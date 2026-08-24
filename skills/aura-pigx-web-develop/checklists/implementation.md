@@ -1,0 +1,66 @@
+# 实现检查清单
+
+## 工程与职责
+
+- [ ] 页面、页面私有组件、Composable、API、类型和 i18n 职责分离
+- [ ] 文件与变量有业务语义，目录和命名符合最新版工程规范及相邻模块
+- [ ] 项目内部 import 使用 `/@/`，没有错误的 `@/`
+- [ ] 只修改需求范围内文件，不覆盖已有业务代码
+
+## 请求与接口
+
+- [ ] 请求统一使用 `/@/utils/request`，未直接创建 axios 实例
+- [ ] API 命名遵循当前业务域与最新版规范，未强制旧版五段式
+- [ ] 字段名、类型、必填性和单值/数组结构与明确接口契约一致
+- [ ] 未硬编码域名、IP、Token、Cookie、密码或部署前缀
+- [ ] 未在业务代码中自行处理认证失效、清 Token 或跳转登录
+
+## Hooks、表格与表单
+
+- [ ] `useTable(state)` 传入响应式状态，未从返回值解构不存在的 `state`
+- [ ] 表格绑定 `tableStyle.cellStyle`、`tableStyle.headerCellStyle`
+- [ ] 分页、排序、下载和对齐复用真实 `useTable` 能力
+- [ ] 权限按钮使用当前项目 `v-auth` 约定
+- [ ] 表单提交前校验、提交期间禁用、成功后关闭并刷新
+
+## 消息提示与弹出框
+
+- [ ] 只使用 `import { useMessage, useMessageBox } from '/@/hooks/message';`
+- [ ] 普通提示使用 `useMessage().info/warning/success/error`
+- [ ] 弹出框使用 `useMessageBox().confirm/warning/success/error/info/prompt`
+- [ ] 未从 `element-plus` 导入或调用 `ElMessage`、`ElMessageBox`、`Message`、`MessageBox`
+- [ ] 未自行实现 Toast、消息组件、通知队列或二次消息 Hook
+- [ ] 未使用 `const { message, messageBox } = useMessage()`
+- [ ] 用户可见固定文案使用 i18n；取消确认作为正常分支处理
+- [ ] 仅新增、编辑、删除、启停、保存、提交、导入等变更操作在请求 `catch` 中使用 `useMessage().error(...)`
+- [ ] 字典、下拉、列表、详情、初始化和刷新等只读加载的 `catch` 未调用 `useMessage()`，并按需要维护局部错误态、空态或重试状态
+
+## 组件与样式
+
+- [ ] 组件选择顺序为全局组件/Hooks → `@fxft/ui-plus` → Element Plus → 页面私有组件
+- [ ] 生成前核对 `src/components/index.ts`，未虚构全局组件
+- [ ] Flex 高度链路、`min-height: 0`、滚动区域和主题变量符合最新版样式规范
+- [ ] 远程样式有正确 scope，不重置无 scope 的 `body`、`html` 或 `.el-*`
+- [ ] import 资源经 `getStaticResourceUrl`，public 资源经 `getPublicResourceUrl`
+
+## 模块联邦与专项组件
+
+- [ ] 远程页面不依赖提供方 `main.ts` 的全局注册副作用
+- [ ] Element Plus 保持本地依赖，未加入 Module Federation shared
+- [ ] expose、i18n、Tailwind、页面 CSS 和静态资源按最新版规范适配
+- [ ] 地图使用 `FxftMap`，未重复接入底层地图 SDK
+- [ ] 单路/多路视频使用 `FxftVideoPlayer` / `FxftMultiVideoPlayer`
+- [ ] 实例、监听器、定时器、Worker、地图和播放器在卸载时正确清理
+
+## 代码注释
+
+- [ ] 页面或复杂组件文件头说明用途、模块和业务角色
+- [ ] 已按所选页面模式列出注释锚点；查询卡片页的实际查询/筛选、工具栏、卡片列表、空态、分页区块均有中文注释
+- [ ] `props`、`emits` 字段有具体中文业务说明
+- [ ] 复杂模板区块、组合条件，以及卡片点击与内部操作的事件阻断说明触发场景或交互边界
+- [ ] API 特殊契约、Header、上传下载或兼容逻辑说明来源
+- [ ] `watch`、`nextTick`、DOM、Teleport、模块联邦、资源清理和 `:deep()` 第三方样式覆盖说明 Why
+- [ ] 必要时使用 `TODO:`、`FIXME:`、`PERF:`、`HACK:`、`DEPRECATED:`
+- [ ] 注释与代码同步，无翻译代码的噪音注释和大段废弃注释代码
+- [ ] 已记录每个关键注释的位置及其覆盖的 Why、契约或边界；不按注释行数验收
+- [ ] 中文内容为 UTF-8 无 BOM，无乱码
