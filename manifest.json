@@ -1,15 +1,8 @@
 {
-  "schemaVersion": 1,
-  "repository": "kj8686745/aura-skills-release",
   "branch": "main",
   "generatedAt": "2026-08-24T06:06:33.4694654Z",
-  "sourceCommit": "7641759d6b37e76c946c6e5cf74c58941facaa85",
-  "skills": [
-    {
-      "name": "aura-pigx-web-develop",
-      "version": "1.2.1",
-      "description": "按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + Vite + TypeScript 业务开发、页面模式选型、接口封装、路由菜单、模块联邦、组件复用、样式与静态资源适配，并支持需求描述、截图、PRD、HTML 原型、Figma 和 Apifox 联调场景。用于开发、修改、评审或验收 aura-pigx-cli nexus 项目及其业务远程模块。",
-      "path": "skills/aura-pigx-web-develop/SKILL.md"
-    }
-  ]
+  "repository": "kj8686745/aura-skills-release",
+  "schemaVersion": 1,
+  "skills": [],
+  "sourceCommit": "7641759d6b37e76c946c6e5cf74c58941facaa85"
 }
