@@ -1,8 +1,15 @@
 {
   "branch": "main",
-  "generatedAt": 1787575339,
+  "generatedAt": 1787620391,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
-  "skills": [],
+  "skills": [
+    {
+      "description": "物联中枢云底座业务开发规范技能，包含项目规范知识库、页面模板、开发清单、落地配方和示例。",
+      "name": "aura-iot-web-develop",
+      "path": "skills/aura-iot-web-develop/SKILL.md",
+      "version": "1.0.0"
+    }
+  ],
   "sourceCommit": ""
 }
