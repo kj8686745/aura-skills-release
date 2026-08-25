@@ -18,8 +18,6 @@ npx skills update <技能名称> --global --yes
 
 ## 已发布技能
 
-| 技能 | 版本 | 说明 |
-| --- | --- | --- |
-| aura-iot-web-develop | 1.0.0 | 物联中枢云底座业务开发规范技能，包含项目规范知识库、页面模板、开发清单、落地配方和示例。 |
+暂未发布技能。
 
 发布清单见 [manifest.json](./manifest.json)。
