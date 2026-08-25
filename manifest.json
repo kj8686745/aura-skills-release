@@ -1,8 +1,15 @@
 {
   "branch": "main",
-  "generatedAt": 1787620562,
+  "generatedAt": 1787621353,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
-  "skills": [],
+  "skills": [
+    {
+      "description": "公司 2D 地图业务开发规范技能，指导 Agent 在 Vue 3 + Vite 项目中接入 @fxft/ui-plus，并使用 FxftMap 完成地图页面、点位聚合、轨迹回放、热力图、绘制和 GeoJSON 渲染。",
+      "name": "fmap-2d",
+      "path": "skills/fmap-2d/SKILL.md",
+      "version": "1.0.2"
+    }
+  ],
   "sourceCommit": ""
 }
