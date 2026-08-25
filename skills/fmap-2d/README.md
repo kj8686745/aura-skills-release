@@ -2,7 +2,7 @@
 
 `fmap-2d` 是公司 2D 地图业务开发规范技能，用于指导 Agent 在 Vue 3 + Vite + TypeScript 项目中接入 `@fxft/ui-plus`，并统一使用 `FxftMap` 实现地图业务。
 
-当前版本：`1.0.1`。
+当前版本：`1.0.3`。
 
 ## 适用场景
 
@@ -17,7 +17,7 @@
 ## 核心原则
 
 1. 后续 2D 地图业务必须优先检查目标项目是否安装 `@fxft/ui-plus`。
-2. 未安装依赖时，不得静默安装，必须先获取用户授权。
+2. 未安装依赖或所用能力要求更高版本时，不得静默安装或升级，必须先获取用户授权；批量轨迹、图层视图、图片导出和新版 GeoJSON 交互要求 `@fxft/ui-plus >= 1.0.36`。
 3. 地图实现必须使用 `FxftMap`，不得重复封装地图 SDK。
 4. 优先按需引入组件和样式，避免无必要的全量注册。
 5. 数据进入地图组件前必须完成坐标、轨迹、热力、GeoJSON 的基础校验与归一化。
@@ -47,6 +47,7 @@ fmap-2d/
 - 业务规则：`references/map-business-rules.md`
 - 模板索引：`templates/README.md`
 - 验证脚本：`scripts/validate-skill.ps1`
+- 使用说明：[USAGE.md](USAGE.md)
 
 ## 示例需求
 

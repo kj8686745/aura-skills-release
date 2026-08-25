@@ -5,6 +5,7 @@
 - [ ] `package.json` 中存在 `@fxft/ui-plus`，或已说明缺失并取得用户授权后安装。
 - [ ] 未授权时没有执行安装命令。
 - [ ] 包管理器与目标项目一致。
+- [ ] 使用 1.0.36 API 时，实际 `@fxft/ui-plus` 版本不低于 `1.0.36`；未获授权时未升级依赖。
 
 ## Resolver 验证
 
@@ -35,6 +36,7 @@
 - [ ] 录像 `playback-stats` 正常触发。
 - [ ] 录像 `playback-seek` 正常触发。
 - [ ] 点播 `playVodTime` 正常触发，录像 `playback-timestamp` 正常触发。
+- [ ] 多路点播没有假定监听 `playVodTime`；窗口状态只使用 `getSelectedWindowUuid`、`getWindowStates`、`getWindowItem` 等公开 API。
 - [ ] 自定义时间轴调用 `setPlayProgress(seconds)` 后视频进度正常跳转。
 - [ ] PTZ 控制事件正常触发。
 - [ ] 单窗口全屏正常。

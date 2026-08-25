@@ -13,6 +13,8 @@ $resolvedSkillPath = (Resolve-Path -LiteralPath $SkillPath).Path
 $required = @(
   "VERSION",
   "SKILL.md",
+  "USAGE.md",
+  "agents\openai.yaml",
   "knowledge\PIGX前端开发规范\README.md",
   "knowledge\PIGX前端开发规范\PIGX前端开发总览.md",
   "knowledge\PIGX前端开发规范\工程与代码生成规范.md",
@@ -78,7 +80,7 @@ if (Test-Path -LiteralPath $skillFile) {
     $errors += "SKILL.md 未声明统一消息 Hook 的精确导入方式"
   }
 
-  foreach ($keyword in @('el-table--fit', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定')) {
+  foreach ($keyword in @('el-table--fit', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video')) {
     if (-not $skillContent.Contains($keyword)) {
       $errors += "SKILL.md 缺少关键规则：$keyword"
     }
@@ -135,6 +137,19 @@ foreach ($guidePath in $codeGuidePaths) {
       $errors += "$($file.Name) 的代码示例直接导入 Element Plus 消息 API"
     }
   }
+}
+
+$usageFile = Join-Path $resolvedSkillPath "USAGE.md"
+if (Test-Path -LiteralPath $usageFile) {
+  $usageContent = Get-Content -LiteralPath $usageFile -Raw -Encoding UTF8
+  foreach ($keyword in @('$aura-pigx-web-develop', '示例提示词', '@fxft/ui-plus')) {
+    if (-not $usageContent.Contains($keyword)) { $errors += "USAGE.md 缺少关键说明：$keyword" }
+  }
+}
+
+$openAiFile = Join-Path $resolvedSkillPath "agents\openai.yaml"
+if ((Test-Path -LiteralPath $openAiFile) -and -not ((Get-Content -LiteralPath $openAiFile -Raw -Encoding UTF8).Contains('$aura-pigx-web-develop'))) {
+  $errors += "agents/openai.yaml 默认提示未引用技能名"
 }
 
 $queryTemplate = Join-Path $resolvedSkillPath "templates\query-table-page.md"

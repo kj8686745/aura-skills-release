@@ -21,6 +21,8 @@
 
 点位索引、聚合图层显隐、单点显隐和图标更新能力要求 `@fxft/ui-plus >= 1.0.34`。使用 `setPointLayerVisible`、`setPointVisible`、`updatePointSymbol` 前必须检查实际安装版本；低于该版本时先说明升级会修改依赖与 lock 文件，并取得用户授权。
 
+使用 `playBatchTracks` 系列批量轨迹控制、`fitLayer`、`flyToLayer`、`exportImage`、`geojson-upload` 或新版 GeoJSON 交互时，要求 `@fxft/ui-plus >= 1.0.36`。版本不足时不得生成这些调用；先说明将修改 `package.json` 与 lock 文件，只有获得用户明确授权后才用项目现有包管理器升级。
+
 ## 安装命令
 
 根据目标项目已有包管理器选择一个命令，不要混用。

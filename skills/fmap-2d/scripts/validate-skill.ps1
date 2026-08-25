@@ -67,12 +67,14 @@ $requiredDirectories = @(
   "checklists",
   "recipes",
   "scripts"
+  ,"agents"
 )
 
 $requiredFiles = @(
   "SKILL.md",
   "README.md",
   "USAGE.md",
+  "agents/openai.yaml",
   "DESIGN.md",
   "references/project-profile.md",
   "references/ui-plus-installation.md",
@@ -110,8 +112,14 @@ Test-FileContains "SKILL.md" "交付格式"
 Test-FileContains "SKILL.md" "@fxft/ui-plus"
 Test-FileContains "SKILL.md" "FxftMap"
 Test-FileContains "SKILL.md" "不得自行引入"
+Test-FileContains "SKILL.md" "首次调用提示"
+Test-FileContains "SKILL.md" "1.0.36"
+Test-FileContains "USAGE.md" '$fmap-2d'
+Test-FileContains "USAGE.md" "可复制提示词"
+Test-FileContains "agents/openai.yaml" '$fmap-2d'
 Test-FileContains "references/ui-plus-installation.md" "FxftUiPlusResolver"
 Test-FileContains "references/ui-plus-installation.md" "repository.fxft.online/repository/npm-public"
+Test-FileContains "references/ui-plus-installation.md" "1.0.36"
 Test-FileContains "references/map-component-guide.md" "addPoint"
 Test-FileContains "references/map-component-guide.md" "setPointLayerVisible"
 Test-FileContains "references/map-component-guide.md" "setPointVisible"
@@ -123,6 +131,9 @@ Test-FileContains "references/map-component-guide.md" "setHeat"
 Test-FileContains "references/map-component-guide.md" "renderGeoJSON"
 Test-FileContains "references/map-component-guide.md" "setDrawSymbol"
 Test-FileContains "references/map-component-guide.md" "initDraw"
+Test-FileContains "references/map-component-guide.md" "playBatchTracks"
+Test-FileContains "references/map-component-guide.md" "geojson-upload"
+Test-FileContains "references/map-component-guide.md" "exportImage"
 Test-FileContains "templates/fxft-map-basic-page.md" "<FxftMap"
 Test-FileContains "templates/fxft-map-points.md" "addPoint"
 Test-FileContains "templates/fxft-map-track.md" "playTrack"
@@ -133,6 +144,19 @@ Test-FileContains "templates/fxft-map-draw-geojson.md" "initDraw"
 Test-FileContains "checklists/validation.md" "FxftUiPlusResolver"
 Test-FileContains "recipes/map-data-normalization.md" "lon"
 Test-FileContains "recipes/map-data-normalization.md" "lat"
+
+Get-ChildItem -LiteralPath $Root -Recurse -File | ForEach-Object {
+  $bytes = [System.IO.File]::ReadAllBytes($_.FullName)
+  if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+    $Errors.Add("文件包含 UTF-8 BOM：$($_.FullName.Substring($Root.Length + 1))")
+  }
+}
+
+Get-ChildItem -LiteralPath (Join-Path $Root 'scripts') -File -Filter '*.ps1' | ForEach-Object {
+  $tokens = $null; $parseErrors = $null
+  [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$parseErrors) | Out-Null
+  foreach ($parseError in $parseErrors) { $Errors.Add("PowerShell 语法错误：$($_.Name):$($parseError.Extent.StartLineNumber) $($parseError.Message)") }
+}
 
 if ($Errors.Count -gt 0) {
   Write-Host "fmap-2d 技能校验失败：" -ForegroundColor Red

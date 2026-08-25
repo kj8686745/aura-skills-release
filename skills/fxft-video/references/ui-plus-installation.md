@@ -19,6 +19,8 @@
 - 安装依赖会修改项目依赖文件。
 - 是否授权使用公司私有 registry 安装。
 
+当前 `FxftVideoPlayer` / `FxftMultiVideoPlayer` 的公开 Props、Events 与 Exposes 以 `@fxft/ui-plus >= 1.0.36` 为准。版本不足时不得生成新版调用；先说明升级会修改 `package.json` 与 lock 文件，只有取得用户明确授权后才使用项目现有包管理器升级。
+
 ## 安装命令
 
 根据目标项目已有包管理器选择一个命令，不要混用。

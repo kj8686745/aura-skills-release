@@ -6,7 +6,7 @@ param([string]$SkillPath = (Join-Path $PSScriptRoot '..'))
 $ErrorActionPreference = 'Stop'
 $errors = [System.Collections.Generic.List[string]]::new()
 $root = (Resolve-Path -LiteralPath $SkillPath).Path
-$required = @('VERSION', 'SKILL.md', 'agents/openai.yaml', 'scripts/detect-pigx-project.ps1', 'scripts/test-detect-pigx-project.ps1')
+$required = @('VERSION', 'SKILL.md', 'USAGE.md', 'agents/openai.yaml', 'scripts/detect-pigx-project.ps1', 'scripts/test-detect-pigx-project.ps1')
 foreach ($relativePath in $required) {
   if (-not (Test-Path -LiteralPath (Join-Path $root $relativePath) -PathType Leaf)) { [void]$errors.Add("缺少必要文件：$relativePath") }
 }
@@ -19,13 +19,15 @@ if (Test-Path -LiteralPath $skillPath) {
   if ($content -notmatch '(?m)^name:\s*aura-pigx-project-router\s*$') { [void]$errors.Add('SKILL.md name 不正确。') }
   if ($content -notmatch '(?m)^description:\s*\S.+$') { [void]$errors.Add('SKILL.md description 不能为空。') }
   if ($version -and -not $content.Contains("当前版本：``$version``")) { [void]$errors.Add('SKILL.md 展示版本与 VERSION 不一致。') }
-  foreach ($keyword in @('currentRemoteConfig', 'exposeModules', 'getModuleFederationLoader', '@module-federation/vite', 'NotPIGX', 'IncompleteCandidate')) {
+  foreach ($keyword in @('currentRemoteConfig', 'exposeModules', 'getModuleFederationLoader', '@module-federation/vite', 'NotPIGX', 'IncompleteCandidate', '首次调用提示', 'fmap-2d', 'fxft-video')) {
     if (-not $content.Contains($keyword)) { [void]$errors.Add("SKILL.md 缺少分流关键字：$keyword") }
   }
 }
 
 $openAiPath = Join-Path $root 'agents/openai.yaml'
 if ((Test-Path -LiteralPath $openAiPath) -and -not ((Get-Content -LiteralPath $openAiPath -Raw -Encoding UTF8).Contains('$aura-pigx-project-router'))) { [void]$errors.Add('agents/openai.yaml 默认提示未引用技能名。') }
+$usagePath = Join-Path $root 'USAGE.md'
+if ((Test-Path -LiteralPath $usagePath) -and -not ((Get-Content -LiteralPath $usagePath -Raw -Encoding UTF8).Contains('示例提示词'))) { [void]$errors.Add('USAGE.md 缺少示例提示词。') }
 
 Get-ChildItem -LiteralPath $root -Recurse -File | ForEach-Object {
   $bytes = [System.IO.File]::ReadAllBytes($_.FullName)

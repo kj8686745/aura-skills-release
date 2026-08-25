@@ -5,9 +5,13 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.2`（2026-08-25）。
+当前版本：`1.2.3`（2026-08-25）。
 
 把本技能作为 PIGX 模块联邦（综合端）的规范执行器。先读取最新版规范，再分析和修改代码；不得用技能中的历史示例覆盖最新版规范。
+
+## 首次调用提示
+
+当前会话首次命中本技能时，简要说明：它负责 PIGX 业务实现；请提供页面/接口/权限或模块联邦目标；地图和视频会串联可用专项技能；示例为“新增设备 CRUD 页面并创建正式菜单和按钮权限”。同一会话后续不重复说明；用户询问“怎么用”“帮助”或“示例”时读取并输出 [使用说明](USAGE.md) 的相关部分。
 
 ## 规范优先级
 
@@ -49,8 +53,8 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 | 详情页或抽屉 | `knowledge/PIGX前端开发规范/页面模式/详情页与抽屉.md` |
 | 看板页 | `knowledge/PIGX前端开发规范/页面模式/看板页.md` |
 | 同路由嵌套覆盖页 | `knowledge/PIGX前端开发规范/页面模式/Teleport嵌套页面模式.md` |
-| 2D 地图 | `knowledge/PIGX前端开发规范/2D地图开发规范.md`；需要专业实现时调用 `/fmap-2d` |
-| 视频 | `knowledge/PIGX前端开发规范/视频开发规范.md`；需要专业实现时调用 `/fxft-video` |
+| 2D 地图 | `knowledge/PIGX前端开发规范/2D地图开发规范.md`；当前环境存在时调用 `/fmap-2d`，并先核验 `@fxft/ui-plus` 版本是否满足所用 API 的要求 |
+| 视频 | `knowledge/PIGX前端开发规范/视频开发规范.md`；当前环境存在时调用 `/fxft-video`，并先核验 `@fxft/ui-plus` 版本是否满足所用 API 的要求 |
 | 公司私服与组件安装 | `knowledge/PIGX前端开发规范/公司组件库下载说明/README.md` |
 | 代码注释 | `references/code-comment-guidelines.md` 与 `checklists/implementation.md` |
 | API/Apifox | `recipes/apifox-workflow.md`、`references/apifox-mcp-guide.md` |

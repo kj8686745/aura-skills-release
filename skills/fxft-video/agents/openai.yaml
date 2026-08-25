@@ -1,0 +1,6 @@
+interface:
+  display_name: "福信视频业务开发"
+  short_description: "使用视频组件实现监控、回放和多路分屏"
+  default_prompt: "使用 $fxft-video 在当前项目接入四路监控视频，并先核验 @fxft/ui-plus 版本。"
+policy:
+  allow_implicit_invocation: true

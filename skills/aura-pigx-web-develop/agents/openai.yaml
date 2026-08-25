@@ -1,0 +1,6 @@
+interface:
+  display_name: "PIGX 综合端业务开发"
+  short_description: "完成 PIGX CRUD、菜单权限、地图视频协同和模块联邦实现"
+  default_prompt: "使用 $aura-pigx-web-develop 新增 PIGX 业务 CRUD 页面、正式菜单和按钮权限。"
+policy:
+  allow_implicit_invocation: true

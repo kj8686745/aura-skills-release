@@ -1,0 +1,6 @@
+interface:
+  display_name: "福信二维地图开发"
+  short_description: "使用 FxftMap 开发二维地图与轨迹能力"
+  default_prompt: "使用 $fmap-2d 在当前项目新增设备地图，并先核验 @fxft/ui-plus 版本。"
+policy:
+  allow_implicit_invocation: true

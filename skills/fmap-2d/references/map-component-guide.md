@@ -47,6 +47,10 @@ const onMapLoad = (mapInstance: unknown) => {
 | `defaultLayer` | `string` | 默认底图 |
 | `showLayerSwitcher` | `boolean` | 是否显示底图切换器 |
 | `showMapTool` | `boolean` | 是否显示地图工具栏 |
+| `devicePixelRatio` | `number` | 渲染像素比；默认使用浏览器值 |
+| `gaodeCorrection` | `boolean` | 高德坐标纠偏；仅在坐标系已确认时开启 |
+| `drawOnce` | `boolean` | 是否限制一次绘制交互 |
+| `drawGeojsonActions` | `boolean` | 是否显示 GeoJSON 绘制动作 |
 
 ## 高频 Events
 
@@ -58,9 +62,12 @@ const onMapLoad = (mapInstance: unknown) => {
 | `marker-click` | 点位点击 |
 | `draw-end` | 交互绘制结束 |
 | `draw-edit` | 绘制编辑结束 |
+| `geojson-upload` | GeoJSON 上传并解析完成 |
 | `track-progress` | 轨迹播放进度变化 |
 | `track-marker-click` | 轨迹点点击 |
 | `track-stopped` | 轨迹停止 |
+| `track-batch-progress` | 批量轨迹整体与单轨进度变化 |
+| `track-batch-stopped` | 批量轨迹停止 |
 | `tool-action` | 地图工具栏动作透出 |
 | `rotation-change` | 地图旋转角变化 |
 
@@ -87,9 +94,15 @@ const onMapLoad = (mapInstance: unknown) => {
 | `setTrackProgress(progress)` | 按距离进度设置播放位置，范围建议 `0~100` |
 | `setTrackTime(timeValue)` | 按时间定位轨迹位置 |
 | `clearTrack()` | 清空轨迹实例 |
+| `setTrackPointsVisible(visible)` | 隐藏/显示轨迹点 marker，不重建轨迹 |
+| `playBatchTracks(trackGroups, options?, layerName?)` | 创建相互隔离的批量轨迹；要求 `@fxft/ui-plus >= 1.0.36` |
+| `playBatchTracksStart(options?)` / `pauseBatchTracks()` / `stopBatchTracks()` | 控制批量轨迹播放 |
+| `setBatchTracksSpeed(speed)` / `setBatchTracksProgress(progress)` | 设置批量轨迹速度或进度 |
+| `setBatchTrackPointsVisible(visible)` / `clearBatchTracks()` | 控制批量轨迹点显示或清空实例 |
 | `setHeat(points, options?, layerName?)` | 设置并显示热力图 |
 | `startDraw(type, layerName?)` | 开始交互绘制 |
 | `stopDraw()` | 停止当前绘制 |
+| `resetDraw()` | 重置当前绘制状态 |
 | `setDrawSymbol(symbol, layerName?)` | 更新指定绘制图层后续交互绘制与 GeoJSON 回显的点、线、面样式 |
 | `initDraw(geojson, options?, layerName?)` | 初始化或重新回显可编辑 GeoJSON，`options.symbol` 可同步指定样式 |
 | `callDrawTool(action, data)` | 控制绘制工具条 |
@@ -97,6 +110,8 @@ const onMapLoad = (mapInstance: unknown) => {
 | `renderGeoJSON(geojson, options?, layerName?)` | 渲染 GeoJSON |
 | `clearLayer(layerName)` | 清空指定图层 |
 | `removeLayer(layerName)` | 移除指定图层 |
+| `fitLayer(layerName, options?)` / `flyToLayer(layerName, options?)` | 定位至图层范围；要求 `>= 1.0.36` |
+| `exportImage(options?)` | 导出当前地图图片；要求 `>= 1.0.36` |
 
 ## 图层显示隐藏
 

@@ -17,8 +17,10 @@ function Write-FixtureFile {
 }
 
 function Invoke-Detector {
-  param([string]$ProjectPath, [string]$Task)
-  $output = & $powerShellExe -NoProfile -ExecutionPolicy Bypass -File $detector -ProjectPath $ProjectPath -TaskDescription $Task -Json
+  param([string]$ProjectPath, [string]$Task, [string[]]$AvailableSkills)
+  $arguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $detector, '-ProjectPath', $ProjectPath, '-TaskDescription', $Task, '-Json')
+  if ($PSBoundParameters.ContainsKey('AvailableSkills')) { $arguments += '-AvailableSkills'; $arguments += ($AvailableSkills -join ',') }
+  $output = & $powerShellExe @arguments
   if ($LASTEXITCODE -ne 0) { throw "识别脚本退出码错误：$LASTEXITCODE" }
   return (($output -join "`n") | ConvertFrom-Json)
 }
@@ -26,6 +28,13 @@ function Invoke-Detector {
 function Assert-Equal {
   param($Actual, $Expected, [string]$Message)
   if ($Actual -ne $Expected) { throw "$Message，期望 $Expected，实际 $Actual。" }
+}
+
+function Assert-Skills {
+  param([object[]]$Actual, [string[]]$Expected, [string]$Message)
+  $actualText = @($Actual) -join ','
+  $expectedText = @($Expected) -join ','
+  if ($actualText -ne $expectedText) { throw "$Message，期望 $expectedText，实际 $actualText。" }
 }
 
 New-Item -ItemType Directory -Path $testRoot -Force | Out-Null
@@ -42,6 +51,17 @@ try {
   Assert-Equal $result.recommendedSkills[0] 'aura-pigx-web-develop' '正式菜单/按钮未分流到 Web 开发技能'
   $result = Invoke-Detector $integrated '新增远程 manifest 配置'
   Assert-Equal @($result.recommendedSkills).Count 2 '模块联邦配置未串联双技能'
+  $result = Invoke-Detector $integrated '新增地图页面，展示点位聚合、轨迹回放和热力图' @('fmap-2d', 'fxft-video')
+  Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop', 'fmap-2d') 'PIGX 地图未分流到 Web + 地图技能'
+  $result = Invoke-Detector $integrated '接入四路监控视频，支持 PTZ 和拖拽换位' @('fmap-2d', 'fxft-video')
+  Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop', 'fxft-video') 'PIGX 视频未分流到 Web + 视频技能'
+  $result = Invoke-Detector $integrated '新增远程地图模块 manifest 配置' @('fmap-2d', 'fxft-video')
+  Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop', 'fmap-2d', 'aura-pigx-module-federation-check') '地图模块联邦未串联三技能'
+  $result = Invoke-Detector $integrated '新增远程视频模块 remote 配置' @('fmap-2d', 'fxft-video')
+  Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop', 'fxft-video', 'aura-pigx-module-federation-check') '视频模块联邦未串联三技能'
+  $result = Invoke-Detector $integrated '新增设备地图点位' @()
+  Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop') '专项技能不可用时应保留 Web 技能'
+  Assert-Equal $result.unavailableSpecializedSkills[0] 'fmap-2d' '缺失地图技能未输出降级信息'
   $result = Invoke-Detector $integrated '审计模块联邦配置'
   Assert-Equal @($result.recommendedSkills).Count 1 '纯审计不应进入 Web 开发流程'
   Assert-Equal $result.recommendedSkills[0] 'aura-pigx-module-federation-check' '纯审计技能错误'
@@ -52,6 +72,8 @@ try {
   $result = Invoke-Detector $notPigx '新增 CRUD 页面'
   Assert-Equal $result.projectType 'NotPIGX' '普通 Vue/Vite 应识别为 NotPIGX'
   Assert-Equal @($result.recommendedSkills).Count 0 '普通 Vue/Vite 不应加载 PIGX Web 技能'
+  $result = Invoke-Detector $notPigx '新增地图页面和视频监控'
+  Assert-Equal @($result.recommendedSkills).Count 0 '非 PIGX 地图/视频项目不应进入 PIGX 流程'
 
   $incomplete = Join-Path $testRoot 'incomplete'
   Write-FixtureFile $incomplete 'vite.config.ts' "import { federation } from '@module-federation/vite'; federation({});"

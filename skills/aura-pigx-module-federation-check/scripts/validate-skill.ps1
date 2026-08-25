@@ -12,6 +12,7 @@ $resolvedSkillPath = (Resolve-Path -LiteralPath $SkillPath).Path
 $requiredFiles = @(
 	'VERSION',
 	'SKILL.md',
+	'USAGE.md',
 	'agents/openai.yaml',
 	'references/integrated-rule-matrix.md',
 	'references/provider-consumer-handoff.md',
@@ -52,8 +53,16 @@ if (Test-Path -LiteralPath $skillFile) {
 	if ($skillContent -match '\[TODO|TODO: Complete') { [void]$errors.Add('SKILL.md 仍包含初始化 TODO。') }
 	if ($version -and -not $skillContent.Contains("当前版本：``$version``")) { [void]$errors.Add('SKILL.md 展示版本与 VERSION 不一致。') }
 	if ($skillContent -match '(?m)^name:\s*(pigx-nexus|pigxNexus)\s*$') { [void]$errors.Add('技能名禁止使用模板项目占位名称。') }
-	foreach ($keyword in @('aura-pigx-web-develop', 'provider-consumer-handoff.md', '改前', '复检', '对外接入说明')) {
+	foreach ($keyword in @('aura-pigx-web-develop', 'provider-consumer-handoff.md', '改前', '复检', '对外接入说明', '首次调用提示')) {
 		if (-not $skillContent.Contains($keyword)) { [void]$errors.Add("SKILL.md 缺少关键流程：$keyword") }
+	}
+}
+
+$usagePath = Join-Path $resolvedSkillPath 'USAGE.md'
+if (Test-Path -LiteralPath $usagePath) {
+	$usageContent = Get-Content -LiteralPath $usagePath -Raw -Encoding UTF8
+	foreach ($keyword in @('$aura-pigx-module-federation-check', '示例提示词')) {
+		if (-not $usageContent.Contains($keyword)) { [void]$errors.Add("USAGE.md 缺少关键说明：$keyword") }
 	}
 }
 

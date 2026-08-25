@@ -1,5 +1,7 @@
 # 视频组件指南
 
+本文档依据 `@fxft/ui-plus@1.0.36` 源码整理；项目版本不足时只能使用已确认兼容的能力，升级必须先取得用户授权。
+
 ## 单路组件：FxftVideoPlayer
 
 `FxftVideoPlayer` 是基于 `JessibucaPro` 封装的单路视频播放组件，支持直播、录像、点播、手动播放遮罩、PTZ 控制、全屏、播放统计、回放时间事件、空态、错误态和视频名称展示。
@@ -22,7 +24,9 @@
 | `playMode` | 播放模式 | `'live' \| 'record' \| 'vod'` | `'live'` |
 | `decoderPath` | 解码器路径 | `string` | `''` |
 | `scriptUrl` | `jessibuca-pro.js` 地址 | `string` | CDN 兜底 |
+| `loadingText` / `errorText` | 加载中与播放错误文案 | `string` | `加载中` / `视频播放异常` |
 | `controlAutoHide` | Jessibuca 控制栏是否自动隐藏 | `boolean` | `true` |
+| `nameAutoHide` | 视频名称区域是否自动隐藏 | `boolean` | `true` |
 | `supportDblclickFullscreen` | 是否支持双击全屏 | `boolean` | `false` |
 | `operateButtons` | 操作按钮配置 | `object` | `{}` |
 | `isResize` | 是否监听尺寸变化 | `boolean` | `true` |
@@ -143,6 +147,8 @@
 | `playMode` | 默认播放模式 | `'live' \| 'record' \| 'vod'` | `'live'` |
 | `decoderPath` | 解码器路径 | `string` | `''` |
 | `multiScriptUrl` | `jessibuca-pro-multi.js` 地址 | `string` | CDN 兜底 |
+| `bacColor` | 多路播放器背景色 | `string` | `'#000000'` |
+| `emptyText` / `errorText` / `loadingText` | 空态、错误与加载文案 | `string` | 内置中文文案 |
 | `controlAutoHide` | 控制栏自动隐藏 | `boolean` | `true` |
 | `supportDblclickFullscreen` | 双击全屏 | `boolean` | `false` |
 | `supportDblclickContainerFullscreen` | 双击容器内全屏 | `boolean` | `false` |
@@ -228,10 +234,10 @@
 - 支持每个窗口单独配置 `playMode`、`autoplay`、`options`。
 - 多路 `live` 模式同样默认开启 `useMSE: true`，并使用 `loadingTimeout: 20`、`heartTimeout: 10` 的直播配置。
 - 开启 `draggable` 后支持窗口拖拽换位。
-- `selected`、`drop`、`getWindowUuidList()`、`getWindowItem()` 统一按 visual order 工作。
+- `selected`、`drop`、`getSelectedWindowUuid()`、`getWindowItem()` 与 `getWindowStates()` 以当前 visual order 反映窗口状态；`getWindowUuidList()` 不是公开 API，禁止调用。
 - 拖拽后选中窗口会同步更新到新位置。
 - 无视频和播放失败按窗口单独管理，不影响其它窗口。
-- 点播模式下通过底层单路播放器的 `playVod()` 执行。
+- 点播模式下通过底层单路播放器的 `playVod()` 执行；多路组件未公开转发 `playVodTime`，业务不得假定可在多路组件上监听该事件。
 - 多路组件在初始化、单窗口初始化、窗口播放和切分屏后会延迟触发 `resize()`，用于避免底层 `video` / `canvas` 偶发按旧尺寸渲染。
 - 如果多路组件所在容器由隐藏变为显示，业务侧可在显示后调用公开方法 `resize(index?)` 主动重算尺寸。
 - 销毁过程中的 `JbPro is destroyed` / `is destroyed` 不作为窗口错误态展示。

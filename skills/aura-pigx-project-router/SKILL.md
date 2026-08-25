@@ -1,13 +1,17 @@
 ---
 name: aura-pigx-project-router
-description: 对当前框架未知的 Vue 3 + Vite 项目进行轻量只读识别，并在 PIGX 综合端开发、CRUD、路由菜单、权限或模块联邦配置时分流到对应 PIGX 技能；不实现业务，也不接管普通 Vue/Vite、React 或非 PIGX 项目。
+description: 对当前框架未知的 Vue 3 + Vite 项目进行轻量只读识别，并在 PIGX 综合端开发、CRUD、路由菜单、权限、地图、视频或模块联邦配置时分流到对应技能；不实现业务，也不接管普通 Vue/Vite、React 或非 PIGX 项目。
 ---
 
 # Aura PIGX 项目分流
 
-当前版本：`1.0.0`。
+当前版本：`1.0.1`。
 
 仅在当前项目框架未知，且用户请求 Vue/Vite 开发、CRUD、路由、菜单、权限或模块联邦配置时使用。本技能只做只读识别和技能分流，不实现业务、不修改项目，也不调用管理端 API。
+
+## 首次调用提示
+
+当前会话首次命中本技能时，简要说明：它只识别 PIGX 综合端并选择后续技能；用户可提供项目路径和需求；示例为“识别当前项目是否为 PIGX 综合端；我要新增设备 CRUD 页面”。同一会话后续不重复说明；用户询问“怎么用”“帮助”或“示例”时读取并输出 [使用说明](USAGE.md) 的相关部分。
 
 ## 识别
 
@@ -29,6 +33,8 @@ description: 对当前框架未知的 Vue 3 + Vite 项目进行轻量只读识�
 ## 分流结果
 
 - `Integrated`：普通业务开发加载 `aura-pigx-web-develop`。
+- `Integrated` 且需求涉及 2D 地图、点位、聚合、轨迹回放、热力图、绘制或 GeoJSON：加载 `aura-pigx-web-develop` 和 `fmap-2d`。
+- `Integrated` 且需求涉及监控视频、单路/多路播放、录像回放、点播、PTZ、分屏或拖拽换位：加载 `aura-pigx-web-develop` 和 `fxft-video`。
 - `Integrated` 且需求涉及 `remote`、`expose`、`manifest`、远程菜单、`shared`、运行时入口或模块联邦配置：由 `aura-pigx-web-develop` 主导实现；修改前和完成后均加载 `aura-pigx-module-federation-check`，分别做基线与复检。
 - `Integrated` 且需求仅为检查、审计、评审、验收或排查：只加载 `aura-pigx-module-federation-check`，不将其误分流为业务开发。
 - `NotPIGX`：说明未命中证据并立即退出，不接管普通 Vue/Vite、React 或其他模块联邦项目。
@@ -37,3 +43,5 @@ description: 对当前框架未知的 Vue 3 + Vite 项目进行轻量只读识�
 ## 边界
 
 分流到 Web 开发技能后，正式新业务页面、菜单入口或页面操作按钮由其菜单权限子流程处理。管理端真实写入仍需用户明确授权，并提供目标环境、运行时凭据、租户和父菜单定位信息。
+
+地图和视频是专项规范：只有它们出现在当前环境的可用技能列表时才能加载。不可用时保留 `aura-pigx-web-develop`，并明确说明专项技能不可用，不得假称已调用。

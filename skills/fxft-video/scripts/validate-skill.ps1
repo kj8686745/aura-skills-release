@@ -48,12 +48,14 @@ $requiredDirectories = @(
   "checklists",
   "recipes",
   "scripts"
+  ,"agents"
 )
 
 $requiredFiles = @(
   "SKILL.md",
   "README.md",
   "USAGE.md",
+  "agents/openai.yaml",
   "DESIGN.md",
   "references/project-profile.md",
   "references/ui-plus-installation.md",
@@ -96,9 +98,15 @@ Test-FileContains "SKILL.md" "FxftMultiVideoPlayer"
 Test-FileContains "SKILL.md" "不得绕过组件库"
 Test-FileContains "SKILL.md" "PTZ"
 Test-FileContains "SKILL.md" "拖拽换位"
+Test-FileContains "SKILL.md" "首次调用提示"
+Test-FileContains "SKILL.md" "1.0.36"
+Test-FileContains "USAGE.md" '$fxft-video'
+Test-FileContains "USAGE.md" "可复制提示词"
+Test-FileContains "agents/openai.yaml" '$fxft-video'
 Test-FileContains "references/ui-plus-installation.md" "FxftUiPlusResolver"
 Test-FileContains "references/ui-plus-installation.md" "repository.fxft.online/repository/npm-public"
 Test-FileContains "references/ui-plus-installation.md" "@fxft/ui-plus"
+Test-FileContains "references/ui-plus-installation.md" "1.0.36"
 Test-FileContains "references/video-component-guide.md" "playMode"
 Test-FileContains "references/video-component-guide.md" "playVod"
 Test-FileContains "references/video-component-guide.md" "ready"
@@ -111,6 +119,8 @@ Test-FileContains "references/video-component-guide.md" "setFullscreenMulti"
 Test-FileContains "references/video-component-guide.md" "toggleSingleWindowContainerFullscreen"
 Test-FileContains "references/video-component-guide.md" "uuid"
 Test-FileContains "references/video-component-guide.md" "draggable"
+Test-FileContains "references/video-component-guide.md" "不是公开 API"
+Test-FileContains "references/video-component-guide.md" "多路组件未公开转发"
 Test-FileContains "references/video-business-rules.md" "manualPlay"
 Test-FileContains "references/video-business-rules.md" "visual order"
 Test-FileContains "templates/fxft-video-basic-page.md" "<FxftVideoPlayer"
@@ -136,6 +146,19 @@ Test-FileContains "checklists/validation.md" "拖拽换位"
 Test-FileContains "checklists/validation.md" "录像"
 Test-FileContains "checklists/validation.md" "全屏"
 Test-FileContains "checklists/validation.md" "控制台无新增错误"
+
+Get-ChildItem -LiteralPath $Root -Recurse -File | ForEach-Object {
+  $bytes = [System.IO.File]::ReadAllBytes($_.FullName)
+  if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+    $Errors.Add("文件包含 UTF-8 BOM：$($_.FullName.Substring($Root.Length + 1))")
+  }
+}
+
+Get-ChildItem -LiteralPath (Join-Path $Root 'scripts') -File -Filter '*.ps1' | ForEach-Object {
+  $tokens = $null; $parseErrors = $null
+  [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$parseErrors) | Out-Null
+  foreach ($parseError in $parseErrors) { $Errors.Add("PowerShell 语法错误：$($_.Name):$($parseError.Extent.StartLineNumber) $($parseError.Message)") }
+}
 
 if ($Errors.Count -gt 0) {
   Write-Host "fxft-video 技能校验失败：" -ForegroundColor Red
