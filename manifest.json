@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1787622736,
+  "generatedAt": 1787623545,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -15,6 +15,12 @@
       "name": "fmap-2d",
       "path": "skills/fmap-2d/SKILL.md",
       "version": "1.0.2"
+    },
+    {
+      "description": "公司视频业务开发规范技能，指导 Claude Code 在 Vue 3 + Vite 项目中接入 @fxft/ui-plus，并使用 FxftVideoPlayer 与 FxftMultiVideoPlayer 完成单路监控、多路分屏、录像回放、点播、PTZ、全屏和拖拽换位。",
+      "name": "fxft-video",
+      "path": "skills/fxft-video/SKILL.md",
+      "version": "1.0.0"
     }
   ],
   "sourceCommit": ""
