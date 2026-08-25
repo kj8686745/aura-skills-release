@@ -1,0 +1,6 @@
+interface:
+  display_name: "PIGX 项目分流"
+  short_description: "识别 PIGX 综合端并分流到开发或联邦检查技能"
+  default_prompt: "使用 $aura-pigx-project-router 识别当前项目，并为本次需求选择合适的 PIGX 技能。"
+policy:
+  allow_implicit_invocation: true

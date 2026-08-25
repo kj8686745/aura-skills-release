@@ -24,6 +24,7 @@ $required = @(
   "knowledge\PIGX前端开发规范\公司组件库下载说明\.npmrc.example",
   "references\message-feedback-guidelines.md",
   "references\code-comment-guidelines.md",
+  "references\admin-menu-permission-workflow.md",
   "recipes\hooks-standards.md",
   "checklists\pre-development.md",
   "checklists\implementation.md",
@@ -77,6 +78,12 @@ if (Test-Path -LiteralPath $skillFile) {
     $errors += "SKILL.md 未声明统一消息 Hook 的精确导入方式"
   }
 
+  foreach ($keyword in @('el-table--fit', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定')) {
+    if (-not $skillContent.Contains($keyword)) {
+      $errors += "SKILL.md 缺少关键规则：$keyword"
+    }
+  }
+
   $frontmatterMatch = [regex]::Match($skillContent, "\A---\r?\n(?<body>.*?)\r?\n---", "Singleline")
   if (-not $frontmatterMatch.Success) {
     $errors += "SKILL.md YAML frontmatter 格式错误"
@@ -127,6 +134,24 @@ foreach ($guidePath in $codeGuidePaths) {
     if ($content -match 'import\s*\{[^}]*\b(ElMessage|ElMessageBox|MessageBox)\b[^}]*\}\s*from\s*[''"]element-plus[''"]') {
       $errors += "$($file.Name) 的代码示例直接导入 Element Plus 消息 API"
     }
+  }
+}
+
+$queryTemplate = Join-Path $resolvedSkillPath "templates\query-table-page.md"
+if ((Test-Path -LiteralPath $queryTemplate) -and -not ((Get-Content -LiteralPath $queryTemplate -Raw -Encoding UTF8).Contains('el-table--fit'))) {
+  $errors += "查询表格模板未声明 el-table--fit 规则"
+}
+
+$dialogTemplate = Join-Path $resolvedSkillPath "templates\dialog-form.md"
+if ((Test-Path -LiteralPath $dialogTemplate) -and -not ((Get-Content -LiteralPath $dialogTemplate -Raw -Encoding UTF8).Contains('filterable'))) {
+  $errors += "弹窗表单模板未声明 el-select filterable 规则"
+}
+
+$adminWorkflow = Join-Path $resolvedSkillPath "references\admin-menu-permission-workflow.md"
+if (Test-Path -LiteralPath $adminWorkflow) {
+  $adminContent = Get-Content -LiteralPath $adminWorkflow -Raw -Encoding UTF8
+  foreach ($keyword in @('明确授权', 'Token', '运行时', 'v-auth', '真实页面菜单 ID', '精确查重', '重新查询', '用户明确指定', '相邻业务模块')) {
+    if (-not $adminContent.Contains($keyword)) { $errors += "菜单权限参考缺少关键约束：$keyword" }
   }
 }
 

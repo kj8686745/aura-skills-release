@@ -1,13 +1,13 @@
 ---
 name: aura-pigx-module-federation-check
-description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联邦生产端或消费端，并检查 PIGX 综合端的模块联邦身份、依赖、Vite 配置、shared singleton、运行时外壳、i18n、样式、静态资源和构建产物。用于检查、评审、验收或排查 aura-pigx-cli 综合端及其派生项目的模块联邦代码与配置；首版识别到生产端或消费端后只报告类型和证据，不执行专项审计。
+description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联邦生产端或消费端，并检查 PIGX 综合端的模块联邦身份、依赖、Vite 配置、shared singleton、运行时外壳、i18n、样式、静态资源和构建产物。模块联邦配置由 Web 开发技能实现，本技能提供改前基线、改后复检与对外接入说明；首版生产端或消费端仅报告类型和证据。
 ---
 
 # Aura PIGX 模块联邦检查
 
-当前版本：`1.0.0`。
+当前版本：`1.0.1`。
 
-把本技能作为只读审计器使用。默认输出问题证据和修复建议；只有用户明确要求修复时才修改被检查项目。
+把本技能作为只读审计器使用。默认输出问题证据和修复建议；模块联邦配置修改由 `aura-pigx-web-develop` 主导，本技能在修改前提供基线、修改后提供复检。只有用户明确要求修复时才修改被检查项目。
 
 ## 规范优先级
 
@@ -35,8 +35,9 @@ description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联�
    - `Consumer`：立即停止，说明首版尚不支持消费端专项审计。
    - `Unknown`：立即停止，列出不足或冲突的识别证据，不猜测项目类型。
 4. 需要机器可读结果时追加 `-Json`；需要核验指定构建清单时追加 `-ManifestPath`；需要检查后台菜单时通过 `-ComponentPath` 传入真实组件值。
-5. 对综合端按 `checklists/integrated-validation.md` 补充 build、独立运行和宿主加载验证。
-6. 只在用户明确要求后依据报告修复确定问题；不得自动修改名称、部署地址、远程拓扑或后台菜单。
+5. 对综合端按 `checklists/integrated-validation.md` 补充 build、独立运行和宿主加载验证。若完成修改且复检没有确定错误，读取 `references/provider-consumer-handoff.md`，输出提供方对外接入说明。
+6. 用户明确给出消费方项目且要求接入时，按 `references/provider-consumer-handoff.md` 的边界直接修改消费方真实配置；不得猜测 manifest 部署地址、远程拓扑或后台菜单。
+7. 只在用户明确要求后依据报告修复确定问题；未明确授权时不得自动修改名称、部署地址、远程拓扑或后台菜单。
 
 ## 端类型边界
 
@@ -65,3 +66,4 @@ description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联�
 3. **风险与人工项**：说明无法仅靠静态扫描确认的内容。
 4. **验证结果**：脚本退出码、build 和运行时检查结果。
 5. **剩余边界**：明确生产端、消费端、后台菜单或部署环境中未覆盖的部分。
+6. **对外接入说明**：仅在综合端完成修改且复检无确定错误时，按参考列出 `remoteName`、`remoteEntryName`、待填 manifest 环境变量、业务/i18n/样式 expose、远程菜单 `componentPath` 与“带参”要求。

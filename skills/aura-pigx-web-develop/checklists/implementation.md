@@ -19,8 +19,13 @@
 
 - [ ] `useTable(state)` 传入响应式状态，未从返回值解构不存在的 `state`
 - [ ] 表格绑定 `tableStyle.cellStyle`、`tableStyle.headerCellStyle`
+- [ ] 表格需要撑满剩余高度时，表格区通过纵向 Flex 与 `min-height: 0` 参与高度链路，`el-table` 同时使用 `class="el-table--fit"` 和 `flex: 1`，未使用 `100vh` 或固定像素高度
 - [ ] 分页、排序、下载和对齐复用真实 `useTable` 能力
+- [ ] 新增或修改的普通 `el-select` 默认使用 `filterable`；明确关闭或组件不兼容时有原因说明
 - [ ] 权限按钮使用当前项目 `v-auth` 约定
+- [ ] 正式新业务页面、菜单入口或操作按钮已生成菜单/按钮权限清单；每个 `v-auth` 都有对应按钮权限，按钮父级使用真实页面菜单 ID
+- [ ] 用户指定的权限编码未被改写；未指定编码遵循当前项目已验证的业务域/动作命名规则，页面 `v-auth` 与后台按钮权限完全一致
+- [ ] 管理端写入仅在明确授权、环境、运行时 Token、租户和父菜单定位齐全时执行；写入前精确查重、写入后 API 复核，凭据未落盘
 - [ ] 表单提交前校验、提交期间禁用、成功后关闭并刷新
 
 ## 消息提示与弹出框
@@ -46,6 +51,7 @@
 ## 模块联邦与专项组件
 
 - [ ] 远程页面不依赖提供方 `main.ts` 的全局注册副作用
+- [ ] 模块联邦配置已在修改前后运行 `aura-pigx-module-federation-check`，Web 开发技能负责实现而检查技能只提供基线/复检
 - [ ] Element Plus 保持本地依赖，未加入 Module Federation shared
 - [ ] expose、i18n、Tailwind、页面 CSS 和静态资源按最新版规范适配
 - [ ] 地图使用 `FxftMap`，未重复接入底层地图 SDK

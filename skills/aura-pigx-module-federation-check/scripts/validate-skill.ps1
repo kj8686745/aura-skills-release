@@ -14,6 +14,7 @@ $requiredFiles = @(
 	'SKILL.md',
 	'agents/openai.yaml',
 	'references/integrated-rule-matrix.md',
+	'references/provider-consumer-handoff.md',
 	'checklists/integrated-validation.md',
 	'knowledge/PIGX前端开发规范/模块联邦开发技术规范.md',
 	'scripts/check-module-federation.ps1',
@@ -51,12 +52,23 @@ if (Test-Path -LiteralPath $skillFile) {
 	if ($skillContent -match '\[TODO|TODO: Complete') { [void]$errors.Add('SKILL.md 仍包含初始化 TODO。') }
 	if ($version -and -not $skillContent.Contains("当前版本：``$version``")) { [void]$errors.Add('SKILL.md 展示版本与 VERSION 不一致。') }
 	if ($skillContent -match '(?m)^name:\s*(pigx-nexus|pigxNexus)\s*$') { [void]$errors.Add('技能名禁止使用模板项目占位名称。') }
+	foreach ($keyword in @('aura-pigx-web-develop', 'provider-consumer-handoff.md', '改前', '复检', '对外接入说明')) {
+		if (-not $skillContent.Contains($keyword)) { [void]$errors.Add("SKILL.md 缺少关键流程：$keyword") }
+	}
 }
 
 $openAiPath = Join-Path $resolvedSkillPath 'agents\openai.yaml'
 if (Test-Path -LiteralPath $openAiPath) {
 	$openAiContent = Get-Content -LiteralPath $openAiPath -Raw -Encoding UTF8
 	if (-not $openAiContent.Contains('$aura-pigx-module-federation-check')) { [void]$errors.Add('agents/openai.yaml 默认提示未显式引用技能名。') }
+}
+
+$handoffPath = Join-Path $resolvedSkillPath 'references\provider-consumer-handoff.md'
+if (Test-Path -LiteralPath $handoffPath) {
+	$handoffContent = Get-Content -LiteralPath $handoffPath -Raw -Encoding UTF8
+	foreach ($keyword in @('remoteName', 'remoteEntryName', 'mf-manifest.json', './i18n/langs', './styles/moduleFederationTailwind.ts', 'componentPath', '带参', 'defineAsyncComponent', '编译期 remote')) {
+		if (-not $handoffContent.Contains($keyword)) { [void]$errors.Add("对外接入参考缺少关键内容：$keyword") }
+	}
 }
 
 $textFiles = Get-ChildItem -LiteralPath $resolvedSkillPath -Recurse -File |

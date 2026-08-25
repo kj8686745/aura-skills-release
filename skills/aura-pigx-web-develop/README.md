@@ -2,9 +2,9 @@
 
 PIGX 模块联邦（综合端）业务开发规范技能。
 
-当前版本：`1.2.1`（2026-08-14）。
+当前版本：`1.2.2`（2026-08-25）。
 
-`1.2.1` 限定业务错误提示仅用于新增、编辑、删除等改变服务端状态的操作；只读数据加载不在 `catch` 中弹出消息。
+`1.2.2` 新增 PIGX 自动菜单/按钮权限准备与受控幂等创建流程；表格撑满剩余高度采用 Flex + `el-table--fit`，普通 `el-select` 默认开启搜索。
 
 ## 权威入口
 
@@ -21,3 +21,5 @@ PIGX 模块联邦（综合端）业务开发规范技能。
 
 1. 业务消息只能使用 `import { useMessage, useMessageBox } from '/@/hooks/message';`，不得直接引入 Element Plus Message/MessageBox 或自行实现消息组件。
 2. 新增和修改代码必须同步遵循中文注释规范，重点说明 Why、契约、边界、副作用和生命周期。
+3. 模块联邦配置由本技能主导实现，并在修改前后调用 `aura-pigx-module-federation-check` 做基线和复检。
+4. 新业务正式页面、菜单入口或操作按钮需要按 `references/admin-menu-permission-workflow.md` 生成菜单权限清单；仅在明确授权且具备运行时凭据时写入管理端。

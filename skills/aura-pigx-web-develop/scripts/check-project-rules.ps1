@@ -137,6 +137,22 @@ foreach ($file in $sourceFiles) {
   if ($file.Extension -eq '.vue' -and $content -match ':deep\(' -and -not (Test-CommentBefore -Source $content -Pattern ':deep\(')) {
     $warnings += "$($relativePath)：:deep() 覆盖附近缺少说明第三方样式覆盖原因的注释"
   }
+
+  if ($file.Extension -eq '.vue') {
+    $selects = [regex]::Matches($content, '(?is)<el-select\b(?<attributes>[^>]*)>')
+    foreach ($select in $selects) {
+      $attributes = $select.Groups['attributes'].Value
+      $isExplicitlyDisabled = $attributes -match '(?i)(:filterable\s*=\s*["'']false["'']|filterable\s*=\s*["'']false["''])'
+      if ($attributes -notmatch '(?i)\bfilterable\b' -and -not $isExplicitlyDisabled) {
+        $warnings += "$($relativePath)：普通 el-select 未发现 filterable；如组件不兼容或用户明确关闭，请在交付中说明"
+      }
+    }
+
+    $authCodes = [regex]::Matches($content, "v-auth\s*=\s*['\"](?<permission>[^'\"]+)['\"]") | ForEach-Object { $_.Groups['permission'].Value } | Select-Object -Unique
+    if ($authCodes.Count -gt 0) {
+      $warnings += "$($relativePath)：发现 v-auth 按钮权限（$($authCodes -join '、')）；正式新业务需按菜单权限流程核验后台按钮及真实页面菜单父级"
+    }
+  }
 }
 
 foreach ($warning in $warnings) {

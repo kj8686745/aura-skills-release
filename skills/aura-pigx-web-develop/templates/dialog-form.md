@@ -10,6 +10,8 @@
 
 以最新版 `form.vue` 骨架为准：通过 `defineExpose({ openDialog })` 打开，提交期间防重复，成功后关闭并触发 `refresh`。
 
+新建或修改普通 `el-select` 时默认添加 `filterable`；仅用户明确关闭或组件不兼容时例外。
+
 消息提示只能使用：
 
 ```ts
