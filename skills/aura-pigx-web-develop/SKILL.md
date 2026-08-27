@@ -1,17 +1,23 @@
 ---
 name: aura-pigx-web-develop
-description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + Vite + TypeScript 业务开发、CRUD、接口封装、正式菜单与按钮权限、模块联邦、组件复用、样式与静态资源适配。模块联邦配置由本技能实现，并串联检查技能做改前基线与改后复检；用于 aura-pigx-cli nexus 项目及其业务远程模块。
+description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + Vite + TypeScript 业务开发、CRUD、接口封装、正式菜单与按钮权限、组件复用、统一视觉风格与样式资源适配。模块联邦配置由本技能实现，并串联检查技能做改前基线与改后复检；用于 aura-pigx-cli nexus 项目及其业务远程模块。
 ---
 
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.4`（2026-08-26）。
+当前版本：`1.2.8`（2026-08-27）。
 
 把本技能作为 PIGX 模块联邦（综合端）的规范执行器。先读取最新版规范，再分析和修改代码；不得用技能中的历史示例覆盖最新版规范。
 
 ## 首次调用提示
 
 当前会话首次命中本技能时，简要说明：它负责 PIGX 业务实现；请提供页面/接口/权限或模块联邦目标；地图和视频会串联可用专项技能；示例为“新增设备 CRUD 页面并创建正式菜单和按钮权限”。同一会话后续不重复说明；用户询问“怎么用”“帮助”或“示例”时读取并输出 [使用说明](USAGE.md) 的相关部分。
+
+## 业务视觉设计协作
+
+当任务新增或改造用户可见的业务页面、CRUD、看板、地图/视频容器或跨页面视觉组件时，在页面实现前调用 `$frontend-design`（当前环境以技能列表中的 `frontend-design/SKILL.md` 为准；用户指定的 `C:\Users\83979\\.cc-switch\\skills\\frontend-design\\SKILL.md` 可作为同一规范来源）。先基于业务对象、受众和页面单一目标确定视觉方向，再形成颜色、字体、间距、圆角、层级和动效令牌；实现后按该技能要求进行一次自我评审，检查是否仍像模板、信息层级是否清晰、键盘焦点和 reduced-motion 是否可用。
+
+`$frontend-design` 只负责视觉方向与体验评审，不能替代 PIGX 页面模式、组件复用、主题变量、消息 Hook、权限或模块联邦规范。纯后端改动、隐藏页、无用户界面的组件修复和仅审计任务不触发该协作。若当前环境没有该技能，继续按 PIGX 样式规范实现，并在交付中说明专项技能不可用。
 
 ## 规范优先级
 
@@ -45,6 +51,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 | 正式菜单、按钮权限或新业务入口 | `references/admin-menu-permission-workflow.md` |
 | 模块联邦提供方/消费方 | `knowledge/PIGX前端开发规范/模块联邦开发技术规范.md` |
 | 页面布局、主题、静态资源 | `knowledge/PIGX前端开发规范/样式布局与静态资源规范.md` |
+| 用户可见页面设计风格统一 | `$frontend-design`、`references/frontend-design-workflow.md`；先定视觉方向和令牌，完成后自评 |
 | 组件选型、公司 UI 规范 | `knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md` |
 | 查询表格页 | `knowledge/PIGX前端开发规范/页面模式/查询表格页.md` |
 | 查询卡片页 | `knowledge/PIGX前端开发规范/页面模式/查询卡片页.md` |
@@ -63,14 +70,14 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 ## 强制工作流
 
 1. **确认项目事实**：检查 `package.json`、锁文件、`vite.config.*`、`src/hooks/`、`src/components/index.ts`、相邻业务模块和生成的类型声明，不凭历史记忆虚构 API。
-2. **解析需求**：列出页面、字段、接口、权限、状态、路由/菜单、验收项和注释锚点。新建正式业务页面、菜单入口或页面操作按钮时，先生成页面菜单和每个 `v-auth` 按钮权限清单；截图、HTML 原型或 Figma 只作为业务内容和视觉输入。
+2. **解析需求**：列出页面、字段、接口、权限、状态、路由/菜单、验收项和注释锚点。新建正式业务页面、菜单入口或页面操作按钮时，先生成页面菜单和每个 `v-auth` 按钮权限清单；截图、HTML 原型或 Figma 只作为业务内容和视觉输入。用户可见页面同时进入 `$frontend-design` 设计协作。
 3. **选择正式页面模式**：从最新版七种页面模式中选择；命中后直接以对应文档为基线，不使用旧模板覆盖。
-4. **规划文件职责**：页面、页面私有组件、业务 composable、API、类型和 i18n 各司其职；只修改需求范围内文件。
+4. **规划文件职责**：编码前先列出路由页、页面私有组件、业务 composable、API、类型和 i18n 的职责清单；只修改需求范围内文件。路由页只负责页面布局、查询主状态和子组件编排，不得为了“先跑通”临时内联多个业务弹窗后再等待评审发现。
 5. **复用优先**：按“综合端全局组件/Hooks → `@fxft/ui-plus` → Element Plus → 页面私有业务组件 → 跨业务公共组件”的顺序选型。
 6. **实现接口**：统一走 `/@/utils/request`；函数命名先遵循当前业务域相邻 API 和最新版规范，不强行套用历史命名。
 7. **实现页面状态**：按适用性覆盖加载态、空态、错误态、权限、校验、防重复提交和资源清理。
 8. **适配模块联邦**：涉及 remote、expose、manifest、远程菜单、shared、运行时入口或模块联邦配置时，先运行 `aura-pigx-module-federation-check` 建立基线；由本技能完成实现后再次运行其复检。远程页面不得依赖提供方 `main.ts` 的全局注册副作用。
-9. **适配资源和样式**：import 资源使用 `getStaticResourceUrl`，public 资源使用 `getPublicResourceUrl`；使用主题变量并保证 Flex 高度链路。
+9. **适配资源和样式**：import 资源使用 `getStaticResourceUrl`，public 资源使用 `getPublicResourceUrl`；使用主题变量并保证 Flex 高度链路；按 `$frontend-design` 产出的视觉令牌统一颜色、字体、间距、圆角、层级和动效。
 10. **同步注释**：实现前按所选页面模式列出注释锚点，编码时同步生成和更新有价值的简体中文注释，禁止交付前集中补泛化注释。
 11. **联调与验证**：新业务菜单权限流程命中时，按参考流程准备并复核菜单/按钮；仅在用户明确授权且提供目标环境、运行时凭据、租户和父菜单定位信息后调用管理端 API。再按 Apifox、构建、lint、浏览器交互、独立/远程运行和正式检查清单逐项验证。
 
@@ -95,11 +102,14 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 
 - 使用 Vue 3、TypeScript 和 `<script setup>`，具体版本以当前项目和最新版总览为准。
 - 路由页必须保持单一真实元素根节点；根元素统一使用 `class="layout-padding"`，业务区域置于 `class="layout-padding-auto layout-padding-view"`，Dialog、Drawer 等弹窗可与业务区域并列置于根节点下，以兼容框架的 Transition 和运行时指令。
+- 同一路由页出现两个及以上业务 Dialog/Drawer，或单个弹窗同时包含独立列表、表单、请求与提交状态时，编码前必须拆为页面私有组件；父页通过 `ref + defineExpose` 或 Props/Emits 编排。只有字段少、无独立请求、无复用价值的单一轻量弹窗可以内联，并在职责清单中记录理由。
+- 父子组件自定义事件及任何需要访问组件 ref 的模板事件必须绑定脚本中已定义的具名方法，例如 `@edit="handleEdit"`；禁止直接绑定或调用组件 ref 成员，也禁止用内联箭头函数访问 ref。普通业务方法可按需接收当前行等上下文；需要调用子组件公开方法时，由具名方法通过 `ref.value?.method(...)` 安全访问，避免挂载前在渲染阶段读取 `undefined`。
 - 项目内部路径使用 `/@/`，避免跨层级相对路径。
 - 列表页按真实 `useTable(state)` 签名传入响应式状态，并使用返回的 `tableStyle`、分页、排序和下载能力；不要从返回值中解构不存在的 `state`。
 - 常规 CRUD 明确要求表格占满剩余高度时，页面容器建立纵向 Flex 高度链路，滚动父级和表格区写 `min-height: 0`，表格使用 `class="el-table--fit"` 与 `flex: 1`；不得使用 `100vh` 或固定像素表格高度。
 - 新建或修改普通 `el-select` 默认添加 `filterable`；仅用户明确关闭、组件不兼容或需求明确禁止搜索时例外，并说明原因。
 - 权限按钮遵循项目 `v-auth` 约定；表单提交前校验，提交期间禁用，成功后再关闭和刷新。
+- 所有业务表单必须从 `/@/hooks/form` 使用 `useForm`；通过 `resetForm` 重置字段，通过 `clearFormValidate` 清理复用弹窗的历史校验状态，禁止在业务页面重复编写 `nextTick + clearValidate/resetFields`。
 - import 图片、SVG、视频等先经 `getStaticResourceUrl`；Worker、decoder 等 public 资源经 `getPublicResourceUrl`。
 - 业务开发需要颜色时，按 `--el-*` → `--next-*` → `--fxft-*` 的顺序从现有主题变量中选用；变量含义和场景以 `knowledge/PIGX前端开发规范/样式布局与静态资源规范.md` 为准。
 - 除非用户明确要求，业务开发不得新增或修改 `.el-*`、`:deep(.el-*)`、`--el-*` 重写及全局 Element Plus 样式覆盖；正常使用 Element Plus 组件公开 props 不受影响。

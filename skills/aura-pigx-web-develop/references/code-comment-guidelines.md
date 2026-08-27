@@ -171,9 +171,8 @@ watch(
   { immediate: true },
 );
 
-// HACK: Element Plus Dialog 完成 DOM 挂载后才能清除内部表单校验
-await nextTick();
-formRef.value?.clearValidate();
+// useForm 会等待 Dialog 完成挂载，避免上一次操作的校验状态残留
+await clearFormValidate(formRef);
 ```
 
 地图、视频、WebSocket、Worker、轮询和模块联邦实例必须说明创建、更新、隐藏恢复和销毁时机。

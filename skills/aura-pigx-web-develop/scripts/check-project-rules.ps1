@@ -35,7 +35,7 @@ if ($Files.Count -gt 0) {
     Where-Object { $_.Extension -in @(".ts", ".tsx", ".vue", ".js", ".jsx") }
 }
 
-$exactMessageImportPattern = 'import\s*\{\s*useMessage\s*,\s*useMessageBox\s*\}\s*from\s*[''"]/@/hooks/message[''"]\s*;?'
+$messageImportPattern = 'import\s*\{(?<imports>[^}]*)\}\s*from\s*[''"]/@/hooks/message[''"]\s*;?'
 $directElementImportPattern = 'import\s*\{[^}]*\b(ElMessage|ElMessageBox|Message|MessageBox)\b[^}]*\}\s*from\s*[''"]element-plus[''"]'
 $oldMessagePattern = 'const\s*\{\s*message\s*,\s*messageBox\s*\}\s*=\s*useMessage\s*\('
 
@@ -91,9 +91,14 @@ foreach ($file in $sourceFiles) {
     $errors += "$relativePath：禁止从 useMessage() 解构 message/messageBox"
   }
 
-  $usesMessageHook = $content -match "\buseMessage(Box)?\s*\("
-  if ($usesMessageHook -and -not $isMessageHook -and $content -notmatch $exactMessageImportPattern) {
-    $errors += "$relativePath：使用消息 API 时必须显式导入 useMessage 和 useMessageBox"
+  $messageImport = [regex]::Match($content, $messageImportPattern)
+  $usesMessage = $content -match '\buseMessage\s*\('
+  $usesMessageBox = $content -match '\buseMessageBox\s*\('
+  if (-not $isMessageHook -and $usesMessage -and (-not $messageImport.Success -or $messageImport.Groups['imports'].Value -notmatch '\buseMessage\b')) {
+    $errors += "$relativePath：调用 useMessage() 时必须从 /@/hooks/message 显式导入 useMessage"
+  }
+  if (-not $isMessageHook -and $usesMessageBox -and (-not $messageImport.Success -or $messageImport.Groups['imports'].Value -notmatch '\buseMessageBox\b')) {
+    $errors += "$relativePath：调用 useMessageBox() 时必须从 /@/hooks/message 显式导入 useMessageBox"
   }
 
   if ($content -match 'from\s+[''"]@/') {
@@ -139,6 +144,18 @@ foreach ($file in $sourceFiles) {
   }
 
   if ($file.Extension -eq '.vue') {
+	$templateEvents = [regex]::Matches($content, '(?is)@[\w:-]+(?:\.[\w-]+)*\s*=\s*["''](?<handler>[^"'']+)["'']')
+	foreach ($templateEvent in $templateEvents) {
+		$handler = $templateEvent.Groups['handler'].Value.Trim()
+		if ($handler -match '(?i)\b\w+Ref(?:\.value)?\.\w+' -or ($handler -match '=>' -and $handler -match '(?i)\b\w+Ref\b')) {
+			$warnings += "$relativePath：访问组件 ref 的模板事件必须绑定脚本中的具名方法，当前表达式为 $handler"
+		}
+	}
+
+    $inlineDialogCount = [regex]::Matches($content, '(?i)<el-(dialog|drawer)\b').Count
+    if ($relativePath -match '/index\.vue$' -and $inlineDialogCount -ge 2) {
+      $warnings += "$relativePath：路由入口内联了 $inlineDialogCount 个 Dialog/Drawer；应在编码前拆为页面私有组件并由父页编排"
+    }
     $selects = [regex]::Matches($content, '(?is)<el-select\b(?<attributes>[^>]*)>')
     foreach ($select in $selects) {
       $attributes = $select.Groups['attributes'].Value
@@ -148,7 +165,7 @@ foreach ($file in $sourceFiles) {
       }
     }
 
-    $authCodes = [regex]::Matches($content, "v-auth\s*=\s*['\"](?<permission>[^'\"]+)['\"]") | ForEach-Object { $_.Groups['permission'].Value } | Select-Object -Unique
+    $authCodes = [regex]::Matches($content, 'v-auth\s*=\s*[''"](?<permission>[^''"]+)[''"]') | ForEach-Object { $_.Groups['permission'].Value } | Select-Object -Unique
     if ($authCodes.Count -gt 0) {
       $warnings += "$($relativePath)：发现 v-auth 按钮权限（$($authCodes -join '、')）；正式新业务需按菜单权限流程核验后台按钮及真实页面菜单父级"
     }

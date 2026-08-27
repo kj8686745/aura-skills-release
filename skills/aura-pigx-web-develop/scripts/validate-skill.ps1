@@ -15,6 +15,7 @@ $required = @(
   "SKILL.md",
   "USAGE.md",
   "agents\openai.yaml",
+  "references\frontend-design-workflow.md",
   "knowledge\PIGX前端开发规范\README.md",
   "knowledge\PIGX前端开发规范\PIGX前端开发总览.md",
   "knowledge\PIGX前端开发规范\工程与代码生成规范.md",
@@ -80,11 +81,17 @@ if (Test-Path -LiteralPath $skillFile) {
     $errors += "SKILL.md 未声明统一消息 Hook 的精确导入方式"
   }
 
-  foreach ($keyword in @('el-table--fit', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video')) {
+  foreach ($keyword in @('el-table--fit', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design')) {
     if (-not $skillContent.Contains($keyword)) {
       $errors += "SKILL.md 缺少关键规则：$keyword"
     }
   }
+
+	foreach ($keyword in @('/@/hooks/form', 'clearFormValidate', 'resetForm')) {
+		if (-not $skillContent.Contains($keyword)) {
+			$errors += "SKILL.md 缺少表单 Hook 硬约束：$keyword"
+		}
+	}
 
   $frontmatterMatch = [regex]::Match($skillContent, "\A---\r?\n(?<body>.*?)\r?\n---", "Singleline")
   if (-not $frontmatterMatch.Success) {
@@ -160,6 +167,24 @@ if ((Test-Path -LiteralPath $queryTemplate) -and -not ((Get-Content -LiteralPath
 $dialogTemplate = Join-Path $resolvedSkillPath "templates\dialog-form.md"
 if ((Test-Path -LiteralPath $dialogTemplate) -and -not ((Get-Content -LiteralPath $dialogTemplate -Raw -Encoding UTF8).Contains('filterable'))) {
   $errors += "弹窗表单模板未声明 el-select filterable 规则"
+}
+
+$designGuide = Join-Path $resolvedSkillPath "references\frontend-design-workflow.md"
+if (Test-Path -LiteralPath $designGuide) {
+  $designContent = Get-Content -LiteralPath $designGuide -Raw -Encoding UTF8
+  foreach ($keyword in @('$frontend-design', '视觉令牌', 'reduced-motion', '纯后端')) {
+    if (-not $designContent.Contains($keyword)) { $errors += "frontend-design 协作参考缺少关键内容：$keyword" }
+  }
+}
+
+$hooksGuide = Join-Path $resolvedSkillPath "recipes\hooks-standards.md"
+if (Test-Path -LiteralPath $hooksGuide) {
+	$hooksContent = Get-Content -LiteralPath $hooksGuide -Raw -Encoding UTF8
+	foreach ($keyword in @('/@/hooks/form', 'clearFormValidate', 'resetForm', '所有业务表单必须使用')) {
+		if (-not $hooksContent.Contains($keyword)) {
+			$errors += "Hooks 规范缺少表单硬约束：$keyword"
+		}
+	}
 }
 
 $adminWorkflow = Join-Path $resolvedSkillPath "references\admin-menu-permission-workflow.md"

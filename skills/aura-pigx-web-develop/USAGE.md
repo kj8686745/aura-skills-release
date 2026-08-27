@@ -6,6 +6,8 @@
 
 地图和视频需求会在当前环境存在对应技能时串联 `fmap-2d` 或 `fxft-video`；专项功能先检查项目的 `@fxft/ui-plus` 实际版本，不足时只提出升级建议，取得用户授权后才升级依赖。
 
+新增或改造用户可见页面时会自动协作调用 `$frontend-design`，先确定与业务对象匹配的视觉方向和令牌，完成后做一致性、自适应、键盘焦点和 reduced-motion 自评；纯后端、隐藏页和组件修复不触发。详细流程见 [`references/frontend-design-workflow.md`](references/frontend-design-workflow.md)。
+
 ## 需要提供的信息
 
 - 页面、字段、接口或 PRD/截图；
@@ -20,6 +22,7 @@
 - `接入四路监控视频，支持全屏、PTZ 和拖拽换位；不安装依赖前先告知我。`
 - `新增 aura-order-web 运行时远程配置，先做模块联邦基线检查，修改后复检。`
 - `根据附件 PRD 开发订单详情页，只改前端，不创建正式菜单。`
+- `新增订单看板页面，先调用 frontend-design 统一视觉方向，再按 PIGX 页面模式实现。`
 
 ## 边界
 

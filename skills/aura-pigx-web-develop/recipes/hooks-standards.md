@@ -55,15 +55,18 @@ const {
 
 ## useForm
 
-先读取当前 `/@/hooks/form.ts` 的真实签名。使用项目表单 Hook 重置字段和校验，不在多个弹窗中复制清理逻辑。
+所有业务表单必须使用 `/@/hooks/form.ts` 的 `useForm`。先读取当前 Hook 的真实签名，统一通过 Hook 重置字段和清理校验，不在页面或多个弹窗中复制 `nextTick + clearValidate/resetFields`。
 
 ```ts
 import { useForm } from '/@/hooks/form';
 
-const { resetForm } = useForm();
+const { clearFormValidate, resetForm } = useForm();
 ```
 
-若最新版页面模式明确使用 `nextTick(() => dataFormRef.value?.resetFields())`，按页面模式和真实 Hook 能力选择，不强行套用旧模板。
+- 弹窗关闭时使用 `resetForm(formRef, form, initialForm)` 恢复初始值。
+- 弹窗打开并完成新增初始化或编辑数据回填后使用 `await clearFormValidate(formRef)`，避免上一次操作的校验错误残留。
+- 仅清理部分字段时可传入字段名或字段名数组；不得绕过 Hook 直接调用 Element Plus 表单实例的 `clearValidate/resetFields`。
+- 当前项目缺少 `clearFormValidate` 时，先升级 `src/hooks/form.ts`，不得退回页面级重复实现。
 
 ## useMessage 与 useMessageBox
 
