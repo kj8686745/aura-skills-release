@@ -115,7 +115,7 @@ const maxUploadSize = await useParam('sys.upload.maxSize');
 ## 封装缺失
 
 1. 用 `rg "useXxx" src/hooks src/views` 确认项目和业务域是否已有实现。
-2. 检查公司组件库或 VueUse 是否已有稳定能力。
+2. 检查公司 UI 规范或 VueUse 是否已有稳定能力。
 3. 仅在确认无法复用时新增业务 Composable。
 4. 页面私有逻辑优先放在页面目录 `composables/`；真正跨业务通用后再提升到 `src/hooks/`。
 5. 新增副作用必须说明生命周期和清理时机。

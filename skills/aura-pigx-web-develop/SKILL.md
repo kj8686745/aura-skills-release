@@ -5,7 +5,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.3`（2026-08-25）。
+当前版本：`1.2.4`（2026-08-26）。
 
 把本技能作为 PIGX 模块联邦（综合端）的规范执行器。先读取最新版规范，再分析和修改代码；不得用技能中的历史示例覆盖最新版规范。
 
@@ -45,7 +45,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 | 正式菜单、按钮权限或新业务入口 | `references/admin-menu-permission-workflow.md` |
 | 模块联邦提供方/消费方 | `knowledge/PIGX前端开发规范/模块联邦开发技术规范.md` |
 | 页面布局、主题、静态资源 | `knowledge/PIGX前端开发规范/样式布局与静态资源规范.md` |
-| 组件选型、公司组件库 | `knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md` |
+| 组件选型、公司 UI 规范 | `knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md` |
 | 查询表格页 | `knowledge/PIGX前端开发规范/页面模式/查询表格页.md` |
 | 查询卡片页 | `knowledge/PIGX前端开发规范/页面模式/查询卡片页.md` |
 | 左树右表页 | `knowledge/PIGX前端开发规范/页面模式/左树右表页.md` |
@@ -55,7 +55,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 | 同路由嵌套覆盖页 | `knowledge/PIGX前端开发规范/页面模式/Teleport嵌套页面模式.md` |
 | 2D 地图 | `knowledge/PIGX前端开发规范/2D地图开发规范.md`；当前环境存在时调用 `/fmap-2d`，并先核验 `@fxft/ui-plus` 版本是否满足所用 API 的要求 |
 | 视频 | `knowledge/PIGX前端开发规范/视频开发规范.md`；当前环境存在时调用 `/fxft-video`，并先核验 `@fxft/ui-plus` 版本是否满足所用 API 的要求 |
-| 公司私服与组件安装 | `knowledge/PIGX前端开发规范/公司组件库下载说明/README.md` |
+| 公司 UI 规范依赖安装 | `knowledge/PIGX前端开发规范/公司组件库下载说明/README.md` |
 | 代码注释 | `references/code-comment-guidelines.md` 与 `checklists/implementation.md` |
 | API/Apifox | `recipes/apifox-workflow.md`、`references/apifox-mcp-guide.md` |
 | Figma | `references/figma-design-workflow.md`；设计输入不得覆盖 PIGX 工程规范 |
@@ -101,6 +101,8 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 - 新建或修改普通 `el-select` 默认添加 `filterable`；仅用户明确关闭、组件不兼容或需求明确禁止搜索时例外，并说明原因。
 - 权限按钮遵循项目 `v-auth` 约定；表单提交前校验，提交期间禁用，成功后再关闭和刷新。
 - import 图片、SVG、视频等先经 `getStaticResourceUrl`；Worker、decoder 等 public 资源经 `getPublicResourceUrl`。
+- 业务开发需要颜色时，按 `--el-*` → `--next-*` → `--fxft-*` 的顺序从现有主题变量中选用；变量含义和场景以 `knowledge/PIGX前端开发规范/样式布局与静态资源规范.md` 为准。
+- 除非用户明确要求，业务开发不得新增或修改 `.el-*`、`:deep(.el-*)`、`--el-*` 重写及全局 Element Plus 样式覆盖；正常使用 Element Plus 组件公开 props 不受影响。
 - 不直接创建 axios 实例，不自行处理认证失效，不硬编码域名、IP、Token、Cookie、密码或部署前缀。
 - Element Plus 保持本地依赖，不加入 Module Federation shared；Vue、Vue Router、Vue I18n、Pinia 按最新版模块联邦规范共享。
 - 地图使用 `FxftMap`；单路和多路视频使用 `FxftVideoPlayer`、`FxftMultiVideoPlayer`，不得重复封装底层 SDK。

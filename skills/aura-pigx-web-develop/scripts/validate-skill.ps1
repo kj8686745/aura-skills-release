@@ -172,8 +172,8 @@ if (Test-Path -LiteralPath $adminWorkflow) {
 
 $standardsRoot = Join-Path $resolvedSkillPath "knowledge\PIGX前端开发规范"
 $standardFiles = Get-ChildItem -LiteralPath $standardsRoot -Recurse -File -Filter "*.md"
-if ($standardFiles.Count -ne 19) {
-  $errors += "最新版 PIGX 规范快照应包含 19 份 Markdown，当前为 $($standardFiles.Count) 份"
+if ($standardFiles.Count -ne 20) {
+	$errors += "最新版 PIGX 规范快照应包含 20 份 Markdown，当前为 $($standardFiles.Count) 份"
 }
 
 $npmrcExample = Join-Path $standardsRoot "公司组件库下载说明\.npmrc.example"
@@ -203,7 +203,7 @@ if ($SourceStandardsPath) {
     if ($relativePath -eq "公司组件库下载说明\README.md") {
       $targetContent = Get-Content -LiteralPath $targetFile -Raw -Encoding UTF8
       if ($targetContent -notmatch "\.npmrc\.example" -or $targetContent -match "_auth=[A-Za-z0-9+/=]{12,}") {
-        $errors += "公司组件库下载说明未正确使用脱敏 .npmrc.example"
+        $errors += "公司 UI 规范下载说明未正确使用脱敏 .npmrc.example"
       }
       continue
     }

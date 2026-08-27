@@ -1,10 +1,10 @@
-# 公司组件库下载配置
+# 公司 UI 规范下载配置
 
-`@fxft/ui-plus` 存放在公司 npm 私服。使用前需要配置 `.npmrc`，本技能提供已脱敏的 [`.npmrc.example`](./.npmrc.example)。复制或合并前，必须通过安全的环境变量或公司凭据管理方式配置认证信息。
+`@fxft/ui-plus` 存放在公司 npm 私服。使用前需要配置 `.npmrc`，本目录提供脱敏模板 [`.npmrc.example`](./.npmrc.example)。复制后将 `${FXFT_NPM_AUTH}` 替换为已获授权的私服认证值，认证值不得提交到代码仓库。
 
 ## 一、放在项目根目录
 
-参考 `.npmrc.example` 创建业务项目根目录的 `.npmrc`，与 `package.json`、lock 文件同级：
+将 `.npmrc.example` 复制为业务项目根目录的 `.npmrc`，与 `package.json`、lock 文件同级：
 
 ```text
 业务项目/
@@ -36,7 +36,7 @@ Test-Path -LiteralPath "$env:USERPROFILE\.npmrc"
 
 ### 文件不存在
 
-返回 `False` 时，先复制脱敏示例，再通过安全方式配置认证环境变量：
+返回 `False` 时，将本目录的 `.npmrc` 复制到用户目录：
 
 ```powershell
 Copy-Item -LiteralPath '<本说明目录>\.npmrc.example' -Destination "$env:USERPROFILE\.npmrc"
@@ -119,4 +119,4 @@ tarball也可能通过 `npm-public` 仓库组返回，只要域名是 `repositor
 pnpm add @fxft/ui-plus@1.0.32 --save-exact
 ```
 
-`.npmrc` 及其认证信息仅限公司内部使用，不得提交真实凭据或对外分发。
+该 `.npmrc.example` 仅限公司内部使用，不得对外分发；由模板生成的含认证值 `.npmrc` 不得提交到代码仓库或对外分发。

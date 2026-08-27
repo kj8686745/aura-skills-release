@@ -315,4 +315,3 @@ onDeactivated(() => {
 4. **异步组件**：推荐使用 `defineAsyncComponent` 懒加载子组件，减少首屏体积
 5. **事件命名**：建议统一用 `hidePage` / `showPage` 控制父级显隐，`onCancel` / `onSuccess` 处理弹窗结果
 6. **scoped 样式限制**：Teleport 出去的内容不在原组件 DOM 树下，`scoped` 样式仍然生效（Vue 3 通过 data 属性追踪），但需确保目标容器样式不冲突
-

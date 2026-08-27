@@ -2,14 +2,14 @@
 
 正式规则以以下最新版资料为准：
 
-- `../knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md`
+- [组件复用与公司 UI 规范](../knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md)
 - `../knowledge/PIGX前端开发规范/样式布局与静态资源规范.md`
 - 当前项目 `src/components/index.ts` 和真实类型声明
 
 ## 组件选择顺序
 
 1. 综合端已有全局组件和 Hooks。
-2. 公司基础组件库 `@fxft/ui-plus`。
+2. 公司 UI 规范提供的 `@fxft/ui-plus` 能力。
 3. Element Plus。
 4. 当前页面目录内的业务组件。
 5. 确认无法复用后再新增跨业务公共组件。
