@@ -2,7 +2,7 @@
 
 ## 总原则
 
-- Vue 组合式逻辑必须先调用 `/vueuse-functions` 做函数选型。
+- Vue 组合式逻辑需要调用 `/vueuse-functions` 做函数选型时，先按 `skill-dependency-workflow.md` 检查技能是否安装；缺失时提示用户，未经明确授权不得安装。
 - `@vueuse/core` 已能覆盖的能力，优先使用 VueUse，减少手写状态、监听、定时器和生命周期清理代码。
 - 不为了使用 VueUse 绕开项目封装：表格、表单、消息、字典、参数仍优先使用 `useTable`、`useForm`、`useMessage`、`useDict`、`useParam`。
 - 禁止使用会绕过项目请求封装的 VueUse 能力，例如 `useFetch`、`useAxios`；接口请求必须走 `/@/utils/request.ts` 和业务 API 模块。

@@ -8,6 +8,8 @@
 
 新增或改造用户可见页面时会自动协作调用 `$frontend-design`，先确定与业务对象匹配的视觉方向和令牌，完成后做一致性、自适应、键盘焦点和 reduced-motion 自评；纯后端、隐藏页和组件修复不触发。详细流程见 [`references/frontend-design-workflow.md`](references/frontend-design-workflow.md)。
 
+调用任何其它技能前都会检查当前环境是否已安装。若缺少 `$frontend-design`、`fmap-2d`、`fxft-video`、`aura-pigx-module-federation-check` 或其它条件依赖，会先提示技能用途、任务影响并询问是否安装；未经明确授权不会安装。用户拒绝时，可降级项继续按 PIGX 本地规范完成，必需项只暂停受影响分支。
+
 ## 需要提供的信息
 
 - 页面、字段、接口或 PRD/截图；

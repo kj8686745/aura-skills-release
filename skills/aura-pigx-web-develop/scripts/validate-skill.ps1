@@ -16,6 +16,7 @@ $required = @(
   "USAGE.md",
   "agents\openai.yaml",
   "references\frontend-design-workflow.md",
+  "references\skill-dependency-workflow.md",
   "knowledge\PIGX前端开发规范\README.md",
   "knowledge\PIGX前端开发规范\PIGX前端开发总览.md",
   "knowledge\PIGX前端开发规范\工程与代码生成规范.md",
@@ -81,7 +82,7 @@ if (Test-Path -LiteralPath $skillFile) {
     $errors += "SKILL.md 未声明统一消息 Hook 的精确导入方式"
   }
 
-  foreach ($keyword in @('el-table--fit', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design')) {
+  foreach ($keyword in @('el-table--fit', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design', '外部技能依赖预检', '明确授权不得执行安装')) {
     if (-not $skillContent.Contains($keyword)) {
       $errors += "SKILL.md 缺少关键规则：$keyword"
     }
@@ -174,6 +175,14 @@ if (Test-Path -LiteralPath $designGuide) {
   $designContent = Get-Content -LiteralPath $designGuide -Raw -Encoding UTF8
   foreach ($keyword in @('$frontend-design', '视觉令牌', 'reduced-motion', '纯后端')) {
     if (-not $designContent.Contains($keyword)) { $errors += "frontend-design 协作参考缺少关键内容：$keyword" }
+  }
+}
+
+$skillDependencyGuide = Join-Path $resolvedSkillPath "references\skill-dependency-workflow.md"
+if (Test-Path -LiteralPath $skillDependencyGuide) {
+  $dependencyContent = Get-Content -LiteralPath $skillDependencyGuide -Raw -Encoding UTF8
+  foreach ($keyword in @('可用技能列表', '是否授权我安装', '不得静默安装', '必需技能', 'vueuse-functions')) {
+    if (-not $dependencyContent.Contains($keyword)) { $errors += "外部技能依赖流程缺少关键内容：$keyword" }
   }
 }
 

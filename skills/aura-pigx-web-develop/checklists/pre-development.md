@@ -9,6 +9,8 @@
 
 ## 当前项目事实
 
+- [ ] 已列出本任务需要调用的所有外部技能，并按当前可用技能列表逐项检查
+- [ ] 缺失技能已向用户说明用途、影响并询问是否安装；未获明确授权时未执行安装
 - [ ] 已检查 `package.json`、锁文件和实际 Node.js/pnpm 要求
 - [ ] 已检查 `vite.config.*`、Module Federation 配置和当前 `remoteName`
 - [ ] 已检查 `src/hooks/`、`src/components/index.ts`、相邻页面和相邻 API
@@ -25,6 +27,7 @@
 - [ ] 已在编码前列出路由页与页面私有组件职责；两个及以上业务 Dialog/Drawer 已分别规划组件文件，未以“先跑通”为由全部内联到入口页
 - [ ] 截图、HTML 原型或 Figma 只作为业务内容和视觉输入，未覆盖 PIGX 工程规范
 - [ ] 地图任务已读取 2D 地图规范；视频任务已读取视频规范
+- [ ] 用户可见页面已检查 `$frontend-design`；地图、视频和模块联邦任务分别检查 `fmap-2d`、`fxft-video`、`aura-pigx-module-federation-check`
 
 ## 接口与反馈
 
