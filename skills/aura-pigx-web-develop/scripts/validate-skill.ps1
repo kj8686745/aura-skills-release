@@ -17,6 +17,7 @@ $required = @(
   "agents\openai.yaml",
   "references\frontend-design-workflow.md",
   "references\skill-dependency-workflow.md",
+  "references\codex-browser-review-workflow.md",
   "knowledge\PIGX前端开发规范\README.md",
   "knowledge\PIGX前端开发规范\PIGX前端开发总览.md",
   "knowledge\PIGX前端开发规范\工程与代码生成规范.md",
@@ -82,7 +83,7 @@ if (Test-Path -LiteralPath $skillFile) {
     $errors += "SKILL.md 未声明统一消息 Hook 的精确导入方式"
   }
 
-  foreach ($keyword in @('el-table--fit', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design', '外部技能依赖预检', '明确授权不得执行安装')) {
+  foreach ($keyword in @('el-table--fit', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design', '外部技能依赖预检', '明确授权不得执行安装', 'Codex 内置浏览器', 'browser:control-in-app-browser', '原型', '待决策', '左侧强调条')) {
     if (-not $skillContent.Contains($keyword)) {
       $errors += "SKILL.md 缺少关键规则：$keyword"
     }
@@ -173,7 +174,7 @@ if ((Test-Path -LiteralPath $dialogTemplate) -and -not ((Get-Content -LiteralPat
 $designGuide = Join-Path $resolvedSkillPath "references\frontend-design-workflow.md"
 if (Test-Path -LiteralPath $designGuide) {
   $designContent = Get-Content -LiteralPath $designGuide -Raw -Encoding UTF8
-  foreach ($keyword in @('$frontend-design', '视觉令牌', 'reduced-motion', '纯后端')) {
+  foreach ($keyword in @('$frontend-design', '视觉令牌', 'reduced-motion', '纯后端', '左侧强调条约束', '选中状态', '模板化重复')) {
     if (-not $designContent.Contains($keyword)) { $errors += "frontend-design 协作参考缺少关键内容：$keyword" }
   }
 }
@@ -183,6 +184,22 @@ if (Test-Path -LiteralPath $skillDependencyGuide) {
   $dependencyContent = Get-Content -LiteralPath $skillDependencyGuide -Raw -Encoding UTF8
   foreach ($keyword in @('可用技能列表', '是否授权我安装', '不得静默安装', '必需技能', 'vueuse-functions')) {
     if (-not $dependencyContent.Contains($keyword)) { $errors += "外部技能依赖流程缺少关键内容：$keyword" }
+  }
+}
+
+$browserReviewGuide = Join-Path $resolvedSkillPath "references\codex-browser-review-workflow.md"
+if (Test-Path -LiteralPath $browserReviewGuide) {
+  $browserReviewContent = Get-Content -LiteralPath $browserReviewGuide -Raw -Encoding UTF8
+  foreach ($keyword in @('Codex 内置浏览器', 'browser:control-in-app-browser', '用户明确意见', '待决策', '不得声称走查通过')) {
+    if (-not $browserReviewContent.Contains($keyword)) { $errors += "Codex 内置浏览器走查参考缺少关键内容：$keyword" }
+  }
+}
+
+$forbiddenBrowserPattern = '(?<!禁止使用)(?<!不得使用)(?<!不要使用)(?<!不使用)(?<!不能使用)(?<!不可使用)(?<!不再使用)/agent-browser'
+foreach ($file in $markdownFiles) {
+  $content = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
+  if ($content -match $forbiddenBrowserPattern) {
+    $errors += "技能补充资料仍将 /agent-browser 作为调用方案：$($file.FullName.Substring($resolvedSkillPath.Length + 1))"
   }
 }
 

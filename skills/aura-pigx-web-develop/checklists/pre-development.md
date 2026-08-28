@@ -11,6 +11,8 @@
 
 - [ ] 已列出本任务需要调用的所有外部技能，并按当前可用技能列表逐项检查
 - [ ] 缺失技能已向用户说明用途、影响并询问是否安装；未获明确授权时未执行安装
+- [ ] 用户可见页面已确认开发服务、实现页路由和 Codex 内置浏览器验证条件
+- [ ] 用户提供可访问原型时，已记录原型 URL、访问权限、目标状态和用户明确验收意见
 - [ ] 已检查 `package.json`、锁文件和实际 Node.js/pnpm 要求
 - [ ] 已检查 `vite.config.*`、Module Federation 配置和当前 `remoteName`
 - [ ] 已检查 `src/hooks/`、`src/components/index.ts`、相邻页面和相邻 API
