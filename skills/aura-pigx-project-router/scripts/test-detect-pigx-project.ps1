@@ -51,17 +51,25 @@ try {
   Assert-Equal $result.recommendedSkills[0] 'aura-pigx-web-develop' '正式菜单/按钮未分流到 Web 开发技能'
   $result = Invoke-Detector $integrated '新增远程 manifest 配置'
   Assert-Equal @($result.recommendedSkills).Count 2 '模块联邦配置未串联双技能'
-  $result = Invoke-Detector $integrated '新增地图页面，展示点位聚合、轨迹回放和热力图' @('fmap-2d', 'fxft-video')
+  $result = Invoke-Detector $integrated '新增地图页面，展示点位聚合、轨迹回放和热力图' @('aura-pigx-web-develop', 'fmap-2d', 'fxft-video')
   Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop', 'fmap-2d') 'PIGX 地图未分流到 Web + 地图技能'
-  $result = Invoke-Detector $integrated '接入四路监控视频，支持 PTZ 和拖拽换位' @('fmap-2d', 'fxft-video')
+  $result = Invoke-Detector $integrated '接入四路监控视频，支持 PTZ 和拖拽换位' @('aura-pigx-web-develop', 'fmap-2d', 'fxft-video')
   Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop', 'fxft-video') 'PIGX 视频未分流到 Web + 视频技能'
-  $result = Invoke-Detector $integrated '新增远程地图模块 manifest 配置' @('fmap-2d', 'fxft-video')
+  $result = Invoke-Detector $integrated '新增远程地图模块 manifest 配置' @('aura-pigx-web-develop', 'fmap-2d', 'fxft-video', 'aura-pigx-module-federation-check')
   Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop', 'fmap-2d', 'aura-pigx-module-federation-check') '地图模块联邦未串联三技能'
-  $result = Invoke-Detector $integrated '新增远程视频模块 remote 配置' @('fmap-2d', 'fxft-video')
+  $result = Invoke-Detector $integrated '新增远程视频模块 remote 配置' @('aura-pigx-web-develop', 'fmap-2d', 'fxft-video', 'aura-pigx-module-federation-check')
   Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop', 'fxft-video', 'aura-pigx-module-federation-check') '视频模块联邦未串联三技能'
   $result = Invoke-Detector $integrated '新增设备地图点位' @()
-  Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop') '专项技能不可用时应保留 Web 技能'
+  Assert-Skills $result.recommendedSkills @() '可用技能列表为空时不得假称 Web 技能已加载'
+  Assert-Skills $result.unavailableSkills @('aura-pigx-web-develop', 'fmap-2d') '缺失技能列表不完整'
   Assert-Equal $result.unavailableSpecializedSkills[0] 'fmap-2d' '缺失地图技能未输出降级信息'
+  if ($result.workflow -notmatch '提示用户是否安装') { throw '缺失技能时未生成安装提示。' }
+  $result = Invoke-Detector $integrated '新增设备地图点位' @('aura-pigx-web-develop')
+  Assert-Skills $result.recommendedSkills @('aura-pigx-web-develop') '地图专项缺失时应保留已安装的 Web 技能'
+  Assert-Skills $result.unavailableSkills @('fmap-2d') '缺失地图技能未进入通用缺失列表'
+  $result = Invoke-Detector $integrated '审计模块联邦配置' @()
+  Assert-Skills $result.recommendedSkills @() '检查技能缺失时不得假称已加载'
+  Assert-Skills $result.unavailableSkills @('aura-pigx-module-federation-check') '缺失模块联邦检查技能未被报告'
   $result = Invoke-Detector $integrated '审计模块联邦配置'
   Assert-Equal @($result.recommendedSkills).Count 1 '纯审计不应进入 Web 开发流程'
   Assert-Equal $result.recommendedSkills[0] 'aura-pigx-module-federation-check' '纯审计技能错误'

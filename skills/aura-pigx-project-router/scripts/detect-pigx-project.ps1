@@ -59,7 +59,7 @@ $isVideoTask = $normalizedTask -match $videoPattern
 $hasAvailabilityContext = $PSBoundParameters.ContainsKey('AvailableSkills')
 
 $recommendedSkills = @()
-$unavailableSpecializedSkills = @()
+$unavailableSkills = @()
 $workflow = '退出，不接管该项目。'
 if ($projectType -eq 'Integrated') {
   if ($isAuditOnly) {
@@ -71,11 +71,7 @@ if ($projectType -eq 'Integrated') {
     if ($isMapTask) { $specializedSkills += 'fmap-2d' }
     if ($isVideoTask) { $specializedSkills += 'fxft-video' }
     foreach ($specializedSkill in $specializedSkills) {
-      if (-not $hasAvailabilityContext -or $availableSkillSet -contains $specializedSkill) {
-        $recommendedSkills += $specializedSkill
-      } else {
-        $unavailableSpecializedSkills += $specializedSkill
-      }
+      $recommendedSkills += $specializedSkill
     }
     if ($isFederationTask) {
       $recommendedSkills += 'aura-pigx-module-federation-check'
@@ -90,6 +86,17 @@ if ($projectType -eq 'Integrated') {
   $workflow = '仅报告缺失证据；用户明确要求建设为 PIGX 综合端时才进入 PIGX 开发流程。'
 }
 
+if ($hasAvailabilityContext -and $recommendedSkills.Count -gt 0) {
+  $desiredSkills = @($recommendedSkills)
+  $recommendedSkills = @($desiredSkills | Where-Object { $availableSkillSet -contains $_ })
+  $unavailableSkills = @($desiredSkills | Where-Object { $availableSkillSet -notcontains $_ })
+  if ($unavailableSkills.Count -gt 0) {
+    $workflow += " 缺少技能：$($unavailableSkills -join '、')；必须提示用户是否安装，未经明确授权不得安装。"
+  }
+}
+
+$unavailableSpecializedSkills = @($unavailableSkills | Where-Object { $_ -in @('fmap-2d', 'fxft-video') })
+
 $result = [pscustomobject]@{
   projectType = $projectType
   matchedEvidence = @($matched)
@@ -99,6 +106,7 @@ $result = [pscustomobject]@{
   isMapTask = $isMapTask
   isVideoTask = $isVideoTask
   recommendedSkills = $recommendedSkills
+  unavailableSkills = $unavailableSkills
   unavailableSpecializedSkills = $unavailableSpecializedSkills
   workflow = $workflow
 }
@@ -110,4 +118,4 @@ Write-Host "已命中：$($matched -join '；')"
 if ($missing.Count -gt 0) { Write-Host "缺失：$($missing -join '；')" }
 Write-Host "建议：$workflow"
 if ($recommendedSkills.Count -gt 0) { Write-Host "加载技能：$($recommendedSkills -join '、')" }
-if ($unavailableSpecializedSkills.Count -gt 0) { Write-Host "不可用专项技能：$($unavailableSpecializedSkills -join '、')；由 Web 开发技能按项目规范继续处理。" }
+if ($unavailableSkills.Count -gt 0) { Write-Host "缺少技能：$($unavailableSkills -join '、')；请提示用户是否安装。用户拒绝或安装失败后，再按可降级/必需边界处理。" }

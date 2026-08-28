@@ -19,7 +19,7 @@ if (Test-Path -LiteralPath $skillPath) {
   if ($content -notmatch '(?m)^name:\s*aura-pigx-project-router\s*$') { [void]$errors.Add('SKILL.md name 不正确。') }
   if ($content -notmatch '(?m)^description:\s*\S.+$') { [void]$errors.Add('SKILL.md description 不能为空。') }
   if ($version -and -not $content.Contains("当前版本：``$version``")) { [void]$errors.Add('SKILL.md 展示版本与 VERSION 不一致。') }
-  foreach ($keyword in @('currentRemoteConfig', 'exposeModules', 'getModuleFederationLoader', '@module-federation/vite', 'NotPIGX', 'IncompleteCandidate', '首次调用提示', 'fmap-2d', 'fxft-video')) {
+  foreach ($keyword in @('currentRemoteConfig', 'exposeModules', 'getModuleFederationLoader', '@module-federation/vite', 'NotPIGX', 'IncompleteCandidate', '首次调用提示', 'fmap-2d', 'fxft-video', '技能安装检查', '明确授权不得安装')) {
     if (-not $content.Contains($keyword)) { [void]$errors.Add("SKILL.md 缺少分流关键字：$keyword") }
   }
 }
