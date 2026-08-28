@@ -10,6 +10,7 @@ $ErrorActionPreference = "Stop"
 $errors = @()
 $warnings = @()
 $resolvedProjectPath = (Resolve-Path -LiteralPath $ProjectPath).Path
+$authOccurrences = @()
 
 if ($Files.Count -gt 0) {
   $sourceFiles = foreach ($file in $Files) {
@@ -38,6 +39,8 @@ if ($Files.Count -gt 0) {
 $messageImportPattern = 'import\s*\{(?<imports>[^}]*)\}\s*from\s*[''"]/@/hooks/message[''"]\s*;?'
 $directElementImportPattern = 'import\s*\{[^}]*\b(ElMessage|ElMessageBox|Message|MessageBox)\b[^}]*\}\s*from\s*[''"]element-plus[''"]'
 $oldMessagePattern = 'const\s*\{\s*message\s*,\s*messageBox\s*\}\s*=\s*useMessage\s*\('
+$nativeScrollCssPattern = '(?im)overflow(?:-[xy])?\s*:\s*(?:auto|scroll)\b'
+$nativeScrollUtilityPattern = '(?i)(?<![\w-])overflow-(?:(?:x|y)-)?(?:auto|scroll)(?![\w-])'
 
 function Get-CommentText {
   param([string]$Source)
@@ -69,6 +72,23 @@ function Test-CommentBefore {
   $start = [Math]::Max(0, $match.Index - $Lookback)
   $context = $Source.Substring($start, $match.Index - $start)
   return $context -match '(?s)(<!--.*?-->|/\*.*?\*/|//[^\r\n]*)\s*$'
+}
+
+function Get-BusinessScope {
+  param([string]$RelativePath)
+
+  $normalizedPath = $RelativePath.Replace("\", "/")
+  $viewMatch = [regex]::Match($normalizedPath, '^src/views/(?<directory>.+)/[^/]+\.vue$')
+  if (-not $viewMatch.Success) {
+    return ([System.IO.Path]::GetDirectoryName($normalizedPath)).Replace("\", "/")
+  }
+
+  $segments = $viewMatch.Groups['directory'].Value -split '/'
+  if ($segments.Count -eq 1 -or $segments[1] -in @('components', 'component', 'dialogs', 'drawers')) {
+    return $segments[0]
+  }
+
+  return "$($segments[0])/$($segments[1])"
 }
 
 foreach ($file in $sourceFiles) {
@@ -107,6 +127,11 @@ foreach ($file in $sourceFiles) {
 
   if ($content -match 'import\s+axios\s+from\s+[''"]axios[''"]' -or $content -match '\baxios\.create\s*\(') {
     $errors += "$relativePath：业务请求必须走 /@/utils/request"
+  }
+
+  # 普通内容区域统一使用 el-scrollbar；第三方组件或虚拟列表等例外需在代码附近说明原因。
+  if ($content -match $nativeScrollCssPattern -or $content -match $nativeScrollUtilityPattern) {
+    $warnings += "$relativePath：发现原生 CSS/Tailwind 滚动写法；普通内容区请改用 el-scrollbar，组件内置滚动或第三方组件例外需添加中文注释并在交付中说明"
   }
 
   # 注释扫描为告警：只识别页面结构和高风险语法，避免用注释数量制造噪音。
@@ -165,11 +190,35 @@ foreach ($file in $sourceFiles) {
       }
     }
 
-    $authCodes = [regex]::Matches($content, 'v-auth\s*=\s*[''"](?<permission>[^''"]+)[''"]') | ForEach-Object { $_.Groups['permission'].Value } | Select-Object -Unique
+    $authCodes = @()
+    $authAttributes = [regex]::Matches($content, '(?is)v-auth\s*=\s*(?<outer>["''])(?<expression>.*?)\k<outer>')
+    foreach ($authAttribute in $authAttributes) {
+      $expression = $authAttribute.Groups['expression'].Value
+      $literalCodes = [regex]::Matches($expression, '[''"](?<permission>[A-Za-z0-9][A-Za-z0-9:_-]*)[''"]')
+      foreach ($literalCode in $literalCodes) {
+        $permission = $literalCode.Groups['permission'].Value
+        $authCodes += $permission
+        $authOccurrences += [PSCustomObject]@{
+          Code = $permission
+          Path = $relativePath
+          BusinessScope = Get-BusinessScope -RelativePath $relativePath
+        }
+      }
+    }
+    $authCodes = $authCodes | Select-Object -Unique
     if ($authCodes.Count -gt 0) {
       $warnings += "$($relativePath)：发现 v-auth 按钮权限（$($authCodes -join '、')）；正式新业务需按菜单权限流程核验后台按钮及真实页面菜单父级"
     }
   }
+}
+
+$crossBusinessAuthGroups = $authOccurrences | Group-Object -Property Code | Where-Object {
+  ($_.Group.BusinessScope | Select-Object -Unique).Count -gt 1
+}
+foreach ($group in $crossBusinessAuthGroups) {
+  $scopes = $group.Group.BusinessScope | Select-Object -Unique
+  $paths = $group.Group.Path | Select-Object -Unique
+  $warnings += "权限标识 $($group.Name) 出现在多个业务范围（$($scopes -join '、')；文件：$($paths -join '、')）；请结合真实页面菜单、路由/组件和业务对象检查是否为跨业务同码。单一业务内多处 v-auth 复用无需改名"
 }
 
 foreach ($warning in $warnings) {

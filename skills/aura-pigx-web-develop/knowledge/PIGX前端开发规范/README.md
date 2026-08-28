@@ -2,7 +2,26 @@
 
 本目录是模块联邦（综合端）业务开发的正式规范入口。规范以当前模板源码为准，适用于人工开发、代码生成、代码评审和交付验收。
 
-**规范版本：`1.1.3`（2026-08-27）**
+**规范版本：`1.1.6`（2026-08-28）**
+
+## 1.1.6 新增内容
+
+- `useForm` 新增 `validateForm`，统一处理表单未挂载、校验成功和校验失败的布尔结果。
+- 业务表单的校验、重置和历史校验清理统一通过 `validateForm/resetForm/clearFormValidate` 完成，页面不再直接调用表单实例的对应方法。
+- 页面布局示例统一使用 `layout-padding` 与 `layout-padding-auto layout-padding-view` 双层框架容器，业务 Flex 样式只挂载到业务类。
+
+## 1.1.5 新增内容
+
+- 普通内容滚动区域统一使用 Element Plus `el-scrollbar`，不再使用原生 CSS 或 Tailwind 的 `overflow: auto/scroll`。
+- `el-table`、`el-tree`、`el-select` 等已有内置滚动能力的组件继续使用组件自身能力，不额外嵌套 `el-scrollbar`。
+- 项目规则扫描新增原生滚动写法告警。
+
+## 1.1.4 新增内容
+
+- 仅供 Dialog/Drawer 使用的详情、候选项和业务列表，统一在公开的 `openDialog/openDrawer` 流程中按需加载，不由父页面或组件挂载阶段提前请求。
+- 同一路由页存在多个业务弹窗或单个复杂弹窗时，必须拆为页面私有组件；父页面只负责布局、主查询状态和子组件编排。
+- 顶部工具栏已有新增等主操作时，空态不再重复放置相同按钮；只保留说明、重试或当前状态独有的恢复操作。
+- 补充只读加载的局部错误态、视觉层级、键盘焦点、低动效偏好和真实浏览器验收规则。
 
 ## 1.1.3 新增内容
 
@@ -50,7 +69,7 @@
 
 - 新项目创建后必须替换 `pigx-nexus`、`pigxNexus`，且部署环境内名称不可重复。
 - 业务请求统一使用 `/@/utils/request`，不得直接创建 axios 实例。
-- 业务表单统一使用 `/@/hooks/form.ts`，不得在页面中重复实现表单重置和历史校验清理。
+- 业务表单统一使用 `/@/hooks/form.ts` 的 `validateForm/resetForm/clearFormValidate`，不得在页面中重复实现校验、重置和历史校验清理。
 - 远程菜单路径第一段使用提供方 `remoteName`。
 - import 静态资源使用 `getStaticResourceUrl`，public 资源使用 `getPublicResourceUrl`。
 - 覆盖自动解析的第三方组件时，使用 Vite Resolver 在编译期注入本地实现，不依赖 `main.ts` 的同名全局注册。

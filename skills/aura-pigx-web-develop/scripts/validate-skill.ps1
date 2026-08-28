@@ -83,13 +83,13 @@ if (Test-Path -LiteralPath $skillFile) {
     $errors += "SKILL.md 未声明统一消息 Hook 的精确导入方式"
   }
 
-  foreach ($keyword in @('el-table--fit', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design', '外部技能依赖预检', '明确授权不得执行安装', 'Codex 内置浏览器', 'browser:control-in-app-browser', '原型', '待决策', '左侧强调条')) {
+  foreach ($keyword in @('el-table--fit', 'el-scrollbar', 'overflow: auto/scroll', 'filterable', 'admin-menu-permission-workflow.md', 'aura-pigx-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design', '外部技能依赖预检', '明确授权不得执行安装', 'Codex 内置浏览器', 'browser:control-in-app-browser', '原型', '待决策', '左侧强调条', '按权限编码去重', '完整菜单树', '业务标识 + 功能动作')) {
     if (-not $skillContent.Contains($keyword)) {
       $errors += "SKILL.md 缺少关键规则：$keyword"
     }
   }
 
-	foreach ($keyword in @('/@/hooks/form', 'clearFormValidate', 'resetForm')) {
+	foreach ($keyword in @('/@/hooks/form', 'validateForm', 'clearFormValidate', 'resetForm')) {
 		if (-not $skillContent.Contains($keyword)) {
 			$errors += "SKILL.md 缺少表单 Hook 硬约束：$keyword"
 		}
@@ -167,8 +167,29 @@ if ((Test-Path -LiteralPath $queryTemplate) -and -not ((Get-Content -LiteralPath
 }
 
 $dialogTemplate = Join-Path $resolvedSkillPath "templates\dialog-form.md"
-if ((Test-Path -LiteralPath $dialogTemplate) -and -not ((Get-Content -LiteralPath $dialogTemplate -Raw -Encoding UTF8).Contains('filterable'))) {
-  $errors += "弹窗表单模板未声明 el-select filterable 规则"
+if (Test-Path -LiteralPath $dialogTemplate) {
+  $dialogTemplateContent = Get-Content -LiteralPath $dialogTemplate -Raw -Encoding UTF8
+  if (-not $dialogTemplateContent.Contains('filterable')) {
+    $errors += "弹窗表单模板未声明 el-select filterable 规则"
+  }
+  if (-not $dialogTemplateContent.Contains('validateForm/resetForm/clearFormValidate')) {
+    $errors += "弹窗表单模板未声明统一 useForm 生命周期方法"
+  }
+}
+
+$projectRuleScript = Join-Path $resolvedSkillPath "scripts\check-project-rules.ps1"
+if (Test-Path -LiteralPath $projectRuleScript) {
+  $projectRuleContent = Get-Content -LiteralPath $projectRuleScript -Raw -Encoding UTF8
+  foreach ($keyword in @('nativeScrollCssPattern', 'nativeScrollUtilityPattern', '普通内容区请改用 el-scrollbar')) {
+    if (-not $projectRuleContent.Contains($keyword)) {
+      $errors += "项目规则扫描缺少滚动区域检查：$keyword"
+    }
+  }
+  foreach ($keyword in @('authOccurrences', 'Get-BusinessScope', 'crossBusinessAuthGroups', '跨业务同码', '单一业务内多处 v-auth 复用无需改名')) {
+    if (-not $projectRuleContent.Contains($keyword)) {
+      $errors += "项目规则扫描缺少权限标识去重提示：$keyword"
+    }
+  }
 }
 
 $designGuide = Join-Path $resolvedSkillPath "references\frontend-design-workflow.md"
@@ -206,7 +227,7 @@ foreach ($file in $markdownFiles) {
 $hooksGuide = Join-Path $resolvedSkillPath "recipes\hooks-standards.md"
 if (Test-Path -LiteralPath $hooksGuide) {
 	$hooksContent = Get-Content -LiteralPath $hooksGuide -Raw -Encoding UTF8
-	foreach ($keyword in @('/@/hooks/form', 'clearFormValidate', 'resetForm', '所有业务表单必须使用')) {
+	foreach ($keyword in @('/@/hooks/form', 'validateForm', 'clearFormValidate', 'resetForm', '所有业务表单必须使用')) {
 		if (-not $hooksContent.Contains($keyword)) {
 			$errors += "Hooks 规范缺少表单硬约束：$keyword"
 		}
@@ -216,7 +237,7 @@ if (Test-Path -LiteralPath $hooksGuide) {
 $adminWorkflow = Join-Path $resolvedSkillPath "references\admin-menu-permission-workflow.md"
 if (Test-Path -LiteralPath $adminWorkflow) {
   $adminContent = Get-Content -LiteralPath $adminWorkflow -Raw -Encoding UTF8
-  foreach ($keyword in @('明确授权', 'Token', '运行时', 'v-auth', '真实页面菜单 ID', '精确查重', '重新查询', '用户明确指定', '相邻业务模块')) {
+  foreach ($keyword in @('明确授权', 'Token', '运行时', 'v-auth', '真实页面菜单 ID', '精确查重', '重新查询', '用户明确指定', '相邻业务模块', '唯一性与冲突处理', '完整菜单树', '一次新增请求', '不得自动追加数字', '业务标识 + 功能动作', 'device_add', '四阶段硬约束', '同一业务中的多处', '不同业务身份')) {
     if (-not $adminContent.Contains($keyword)) { $errors += "菜单权限参考缺少关键约束：$keyword" }
   }
 }
