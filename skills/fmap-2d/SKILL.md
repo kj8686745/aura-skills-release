@@ -2,7 +2,7 @@
 name: fmap-2d
 description: 公司 2D 地图业务开发规范技能，指导 Agent 在 Vue 3 + Vite 项目中接入 @fxft/ui-plus，并使用 FxftMap 完成地图页面、点位聚合、轨迹回放、热力图、绘制和 GeoJSON 渲染。
 metadata:
-  version: "1.0.3"
+  version: "1.0.4"
   type: project-development-standard
   project: fmap-2d
   stack: Vue 3 / Vite / TypeScript / @fxft/ui-plus / FxftMap
@@ -23,6 +23,7 @@ metadata:
 | 安装或接入组件库 | `references/ui-plus-installation.md`、`recipes/install-and-resolver.md` |
 | 地图基础页面 | `templates/fxft-map-basic-page.md`、`references/map-component-guide.md` |
 | 点位、Marker、聚合 | `templates/fxft-map-points.md`、`references/map-component-guide.md`、`recipes/map-data-normalization.md` |
+| 地图选点、位置选择 | `references/map-component-guide.md` 的“地图选点”章节、`recipes/map-data-normalization.md` |
 | 轨迹回放 | `templates/fxft-map-track.md`、`references/map-component-guide.md`、`recipes/map-data-normalization.md` |
 | 热力图 | `templates/fxft-map-heat.md`、`references/map-component-guide.md`、`recipes/map-data-normalization.md` |
 | 交互绘制、API 绘制、GeoJSON | `templates/fxft-map-draw-geojson.md`、`references/map-component-guide.md` |
@@ -85,6 +86,7 @@ fmap-2d/
 - 交互绘制或 GeoJSON 回显需要随外部状态切换样式时，必须使用 `setDrawSymbol` 和 `initDraw` 的 `symbol` 参数；不得修改绘制工具或图形对象的私有字段。
 - 图层命名必须有业务语义，例如 `deviceMarkerLayer`、`vehicleTrackLayer`、`alarmHeatLayer`。
 - 点位 id 必须稳定，不得每次刷新都临时生成导致 diff、清理和点击回调失效。
+- 普通位置选择必须通过 `map-click` 获取坐标，并使用 `addPoint` 回显唯一 marker；不得为单点选址启用 `startDraw('point')`、`draw-end` 或 `initDraw`。未要求自定义视觉时不得传入图标和尺寸配置，使用组件默认 marker。
 - 点位 id 优先使用真正唯一的业务主键（资产场景优先 `assetId`）；设备 ID 或设备编码不保证唯一时不得作为点位主键。
 - 同一批业务点只进入一个聚合图层；报警、在线、离线等状态通过 marker 图标和单点显隐表达，不得用多个聚合层重复渲染同一实体。
 - 大批量点位变化必须按稳定 id 做增量新增、删除和更新；不得因按钮显隐、树勾选或普通刷新反复整层 `clear: true` 重建。

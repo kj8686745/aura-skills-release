@@ -174,6 +174,70 @@ const setAlarmPointsVisible = (points: Array<{ id: string; alarm: boolean }>, vi
 - 数据源整体刷新、筛选条件整体变化或聚合配置重建时，才使用 `clear: true` 或 `clearLayer(layerName)`。
 - `clearPointById` 的 `id` 必须和添加点位时的点位 `id` 完全一致，聚合图层同样按该 id 删除子点。
 
+## 地图选点
+
+设备安装位置、地址选择等普通单点选址不是几何绘制场景。`FxftMap` 会通过 `map-click` 原样透传底层地图左键点击事件，应从 `payload.coordinate.x` 读取经度、从 `payload.coordinate.y` 读取纬度，再使用普通点位 API 回显唯一 marker。
+
+```vue
+<template>
+  <FxftMap ref="mapRef" @map-click="handleMapClick" />
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+
+type SelectedLocation = {
+  longitude: number;
+  latitude: number;
+};
+
+const mapRef = ref<any>(null);
+const selectedLocation = ref<SelectedLocation | null>(null);
+const locationPickerLayer = "locationPickerMarkerLayer";
+
+const updateSelectedLocation = (longitude: number, latitude: number) => {
+  if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) return;
+  if (longitude < -180 || longitude > 180 || latitude < -90 || latitude > 90) return;
+
+  selectedLocation.value = { longitude, latitude };
+  mapRef.value?.addPoint?.(
+    {
+      id: "selected-location",
+      lon: longitude,
+      lat: latitude,
+    },
+    {
+      clear: true,
+      cluster: false,
+      enableClick: false,
+    },
+    locationPickerLayer
+  );
+};
+
+const handleMapClick = (payload: any) => {
+  updateSelectedLocation(
+    Number(payload?.coordinate?.x),
+    Number(payload?.coordinate?.y)
+  );
+};
+
+// 中文地址查询得到坐标后，也调用此方法，保证搜索选址与点击选址行为一致。
+const handleAddressResolved = (longitude: number, latitude: number) => {
+  updateSelectedLocation(longitude, latitude);
+};
+</script>
+```
+
+使用约束：
+
+- 单点选址不得使用 `startDraw("point")`、`draw-end` 或 `initDraw`；这些 API 只用于需要编辑、保存为 GeoJSON 的几何绘制。
+- 选中点使用固定 id、独立语义图层和 `clear: true`，确保地图上始终只有一个选址 marker。
+- 未要求自定义 marker 时，不传 `icon`、`markerWidth`、`markerHeight`，直接使用组件默认 marker。
+- 中文地址搜索与鼠标点击必须汇入同一个坐标和 marker 更新方法，避免表单值与地图回显不一致。
+- 地址查询、正向解析或逆解析优先复用项目已有 API；不得为了选点额外引入高德、百度等地图 SDK。
+- 表单接口仅接收地址时只提交地址；后端已提供经纬度字段时按真实字段提交，禁止猜测字段名。
+
 ### 统一聚合与增量同步
 
 - 同一业务实体只进入一个聚合图层。报警、在线、离线等状态使用 `updatePointSymbol` 切换图标，或使用 `setPointVisible` 控制分类显隐，不要再叠加第二个报警聚合层。
@@ -276,6 +340,8 @@ type HeatPoint = [number, number, number] | { lon: number; lat: number; value: n
 | `gradient` | 颜色梯度映射 |
 
 ## 绘制与 GeoJSON
+
+本节只适用于需要编辑或保存为 GeoJSON 的点、线、圆、矩形、多边形。普通位置选择遵循“地图选点”章节，不进入绘制模式。
 
 常用方法：
 
