@@ -4,13 +4,14 @@
 
 用于 Vue 3 + Vite 项目的 2D 地图、点位、聚合、轨迹、热力、绘制和 GeoJSON。可根据需求自动触发，也可显式调用：`$fmap-2d <需求>`；不用于 3D 地图或要求绕过 `FxftMap` 的底层 SDK 重写。
 
-请提供项目路径、地图数据样例、坐标系和目标能力。使用批量轨迹、`geojson-upload`、图层定位/导出等 1.0.36 API 前，必须确认 `@fxft/ui-plus >= 1.0.36`；版本不足时先说明升级会改动依赖与 lock 文件，获得用户明确授权后才升级。
+请提供项目路径、地图数据样例、坐标系和目标能力。使用批量轨迹、`geojson-upload`、图层定位/导出等 API 前，必须确认 `@fxft/ui-plus >= 1.0.36`；使用 HTML Marker 聚合、PNG/HTML 切换、坐标更新或聚合文字对齐前，必须确认 `>= 1.0.37`。版本不足时先说明升级会改动依赖与 lock 文件，获得用户明确授权后才升级。
 
 可复制提示词：
 
 - `在当前项目新增设备地图，展示点位聚合和告警筛选；先检查 @fxft/ui-plus 版本。`
 - `实现车辆批量轨迹回放、倍速和进度控制；若版本不足 1.0.36，先告诉我再升级。`
 - `新增 GeoJSON 围栏页面，支持上传、回显和导出图片；坐标系为 GCJ-02。`
+- `把 SOS 点位切换为 HTML 动画 Marker 并保留原聚合；若版本不足 1.0.37，先告诉我再升级。`
 
 ## 何时使用
 
@@ -64,7 +65,8 @@
 - 资产场景优先使用 `assetId`，没有使用可能重复的设备 ID/编码作为点位主键。
 - 坐标字段已归一化为 `lon` / `lat`。
 - 使用单一聚合图层和 `addPoint(clear: false)` 做增量同步，图层名有业务语义。
-- 整层显隐使用 `setPointLayerVisible`，分类显隐使用 `setPointVisible`，图标切换使用 `updatePointSymbol`。
+- 整层显隐使用 `setPointLayerVisible`，分类显隐使用 `setPointVisible`，PNG 图标切换使用 `updatePointSymbol`，HTML 表现或坐标更新使用 `updatePointMarker`。
+- HTML Marker 复用同一稳定点位和原聚合图层，聚合数字在一位数、多位数下均保持水平、垂直居中。
 - 缩放时若聚合点漂移，启用 `forceRenderOnZooming`；移动和旋转同步启用对应 `forceRenderOn*`，全部点可隐藏时设置 `animation: false`。
 - 点击事件通过 `marker-click` 或 marker events 处理。
 

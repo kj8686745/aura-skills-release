@@ -23,6 +23,8 @@
 
 使用 `playBatchTracks` 系列批量轨迹控制、`fitLayer`、`flyToLayer`、`exportImage`、`geojson-upload` 或新版 GeoJSON 交互时，要求 `@fxft/ui-plus >= 1.0.36`。版本不足时不得生成这些调用；先说明将修改 `package.json` 与 lock 文件，只有获得用户明确授权后才用项目现有包管理器升级。
 
+使用 HTML Marker 参与原聚合、PNG/HTML Marker 动态切换、同点位坐标更新或聚合文字水平/垂直对齐时，要求 `@fxft/ui-plus >= 1.0.37`。对应公开 API 为 `updatePointMarker`，聚合文字配置为 `clusterTextAlign`、`clusterTextVerticalAlign`、`clusterTextDx`、`clusterTextDy`。
+
 ## 安装命令
 
 根据目标项目已有包管理器选择一个命令，不要混用。

@@ -36,7 +36,10 @@
 - [ ] 空数据场景有清理图层或空状态处理。
 - [ ] 单个或少量点位移除优先使用 `clearPointById`，没有通过整层重绘替代点位删除。
 - [ ] 同一实体只进入一个聚合图层，没有用报警层、设备层重复渲染和重复计数。
-- [ ] 整层显隐使用 `setPointLayerVisible`，分类显隐使用 `setPointVisible`，图标切换使用 `updatePointSymbol`。
+- [ ] 整层显隐使用 `setPointLayerVisible`，分类显隐使用 `setPointVisible`，PNG 图标切换使用 `updatePointSymbol`，PNG/HTML 表现或坐标更新使用 `updatePointMarker`。
+- [ ] HTML Marker 复用原稳定点位和原聚合图层，没有创建第二套 HTML 点位或孤立图层。
+- [ ] HTML Marker 的业务坐标使用 `{ lon, lat }`，图片与 HTML 双向切换后 id、显隐和聚合关系保持不变。
+- [ ] 圆形聚合数字使用默认水平/垂直居中；不规则背景才使用 `clusterTextDx`、`clusterTextDy` 微调。
 - [ ] 业务代码没有访问 `_layer`、`_clusterLayerMap` 等地图私有字段。
 - [ ] 业务代码没有访问 `_options`、`_drawTool`、`_geometry` 等绘制实现私有字段。
 - [ ] 点位范围变化按稳定 id 增量同步，没有每次全量 `clear: true`。

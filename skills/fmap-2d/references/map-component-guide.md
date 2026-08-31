@@ -83,6 +83,7 @@ const onMapLoad = (mapInstance: unknown) => {
 | `setPointLayerVisible(layerName?, visible?)` | 隐藏/显示整个普通或聚合点位图层；不清空点位和聚合索引 |
 | `setPointVisible(id, visible?, layerName?)` | 按稳定点位 id 隐藏/显示 marker；隐藏点不参与当前聚合数量 |
 | `updatePointSymbol(id, symbol, layerName?)` | 按稳定点位 id 更新 marker 图标；不移除点位、不改变聚合总数据 |
+| `updatePointMarker(id, presentation, layerName?)` | 更新稳定点位的图片/HTML 表现与坐标；支持 PNG ↔ HTML 切换并保留原聚合，要求 `@fxft/ui-plus >= 1.0.37` |
 | `playTrack(markerList, options?, layerName?)` | 创建轨迹实例 |
 | `playTrackStart()` | 开始轨迹播放 |
 | `pauseTrack()` | 暂停轨迹播放 |
@@ -163,6 +164,9 @@ const setAlarmPointsVisible = (points: Array<{ id: string; alarm: boolean }>, vi
 | `forceRenderOnZooming` | 地图缩放过程中实时重绘聚合画布，避免聚合点与底图错位 |
 | `forceRenderOnRotating` | 地图旋转过程中实时重绘聚合画布，避免聚合点与底图错位 |
 | `animation` | 聚合中心过渡动画；全部 marker 可能被隐藏时建议设为 `false`，规避空范围动画跳动和 `getMin` 错误 |
+| `clusterTextAlign` | 聚合数字水平对齐；圆形背景默认使用 `'center'`，要求 `>= 1.0.37` |
+| `clusterTextVerticalAlign` | 聚合数字垂直对齐；圆形背景默认使用 `'middle'`，要求 `>= 1.0.37` |
+| `clusterTextDx` / `clusterTextDy` | 聚合数字相对背景的像素偏移；仅用于不规则 PNG 的视觉中心微调，要求 `>= 1.0.37` |
 | `infoWindow` | 默认信息窗配置 |
 | `clusterInfoWindow` | 聚合点信息窗配置 |
 | `events` | 给 marker 统一绑定事件 |
@@ -173,6 +177,79 @@ const setAlarmPointsVisible = (points: Array<{ id: string; alarm: boolean }>, vi
 - 新增点位时可使用 `addPoint(points, { clear: false, ...options }, layerName)` 追加到已有图层。
 - 数据源整体刷新、筛选条件整体变化或聚合配置重建时，才使用 `clear: true` 或 `clearLayer(layerName)`。
 - `clearPointById` 的 `id` 必须和添加点位时的点位 `id` 完全一致，聚合图层同样按该 id 删除子点。
+
+### HTML Marker 与原聚合
+
+`@fxft/ui-plus >= 1.0.37` 通过 `updatePointMarker` 让同一稳定点位在图片 Marker 与 HTML Marker 之间切换。HTML Marker 在底层使用透明普通 Marker 代理参与现有聚合：聚合时隐藏 HTML 表现，散开时恢复 HTML 表现，不需要第二套 HTML 图层。
+
+```typescript
+const deviceMarkerLayer = "deviceMarkerLayer";
+
+const showEmergencyMarker = (
+  pointId: string,
+  longitude: number,
+  latitude: number,
+  content: HTMLElement
+) => {
+  mapRef.value?.updatePointMarker?.(
+    pointId,
+    {
+      type: "html",
+      coordinate: { lon: longitude, lat: latitude },
+      content,
+      horizontalAlignment: "middle",
+      verticalAlignment: "middle",
+      dx: 0,
+      dy: 0,
+    },
+    deviceMarkerLayer
+  );
+};
+
+const restoreImageMarker = (
+  pointId: string,
+  longitude: number,
+  latitude: number,
+  markerFile: string
+) => {
+  mapRef.value?.updatePointMarker?.(
+    pointId,
+    {
+      type: "image",
+      coordinate: { lon: longitude, lat: latitude },
+      symbol: {
+        markerFile,
+        markerWidth: 42,
+        markerHeight: 49,
+      },
+    },
+    deviceMarkerLayer
+  );
+};
+```
+
+使用约束：
+
+- `pointId` 必须是 `addPoint` 时使用的稳定 id，`layerName` 必须是原聚合图层名。
+- 动态事件携带有效坐标时，以事件坐标更新同一稳定点位；业务只传 `{ lon, lat }`，不要构造底层 `Coordinate`、`Point` 或 `Position`。
+- HTML 与图片双向切换不能改变点位 id，也不能通过 `clearPointById + addPoint` 模拟更新。
+- `content` 优先传可信 DOM 或静态模板；字符串内容不得拼接未经处理的用户输入。
+- HTML 内容中的动画由浏览器 DOM/CSS 渲染，透明代理仅负责坐标、点击和聚合计算。
+
+### 聚合数字对齐
+
+圆形聚合背景使用以下默认配置，组件与底层会用 Canvas 原生 `textAlign` 和 `textBaseline` 保证一位数、多位数真实居中：
+
+```typescript
+{
+  clusterTextAlign: "center",
+  clusterTextVerticalAlign: "middle",
+  clusterTextDx: 0,
+  clusterTextDy: 0,
+}
+```
+
+只有聚合背景 PNG 的视觉中心不在几何中心时，才通过 `clusterTextDx`、`clusterTextDy` 做像素级微调。圆形背景不得用字符宽度或固定左偏移手工计算居中。
 
 ## 地图选点
 
@@ -270,12 +347,16 @@ mapRef.value?.addPoint?.(
     forceRenderOnZooming: true,
     forceRenderOnRotating: true,
     animation: false,
+    clusterTextAlign: "center",
+    clusterTextVerticalAlign: "middle",
+    clusterTextDx: 0,
+    clusterTextDy: 0,
   },
   "deviceMarkerLayer"
 );
 ```
 
-其中 `forceRenderOnZooming` 解决缩放错位，`forceRenderOnMoving` 解决拖动错位，`forceRenderOnRotating` 解决旋转错位。若业务允许所有 marker 隐藏，设置 `animation: false` 可避免从 0 个可见点恢复时聚合中心动画读取空范围。
+其中 `forceRenderOnZooming` 解决缩放错位，`forceRenderOnMoving` 解决拖动错位，`forceRenderOnRotating` 解决旋转错位。若业务允许所有 marker 隐藏，设置 `animation: false` 可避免从 0 个可见点恢复时聚合中心动画读取空范围。稳定重绘不得在视图未改变时销毁并重建普通 Marker、HTML Marker 或聚合图标。
 
 ## 轨迹回放
 

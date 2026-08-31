@@ -91,6 +91,11 @@ const renderDevicePoints = (rawList: RawDevice[]) => {
       forceRenderOnRotating: true,
       // 支持全部 marker 隐藏时关闭中心过渡，规避空范围动画跳动
       animation: false,
+      // 圆形聚合背景使用真实水平、垂直居中；不规则背景再用 dx/dy 微调
+      clusterTextAlign: "center",
+      clusterTextVerticalAlign: "middle",
+      clusterTextDx: 0,
+      clusterTextDy: 0,
       clusterMarkerRanges: [
         { min: 0, width: 40, height: 40, textSize: 12 },
         { min: 10, width: 46, height: 46, textSize: 12 },
@@ -135,6 +140,48 @@ const setDeviceVisible = (id: string | number, visible: boolean) => {
 const updateDeviceIcon = (id: string | number, markerFile: string) => {
   mapRef.value?.updatePointSymbol?.(id, { markerFile }, deviceMarkerLayer);
 };
+
+const showHtmlDeviceMarker = (
+  id: string | number,
+  longitude: number,
+  latitude: number,
+  content: HTMLElement
+) => {
+  mapRef.value?.updatePointMarker?.(
+    id,
+    {
+      type: "html",
+      coordinate: { lon: longitude, lat: latitude },
+      content,
+      horizontalAlignment: "middle",
+      verticalAlignment: "middle",
+      dx: 0,
+      dy: 0,
+    },
+    deviceMarkerLayer
+  );
+};
+
+const restoreImageDeviceMarker = (
+  id: string | number,
+  longitude: number,
+  latitude: number,
+  markerFile: string
+) => {
+  mapRef.value?.updatePointMarker?.(
+    id,
+    {
+      type: "image",
+      coordinate: { lon: longitude, lat: latitude },
+      symbol: {
+        markerFile,
+        markerWidth: 36,
+        markerHeight: 36,
+      },
+    },
+    deviceMarkerLayer
+  );
+};
 </script>
 
 <style scoped>
@@ -150,9 +197,13 @@ const updateDeviceIcon = (id: string | number, markerFile: string) => {
 
 - 点位 `id` 必须稳定并真正唯一；资产场景优先使用 `assetId`，不要默认设备 ID/编码不会重复。
 - 大量点位建议开启 `cluster: true`。
-- 同一实体只进入一个聚合图层；报警、在线、离线使用 `updatePointSymbol` 切换图标，分类开关使用 `setPointVisible`。
+- 同一实体只进入一个聚合图层；普通 PNG 状态使用 `updatePointSymbol` 切换图标，PNG/HTML 表现或坐标更新使用 `updatePointMarker`，分类开关使用 `setPointVisible`。
+- HTML Marker 复用原稳定 id 和原聚合图层，通过透明普通 Marker 代理参与聚合；不得另建 HTML 图层或重复点位。
+- 动态事件坐标有效时，以事件 `{ lon, lat }` 更新同一点位；不要向业务代码暴露底层坐标类型。
+- HTML `content` 优先使用可信 DOM 或静态模板，不拼接未经处理的用户输入。
 - 维护 `id → 数据快照` 做增量同步：新增点只追加、删除点只调用 `clearPointById`、变化点只更新同 id；不要每次刷新全量 `clear: true`。
 - 地图加载完成和初始接口返回必须调用同一个幂等同步入口，避免同一批点以 `clear: false` 追加两次。
 - `maxClusterRadius` 是像素语义，实际公里数会随 zoom 变化。
 - 缩放时聚合位置漂移时启用 `forceRenderOnZooming`；拖动、旋转分别启用 `forceRenderOnMoving`、`forceRenderOnRotating`。全部点可隐藏时同时设置 `animation: false`。
+- 圆形聚合数字使用 `center` / `middle`；只有不规则背景才用 `clusterTextDx`、`clusterTextDy` 微调，并验证多位数仍居中。
 - 点击事件可通过 `@marker-click` 处理，业务数据放在 `customData`。

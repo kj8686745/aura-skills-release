@@ -55,7 +55,10 @@
 - 不要在每次刷新时用当前时间随机生成 id。
 - 点位业务数据放入 `customData`，不要散落在事件闭包中。
 - 大量点位优先开启聚合。
-- 同一实体只进入一个聚合图层；报警、在线、离线等状态通过 `updatePointSymbol` 或 `setPointVisible` 表达，禁止重复叠加多个聚合层。
+- 同一实体只进入一个聚合图层；报警、在线、离线等 PNG 状态通过 `updatePointSymbol` 或 `setPointVisible` 表达，PNG/HTML 表现或坐标变化通过 `updatePointMarker` 更新，禁止重复叠加多个聚合层。
+- HTML Marker 使用同一稳定点位在原聚合图层中的透明普通 Marker 代理参与聚合；禁止另建孤立 HTML 图层或重复添加同一业务实体。
+- 动态事件（例如 SOS）提供有效坐标时，以事件坐标更新匹配到的稳定点位；业务只传 `{ lon, lat }`，由组件转换底层坐标格式。
+- HTML Marker 切回图片后必须继续保留原稳定 id、显隐状态和聚合关系。
 - 单个或少量点位移除时优先使用 `clearPointById(id, layerName)`，避免 `clearLayer + addPoint` 造成整层重绘和卡顿。
 - 新增点位时优先使用 `addPoint(points, { clear: false, ...options }, layerName)` 追加点位。
 - 坐标、状态或图标变化时只更新同 id 点位；删除时只调用 `clearPointById`，不得每次数据范围变化都整层重建。
@@ -69,6 +72,7 @@
 - `maxClusterZoom` 控制超过哪个缩放层级后散点显示，不控制图层显隐。
 - 缩放、移动、旋转时聚合点贴屏幕或漂移，设置 `forceRenderOnZooming: true`、`forceRenderOnMoving: true`、`forceRenderOnRotating: true`。
 - 所有 marker 可能被隐藏时建议设置 `animation: false`，避免恢复聚合时中心跳动或底层读取空范围出现 `getMin` 错误。
+- 圆形聚合背景默认使用 `clusterTextAlign: 'center'` 与 `clusterTextVerticalAlign: 'middle'`；`clusterTextDx`、`clusterTextDy` 只用于不规则背景图的视觉中心微调。
 - 分类按钮切换不请求、不清空、不重建图层；所有分类关闭时聚合数量应为 0，恢复后数量不得翻倍。
 
 ## 轨迹规则
