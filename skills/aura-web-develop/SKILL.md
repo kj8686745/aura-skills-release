@@ -2,10 +2,9 @@
 name: aura-web-develop
 description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + Vite + TypeScript 业务开发、CRUD、接口封装、正式菜单与按钮权限、组件复用、统一视觉风格与样式资源适配。模块联邦配置由本技能实现，并串联检查技能做改前基线与改后复检；用于 aura-pigx-cli nexus 项目及其业务远程模块。
 ---
-
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.13`（2026-08-28）。
+当前版本：`1.2.14`（2026-08-31）。
 
 把本技能作为 PIGX 模块联邦（综合端）的规范执行器。先读取最新版规范，再分析和修改代码；不得用技能中的历史示例覆盖最新版规范。
 
@@ -61,28 +60,29 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 
 再按任务类型补读：
 
-| 任务类型 | 必读资料 |
-|---|---|
-| 路由、菜单、隐藏页 | `knowledge/PIGX前端开发规范/路由与菜单规范.md` |
-| 正式菜单、按钮权限或新业务入口 | `references/admin-menu-permission-workflow.md` |
-| 模块联邦提供方/消费方 | `knowledge/PIGX前端开发规范/模块联邦开发技术规范.md` |
-| 页面布局、主题、静态资源 | `knowledge/PIGX前端开发规范/样式布局与静态资源规范.md` |
-| 用户可见页面设计风格统一 | `$frontend-design`、`references/frontend-design-workflow.md`；先定视觉方向和令牌，限制无语义的左侧强调条重复，完成后自评 |
-| 组件选型、公司 UI 规范 | `knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md` |
-| 查询表格页 | `knowledge/PIGX前端开发规范/页面模式/查询表格页.md` |
-| 查询卡片页 | `knowledge/PIGX前端开发规范/页面模式/查询卡片页.md` |
-| 左树右表页 | `knowledge/PIGX前端开发规范/页面模式/左树右表页.md` |
-| 弹窗表单 | `knowledge/PIGX前端开发规范/页面模式/弹窗表单.md` |
-| 详情页或抽屉 | `knowledge/PIGX前端开发规范/页面模式/详情页与抽屉.md` |
-| 看板页 | `knowledge/PIGX前端开发规范/页面模式/看板页.md` |
-| 同路由嵌套覆盖页 | `knowledge/PIGX前端开发规范/页面模式/Teleport嵌套页面模式.md` |
-| 2D 地图 | `knowledge/PIGX前端开发规范/2D地图开发规范.md`；先检查并按需提示安装 `/fmap-2d`，再核验 `@fxft/ui-plus` 版本是否满足所用 API 的要求 |
-| 视频 | `knowledge/PIGX前端开发规范/视频开发规范.md`；先检查并按需提示安装 `/fxft-video`，再核验 `@fxft/ui-plus` 版本是否满足所用 API 的要求 |
-| 公司 UI 规范依赖安装 | `knowledge/PIGX前端开发规范/公司组件库下载说明/README.md` |
-| 代码注释 | `references/code-comment-guidelines.md` 与 `checklists/implementation.md` |
-| API/Apifox | `recipes/apifox-workflow.md`、`references/apifox-mcp-guide.md` |
-| Figma | `references/figma-design-workflow.md`；设计输入不得覆盖 PIGX 工程规范 |
-| 页面开发后浏览器验收、可访问原型比对 | `references/codex-browser-review-workflow.md`；明确使用 Codex 内置浏览器 |
+
+| 任务类型                             | 必读资料                                                                                                                             |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| 路由、菜单、隐藏页                   | `knowledge/PIGX前端开发规范/路由与菜单规范.md`                                                                                       |
+| 正式菜单、按钮权限或新业务入口       | `references/admin-menu-permission-workflow.md`                                                                                       |
+| 模块联邦提供方/消费方                | `knowledge/PIGX前端开发规范/模块联邦开发技术规范.md`                                                                                 |
+| 页面布局、主题、静态资源             | `knowledge/PIGX前端开发规范/样式布局与静态资源规范.md`                                                                               |
+| 用户可见页面设计风格统一             | `$frontend-design`、`references/frontend-design-workflow.md`；先定视觉方向和令牌，限制无语义的左侧强调条重复，完成后自评             |
+| 组件选型、公司 UI 规范               | `knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md`                                                                         |
+| 查询表格页                           | `knowledge/PIGX前端开发规范/页面模式/查询表格页.md`                                                                                  |
+| 查询卡片页                           | `knowledge/PIGX前端开发规范/页面模式/查询卡片页.md`                                                                                  |
+| 左树右表页                           | `knowledge/PIGX前端开发规范/页面模式/左树右表页.md`                                                                                  |
+| 弹窗表单                             | `knowledge/PIGX前端开发规范/页面模式/弹窗表单.md`                                                                                    |
+| 详情页或抽屉                         | `knowledge/PIGX前端开发规范/页面模式/详情页与抽屉.md`                                                                                |
+| 看板页                               | `knowledge/PIGX前端开发规范/页面模式/看板页.md`                                                                                      |
+| 同路由嵌套覆盖页                     | `knowledge/PIGX前端开发规范/页面模式/Teleport嵌套页面模式.md`                                                                        |
+| 2D 地图                              | `knowledge/PIGX前端开发规范/2D地图开发规范.md`；先检查并按需提示安装 `/fmap-2d`，再核验 `@fxft/ui-plus` 版本是否满足所用 API 的要求  |
+| 视频                                 | `knowledge/PIGX前端开发规范/视频开发规范.md`；先检查并按需提示安装 `/fxft-video`，再核验 `@fxft/ui-plus` 版本是否满足所用 API 的要求 |
+| 公司 UI 规范依赖安装                 | `knowledge/PIGX前端开发规范/公司组件库下载说明/README.md`                                                                            |
+| 代码注释                             | `references/code-comment-guidelines.md` 与 `checklists/implementation.md`                                                            |
+| API/Apifox                           | `recipes/apifox-workflow.md`、`references/apifox-mcp-guide.md`                                                                       |
+| Figma                                | `references/figma-design-workflow.md`；设计输入不得覆盖 PIGX 工程规范                                                                |
+| 页面开发后浏览器验收、可访问原型比对 | `references/codex-browser-review-workflow.md`；明确使用 Codex 内置浏览器                                                             |
 
 ## 强制工作流
 
