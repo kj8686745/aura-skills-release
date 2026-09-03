@@ -4,7 +4,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 ---
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.14`（2026-08-31）。
+当前版本：`1.2.17`（2026-09-02）。
 
 把本技能作为 PIGX 模块联邦（综合端）的规范执行器。先读取最新版规范，再分析和修改代码；不得用技能中的历史示例覆盖最新版规范。
 
@@ -90,10 +90,10 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 2. **解析需求**：列出页面、字段、接口、权限、状态、路由/菜单、验收项和注释锚点。新建正式业务页面、菜单入口或页面操作按钮时，先生成页面菜单和按唯一权限编码归并的 `v-auth` 按钮权限清单；同一编码的多处按钮引用只对应一条后台权限记录。截图、HTML 原型或 Figma 只作为业务内容和视觉输入。用户可见页面同时进入 `$frontend-design` 设计协作。
 3. **选择正式页面模式**：从最新版七种页面模式中选择；命中后直接以对应文档为基线，不使用旧模板覆盖。
 4. **规划文件职责**：编码前先列出路由页、页面私有组件、业务 composable、API、类型和 i18n 的职责清单；只修改需求范围内文件。路由页只负责页面布局、查询主状态和子组件编排，不得为了“先跑通”临时内联多个业务弹窗后再等待评审发现。
-5. **复用优先**：按“综合端全局组件/Hooks → `@fxft/ui-plus` → Element Plus → 页面私有业务组件 → 跨业务公共组件”的顺序选型。
+5. **复用优先**：按“综合端全局组件/Hooks → Element Plus → 页面私有业务组件 → 跨业务公共组件”的顺序选型。业务 UI 需要进入 Element Plus 选型阶段时，必须先使用 Codex 内置浏览器访问 [Element Plus 组件总览](https://element-plus.org/zh-CN/component/overview)，再阅读候选组件的官方文档，核对当前项目版本支持的 Props、Events、Slots 和公开方法；存在满足需求或可通过官方组合方式满足需求的组件时优先采用。只有综合端全局组件/Hooks 和 Element Plus 均确实无法满足时，才允许自行编写 UI 组件，并在职责清单和交付中记录已核对的候选组件及不适用原因；不得仅凭记忆、个人偏好或样式差异跳过官方组件。地图、视频等专项能力仍按对应专项规范选型，不适用本通用顺序。
 6. **实现接口**：统一走 `/@/utils/request`；函数命名先遵循当前业务域相邻 API 和最新版规范，不强行套用历史命名。
 7. **实现页面状态**：按适用性覆盖加载态、空态、错误态、权限、校验、防重复提交和资源清理。
-8. **适配模块联邦**：涉及 remote、expose、manifest、远程菜单、shared、运行时入口或模块联邦配置时，先检查 `aura-module-federation-check` 是否可用；缺失时提示用户安装。可用后先建立基线，由本技能完成实现后再次复检。远程页面不得依赖提供方 `main.ts` 的全局注册副作用。
+8. **适配模块联邦**：涉及 remote、expose、manifest、远程菜单、shared、运行时入口或模块联邦配置时，先检查 `aura-module-federation-check` 是否可用；缺失时提示用户安装。可用后先建立基线，由本技能完成实现后再次复检。远程页面不得依赖提供方 `main.ts` 的全局注册副作用；按需注册、组件库 Resolver 或自动导入组件由提供方优先通过编译期 Resolver 注入组件代码与 `sideEffects` 样式，宿主不得承担提供方组件库的安装和解析职责。必须从构建产物核验对应 JS import 与 CSS 依赖，并分别验证独立运行和远程加载，控制台不得出现 `Failed to resolve component`，组件容器尺寸和样式必须正常。Resolver 无法覆盖时才显式导入组件及配套样式，禁止只导入组件 JS。
 9. **适配资源和样式**：import 资源使用 `getStaticResourceUrl`，public 资源使用 `getPublicResourceUrl`；使用主题变量并保证 Flex 高度链路；按 `$frontend-design` 产出的视觉令牌统一颜色、字体、间距、圆角、层级和动效。
 10. **同步注释**：实现前按所选页面模式列出注释锚点，编码时同步生成和更新有价值的简体中文注释，禁止交付前集中补泛化注释。
 11. **联调与验证**：新业务菜单权限流程命中时，按参考流程准备并复核菜单/按钮；仅在用户明确授权且提供目标环境、运行时凭据、租户和父菜单定位信息后调用管理端 API。再按 Apifox、构建、lint、Codex 内置浏览器交互、独立/远程运行和正式检查清单逐项验证；有可访问原型时同步对照走查，用户无明确意见时交付差异与决策项。
@@ -116,6 +116,15 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 - 仅新增、编辑、删除、启停、保存、提交、导入等用户主动发起且改变服务端状态的操作，才在请求 `catch` 中调用 `useMessage().error(...)`；字典、下拉选项、列表、详情、初始化和刷新等只读数据加载失败不弹消息，由局部错误态、空态、重试能力或上层错误策略处理。确认框取消属于正常分支，也不提示。
 
 ## 最新版核心规则
+
+### 命名强制约束
+
+- 项目、目录、Vue/CSS/SCSS/HTML 和静态资源文件使用小写 `kebab-case`；JavaScript/TypeScript 模块文件使用 `camelCase`，例如 `mapConfig.ts`、`coordinateTransform.ts`。
+- 组合式 Hook 文件使用 `useXxx.ts`，导出函数使用 `useXxx`；Vue 组件名使用 PascalCase，组件文件仍使用 `kebab-case`。
+- 函数、方法、变量、参数和对象成员使用 lowerCamelCase；常量使用 UPPER_SNAKE_CASE；类型、接口、枚举和类使用 PascalCase。
+- CSS/SCSS 类名使用小写 `kebab-case`，组件样式优先采用 BEM（`block__element--modifier`）；避免标签、ID 和全局通配符选择器。
+- 函数名必须包含动作和业务对象语义，禁止使用 `save`、`query`、`data1`、`useData` 等无法表达职责的过泛名称。
+- 新增命名必须使用正确英文单词，禁止拼音、中文、无意义缩写和大小写混用；已有文件不因本规则批量重命名。
 
 - 使用 Vue 3、TypeScript 和 `<script setup>`，具体版本以当前项目和最新版总览为准。
 - 路由页必须保持单一真实元素根节点；根元素统一使用 `class="layout-padding"`，业务区域置于 `class="layout-padding-auto layout-padding-view"`，Dialog、Drawer 等弹窗可与业务区域并列置于根节点下，以兼容框架的 Transition 和运行时指令。

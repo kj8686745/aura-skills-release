@@ -10,7 +10,24 @@
 
 ## 文件和目录
 
-- Vue 文件使用 kebab-case，路由页面入口通常为 `index.vue`。
+- 项目、目录、Vue/CSS/SCSS/HTML 和静态资源文件使用小写 `kebab-case`，例如 `device-location-picker.vue`；JavaScript/TypeScript 模块文件使用 `camelCase`，例如 `mapConfig.ts`、`coordinateTransform.ts`。
+- 组合式 Hook 文件使用 `useXxx.ts`，例如 `useDeviceQuery.ts`；Hook 导出函数使用 `useDeviceQuery`。
+- Vue 组件在模板和组件名中使用 PascalCase；文件名遵循本项目统一的 `kebab-case` 文件规则。
+- 不因为目录历史写法批量重命名已有文件；新增文件按以上规则命名，修改已有文件时保持当前模块的一致性。
+
+## 代码标识符
+
+- 函数、方法、变量、参数和对象成员使用 lowerCamelCase，名称必须表达业务动作或业务含义。
+- 常量使用 UPPER_SNAKE_CASE，单词之间使用下划线，避免无语义缩写。
+- 类型、接口、枚举和类使用 PascalCase；布尔值使用 `is`、`has`、`can`、`should` 等语义前缀。
+- API 方法使用“动作 + 业务对象”，例如 `getDeviceList`、`updateDeviceStatus`；禁止使用 `query`、`save`、`data1` 等过泛名称。
+
+## CSS 与 HTML
+
+- CSS/SCSS 类名使用小写 `kebab-case`；组件样式优先采用 BEM：`block__element--modifier`。
+- 选择器避免直接使用标签名、ID 和全局通配符，优先使用业务类名；嵌套层级保持简洁。
+- CSS 属性按项目格式化工具输出，每个选择器和属性独占一行；长度为 0 时省略单位。
+- Vue Template 使用语义化标签、双引号属性和简洁表达式；复杂表达式提取为计算属性或方法。
 - 页面放在 `src/views/<业务域>/<业务模块>/`，私有组件放在同目录 `components/`。
 - API 放在 `src/api/<业务域>/`，目录结构先遵循相邻模块。
 - 业务 Composable 放在页面目录 `composables/`；跨业务稳定后再提升到 `src/hooks/`。
