@@ -4,7 +4,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 ---
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.18`（2026-09-03）。
+当前版本：`1.2.19`（2026-09-07）。
 
 把本技能作为 PIGX 模块联邦（综合端）的规范执行器。先读取最新版规范，再分析和修改代码；不得用技能中的历史示例覆盖最新版规范。
 
@@ -128,6 +128,7 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 
 - 使用 Vue 3、TypeScript 和 `<script setup>`，具体版本以当前项目和最新版总览为准。
 - 路由页必须保持单一真实元素根节点；根元素统一使用 `class="layout-padding"`，业务区域置于 `class="layout-padding-auto layout-padding-view"`，Dialog、Drawer 等弹窗可与业务区域并列置于根节点下，以兼容框架的 Transition 和运行时指令。
+- 业务路由入口保留在业务目录的 `index.vue`。凡由该页面引入的私有页面组件，包括表单、详情、弹窗、抽屉、面板和嵌套业务视图，必须放入同路径的 `components/` 目录，禁止与 `index.vue` 并列；确需跨业务复用时才放入 `src/components`。
 - 同一路由页出现两个及以上业务 Dialog/Drawer，或单个弹窗同时包含独立列表、表单、请求与提交状态时，编码前必须拆为页面私有组件；父页通过 `ref + defineExpose` 或 Props/Emits 编排。只有字段少、无独立请求、无复用价值的单一轻量弹窗可以内联，并在职责清单中记录理由。
 - 仅供弹窗使用的详情、候选项、字典项和业务列表由弹窗持有，并在公开的 `openDialog/openDrawer/open` 流程中按需加载；禁止父页面、弹窗挂载阶段或 `immediate` 监听提前请求。父页面只传入记录 ID、已选 ID 等本次操作上下文；只读加载失败使用弹窗局部错误态和重试，不弹全局消息。
 - 顶部或摘要工具栏已有新增等主操作时，空态不得重复放置相同按钮；只保留说明、重试、授权或当前状态独有的恢复操作。
@@ -136,6 +137,7 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 - 列表页按真实 `useTable(state)` 签名传入响应式状态，并使用返回的 `tableStyle`、分页、排序和下载能力；不要从返回值中解构不存在的 `state`。
 - 常规 CRUD 明确要求表格占满剩余高度时，页面容器建立纵向 Flex 高度链路，滚动父级和表格区写 `min-height: 0`，表格使用 `class="el-table--fit"` 与 `flex: 1`；不得使用 `100vh` 或固定像素表格高度。
 - 普通内容区域需要滚动时必须使用 Element Plus `el-scrollbar`，不得用 `overflow: auto/scroll`、`overflow-y-auto`、`overflow-auto` 等原生 CSS/Tailwind 滚动实现；查询区、工具栏和分页置于滚动区域外。`el-table`、`el-tree`、`el-select` 等已有内置滚动能力的 Element Plus 组件优先使用其公开高度、最大高度或组件自身滚动能力，不额外套 `el-scrollbar`。
+- v-loading 覆盖的区域如果自身或实际滚动容器可能滚动，loading 期间必须锁定该滚动容器（overflow: hidden 或等效状态类），loading 结束后恢复；局部表格、树、弹窗和地图只锁定其实际覆盖区域，不得误锁整页。
 - 新建或修改普通 `el-select` 默认添加 `filterable`；仅用户明确关闭、组件不兼容或需求明确禁止搜索时例外，并说明原因。
 - 权限按钮遵循项目 `v-auth` 约定；表单提交前校验，提交期间禁用，成功后再关闭和刷新。
 - 所有业务表单必须从 `/@/hooks/form` 使用 `useForm`；通过 `validateForm` 校验，通过 `resetForm` 重置字段，通过 `clearFormValidate` 清理复用弹窗的历史校验状态。业务页面禁止直接调用表单实例的 `validate/resetFields/clearValidate`，也不得重复编写对应逻辑。
