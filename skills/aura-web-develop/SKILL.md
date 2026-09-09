@@ -4,7 +4,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 ---
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.19`（2026-09-07）。
+当前版本：`1.2.20`（2026-09-09）。
 
 把本技能作为 PIGX 模块联邦（综合端）的规范执行器。先读取最新版规范，再分析和修改代码；不得用技能中的历史示例覆盖最新版规范。
 
@@ -25,6 +25,12 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 若用户提供可访问的原型、设计稿预览或业务参考链接，使用 Codex 内置浏览器同时访问实现页与原型，按业务内容、布局层级、字段与操作、主要状态、响应式和用户明确意见逐项对照。用户明确提出的取舍、差异接受项或验收意见优先，不能被原型默认表现覆盖。
 
 用户没有明确走查意见时，不擅自替用户确认有主观取舍的视觉差异；输出走查结果、实现一致项、差异项、风险和需要用户决策的选项。浏览器技能不可用、页面无法启动、原型无权限或链接不可访问时，明确说明未完成项和原因，不得声称走查通过。
+
+## Prettier 代码格式化
+
+每次新增、修改或重构代码完成后，必须自动执行 Prettier，再进入 build、typecheck、lint 和浏览器验证。先读取项目的 Prettier 配置和 `package.json` 脚本，识别锁文件对应的包管理器；优先调用项目已有的 `format` 或 `format:write` 脚本，否则使用该项目本地安装的 Prettier 格式化本次修改且受支持的代码文件。不得只凭全局 Prettier 或记忆中的默认配置执行。
+
+格式化仅覆盖本次修改的受支持文件，并遵循 `.prettierignore`，不格式化锁文件、生成物和第三方目录。项目未安装本地 Prettier 时不得静默安装；应说明格式化未执行，并在交付中记录缺失原因。格式化完成后执行 `git diff --check`，再继续后续验证。详细命令选择见 [Prettier 代码格式化流程](references/prettier-formatting-workflow.md)。
 
 ## 业务视觉设计协作
 
@@ -174,10 +180,11 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 交付前至少执行：
 
 1. `scripts/validate-skill.ps1`（维护技能本身时）。
-2. 当前项目可用的 build/typecheck 与 lint 命令。
-3. `scripts/check-project-rules.ps1 -ProjectPath <项目路径>`，检查消息 API、路径别名、高风险违规和注释覆盖告警。
-4. 对应最新版页面模式和 `knowledge/PIGX前端开发规范/开发检查清单.md`。
-5. 使用 Codex 内置浏览器验证核心流程；有可访问原型时同步对照，模块联邦任务同时验证独立运行和远程运行。
+2. Prettier 自动格式化和 `git diff --check`。
+3. 当前项目可用的 build/typecheck 与 lint 命令。
+4. `scripts/check-project-rules.ps1 -ProjectPath <项目路径>`，检查消息 API、路径别名、高风险违规和注释覆盖告警。
+5. 对应最新版页面模式和 `knowledge/PIGX前端开发规范/开发检查清单.md`。
+6. 使用 Codex 内置浏览器验证核心流程；有可访问原型时同步对照，模块联邦任务同时验证独立运行和远程运行。
 
 ## 交付格式
 

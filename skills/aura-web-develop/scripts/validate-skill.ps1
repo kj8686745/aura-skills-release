@@ -18,6 +18,7 @@ $required = @(
   "references\frontend-design-workflow.md",
   "references\skill-dependency-workflow.md",
   "references\codex-browser-review-workflow.md",
+  "references\prettier-formatting-workflow.md",
   "knowledge\PIGX前端开发规范\README.md",
   "knowledge\PIGX前端开发规范\PIGX前端开发总览.md",
   "knowledge\PIGX前端开发规范\工程与代码生成规范.md",
@@ -83,7 +84,7 @@ if (Test-Path -LiteralPath $skillFile) {
     $errors += "SKILL.md 未声明统一消息 Hook 的精确导入方式"
   }
 
-  foreach ($keyword in @('el-table--fit', 'el-scrollbar', 'overflow: auto/scroll', 'filterable', 'admin-menu-permission-workflow.md', 'aura-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design', '外部技能依赖预检', '明确授权不得执行安装', 'Codex 内置浏览器', 'browser:control-in-app-browser', '原型', '待决策', '左侧强调条', '按权限编码去重', '完整菜单树', '业务标识 + 功能动作')) {
+  foreach ($keyword in @('el-table--fit', 'el-scrollbar', 'overflow: auto/scroll', 'filterable', 'admin-menu-permission-workflow.md', 'aura-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design', '外部技能依赖预检', '明确授权不得执行安装', 'Codex 内置浏览器', 'browser:control-in-app-browser', '原型', '待决策', '左侧强调条', '按权限编码去重', '完整菜单树', '业务标识 + 功能动作', 'Prettier', 'git diff --check')) {
     if (-not $skillContent.Contains($keyword)) {
       $errors += "SKILL.md 缺少关键规则：$keyword"
     }
@@ -213,6 +214,14 @@ if (Test-Path -LiteralPath $browserReviewGuide) {
   $browserReviewContent = Get-Content -LiteralPath $browserReviewGuide -Raw -Encoding UTF8
   foreach ($keyword in @('Codex 内置浏览器', 'browser:control-in-app-browser', '用户明确意见', '待决策', '不得声称走查通过')) {
     if (-not $browserReviewContent.Contains($keyword)) { $errors += "Codex 内置浏览器走查参考缺少关键内容：$keyword" }
+  }
+}
+
+$prettierGuide = Join-Path $resolvedSkillPath "references\prettier-formatting-workflow.md"
+if (Test-Path -LiteralPath $prettierGuide) {
+  $prettierContent = Get-Content -LiteralPath $prettierGuide -Raw -Encoding UTF8
+  foreach ($keyword in @('每次新增、修改或重构代码完成后自动执行一次', 'package.json', '.prettierignore', 'pnpm exec prettier', 'npm exec -- prettier', 'yarn prettier', 'git diff --check')) {
+    if (-not $prettierContent.Contains($keyword)) { $errors += "Prettier 格式化流程缺少关键内容：$keyword" }
   }
 }
 

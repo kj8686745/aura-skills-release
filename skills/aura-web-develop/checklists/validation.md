@@ -4,6 +4,7 @@
 
 - [ ] 已复核外部技能依赖检查结果；交付中列明缺失、安装授权、安装结果或降级影响
 - [ ] 使用当前项目规定的 Node.js 和 pnpm 版本
+- [ ] 编程完成后已自动执行项目本地 Prettier，并已执行 `git diff --check`
 - [ ] build/typecheck 成功
 - [ ] lint 成功或已记录已有警告
 - [ ] 已运行 `scripts/check-project-rules.ps1 -ProjectPath <项目路径>`
