@@ -4,7 +4,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 ---
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.21`（2026-09-10）。
+当前版本：`1.2.22`（2026-09-11）。
 
 把本技能作为 PIGX 模块联邦（综合端）的规范执行器。先读取最新版规范，再分析和修改代码；不得用技能中的历史示例覆盖最新版规范。
 
@@ -20,7 +20,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 
 ## Codex 内置浏览器自查
 
-前端页面业务开发或可见交互改造完成后，必须明确告诉用户“现在使用 Codex 内置浏览器进行页面自查”，并调用当前环境的 `browser:control-in-app-browser`。优先复用 Codex 中已打开的目标标签页和登录状态，验证实际实现页面，不得用外部 Chrome、`agent-browser` 或仅看源码代替。完整流程见 [Codex 内置浏览器走查](references/codex-browser-review-workflow.md)。
+前端页面业务开发或可见交互改造完成后，必须明确告诉用户“现在使用 Codex 内置浏览器进行页面自查”，并读取、遵循当前环境的 `browser:control-in-app-browser` Skill。该名称代表浏览器 Skill，不是可直接调用的 MCP 工具；实际操作必须通过该 Skill 指定的 `browser-client.mjs` 和 `mcp__node_repl__js` 完成。用户明确说“Codex 内置 Browser”或要求接管 Codex 内已打开页面时，选择 `iab`，优先复用当前会话中 URL 匹配的已有标签页和登录状态，不要新建重复标签页。不得改用 `computer-use` 接管 ChatGPT/Codex 桌面窗口，也不得用外部 Chrome、`agent-browser` 或仅看源码代替。每次导航、点击、输入或滚动后，必须重新读取 DOM/可访问状态，再决定下一步；标签页失效时只重新获取该 `iab` 会话中的标签页，不要切换浏览器。浏览器 Skill 不可用时必须说明未完成浏览器自查，不得声称验证通过。完整流程见 [Codex 内置浏览器走查](references/codex-browser-review-workflow.md)。
 
 若用户提供可访问的原型、设计稿预览或业务参考链接，使用 Codex 内置浏览器同时访问实现页与原型，按业务内容、布局层级、字段与操作、主要状态、响应式和用户明确意见逐项对照。用户明确提出的取舍、差异接受项或验收意见优先，不能被原型默认表现覆盖。
 
