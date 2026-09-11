@@ -1,50 +1,13 @@
-# 实现检查清单
+# 实现检查
 
-## 组件使用
-
-- [ ] 单路页面使用 `FxftVideoPlayer` 或 `fxft-video-player`。
-- [ ] 多路页面使用 `FxftMultiVideoPlayer` 或 `fxft-multi-video-player`。
-- [ ] 没有绕过组件库直接封装 `JessibucaPro` / `JessibucaProMulti`。
-- [ ] 通过 `ref` 调用组件公开 exposes。
-- [ ] 没有使用未在组件文档中说明的内部私有字段。
-
-## 依赖接入
-
-- [ ] 已复用目标项目现有包管理器。
-- [ ] 已复用或补齐 `FxftUiPlusResolver`。
-- [ ] 没有覆盖已有 Vite 插件配置。
-- [ ] 未将私有 registry 地址写入业务代码。
-
-## 单路视频
-
-- [ ] `url` 为空时有空态处理。
-- [ ] `@error` 已处理播放或脚本加载错误。
-- [ ] `playMode` 符合业务：`live` / `record` / `vod`。
-- [ ] 点播文件使用 `playMode="vod"`。
-- [ ] 需要 PTZ 时已开启 `operateButtons.ptz` 并监听 `@ptz`。
-- [ ] 需要回放时已监听 `playback-timestamp`、`playback-stats`、`playback-seek`。
-- [ ] 需要同步自定义时间轴时已监听 `playVodTime`，主动跳转时调用 `setPlayProgress(seconds)`。
-
-## 多路视频
-
-- [ ] `videos` 数据结构符合 `MultiVideoItem`。
-- [ ] 多路窗口有稳定 `uuid` 或业务 `id`。
-- [ ] 拖拽换位场景未把 `index` 当作长期稳定业务标识。
-- [ ] 已监听 `selected`、`drop` 或 `status-change` 等必要事件。
-- [ ] 单窗口错误不会影响其它窗口。
-- [ ] 单窗全屏与整体全屏逻辑区分清楚。
-
-## 业务逻辑
-
-- [ ] 视频事件回调保持轻量。
-- [ ] PTZ、拖拽同步、播放控制、错误上报等复杂逻辑拆到业务方法、API 模块或组合式函数。
-- [ ] 空数据场景不会误触发播放请求。
-- [ ] 切换流地址、播放模式或窗口布局时状态同步清晰。
-
-## 代码风格
-
-- [ ] Vue 页面优先使用 `<script setup>`。
-- [ ] 注释和用户可见说明使用简体中文。
-- [ ] 新增类型命名具备业务语义。
-- [ ] 没有把 token、Cookie、密码写入代码。
-- [ ] 生产资源路径通过配置或常量管理。
+- [ ] 单路使用 `FxftWebVideo`，多路使用 `FxftWebMultiVideo`。
+- [ ] Source 使用判别联合，内容类型没有旧 `record/recording` 值。
+- [ ] 没有直接创建或暴露底层播放引擎。
+- [ ] 空态、错误态、重连耗尽和不可见释放已处理。
+- [ ] PTZ stop 不做节流，业务收到 stop 后立即停止设备。
+- [ ] 多路顺序只由增删和 reorder 修改，布局切换只改变容量。
+- [ ] 删除事件由业务更新受控 channels。
+- [ ] 自动播放遵循 `channel.autoplay ?? autoplay`。
+- [ ] 动态 FLV/MPEG-TS 未知音频能力时允许不传 `hasAudio`；未传或 true 可自动音频降级，false 从开始忽略音频。
+- [ ] 单路业务请求通过动态 `emptyText` 显示加载，多路请求通过整墙 `v-loading` 显示。
+- [ ] 无 Source 或请求失败通过空态呈现；多路单通道错误使用 `channel.emptyText`，没有重复弹消息提示。

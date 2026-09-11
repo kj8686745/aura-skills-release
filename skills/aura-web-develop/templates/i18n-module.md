@@ -1,8 +1,14 @@
 # i18n 模块文件模板
 
-## 文件位置
+## 文件位置与分层
 
 ```
+# 同一业务域跨页面复用
+src/views/<业务域>/i18n/
+├── zh-cn.ts
+└── en.ts
+
+# 仅当前业务模块专属
 src/views/<业务域>/<业务模块>/i18n/
 ├── zh-cn.ts
 └── en.ts
@@ -10,13 +16,13 @@ src/views/<业务域>/<业务模块>/i18n/
 
 ## 复用原则
 
-**优先使用已有公共 key**，不在模块文件中重复定义：
+新增文案按“全项目 → 业务域 → 当前模块”搜索。全项目通用 key 复用 `src/i18n/`；同一业务域两个及以上页面共用的 key 放入 `src/views/<业务域>/i18n/`；只有页面专属文案才放入模块文件，禁止重复定义同义文案。
 
 | 场景 | 使用 |
 |---|---|
 | 查询按钮 | `$t('common.queryBtn')` |
 | 新增按钮 | `$t('common.addBtn')` |
-| 重置按钮 | `$t('common.resetBtn')` |
+| 清空筛选按钮 | `$t('<业务域>.clearFilter')` 或已有全局 key |
 | 操作列标题 | `$t('common.action')` |
 | 编辑按钮 | `$t('common.editBtn')` |
 | 删除按钮 | `$t('common.delBtn')` |
@@ -28,20 +34,11 @@ src/views/<业务域>/<业务模块>/i18n/
 ## zh-cn.ts 模板
 
 ```ts
-// src/views/<业务域>/<业务模块>/i18n/zh-cn.ts
+// src/views/<业务域>/i18n/zh-cn.ts（跨模块复用）
 export default {
-  // key 命名：<模块短名>.<功能描述>，camelCase
-  <模块短名>: {
-    // 字段名
-    ruleName: '规则名称',
-    ruleCode: '规则编码',
-    // 状态
-    statusEnabled: '已启用',
-    statusDisabled: '已停用',
-    // 操作
-    publishRule: '发布规则',
-    // placeholder
-    ruleNamePlaceholder: '请输入规则名称',
+  <业务域短名>: {
+    clearFilter: '清空筛选',
+    loadFailed: '加载失败',
   },
 }
 ```
@@ -49,7 +46,7 @@ export default {
 ## en.ts 模板
 
 ```ts
-// src/views/<业务域>/<业务模块>/i18n/en.ts
+// src/views/<业务域>/<业务模块>/i18n/zh-cn.ts（页面专属）
 export default {
   <模块短名>: {
     ruleName: 'Rule Name',
@@ -61,6 +58,8 @@ export default {
   },
 }
 ```
+
+同样为业务域和页面专属 key 分别维护 `en.ts`，禁止只更新一种语言。
 
 ## 组件中使用
 

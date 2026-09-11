@@ -1,76 +1,36 @@
-# FxftMultiVideoPlayer 多路基础页面模板
-
-适用于多路分屏播放、监控大屏或多窗口直播页面。
+# 多路基础模板
 
 ```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { FxftWebMultiVideo } from '@fxft/ui-plus'
+import type { WebVideoChannel, WebVideoWallLayout } from '@fxft/ui-plus'
+
+const selectedId = ref('camera-01')
+const selectedIds = ref(['camera-01'])
+const layout = ref<WebVideoWallLayout>({ columns: 2 })
+const loading = ref(false)
+const channels = ref<WebVideoChannel[]>([
+  { id: 'camera-01', title: '东门', source: { protocol: 'hls', url: '/live/01.m3u8', kind: 'live' } },
+  { id: 'camera-02', title: '西门', autoplay: false, source: null, emptyText: '西门视频地址获取失败' },
+])
+</script>
+
 <template>
-  <div class="multi-video-page">
-    <FxftMultiVideoPlayer
-      ref="multiRef"
-      :split="split"
-      :videos="videos"
-      :autoplay="true"
-      play-mode="live"
-      decoder-path="/jessibucaPro/decoder-pro-simd.js"
-      @ready="onReady"
-      @selected="onSelected"
-      @play="onPlay"
-      @error="onError"
+  <div v-loading="loading" class="video-wall-region">
+    <FxftWebMultiVideo
+      v-model:selected-id="selectedId"
+      v-model:selected-ids="selectedIds"
+      :channels="channels"
+      :layout="layout"
+      empty-text="暂无视频源"
+      :features="{ ptz: true, snapshot: true, removeChannel: true }"
+      @layout-change="layout = $event"
+      @reorder="channels = $event.channels"
+      @remove-channel="channels = channels.filter(item => !$event.ids.includes(item.id))"
     />
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from "vue";
-
-const multiRef = ref<any>(null);
-const split = ref(4);
-
-const videos = ref([
-  { uuid: "camera-001", id: 1, name: "一路", url: "ws://example.com/live/ch01" },
-  { uuid: "camera-002", id: 2, name: "二路", url: "ws://example.com/live/ch02" },
-  { uuid: "camera-003", id: 3, name: "三路", url: "ws://example.com/live/ch03" },
-  { uuid: "camera-004", id: 4, name: "四路", url: "ws://example.com/live/ch04" },
-]);
-
-const onReady = (instance: unknown) => {
-  console.log("多路播放器已创建", instance);
-};
-
-const onSelected = (payload: any) => {
-  console.log("选中窗口", payload.index, payload.uuid, payload.url);
-};
-
-const onPlay = (payload: any) => {
-  console.log("窗口开始播放", payload.index, payload.uuid);
-};
-
-const onError = (payload: any) => {
-  console.error("窗口播放异常", payload.index, payload.uuid, payload.value?.message);
-};
-
-const changeSplit = (nextSplit: number | string) => {
-  split.value = nextSplit as number;
-  multiRef.value?.arrangeWindow?.(nextSplit);
-};
-
-const playSelectedWindow = (url: string) => {
-  multiRef.value?.playWindow?.(undefined, url);
-};
-</script>
-
-<style scoped>
-.multi-video-page {
-  width: 100%;
-  height: 100%;
-  min-height: 560px;
-  background: #000;
-}
-</style>
 ```
 
-## 使用要点
-
-- `split` 支持 `1`、`2`、`3`、`4`、`3-1`、`4-1`。
-- `videos` 中建议提供稳定 `uuid`，方便后续拖拽和业务映射。
-- `playWindow()` 不传窗口时默认播放当前选中窗口。
+`v-loading` 需要按项目现有 Element Plus 方式注册指令和样式。布局支持 1/4/6/9/16 分屏。普通点击单选，Ctrl 点击多选。
