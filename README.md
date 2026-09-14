@@ -4,16 +4,16 @@
 
 ## 安装
 
-使用 npx skills 安装指定技能：
+安装指定技能到 Codex 的全局技能目录：
 
 ```powershell
 npx skills add kj8686745/aura-skills-release --skill <技能名称> --global --yes --agent codex
+```
 
 安装全部已发布技能到 Codex：
 
 ```powershell
 npx skills add kj8686745/aura-skills-release --skill '*' --global --yes --agent codex
-```
 ```
 
 更新已安装技能：
