@@ -7,7 +7,7 @@
 使用 npx skills 安装指定技能：
 
 ```powershell
-npx skills add kj8686745/aura-skills-release --skill <技能名称> --global --yes
+npx skills add kj8686745/aura-skills-release --skill <技能名称> --global --yes --agent codex
 ```
 
 更新已安装技能：
