@@ -16,6 +16,37 @@ npx skills add kj8686745/aura-skills-release --skill <技能名称> --global --y
 npx skills update <技能名称> --global --yes
 ```
 
+## 技能管理
+
+查看已安装的技能：
+
+```powershell
+npx skills list
+```
+
+删除多个技能：
+
+```powershell
+npx skills remove <技能名称> to-spec diagnosing-bugs
+```
+
+删除全局安装的技能：
+
+```powershell
+npx skills remove -g <技能名称>
+```
+
+跳过确认直接删除：
+
+```powershell
+npx skills remove -y <技能名称>
+```
+
+删除所有技能：
+
+```powershell
+npx skills remove --all
+```
 ## 已发布技能
 
 | 技能 | 版本 | 说明 |
