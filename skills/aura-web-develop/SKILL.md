@@ -4,7 +4,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 ---
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.23`（2026-09-14）。
+当前版本：`1.2.25`（2026-09-14）。
 
 把本技能作为 PIGX 模块联邦（综合端）的规范执行器。先读取最新版规范，再分析和修改代码；不得用技能中的历史示例覆盖最新版规范。
 
@@ -22,7 +22,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 
 前端页面业务开发或可见交互改造完成后，必须明确告诉用户“现在使用 Codex 内置浏览器进行页面自查”，并读取、遵循当前环境的 `browser:control-in-app-browser` Skill。该名称代表浏览器 Skill，不是可直接调用的 MCP 工具；实际操作必须通过该 Skill 指定的 `browser-client.mjs` 和 `mcp__node_repl__js` 完成。用户明确说“Codex 内置 Browser”或要求接管 Codex 内已打开页面时，选择 `iab`，优先复用当前会话中 URL 匹配的已有标签页和登录状态，不要新建重复标签页。不得改用 `computer-use` 接管 ChatGPT/Codex 桌面窗口，也不得用外部 Chrome、`agent-browser` 或仅看源码代替。每次导航、点击、输入或滚动后，必须重新读取 DOM/可访问状态，再决定下一步；标签页失效时只重新获取该 `iab` 会话中的标签页，不要切换浏览器。浏览器 Skill 不可用时必须说明未完成浏览器自查，不得声称验证通过。完整流程见 [Codex 内置浏览器走查](references/codex-browser-review-workflow.md)。
 
-若用户提供可访问的原型、设计稿预览或业务参考链接，使用 Codex 内置浏览器同时访问实现页与原型，按业务内容、布局层级、字段与操作、主要状态、响应式和用户明确意见逐项对照。用户明确提出的取舍、差异接受项或验收意见优先，不能被原型默认表现覆盖。
+若用户提供可访问的原型、设计稿预览或业务参考链接，编码前使用 Codex 内置浏览器建立“原型字段/操作/状态 → 实现”的对照表；完成后同时访问实现页与原型，按业务内容、布局层级、字段与操作、主要状态、响应式和用户明确意见逐项对照。原型存在不合理、缺失或与真实接口冲突时不得自行改良，必须记录差异并交由用户决策；用户明确提出的取舍、差异接受项或验收意见优先，不能被原型默认表现覆盖。
 
 用户没有明确走查意见时，不擅自替用户确认有主观取舍的视觉差异；输出走查结果、实现一致项、差异项、风险和需要用户决策的选项。浏览器技能不可用、页面无法启动、原型无权限或链接不可访问时，明确说明未完成项和原因，不得声称走查通过。
 
@@ -110,6 +110,16 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 - 新增 key 前必须依次搜索全局、业务域和当前模块语言包；已存在且语义一致的 key 直接复用，禁止在相邻业务模块重复定义同义文案。发现同类文案已在多个模块出现或预期跨模块复用时，应按复用范围主动提取到全局或业务域公共语言包，并同步替换本次涉及模块的重复 key。
 - 业务域共享 key 使用业务域命名空间，例如 `iot.clearFilter`；不得以页面名称承载跨页面通用语义。中英文语言包必须同步维护。
 - 不为整理目录而无差别迁移历史 key；仅在本次需求涉及的模块中合并已确认重复、且不影响远程暴露和现有调用契约的文案。
+
+### 枚举、字典、国际化与占位硬约束
+
+- 编码前解析 API/OpenAPI、TypeScript 类型和相邻业务契约中的枚举与 `dictKey`，逐字段列出“筛选、表格、详情、表单”的渲染方式。接口类型中带字典的字段必须保留 `/** @dictKey <key> */` 注释，作为可扫描契约。
+- 有字典的筛选与表单必须使用 `DictSelect` 或项目字典选项；表格状态使用 `DictTag`，详情只读展示使用 `DictText`。禁止硬编码枚举选项，禁止直接输出对应 `*Name` 快照；无字典的真实名称字段除外。
+- 业务 `.vue/.ts` 中用户可见文案一律使用 `t()` / `$t()`，覆盖 label、title、placeholder、按钮、列名、卡片标题与说明、Dialog/Drawer、空态、校验与消息。注释、接口/字典返回值、后端异常、mock 数据和 i18n 文件除外。
+- 新文案先复用 `common`；跨两个及以上业务模块、但不属于全局 common 的文案上提到业务域公共 `i18n/`；中英文 key 同步存在。不得在页面 i18n 重复定义已有 common 或业务域文案。
+- 每个可编辑或筛选的 `el-input`、`el-select`、`el-date-picker`、`el-input-number`、`el-autocomplete` 必须具备 i18n placeholder。确无占位语义时添加 `data-placeholder-exempt`，并以相邻中文注释说明原因。
+- 行内查询表单中，查询、重置、导出、视图切换等每个独立操作各占一个无标签 `el-form-item`；禁止在同一无标签 `el-form-item` 内堆叠多个 `el-button` 或 `el-radio-group`。间距只由表单 `gap` 管理，不使用按钮相邻 margin 或负 `margin-bottom` 补偿。
+- 交付前必须运行 `scripts/check-project-rules.ps1 -ProjectPath <项目路径> -StrictUiContracts`。直接中文、缺少 placeholder、i18n key 未在 zh/en 同步、或已声明 `@dictKey` 字段的 `*Name` 直出均为错误，不得进入 build 或交付。
 5. **复用优先**：按“综合端全局组件/Hooks → Element Plus → 页面私有业务组件 → 跨业务公共组件”的顺序选型。业务 UI 需要进入 Element Plus 选型阶段时，必须先使用 Codex 内置浏览器访问 [Element Plus 组件总览](https://element-plus.org/zh-CN/component/overview)，再阅读候选组件的官方文档，核对当前项目版本支持的 Props、Events、Slots 和公开方法；存在满足需求或可通过官方组合方式满足需求的组件时优先采用。只有综合端全局组件/Hooks 和 Element Plus 均确实无法满足时，才允许自行编写 UI 组件，并在职责清单和交付中记录已核对的候选组件及不适用原因；不得仅凭记忆、个人偏好或样式差异跳过官方组件。地图、视频等专项能力仍按对应专项规范选型，不适用本通用顺序。
 6. **实现接口**：统一走 `/@/utils/request`；函数命名先遵循当前业务域相邻 API 和最新版规范，不强行套用历史命名。
 7. **实现页面状态**：按适用性覆盖加载态、空态、错误态、权限、校验、防重复提交和资源清理。
@@ -153,6 +163,7 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 - 仅供弹窗使用的详情、候选项、字典项和业务列表由弹窗持有，并在公开的 `openDialog/openDrawer/open` 流程中按需加载；禁止父页面、弹窗挂载阶段或 `immediate` 监听提前请求。父页面只传入记录 ID、已选 ID 等本次操作上下文；只读加载失败使用弹窗局部错误态和重试，不弹全局消息。
 - 顶部或摘要工具栏已有新增等主操作时，空态不得重复放置相同按钮；只保留说明、重试、授权或当前状态独有的恢复操作。
 - 父子组件自定义事件及任何需要访问组件 ref 的模板事件必须绑定脚本中已定义的具名方法，例如 `@edit="handleEdit"`；禁止直接绑定或调用组件 ref 成员，也禁止用内联箭头函数访问 ref。普通业务方法可按需接收当前行等上下文；需要调用子组件公开方法时，由具名方法通过 `ref.value?.method(...)` 安全访问，避免挂载前在渲染阶段读取 `undefined`。
+- 模板使用全局或局部组件时，`<script setup>` 中的 `ref/reactive/computed/shallowRef/shallowReactive` 数据绑定不得与任何组件标签同名或规范化后同名，否则 Vue 会把响应式数据当作组件解析。数据状态统一使用带业务语义的 `xxxState`、`xxxData` 或放入所属 `state.xxx`；交付前必须运行项目规则扫描检查此类遮蔽。
 - 项目内部路径使用 `/@/`，避免跨层级相对路径。
 - 列表页按真实 `useTable(state)` 签名传入响应式状态，并使用返回的 `tableStyle`、分页、排序和下载能力；不要从返回值中解构不存在的 `state`。
 - 常规 CRUD 明确要求表格占满剩余高度时，页面容器建立纵向 Flex 高度链路，滚动父级和表格区写 `min-height: 0`，表格使用 `class="el-table--fit"` 与 `flex: 1`；不得使用 `100vh` 或固定像素表格高度。
@@ -196,7 +207,7 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 1. `scripts/validate-skill.ps1`（维护技能本身时）。
 2. Prettier 自动格式化和 `git diff --check`。
 3. 当前项目可用的 build/typecheck 与 lint 命令。
-4. `scripts/check-project-rules.ps1 -ProjectPath <项目路径>`，检查消息 API、路径别名、高风险违规和注释覆盖告警。
+4. `scripts/check-project-rules.ps1 -ProjectPath <项目路径> -StrictUiContracts`，检查消息 API、路径别名、高风险违规、注释覆盖、字典契约、i18n 与 placeholder；错误必须先修复。
 5. 对应最新版页面模式和 `knowledge/PIGX前端开发规范/开发检查清单.md`。
 6. 使用 Codex 内置浏览器验证核心流程；有可访问原型时同步对照，模块联邦任务同时验证独立运行和远程运行。
 

@@ -13,3 +13,5 @@
 不得恢复旧式 `const { state } = useTable(...)` 或 `const { message, messageBox } = useMessage()`。
 
 当需求明确要求表格占满页面剩余高度时，在正式骨架中增加纵向 Flex 高度链路：表格区和滚动父级使用 `min-height: 0`，`el-table` 写为 `class="el-table--fit"` 并以 `flex: 1` 填充表格区。不得使用 `100vh` 或固定像素表格高度。
+
+行内查询表单以 `gap` 控制行列间距；查询、重置、导出、视图切换等每个独立操作各写一个无标签 `el-form-item`，禁止把多个操作堆入同一个 `el-form-item`。

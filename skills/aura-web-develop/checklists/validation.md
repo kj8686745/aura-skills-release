@@ -7,7 +7,8 @@
 - [ ] 编程完成后已自动执行项目本地 Prettier，并已执行 `git diff --check`
 - [ ] build/typecheck 成功
 - [ ] lint 成功或已记录已有警告
-- [ ] 已运行 `scripts/check-project-rules.ps1 -ProjectPath <项目路径>`
+- [ ] 已运行 `scripts/check-project-rules.ps1 -ProjectPath <项目路径> -StrictUiContracts`
+- [ ] 严格 UI 契约扫描无错误：无直接中文、缺失 placeholder、zh/en i18n key 缺失、已声明 `@dictKey` 字段 `*Name` 直出或硬编码枚举
 - [ ] 无业务代码直接导入 Element Plus Message/MessageBox
 - [ ] 无错误 `@/` 别名、业务 axios 实例、凭证或部署前缀硬编码
 - [ ] 已处理注释覆盖扫描告警，或已记录告警不适用原因

@@ -7,6 +7,9 @@
 - [ ] 页面实现完成后已明确说明使用 Codex 内置浏览器自查，未用外部 Chrome、`agent-browser` 或仅看源码代替
 - [ ] 页面、页面私有组件、Composable、API、类型和 i18n 职责分离
 - [ ] i18n 已按全项目、业务域、页面专属三层复用；新增 key 前已搜索同义文案，跨页面重复文案未落入各自业务目录
+- [ ] 已解析 API/OpenAPI/类型中的枚举与 `@dictKey`，并逐项核对筛选、表格、详情和表单；字典筛选/表单使用 `DictSelect` 或项目字典选项，表格使用 `DictTag`，详情使用 `DictText`，没有硬编码枚举或对应 `*Name` 直出
+- [ ] 用户可见 label、title、placeholder、按钮、列名、卡片、Dialog/Drawer、空态、校验和消息均走 `t()` / `$t()`；已复用 common，跨两个及以上业务模块的文案已上提到业务域 i18n，zh/en key 同步存在
+- [ ] 所有可编辑或筛选控件均有 i18n placeholder；例外使用 `data-placeholder-exempt` 并有相邻中文原因说明
 - [ ] 路由页只保留布局、查询主状态和子组件编排；两个及以上业务 Dialog/Drawer 已拆为页面私有组件，复杂单弹窗也未内联堆积列表、表单和请求状态
 - [ ] 仅供弹窗使用的详情、候选项和业务列表由弹窗持有，并在公开 `open` 流程中加载；父页面、组件挂载阶段和 `immediate` 监听未提前请求
 - [ ] 父页面只传记录 ID、已选 ID 等操作上下文；保存后只刷新仍打开且确有需要的关联弹窗
@@ -26,6 +29,7 @@
 
 ## Hooks、表格与表单
 
+- [ ] `<script setup>` 的 `ref/reactive/computed/shallowRef/shallowReactive` 数据绑定未与模板中的任何全局或局部组件标签同名或规范化后同名
 - [ ] `useTable(state)` 传入响应式状态，未从返回值解构不存在的 `state`
 - [ ] 表格绑定 `tableStyle.cellStyle`、`tableStyle.headerCellStyle`
 - [ ] 表格需要撑满剩余高度时，表格区通过纵向 Flex 与 `min-height: 0` 参与高度链路，`el-table` 同时使用 `class="el-table--fit"` 和 `flex: 1`，未使用 `100vh` 或固定像素高度

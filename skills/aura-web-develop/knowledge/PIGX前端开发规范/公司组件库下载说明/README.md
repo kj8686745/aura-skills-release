@@ -96,13 +96,13 @@ npm view @fxft/ui-plus
 keywords: vue3, element-plus
 
 dist-tags:
-latest: 1.0.32
+latest: 1.0.37
 
 dist.tarball:
-https://repository.fxft.online/repository/npm-store/@fxft/ui-plus/-/ui-plus-1.0.32.tgz
+https://repository.fxft.online/repository/npm-store/@fxft/ui-plus/-/ui-plus-1.0.37.tgz
 ```
 
-tarball也可能通过 `npm-public` 仓库组返回，只要域名是 `repository.fxft.online`，并且能够读取 `@fxft/ui-plus@1.0.32`，即表示配置和下载权限正常。
+tarball也可能通过 `npm-public` 仓库组返回，只要域名是 `repository.fxft.online`，并且能够读取 `@fxft/ui-plus@1.0.37`，即表示配置和下载权限正常。
 
 常见失败：
 
@@ -116,7 +116,7 @@ tarball也可能通过 `npm-public` 仓库组返回，只要域名是 `repositor
 权限检查成功后安装固定版本：
 
 ```bash
-pnpm add @fxft/ui-plus@1.0.32 --save-exact
+pnpm add @fxft/ui-plus@1.0.37 --save-exact
 ```
 
 该 `.npmrc.example` 仅限公司内部使用，不得对外分发；由模板生成的含认证值 `.npmrc` 不得提交到代码仓库或对外分发。

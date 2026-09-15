@@ -3,7 +3,8 @@
 param(
   [Parameter(Mandatory = $true)]
   [string]$ProjectPath,
-  [string[]]$Files = @()
+  [string[]]$Files = @(),
+  [switch]$StrictUiContracts
 )
 
 $ErrorActionPreference = "Stop"
@@ -11,6 +12,7 @@ $errors = @()
 $warnings = @()
 $resolvedProjectPath = (Resolve-Path -LiteralPath $ProjectPath).Path
 $authOccurrences = @()
+$uiContractErrors = @()
 
 if ($Files.Count -gt 0) {
   $sourceFiles = foreach ($file in $Files) {
@@ -35,6 +37,16 @@ if ($Files.Count -gt 0) {
   $sourceFiles = Get-ChildItem -LiteralPath $sourceRoot -Recurse -File |
     Where-Object { $_.Extension -in @(".ts", ".tsx", ".vue", ".js", ".jsx") }
 }
+
+$allSourceRoot = Join-Path $resolvedProjectPath "src"
+$localeFiles = if (Test-Path -LiteralPath $allSourceRoot) {
+  Get-ChildItem -LiteralPath $allSourceRoot -Recurse -File |
+    Where-Object { $_.Name -in @("zh-cn.ts", "en.ts") }
+} else {
+  @()
+}
+$zhLocaleText = (($localeFiles | Where-Object { $_.Name -eq "zh-cn.ts" } | ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 }) -join "`n")
+$enLocaleText = (($localeFiles | Where-Object { $_.Name -eq "en.ts" } | ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 }) -join "`n")
 
 $messageImportPattern = 'import\s*\{(?<imports>[^}]*)\}\s*from\s*[''"]/@/hooks/message[''"]\s*;?'
 $directElementImportPattern = 'import\s*\{[^}]*\b(ElMessage|ElMessageBox|Message|MessageBox)\b[^}]*\}\s*from\s*[''"]element-plus[''"]'
@@ -74,6 +86,58 @@ function Test-CommentBefore {
   return $context -match '(?s)(<!--.*?-->|/\*.*?\*/|//[^\r\n]*)\s*$'
 }
 
+function Remove-Comments {
+  param([string]$Source)
+
+  return $Source -replace '(?s)<!--.*?-->', '' -replace '(?s)/\*.*?\*/', '' -replace '(?m)//[^\r\n]*', ''
+}
+
+function Test-I18nKeyExists {
+  param(
+    [string]$LocaleText,
+    [string]$Key
+  )
+
+  $parts = $Key -split '\.'
+  if ($parts.Count -lt 2) {
+    return $true
+  }
+
+  $pattern = '(?s)'
+  for ($index = 0; $index -lt $parts.Count; $index++) {
+    $escapedPart = [regex]::Escape($parts[$index])
+    if ($index -lt ($parts.Count - 1)) {
+      $pattern += "\b$escapedPart\s*:\s*\{.*?"
+    } else {
+      $pattern += "\b$escapedPart\s*:"
+    }
+  }
+  return $LocaleText -match $pattern
+}
+
+function Add-UiContractError {
+  param([string]$Message)
+  $script:uiContractErrors += $Message
+}
+
+$dictKeyFields = @()
+if ($StrictUiContracts) {
+  foreach ($typeFile in $sourceFiles) {
+    $typeContent = Get-Content -LiteralPath $typeFile.FullName -Raw -Encoding UTF8
+    $annotations = [regex]::Matches(
+      $typeContent,
+      '(?s)/\*\*[^*]*?@dictKey\s+(?<dictKey>[A-Za-z0-9_.-]+)[^*]*?\*/\s*(?:readonly\s+)?(?<field>[A-Za-z_$][\w$]*)\??\s*:'
+    )
+    foreach ($annotation in $annotations) {
+      $dictKeyFields += [PSCustomObject]@{
+        DictKey = $annotation.Groups['dictKey'].Value
+        Field = $annotation.Groups['field'].Value
+      }
+    }
+  }
+  $dictKeyFields = $dictKeyFields | Sort-Object DictKey, Field -Unique
+}
+
 function Get-BusinessScope {
   param([string]$RelativePath)
 
@@ -99,6 +163,72 @@ foreach ($file in $sourceFiles) {
   $relativePath = $file.FullName.Substring($resolvedProjectPath.Length + 1).Replace("\", "/")
   $content = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
   $commentText = Get-CommentText -Source $content
+
+  if ($StrictUiContracts) {
+    $isI18nFile = $relativePath -match '(^|/)i18n/' -or $file.Name -in @('zh-cn.ts', 'en.ts')
+    $isContractException = $isI18nFile -or $relativePath -match '(^|/)(api|mock)/'
+    $sourceWithoutComments = Remove-Comments -Source $content
+
+    if (-not $isContractException) {
+      if ($file.Extension -eq '.vue') {
+        $templateMatch = [regex]::Match($sourceWithoutComments, '(?is)<template\b[^>]*>(?<template>.*?)</template>')
+        if ($templateMatch.Success) {
+          $template = $templateMatch.Groups['template'].Value
+          $staticText = [regex]::Match($template, '(?s)>\s*[^<>{}]*[\u4e00-\u9fff][^<>{}]*<')
+          $staticAttribute = [regex]::Match($template, '(?is)\b(?:label|title|placeholder|content|description|empty-text|confirm-button-text|cancel-button-text)\s*=\s*["''][^"'']*[\u4e00-\u9fff][^"'']*["'']')
+          if ($staticText.Success -or $staticAttribute.Success) {
+            Add-UiContractError "$relativePath：用户可见模板文案禁止直接写中文，必须使用 t() / `$t()"
+          }
+
+          $controls = [regex]::Matches($template, '(?is)<el-(?:input|select|date-picker|input-number|autocomplete)\b(?<attributes>[^>]*)>')
+          foreach ($control in $controls) {
+            $attributes = $control.Groups['attributes'].Value
+            if ($attributes -notmatch '(?i)(?:\s|:)(?:placeholder|start-placeholder|end-placeholder|data-placeholder-exempt)\b') {
+              Add-UiContractError "$relativePath：el-$($control.Value.Split()[0].Substring(4)) 缺少 i18n placeholder；无占位语义时添加 data-placeholder-exempt 并说明原因"
+            }
+          }
+
+          $inlineForms = [regex]::Matches($template, '(?is)<el-form\b(?<attributes>[^>]*)>(?<body>.*?)</el-form>')
+          foreach ($inlineForm in $inlineForms) {
+            if ($inlineForm.Groups['attributes'].Value -notmatch '(?i)(?:\binline\b|:inline\s*=\s*["'']true["''])') {
+              continue
+            }
+            $formItems = [regex]::Matches($inlineForm.Groups['body'].Value, '(?is)<el-form-item\b(?<attributes>[^>]*)>(?<body>.*?)</el-form-item>')
+            foreach ($formItem in $formItems) {
+              if ($formItem.Groups['attributes'].Value -match '(?i)\b:?(?:label|prop)\s*=') {
+                continue
+              }
+              $operationCount = [regex]::Matches($formItem.Groups['body'].Value, '(?is)<el-(?:button|radio-group)\b').Count
+              if ($operationCount -gt 1) {
+                Add-UiContractError "$relativePath：行内查询表单的无标签 el-form-item 包含 $operationCount 个操作控件；每个操作必须独占一个 el-form-item，并由 form gap 控制间距"
+              }
+            }
+          }
+        }
+      }
+
+      if ($file.Extension -in @('.ts', '.tsx', '.js', '.jsx', '.vue') -and $sourceWithoutComments -match '(?s)[''\"]([^''\"]*[\u4e00-\u9fff][^''\"]*)[''\"]') {
+        Add-UiContractError "$relativePath：业务脚本中存在直接中文文案，必须使用 i18n；后端异常请保留在 api/mock 边界"
+      }
+    }
+
+    $i18nCalls = [regex]::Matches($sourceWithoutComments, '(?<![\w$])(?:\$t|t)\(\s*[''\"](?<key>[A-Za-z_$][\w$]*(?:\.[\w$-]+)+)[''\"]')
+    foreach ($call in $i18nCalls) {
+      $key = $call.Groups['key'].Value
+      if (-not (Test-I18nKeyExists -LocaleText $zhLocaleText -Key $key) -or -not (Test-I18nKeyExists -LocaleText $enLocaleText -Key $key)) {
+        Add-UiContractError "$relativePath：i18n key $key 未在 zh-cn.ts 与 en.ts 中同步存在"
+      }
+    }
+
+    if ($file.Extension -eq '.vue' -and $relativePath -match '^src/views/') {
+      foreach ($dictField in $dictKeyFields) {
+        $displayField = "$($dictField.Field)Name"
+        if ($sourceWithoutComments -match "(?<![\w$])$([regex]::Escape($displayField))(?![\w$])") {
+          Add-UiContractError "$relativePath：@dictKey $($dictField.DictKey) 字段 $($dictField.Field) 直接使用 $displayField；筛选/表格/详情/表单必须使用 DictSelect、DictTag 或 DictText"
+        }
+      }
+    }
+  }
 
   # 统一消息 Hook 本身是唯一允许直接封装 Element Plus 消息 API 的边界。
   $isMessageHook = $relativePath -eq "src/hooks/message.ts"
@@ -169,6 +299,25 @@ foreach ($file in $sourceFiles) {
   }
 
   if ($file.Extension -eq '.vue') {
+	$templateMatch = [regex]::Match($content, '(?is)<template\b[^>]*>(?<template>.*?)</template>')
+	$scriptSetupMatch = [regex]::Match($content, '(?is)<script\b[^>]*\bsetup\b[^>]*>(?<script>.*?)</script>')
+	if ($templateMatch.Success -and $scriptSetupMatch.Success) {
+		$nativeTags = @('a','article','aside','button','canvas','code','div','em','footer','form','h1','h2','h3','h4','h5','h6','header','i','img','input','label','li','main','nav','ol','p','section','select','small','span','strong','table','tbody','td','textarea','th','thead','tr','ul')
+		$componentTags = [regex]::Matches($templateMatch.Groups['template'].Value, '(?i)<(?<tag>[a-z][a-z0-9-]*)\b') |
+			ForEach-Object { $_.Groups['tag'].Value.ToLowerInvariant() } |
+			Where-Object { $_ -notin $nativeTags } |
+			Select-Object -Unique
+		$dataBindings = [regex]::Matches($scriptSetupMatch.Groups['script'].Value, '(?m)\b(?:const|let|var)\s+(?<name>[A-Za-z_$][\w$]*)\s*=\s*(?:ref|reactive|computed|shallowRef|shallowReactive)\s*\(')
+		foreach ($binding in $dataBindings) {
+			$bindingName = $binding.Groups['name'].Value
+			$normalizedBinding = $bindingName.Replace('-', '').ToLowerInvariant()
+			$shadowedTag = $componentTags | Where-Object { $_.Replace('-', '').ToLowerInvariant() -eq $normalizedBinding } | Select-Object -First 1
+			if ($shadowedTag) {
+				$errors += "$relativePath：数据绑定 $bindingName 与模板组件 <$shadowedTag> 同名，会将响应式对象误解析为组件；请改用带业务语义的 xxxState、xxxData 或 state.xxx"
+			}
+		}
+	}
+
 	$templateEvents = [regex]::Matches($content, '(?is)@[\w:-]+(?:\.[\w-]+)*\s*=\s*["''](?<handler>[^"'']+)["'']')
 	foreach ($templateEvent in $templateEvents) {
 		$handler = $templateEvent.Groups['handler'].Value.Trim()
@@ -223,6 +372,10 @@ foreach ($group in $crossBusinessAuthGroups) {
 
 foreach ($warning in $warnings) {
   Write-Host "! $warning" -ForegroundColor Yellow
+}
+
+foreach ($uiContractError in ($uiContractErrors | Select-Object -Unique)) {
+  $errors += $uiContractError
 }
 
 foreach ($errorItem in $errors) {

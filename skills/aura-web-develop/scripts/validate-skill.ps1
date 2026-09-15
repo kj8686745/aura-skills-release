@@ -84,7 +84,7 @@ if (Test-Path -LiteralPath $skillFile) {
     $errors += "SKILL.md 未声明统一消息 Hook 的精确导入方式"
   }
 
-  foreach ($keyword in @('el-table--fit', 'el-scrollbar', 'overflow: auto/scroll', 'filterable', 'admin-menu-permission-workflow.md', 'aura-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design', '外部技能依赖预检', '明确授权不得执行安装', 'Codex 内置浏览器', 'browser:control-in-app-browser', '原型', '待决策', '左侧强调条', '按权限编码去重', '完整菜单树', '业务标识 + 功能动作', 'Prettier', 'git diff --check')) {
+  foreach ($keyword in @('el-table--fit', 'el-scrollbar', 'overflow: auto/scroll', 'filterable', 'admin-menu-permission-workflow.md', 'aura-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design', '外部技能依赖预检', '明确授权不得执行安装', 'Codex 内置浏览器', 'browser:control-in-app-browser', '原型', '待决策', '左侧强调条', '按权限编码去重', '完整菜单树', '业务标识 + 功能动作', 'Prettier', 'git diff --check', 'DictTag', 'DictText', '@dictKey', 'StrictUiContracts', 'data-placeholder-exempt')) {
     if (-not $skillContent.Contains($keyword)) {
       $errors += "SKILL.md 缺少关键规则：$keyword"
     }
@@ -184,6 +184,11 @@ if (Test-Path -LiteralPath $projectRuleScript) {
   foreach ($keyword in @('nativeScrollCssPattern', 'nativeScrollUtilityPattern', '普通内容区请改用 el-scrollbar')) {
     if (-not $projectRuleContent.Contains($keyword)) {
       $errors += "项目规则扫描缺少滚动区域检查：$keyword"
+    }
+  }
+  foreach ($keyword in @('StrictUiContracts', 'Test-I18nKeyExists', 'data-placeholder-exempt', '@dictKey', 'uiContractErrors')) {
+    if (-not $projectRuleContent.Contains($keyword)) {
+      $errors += "项目规则扫描缺少 UI 契约检查：$keyword"
     }
   }
   foreach ($keyword in @('authOccurrences', 'Get-BusinessScope', 'crossBusinessAuthGroups', '跨业务同码', '单一业务内多处 v-auth 复用无需改名')) {
