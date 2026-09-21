@@ -2,9 +2,10 @@
 name: aura-web-develop
 description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + Vite + TypeScript 业务开发、CRUD、接口封装、正式菜单与按钮权限、组件复用、统一视觉风格与样式资源适配。模块联邦配置由本技能实现，并串联检查技能做改前基线与改后复检；用于 aura-pigx-cli nexus 项目及其业务远程模块。
 ---
+
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.25`（2026-09-14）。
+当前版本：`1.2.26`（2026-09-21）。
 
 把本技能作为 PIGX 模块联邦（综合端）的规范执行器。先读取最新版规范，再分析和修改代码；不得用技能中的历史示例覆盖最新版规范。
 
@@ -73,7 +74,6 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 
 再按任务类型补读：
 
-
 | 任务类型                             | 必读资料                                                                                                                             |
 | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
 | 路由、菜单、隐藏页                   | `knowledge/PIGX前端开发规范/路由与菜单规范.md`                                                                                       |
@@ -120,6 +120,7 @@ description: 按最新版 PIGX 模块联邦（综合端）规范完成 Vue 3 + V
 - 每个可编辑或筛选的 `el-input`、`el-select`、`el-date-picker`、`el-input-number`、`el-autocomplete` 必须具备 i18n placeholder。确无占位语义时添加 `data-placeholder-exempt`，并以相邻中文注释说明原因。
 - 行内查询表单中，查询、重置、导出、视图切换等每个独立操作各占一个无标签 `el-form-item`；禁止在同一无标签 `el-form-item` 内堆叠多个 `el-button` 或 `el-radio-group`。间距只由表单 `gap` 管理，不使用按钮相邻 margin 或负 `margin-bottom` 补偿。
 - 交付前必须运行 `scripts/check-project-rules.ps1 -ProjectPath <项目路径> -StrictUiContracts`。直接中文、缺少 placeholder、i18n key 未在 zh/en 同步、或已声明 `@dictKey` 字段的 `*Name` 直出均为错误，不得进入 build 或交付。
+
 5. **复用优先**：按“综合端全局组件/Hooks → Element Plus → 页面私有业务组件 → 跨业务公共组件”的顺序选型。业务 UI 需要进入 Element Plus 选型阶段时，必须先使用 Codex 内置浏览器访问 [Element Plus 组件总览](https://element-plus.org/zh-CN/component/overview)，再阅读候选组件的官方文档，核对当前项目版本支持的 Props、Events、Slots 和公开方法；存在满足需求或可通过官方组合方式满足需求的组件时优先采用。只有综合端全局组件/Hooks 和 Element Plus 均确实无法满足时，才允许自行编写 UI 组件，并在职责清单和交付中记录已核对的候选组件及不适用原因；不得仅凭记忆、个人偏好或样式差异跳过官方组件。地图、视频等专项能力仍按对应专项规范选型，不适用本通用顺序。
 6. **实现接口**：统一走 `/@/utils/request`；函数命名先遵循当前业务域相邻 API 和最新版规范，不强行套用历史命名。
 7. **实现页面状态**：按适用性覆盖加载态、空态、错误态、权限、校验、防重复提交和资源清理。
@@ -170,7 +171,7 @@ import { useMessage, useMessageBox } from '/@/hooks/message';
 - 普通内容区域需要滚动时必须使用 Element Plus `el-scrollbar`，不得用 `overflow: auto/scroll`、`overflow-y-auto`、`overflow-auto` 等原生 CSS/Tailwind 滚动实现；查询区、工具栏和分页置于滚动区域外。`el-table`、`el-tree`、`el-select` 等已有内置滚动能力的 Element Plus 组件优先使用其公开高度、最大高度或组件自身滚动能力，不额外套 `el-scrollbar`。
 - v-loading 覆盖的区域如果自身或实际滚动容器可能滚动，loading 期间必须锁定该滚动容器（overflow: hidden 或等效状态类），loading 结束后恢复；局部表格、树、弹窗和地图只锁定其实际覆盖区域，不得误锁整页。
 - 新建或修改普通 `el-select` 默认添加 `filterable`；仅用户明确关闭、组件不兼容或需求明确禁止搜索时例外，并说明原因。
-- 权限按钮遵循项目 `v-auth` 约定；表单提交前校验，提交期间禁用，成功后再关闭和刷新。
+- 权限按钮遵循项目 `v-auth` 约定；只承载受限操作的上层容器必须按全部子操作权限的并集控制可见性，例如表格操作列使用 `v-if="permissions.any([...])"`，同时保留各按钮自己的 `v-auth`。卡片操作区、仅含受限按钮的工具栏分组、下拉触发器和批量选择列同理，禁止在所有子操作均无权限时留下空列、空菜单、空白 footer、分隔线或占位间距；包含查看、刷新等无权限操作的混合容器不得整体隐藏，只隐藏其中受限分组。表单提交前校验，提交期间禁用，成功后再关闭和刷新。
 - 所有业务表单必须从 `/@/hooks/form` 使用 `useForm`；通过 `validateForm` 校验，通过 `resetForm` 重置字段，通过 `clearFormValidate` 清理复用弹窗的历史校验状态。业务页面禁止直接调用表单实例的 `validate/resetFields/clearValidate`，也不得重复编写对应逻辑。
 - import 图片、SVG、视频等先经 `getStaticResourceUrl`；Worker、decoder 等 public 资源经 `getPublicResourceUrl`。
 - 业务开发需要颜色时，按 `--el-*` → `--next-*` → `--fxft-*` 的顺序从现有主题变量中选用；变量含义和场景以 `knowledge/PIGX前端开发规范/样式布局与静态资源规范.md` 为准。

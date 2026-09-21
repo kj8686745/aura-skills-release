@@ -8,16 +8,16 @@ PIGX 模块联邦（综合端）是基于 Vue 3 的模块联邦前端项目。�
 
 ## 二、技术栈
 
-| 分类 | 当前实现 |
-| --- | --- |
-| 视图 | Vue 3.5、TypeScript、`<script setup>` |
-| 构建 | Vite 6、pnpm 10、Node.js 20.12 及以上 |
-| UI | Element Plus 2.14.3，Module Federation singleton |
-| 状态与路由 | Pinia 2、Vue Router 4 |
-| 国际化 | Vue I18n 9 |
-| 请求 | Axios，经 `/@/utils/request` 懒加载封装 |
-| 模块联邦 | `@module-federation/vite@1.18.2`、`@module-federation/enhanced@2.8.0` |
-| 样式 | SCSS、Tailwind CSS、主题 CSS 变量、远程 scoped Tailwind |
+| 分类       | 当前实现                                                              |
+| ---------- | --------------------------------------------------------------------- |
+| 视图       | Vue 3.5、TypeScript、`<script setup>`                                 |
+| 构建       | Vite 6、pnpm 10、Node.js 20.12 及以上                                 |
+| UI         | Element Plus 2.14.3，Module Federation singleton                      |
+| 状态与路由 | Pinia 2、Vue Router 4                                                 |
+| 国际化     | Vue I18n 9                                                            |
+| 请求       | Axios，经 `/@/utils/request` 懒加载封装                               |
+| 模块联邦   | `@module-federation/vite@1.18.2`、`@module-federation/enhanced@2.8.0` |
+| 样式       | SCSS、Tailwind CSS、主题 CSS 变量、远程 scoped Tailwind               |
 
 禁止恢复 `@originjs/vite-plugin-federation`、`vite-plugin-top-level-await` 或旧静态远程注册表。
 
@@ -110,7 +110,7 @@ main.ts
 ## 九、每个页面必须具备
 
 - 加载态、空态、错误态或明确的不适用说明。
-- 按钮权限、表单校验和提交防重复。
+- 按钮权限、权限容器可见性、表单校验和提交防重复；所有受限子操作均无权限时不保留空操作列或空白操作区。
 - 使用主题变量，不硬编码主题色。
 - 独立运行和远程运行均正确。
 - 静态资源请求指向资源提供方，无部署前缀硬编码。
