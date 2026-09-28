@@ -15,6 +15,10 @@
 
 ## 坐标规则
 
+- `gaodeCorrection` 仅在坐标系已确认且确有纠偏需求时开启；不得凭经验设置。
+- `devicePixelRatio`、`drawOnce`、`drawGeojsonActions` 按实际交互与设备性能选择。
+- 私有 registry 仅用于依赖安装，不写入业务代码。
+
 统一在适配层转换为：
 
 ```typescript
@@ -92,6 +96,9 @@
 - 热力图图层使用独立业务图层名，便于清理。
 
 ## 绘制与 GeoJSON 规则
+
+- 普通位置选择通过 `map-click` 获取坐标，用 `addPoint` 回显唯一 marker，不使用 `startDraw('point')`、`draw-end` 或 `initDraw`；未要求自定义视觉时使用默认 marker，不传图标或尺寸。
+- 外部状态驱动绘制或 GeoJSON 样式时使用 `setDrawSymbol` 和 `initDraw` 的 `symbol` 参数，不修改私有字段。
 
 - 交互绘制使用 `startDraw`。
 - API 直接绘制使用 `drawByType`。

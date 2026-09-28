@@ -2,7 +2,7 @@
 
 `fmap-2d` 是公司 2D 地图业务开发规范技能，用于指导 Agent 在 Vue 3 + Vite + TypeScript 项目中接入 `@fxft/ui-plus`，并统一使用 `FxftMap` 实现地图业务。
 
-当前版本：`1.0.5`。
+当前版本：`1.0.6`。
 
 ## 适用场景
 

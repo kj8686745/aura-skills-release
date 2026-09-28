@@ -105,16 +105,15 @@ foreach ($file in $requiredFiles) {
 
 Test-FileContains "SKILL.md" "name: fmap-2d"
 Test-FileMatches "SKILL.md" '(?m)^  version: "\d+\.\d+\.\d+"$' 'metadata.version 必须是语义化版本'
-Test-FileContains "SKILL.md" "重要：先读哪些文件"
-Test-FileContains "SKILL.md" "强制工作流"
-Test-FileContains "SKILL.md" "当前项目硬性约束"
-Test-FileContains "SKILL.md" "交付格式"
+Test-FileContains "SKILL.md" "按场景读取"
+Test-FileContains "SKILL.md" "接入底线"
+Test-FileContains "SKILL.md" "map-business-rules.md"
+Test-FileContains "SKILL.md" "验证与交付"
 Test-FileContains "SKILL.md" "@fxft/ui-plus"
 Test-FileContains "SKILL.md" "FxftMap"
 Test-FileContains "SKILL.md" "不得自行引入"
-Test-FileContains "SKILL.md" "首次调用提示"
-Test-FileContains "SKILL.md" "1.0.36"
-Test-FileContains "SKILL.md" "1.0.37"
+Test-FileContains "SKILL.md" "使用说明"
+Test-FileContains "SKILL.md" "references/ui-plus-installation.md"
 Test-FileContains "USAGE.md" '$fmap-2d'
 Test-FileContains "USAGE.md" "可复制提示词"
 Test-FileContains "agents/openai.yaml" '$fmap-2d'
@@ -163,6 +162,18 @@ Get-ChildItem -LiteralPath (Join-Path $Root 'scripts') -File -Filter '*.ps1' | F
   $tokens = $null; $parseErrors = $null
   [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$parseErrors) | Out-Null
   foreach ($parseError in $parseErrors) { $Errors.Add("PowerShell 语法错误：$($_.Name):$($parseError.Extent.StartLineNumber) $($parseError.Message)") }
+}
+
+
+# 校验按需读取入口，避免拆分后参考文档失联。
+$entryText = Get-Content -LiteralPath (Join-Path $Root 'SKILL.md') -Raw -Encoding UTF8
+foreach ($link in [regex]::Matches($entryText, '\]\((?<path>[^)]+)\)')) {
+  $relativeLink = $link.Groups['path'].Value
+  if ($relativeLink -match '^(https?://|#)') { continue }
+  $target = Join-Path $Root ($relativeLink -split '#', 2)[0]
+  if (-not (Test-Path -LiteralPath $target -PathType Leaf)) {
+    [void]$Errors.Add("SKILL.md 引用不存在：$relativeLink")
+  }
 }
 
 if ($Errors.Count -gt 0) {

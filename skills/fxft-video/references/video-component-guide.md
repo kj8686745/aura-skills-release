@@ -25,6 +25,8 @@ FLV/MPEG-TS 的 `hasAudio`：未传表示自动模式；未传或显式 `true` �
 
 ## FxftWebVideo
 
+`fullscreen` 默认开启；录像、截图、缩放和 PTZ 通过 `features` 显式开启。PTZ 仅在 `source.kind === 'live'` 且播放器可操作时可用；按下发 `{ command, direction: command, phase: 'start', speed }`，松开发 `{ command, direction: 'stop', phase: 'stop', speed }`。
+
 主要 Props：
 
 | Prop | 默认值 | 说明 |

@@ -44,6 +44,18 @@ Get-ChildItem -LiteralPath $Root -Recurse -File | ForEach-Object {
   }
 }
 
+
+# 校验按需读取入口，避免拆分后参考文档失联。
+$entryText = Get-Content -LiteralPath (Join-Path $Root 'SKILL.md') -Raw -Encoding UTF8
+foreach ($link in [regex]::Matches($entryText, '\]\((?<path>[^)]+)\)')) {
+  $relativeLink = $link.Groups['path'].Value
+  if ($relativeLink -match '^(https?://|#)') { continue }
+  $target = Join-Path $Root ($relativeLink -split '#', 2)[0]
+  if (-not (Test-Path -LiteralPath $target -PathType Leaf)) {
+    [void]$Errors.Add("SKILL.md 引用不存在：$relativeLink")
+  }
+}
+
 if ($Errors.Count) {
   Write-Host 'fxft-video 技能校验失败：' -ForegroundColor Red
   $Errors | ForEach-Object { Write-Host "- $_" -ForegroundColor Red }

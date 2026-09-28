@@ -40,6 +40,18 @@ Get-ChildItem -LiteralPath (Join-Path $root 'scripts') -File -Filter '*.ps1' | F
   foreach ($parseError in $parseErrors) { [void]$errors.Add("PowerShell 语法错误：$($_.Name):$($parseError.Extent.StartLineNumber) $($parseError.Message)") }
 }
 
+
+# 校验按需读取入口，避免拆分后参考文档失联。
+$entryText = Get-Content -LiteralPath (Join-Path $Root 'SKILL.md') -Raw -Encoding UTF8
+foreach ($link in [regex]::Matches($entryText, '\]\((?<path>[^)]+)\)')) {
+  $relativeLink = $link.Groups['path'].Value
+  if ($relativeLink -match '^(https?://|#)') { continue }
+  $target = Join-Path $Root ($relativeLink -split '#', 2)[0]
+  if (-not (Test-Path -LiteralPath $target -PathType Leaf)) {
+    [void]$Errors.Add("SKILL.md 引用不存在：$relativeLink")
+  }
+}
+
 foreach ($errorItem in $errors) { Write-Host "✗ $errorItem" -ForegroundColor Red }
 if ($errors.Count -gt 0) { exit 1 }
 Write-Host "✓ aura-web-project-router $version 技能校验通过。" -ForegroundColor Green

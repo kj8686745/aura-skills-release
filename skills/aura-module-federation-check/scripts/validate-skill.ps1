@@ -109,6 +109,18 @@ if ($SourceStandardsPath) {
 	}
 }
 
+
+# 校验按需读取入口，避免拆分后参考文档失联。
+$entryText = Get-Content -LiteralPath (Join-Path $resolvedSkillPath 'SKILL.md') -Raw -Encoding UTF8
+foreach ($link in [regex]::Matches($entryText, '\]\((?<path>[^)]+)\)')) {
+  $relativeLink = $link.Groups['path'].Value
+  if ($relativeLink -match '^(https?://|#)') { continue }
+  $target = Join-Path $resolvedSkillPath ($relativeLink -split '#', 2)[0]
+  if (-not (Test-Path -LiteralPath $target -PathType Leaf)) {
+    [void]$Errors.Add("SKILL.md 引用不存在：$relativeLink")
+  }
+}
+
 foreach ($item in $errors) { Write-Host "✗ $item" -ForegroundColor Red }
 if ($errors.Count -gt 0) {
 	Write-Host "技能校验失败：共 $($errors.Count) 项。" -ForegroundColor Red

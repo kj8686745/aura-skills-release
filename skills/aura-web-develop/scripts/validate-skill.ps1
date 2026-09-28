@@ -79,22 +79,46 @@ if (Test-Path -LiteralPath $skillFile) {
     $errors += "SKILL.md 展示版本与 VERSION 不一致"
   }
 
-  $requiredMessageImport = "import { useMessage, useMessageBox } from '/@/hooks/message';"
-  if (-not $skillContent.Contains($requiredMessageImport)) {
-    $errors += "SKILL.md 未声明统一消息 Hook 的精确导入方式"
-  }
-
-  foreach ($keyword in @('el-table--fit', 'el-scrollbar', 'overflow: auto/scroll', 'filterable', 'admin-menu-permission-workflow.md', 'aura-module-federation-check', 'v-auth', '用户明确指定', '首次调用提示', 'fmap-2d', 'fxft-video', 'frontend-design', '外部技能依赖预检', '明确授权不得执行安装', 'Codex 内置浏览器', 'browser:control-in-app-browser', '原型', '待决策', '左侧强调条', '按权限编码去重', '完整菜单树', '业务标识 + 功能动作', 'Prettier', 'git diff --check', 'DictTag', 'DictText', '@dictKey', 'StrictUiContracts', 'data-placeholder-exempt')) {
+  # 入口只校验导航与底线；详细约束在对应资料中校验。
+  foreach ($keyword in @('按场景读取', 'dayjs', 'aura-module-federation-check', 'StrictUiContracts')) {
     if (-not $skillContent.Contains($keyword)) {
-      $errors += "SKILL.md 缺少关键规则：$keyword"
+      $errors += "SKILL.md 缺少入口约束：$keyword"
     }
   }
 
-	foreach ($keyword in @('/@/hooks/form', 'validateForm', 'clearFormValidate', 'resetForm')) {
-		if (-not $skillContent.Contains($keyword)) {
-			$errors += "SKILL.md 缺少表单 Hook 硬约束：$keyword"
-		}
-	}
+  foreach ($link in [regex]::Matches($skillContent, '\]\((?<path>[^)]+)\)')) {
+    $relativeLink = $link.Groups['path'].Value
+    if ($relativeLink -match '^(https?://|#)') { continue }
+    $targetPath = Join-Path $resolvedSkillPath ($relativeLink -split '#', 2)[0]
+    if (-not (Test-Path -LiteralPath $targetPath)) {
+      $errors += "SKILL.md 引用不存在：$relativeLink"
+    }
+  }
+
+  $ruleDocuments = @{
+    'references/business-object-loading.md' = @('入口上下文', '详情接口', 'keep-alive', '旧请求')
+    'references/date-time-guidelines.md' = @('dayjs', 'isValid()', 'toDate()', 'YYYY-MM-DD HH:mm:ss')
+    'references/ui-data-contracts.md' = @('DictTag', 'DictText', '@dictKey', 'StrictUiContracts', 'data-placeholder-exempt')
+    'references/implementation-rules.md' = @('el-table--fit', 'el-scrollbar', 'overflow: auto/scroll', 'filterable', 'v-auth', '/@/hooks/form')
+    'references/component-selection.md' = @('Element Plus', 'Resolver', 'aura-module-federation-check')
+    'references/message-feedback-guidelines.md' = @("import { useMessage, useMessageBox } from '/@/hooks/message';")
+  }
+  foreach ($relativeDocument in $ruleDocuments.Keys) {
+    if (-not $skillContent.Contains($relativeDocument)) {
+      $errors += "SKILL.md 缺少规则导航：$relativeDocument"
+    }
+    $documentPath = Join-Path $resolvedSkillPath $relativeDocument
+    if (-not (Test-Path -LiteralPath $documentPath)) {
+      $errors += "缺少规则文档：$relativeDocument"
+      continue
+    }
+    $documentContent = Get-Content -LiteralPath $documentPath -Raw -Encoding UTF8
+    foreach ($keyword in $ruleDocuments[$relativeDocument]) {
+      if (-not $documentContent.Contains($keyword)) {
+        $errors += "$relativeDocument 缺少关键规则：$keyword"
+      }
+    }
+  }
 
   $frontmatterMatch = [regex]::Match($skillContent, "\A---\r?\n(?<body>.*?)\r?\n---", "Singleline")
   if (-not $frontmatterMatch.Success) {

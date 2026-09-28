@@ -21,6 +21,8 @@
 
 ## 请求与接口
 
+- [ ] 已按[已有业务对象的数据加载约束](../references/business-object-loading.md)确定数据来源；页面、Tab、面板、抽屉、弹窗均按实际场景加载详情，入口只传标识与上下文，操作类型没有由 ID 是否存在统一推断
+- [ ] 未将表格行、卡片、树节点、地图点位、Props、路由 state 或缓存直接作为详情/表单；回填与提交显式映射，加载失败不回退入口快照，旧请求不覆盖新目标
 - [ ] 请求统一使用 `/@/utils/request`，未直接创建 axios 实例
 - [ ] API 命名遵循当前业务域与最新版规范，未强制旧版五段式
 - [ ] 字段名、类型、必填性和单值/数组结构与明确接口契约一致
@@ -29,6 +31,8 @@
 
 ## Hooks、表格与表单
 
+- [ ] 日期时间处理遵循[日期与时间处理强制约束](../references/date-time-guidelines.md)，统一使用 `dayjs` 或基于它的公共工具；未用字符串截取、手写运算、原生 `Date` 运算或其它日期库替代
+- [ ] 时间空值与无效值、显示精度、接口格式、时间戳单位和时区按契约处理；必要的原生 `Date` 通过 `.toDate()` 转换，插件复用项目注册
 - [ ] `<script setup>` 的 `ref/reactive/computed/shallowRef/shallowReactive` 数据绑定未与模板中的任何全局或局部组件标签同名或规范化后同名
 - [ ] `useTable(state)` 传入响应式状态，未从返回值解构不存在的 `state`
 - [ ] 表格绑定 `tableStyle.cellStyle`、`tableStyle.headerCellStyle`
