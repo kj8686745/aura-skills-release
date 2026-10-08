@@ -5,7 +5,7 @@ description: 按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + 
 
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.2.27`（2026-09-28）。
+当前版本：`1.2.28`（2026-10-08）。
 
 ## 执行入口
 
@@ -43,7 +43,7 @@ description: 按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + 
 | 公司组件库依赖安装 | [下载与权限](knowledge/PIGX前端开发规范/公司组件库下载说明/README.md) |
 | API/Apifox / Figma | 分别读取 [Apifox 流程](recipes/apifox-workflow.md) 与 [MCP 指南](references/apifox-mcp-guide.md) / [Figma 流程](references/figma-design-workflow.md) |
 | 新页面、复杂组件、接口契约或副作用注释 | [注释规范](references/code-comment-guidelines.md) |
-| 可见页面/交互改造验收，或用户提供可访问原型 | [Codex 内置浏览器走查](references/codex-browser-review-workflow.md)；原型在编码前建立对照，完成后复核；浏览器不可用时如实说明 |
+| 可见页面/交互改造验收，或用户提供可访问原型 | [Codex 内置浏览器走查](references/codex-browser-review-workflow.md)；按当前工具能力连接，不以旧技能名缺失判定不可用；原型在编码前建立对照，完成后复核 |
 
 ## 页面模式
 

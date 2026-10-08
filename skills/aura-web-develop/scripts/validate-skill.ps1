@@ -241,7 +241,7 @@ if (Test-Path -LiteralPath $skillDependencyGuide) {
 $browserReviewGuide = Join-Path $resolvedSkillPath "references\codex-browser-review-workflow.md"
 if (Test-Path -LiteralPath $browserReviewGuide) {
   $browserReviewContent = Get-Content -LiteralPath $browserReviewGuide -Raw -Encoding UTF8
-  foreach ($keyword in @('Codex 内置浏览器', 'browser:control-in-app-browser', '用户明确意见', '待决策', '不得声称走查通过')) {
+  foreach ($keyword in @('Codex 内置浏览器', 'cua_repl', 'iab', '用户明确意见', '待决策', '不得声称走查通过')) {
     if (-not $browserReviewContent.Contains($keyword)) { $errors += "Codex 内置浏览器走查参考缺少关键内容：$keyword" }
   }
 }
