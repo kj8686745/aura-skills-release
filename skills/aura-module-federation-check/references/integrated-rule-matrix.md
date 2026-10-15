@@ -17,7 +17,7 @@
 | 规则 | 级别 | 判定 |
 |---|---|---|
 | `MF-TYPE-001` | error | 项目目录或 `package.json` 无法读取。 |
-| `MF-TYPE-002` | pass | 同时命中综合端基础配置、标准 expose、运行时注册表和 Vite federation。 |
+| `MF-TYPE-002` | pass | 同时命中综合端基础配置、标准 expose、公共包运行时绑定，以及 Vite federation。 |
 | `MF-TYPE-003` | unsupported | 只命中生产端 exposes，返回退出码 `3`。 |
 | `MF-TYPE-004` | unsupported | 只命中消费端 remotes/runtime，返回退出码 `3`。 |
 | `MF-TYPE-005` | error | 同时命中非综合端的生产和消费特征，或证据不足，返回退出码 `2`。 |
@@ -30,9 +30,9 @@
 |---|---|---|
 | `MF-ID-001` | error | 业务源码、环境变量、构建配置、根 README 或包信息仍包含模板占位名。规范文档目录不参与扫描。 |
 | `MF-ID-002` | error | 缺少 `remoteName`、`remoteEntryName` 或 `systemId`。 |
-| `MF-ID-003` | error | `remoteName` 不是 kebab-case，或 `remoteEntryName` 不是 lowerCamelCase。 |
+| `MF-ID-003` | error | `remoteName` 不是 kebab-case，或 `remoteEntryName` 不是有效部署目录；1.2.0 支持 `/aura/orderWeb` 多级路径。 |
 | `MF-ID-004` | error | PostCSS/Tailwind scope 不等于 `aura-mf-remote-<remoteName>`。 |
-| `MF-ID-005` | error | 启动缓存键前缀与 `systemId` 不一致。 |
+| `MF-ID-005` | error | 启动缓存键前缀不一致：使用 `remoteName`；还须人工核对 main.ts 与 index.html 一致。 |
 | `MF-ID-006` | warning | `package.json.name` 与 `remoteName` 不一致。 |
 | `MF-ID-007` | warning | 非根路径 `VITE_PUBLIC_PATH` 与 `remoteEntryName` 前缀不一致。 |
 | `MF-ID-008` | manual | 部署环境内三个身份的唯一性无法仅靠单仓库确认。 |
@@ -45,12 +45,16 @@
 |---|---|---|
 | `MF-DEP-001` | error | 缺少 `@module-federation/vite` 或 `@module-federation/enhanced`。 |
 | `MF-DEP-002` | error | 仍使用 `@originjs/vite-plugin-federation` 或 `vite-plugin-top-level-await`。 |
-| `MF-DEP-003` | error | 明确配置的 Node 版本低于 `20.12.0`，或 pnpm 版本低于 `10.28.0`。 |
+| `MF-DEP-003` | error | 1.2.0 的 Node 约束低于 `22`，或 pnpm 低于 `10.28.0`；复杂 Node 范围为 warning 待人工核对。 |
 | `MF-VITE-001` | error | 缺少 federation 插件、当前容器名、`remoteEntry.js` 或 manifest。 |
 | `MF-VITE-002` | error | Vue、Vue Router、Vue I18n、Pinia、Element Plus 未配置 singleton。 |
-| `MF-VITE-003` | error | Element Plus 版本或 requiredVersion 未对齐 `2.14.3`。 |
+| `MF-VITE-003` | error | Element Plus 版本或 requiredVersion 未对齐：`2.14.6`。 |
 | `MF-VITE-004` | error | 未禁用 Module Preload，或缺少远程预加载跳过插件。 |
 | `MF-VITE-005` | warning | `bundleAllCSS` 不是 `false`，可能破坏 expose 级样式加载。 |
+
+| `MF-DEP-004` | error / manual | web-kit 未固定 `1.6.15`、已安装关键 exports 缺失或版本不一致为 error；未安装为 manual。 |
+| `MF-VITE-006` | error | 公共包模式缺少联邦扫描、SSR 清理、dev 优化、AutoImport 工厂或 auraOptimizeDeps 接入。 |
+| `MF-VITE-007` | error | 公共包模式没有通过 createAuraPostcssPlugins 绑定 PostCSS。 |
 
 ## 四、运行时外壳
 
@@ -58,9 +62,11 @@
 |---|---|---|
 | `MF-RUNTIME-001` | error | 缺少综合端标准配置、注册表、远程入口、i18n、样式或 Element Provider 文件。 |
 | `MF-RUNTIME-002` | error | 标准 `i18n/langs`、scoped Tailwind 或 runtime expose 缺失。 |
-| `MF-RUNTIME-003` | error | 远程路由没有真实 `aura-mf-remote-scope` 根节点，或 Provider 未放在该根节点内部。 |
-| `MF-RUNTIME-004` | error | 缺少加载失败隔离、重新加载、manifest/i18n/style 缓存刷新能力。 |
-| `MF-RUNTIME-005` | error | 缺少运行时远程注册与入口标准化能力。 |
+
+| `MF-RUNTIME-006` | error | 公共包模式缺少四个联邦工厂导入/调用、runtime、entries、Provider、scope 或 loader 导出标记。 |
+| `MF-RUNTIME-007` | manual | 包内部的 scope、失败隔离、重试及缓存刷新需要真实宿主运行验证。 |
+
+本技能只按 1.2.0 公共包绑定审计，旧本地运行时规则 `003`—`005` 已移除。静态检查是模板结构核对，不能证明完整 TypeScript 语义、插件顺序或运行效果。
 
 除标准外壳外，继续执行综合端提供方、消费方和菜单专项规则。
 
@@ -81,7 +87,7 @@
 | `MF-CONSUMER-002` | error | 运行时 entry 未使用环境变量，或环境变量未在 `.env*` 声明。 |
 | `MF-CONSUMER-003` | error | 远程入口前缀、本地代理路径和代理环境变量不一致。 |
 | `MF-CONSUMER-004` | error | 源码直接导入远程模块，但编译期 remotes 未配置对应远程。 |
-| `MF-CONSUMER-005` | error | 源码直接导入远程模块但缺少精确或通配 TypeScript 声明。 |
+| `MF-CONSUMER-005` | error | 源码直接导入远程模块但缺少声明；识别本地声明和显式启用的已安装 `types/remote-core` 公开声明，不能把未引用声明算作通过。 |
 | `MF-CONSUMER-006` | error | 远程 Vue 组件静态默认导入，或动态导入未建立 `defineAsyncComponent` 边界。 |
 
 动态菜单页面只需要运行时 entries，不应因为菜单加载而强制加入编译期 remotes；只有源码直接 import 的远程才执行 `MF-CONSUMER-004`。

@@ -48,7 +48,9 @@ $localeFiles = if (Test-Path -LiteralPath $allSourceRoot) {
 $zhLocaleText = (($localeFiles | Where-Object { $_.Name -eq "zh-cn.ts" } | ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 }) -join "`n")
 $enLocaleText = (($localeFiles | Where-Object { $_.Name -eq "en.ts" } | ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 }) -join "`n")
 
-$messageImportPattern = 'import\s*\{(?<imports>[^}]*)\}\s*from\s*[''"]/@/hooks/message[''"]\s*;?'
+$messageEntry = '/@/config/aura/index'
+$requestEntry = '/@/config/aura/request'
+$messageImportPattern = 'import\s*\{(?<imports>[^}]*)\}\s*from\s*[''"]' + [regex]::Escape($messageEntry) + '(?:\.ts)?[''"]\s*;?'
 $directElementImportPattern = 'import\s*\{[^}]*\b(ElMessage|ElMessageBox|Message|MessageBox)\b[^}]*\}\s*from\s*[''"]element-plus[''"]'
 $oldMessagePattern = 'const\s*\{\s*message\s*,\s*messageBox\s*\}\s*=\s*useMessage\s*\('
 $nativeScrollCssPattern = '(?im)overflow(?:-[xy])?\s*:\s*(?:auto|scroll)\b'
@@ -230,10 +232,9 @@ foreach ($file in $sourceFiles) {
     }
   }
 
-  # 统一消息 Hook 本身是唯一允许直接封装 Element Plus 消息 API 的边界。
-  $isMessageHook = $relativePath -eq "src/hooks/message.ts"
+  # 公共消息实现在 npm；项目源码统一使用绑定入口。
 
-  if (-not $isMessageHook -and $content -match $directElementImportPattern) {
+  if ($content -match $directElementImportPattern) {
     $errors += "$relativePath：禁止直接从 element-plus 导入 Message/MessageBox"
   }
 
@@ -241,14 +242,15 @@ foreach ($file in $sourceFiles) {
     $errors += "$relativePath：禁止从 useMessage() 解构 message/messageBox"
   }
 
-  $messageImport = [regex]::Match($content, $messageImportPattern)
+  $messageImports = [regex]::Matches($content, $messageImportPattern)
+  $importedMessageNames = ($messageImports | ForEach-Object { $_.Groups['imports'].Value }) -join ','
   $usesMessage = $content -match '\buseMessage\s*\('
   $usesMessageBox = $content -match '\buseMessageBox\s*\('
-  if (-not $isMessageHook -and $usesMessage -and (-not $messageImport.Success -or $messageImport.Groups['imports'].Value -notmatch '\buseMessage\b')) {
-    $errors += "$relativePath：调用 useMessage() 时必须从 /@/hooks/message 显式导入 useMessage"
+  if ($usesMessage -and $importedMessageNames -notmatch '\buseMessage\b') {
+    $errors += "$relativePath：调用 useMessage() 时必须从 $messageEntry 显式导入 useMessage"
   }
-  if (-not $isMessageHook -and $usesMessageBox -and (-not $messageImport.Success -or $messageImport.Groups['imports'].Value -notmatch '\buseMessageBox\b')) {
-    $errors += "$relativePath：调用 useMessageBox() 时必须从 /@/hooks/message 显式导入 useMessageBox"
+  if ($usesMessageBox -and $importedMessageNames -notmatch '\buseMessageBox\b') {
+    $errors += "$relativePath：调用 useMessageBox() 时必须从 $messageEntry 显式导入 useMessageBox"
   }
 
   if ($content -match 'from\s+[''"]@/') {
@@ -256,7 +258,14 @@ foreach ($file in $sourceFiles) {
   }
 
   if ($content -match 'import\s+axios\s+from\s+[''"]axios[''"]' -or $content -match '\baxios\.create\s*\(') {
-    $errors += "$relativePath：业务请求必须走 /@/utils/request"
+    $errors += "$relativePath：业务请求必须走 $requestEntry"
+  }
+
+  if ($content -match '(?:from\s*|import\s*\()\s*[''"]/@/(?:utils/request|hooks/(?:message|table|dict|param|form|usePermissions))(?:\.ts)?[''"]') {
+    $errors += "$relativePath：1.2.0 禁止继续引用已迁移的旧入口；使用 config/aura 实例或 aura-web-kit 公开子路径"
+  }
+  if ($content -match '(?:from\s*|import\s*\()\s*[''"]@fxft/aura-web-kit/(?:vite|postcss)(?:/[^''"]*)?[''"]') {
+    $errors += "$relativePath：Node 构建入口不能进入 src 浏览器依赖图；请在 Vite/PostCSS 配置中使用"
   }
 
   # 普通内容区域统一使用 el-scrollbar；第三方组件或虚拟列表等例外需在代码附近说明原因。

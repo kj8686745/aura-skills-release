@@ -14,7 +14,7 @@ function Get-MfProjectType {
 	$evidence = [System.Collections.Generic.List[string]]::new()
 	$baseConfigPath = Join-Path $ProjectPath 'src\config\moduleFederationBaseConfig.ts'
 	$exposesPath = Join-Path $ProjectPath 'src\hooks\moduleFederation.ts'
-	$registryPath = Join-Path $ProjectPath 'src\utils\moduleFederationRegistry.ts'
+	$bindingPath = Join-Path $ProjectPath 'src\config\aura\federation.ts'
 	$viteFiles = @(Get-ChildItem -LiteralPath $ProjectPath -File -Filter 'vite.config.*' -ErrorAction SilentlyContinue)
 	$viteContent = ($viteFiles | ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 }) -join "`n"
 
@@ -22,16 +22,17 @@ function Get-MfProjectType {
 		((Get-Content -LiteralPath $baseConfigPath -Raw -Encoding UTF8) -match '\bcurrentRemoteConfig\b')
 	$hasStandardExposes = (Test-Path -LiteralPath $exposesPath -PathType Leaf) -and
 		((Get-Content -LiteralPath $exposesPath -Raw -Encoding UTF8) -match '\bexposeModules\b')
-	$hasRuntimeRegistry = (Test-Path -LiteralPath $registryPath -PathType Leaf) -and
-		((Get-Content -LiteralPath $registryPath -Raw -Encoding UTF8) -match '\bgetModuleFederationLoader\b')
+	# 1.2.0 的运行时实现位于公共包；项目保留实例绑定，缺失工厂参数由综合端规则报告。
+	$hasRuntimeBinding = (Test-Path -LiteralPath $bindingPath -PathType Leaf) -and
+		((Get-Content -LiteralPath $bindingPath -Raw -Encoding UTF8) -match '@fxft/aura-web-kit/federation')
 	$hasFederationVite = $viteContent -match '@module-federation/vite' -and $viteContent -match '\bfederation\s*\('
 
 	if ($hasBaseConfig) { [void]$evidence.Add('命中 currentRemoteConfig 综合端基础配置') }
 	if ($hasStandardExposes) { [void]$evidence.Add('命中 exposeModules 标准聚合入口') }
-	if ($hasRuntimeRegistry) { [void]$evidence.Add('命中 getModuleFederationLoader 运行时注册表') }
+	if ($hasRuntimeBinding) { [void]$evidence.Add('命中 config/aura/federation 公共包运行时绑定') }
 	if ($hasFederationVite) { [void]$evidence.Add('命中 @module-federation/vite 配置') }
 
-	if ($hasBaseConfig -and $hasStandardExposes -and $hasRuntimeRegistry -and $hasFederationVite) {
+	if ($hasBaseConfig -and $hasStandardExposes -and $hasRuntimeBinding -and $hasFederationVite) {
 		return [pscustomobject]@{ Type = 'Integrated'; Evidence = @($evidence) }
 	}
 

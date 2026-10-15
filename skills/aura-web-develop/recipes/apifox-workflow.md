@@ -18,14 +18,14 @@
 
 - `knowledge/PIGX前端开发规范/工程与代码生成规范.md`
 - 当前业务域 `src/api/` 相邻模块
-- 当前 `/@/utils/request` 类型和调用方式
+- 当前 `/@/config/aura/request` 类型和调用方式
 - 对应页面模式
 
 API 命名跟随当前业务域和最新版规范，不强制历史五段式。
 
 ## 3. 生成或修正 API
 
-- 请求统一走 `/@/utils/request`。
+- 请求统一走 `/@/config/aura/request`。
 - 生成明确的 TypeScript 请求与响应类型。
 - 已明确的字段完全按契约落地，不增加旧字段、多字段兜底或单值/数组转换。
 - API 函数添加简体中文用途注释；特殊 Header、Blob、上传或兼容逻辑说明来源。
@@ -67,7 +67,7 @@ const { getDataList, tableStyle } = useTable(state);
 页面需要成功、失败或确认反馈时只能使用：
 
 ```ts
-import { useMessage, useMessageBox } from '/@/hooks/message';
+import { useMessage, useMessageBox } from '/@/config/aura/index';
 ```
 
 不得直接引入 Element Plus Message/MessageBox，不自行实现消息组件。

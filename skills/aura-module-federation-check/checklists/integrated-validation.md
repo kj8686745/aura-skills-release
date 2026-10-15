@@ -2,6 +2,11 @@
 
 ## 静态审计
 
+- [ ] 只按 1.2.0 公共包绑定验收；不保留旧运行时文件与旧 alias 兼容。
+- [ ] 声明/锁定/已安装 web-kit 版本已核对；公开入口与类型真实存在。
+- [ ] 1.2.0 Node ≥22、Element Plus 2.14.6 singleton；auraOptimizeDeps、公共构建插件与 PostCSS 已接入。
+- [ ] 多级 remoteEntryName 与完整部署前缀一致，index.html 与 main.ts 启动缓存均按 remoteName。
+
 - [ ] 脚本识别结果为 `Integrated`。
 - [ ] 没有 `error` 级结果。
 - [ ] 模板占位身份已全部替换。

@@ -8,7 +8,7 @@
 ## 枚举、字典、国际化与占位硬约束
 
 - 编码前解析 API/OpenAPI、TypeScript 类型和相邻业务契约中的枚举与 `dictKey`，逐字段列出“筛选、表格、详情、表单”的渲染方式。接口类型中带字典的字段必须保留 `/** @dictKey <key> */` 注释，作为可扫描契约。
-- 有字典的筛选与表单必须使用 `DictSelect` 或项目字典选项；表格状态使用 `DictTag`，详情只读展示使用 `DictText`。禁止硬编码枚举选项，禁止直接输出对应 `*Name` 快照；无字典的真实名称字段除外。
+- 有字典的筛选与表单必须使用 `AuraDictSelect` 或项目字典选项；表格状态使用 `AuraDictTag`，详情只读展示使用 `AuraDictText`。禁止硬编码枚举选项，禁止直接输出对应 `*Name` 快照；无字典的真实名称字段除外。
 - 业务 `.vue/.ts` 中用户可见文案一律使用 `t()` / `$t()`，覆盖 label、title、placeholder、按钮、列名、卡片标题与说明、Dialog/Drawer、空态、校验与消息。注释、接口/字典返回值、后端异常、mock 数据和 i18n 文件除外。
 - 新文案先复用 `common`；跨两个及以上业务模块、但不属于全局 common 的文案上提到业务域公共 `i18n/`；中英文 key 同步存在。不得在页面 i18n 重复定义已有 common 或业务域文案。
 - 每个可编辑或筛选的 `el-input`、`el-select`、`el-date-picker`、`el-input-number`、`el-autocomplete` 必须具备 i18n placeholder。确无占位语义时添加 `data-placeholder-exempt`，并以相邻中文注释说明原因。

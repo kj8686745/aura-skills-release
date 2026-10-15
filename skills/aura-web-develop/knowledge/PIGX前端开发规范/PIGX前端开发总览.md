@@ -1,5 +1,7 @@
 # PIGX 前端开发总览
 
+公共工具与 Hook 选型先查 [aura-web-kit 能力清单](./aura-web-kit能力清单与接入规范.md)。框架 1.2.0 使用公共包公开子路径和项目 `config/aura` 入口，不新增旧路径兼容 alias。
+
 ## 一、项目定位
 
 PIGX 模块联邦（综合端）是基于 Vue 3 的模块联邦前端项目。它既能独立运行，也能作为提供方把页面、组件、API、工具、国际化和样式暴露给其他综合端，同时作为消费方加载 `aura-core` 或业务远程模块。
@@ -11,11 +13,11 @@ PIGX 模块联邦（综合端）是基于 Vue 3 的模块联邦前端项目。�
 | 分类       | 当前实现                                                              |
 | ---------- | --------------------------------------------------------------------- |
 | 视图       | Vue 3.5、TypeScript、`<script setup>`                                 |
-| 构建       | Vite 6、pnpm 10、Node.js 20.12 及以上                                 |
-| UI         | Element Plus 2.14.3，Module Federation singleton                      |
+| 构建       | Vite 6、pnpm 10、Node.js 22 及以上                                 |
+| UI         | Element Plus 2.14.6，Module Federation singleton                      |
 | 状态与路由 | Pinia 2、Vue Router 4                                                 |
 | 国际化     | Vue I18n 9                                                            |
-| 请求       | Axios，经 `/@/utils/request` 懒加载封装                               |
+| 请求       | Axios，经 `/@/config/aura/request` 懒加载封装                               |
 | 模块联邦   | `@module-federation/vite@1.18.2`、`@module-federation/enhanced@2.8.0` |
 | 样式       | SCSS、Tailwind CSS、主题 CSS 变量、远程 scoped Tailwind               |
 
@@ -31,7 +33,7 @@ pnpm dev
 pnpm build
 ```
 
-模板要求 Node.js 20.12 及以上。包管理器以 `packageManager` 和 `pnpm-lock.yaml` 为准，不混用 npm、yarn。
+模板要求 Node.js 22 及以上。包管理器以 `packageManager` 和 `pnpm-lock.yaml` 为准，不混用 npm、yarn。
 
 ## 四、目录职责
 
@@ -41,7 +43,8 @@ src/
 ├── assets/       # 参与 Vite 构建的图片、SVG、字体等
 ├── components/   # 模块联邦（综合端）全局或跨业务复用组件
 ├── config/       # 站点和模块联邦配置
-├── hooks/        # useTable、模块联邦等组合能力
+├── hooks/        # 项目模块联邦入口与业务组合能力
+├── config/aura/  # 请求、消息、账号、存储与联邦等实例绑定
 ├── i18n/         # 本地及模块联邦语言包聚合
 ├── router/       # 静态路由、补充路由、后端菜单解析
 ├── stores/       # Pinia 状态
@@ -56,7 +59,7 @@ src/
 
 - 页面放在 `views/<业务域>/`，页面内部组件放在同目录 `components/`。
 - 后端接口放在 `api/<业务域>/`，页面不得内联大段请求配置。
-- 跨页面复用逻辑优先放在业务 hooks；真正通用后再提升到 `src/hooks`。
+- 跨页面复用逻辑优先放在业务 hooks；跨项目通用能力进入 `aura-web-kit`，公开入口接收项目依赖。
 - 只在多个业务域复用的组件才进入 `src/components`。
 
 ## 五、应用运行链路
@@ -72,7 +75,7 @@ main.ts
 → 本地加载或模块联邦加载页面
 ```
 
-`src/utils/request.ts` 保持原调用接口，但首次真实请求才加载请求内核。认证失效由独立处理器解耦，业务页面不自行清 Token 或跳转登录。
+`src/config/aura/request.ts` 保持原调用接口，但首次真实请求才加载请求内核。认证失效由独立处理器解耦，业务页面不自行清 Token 或跳转登录。
 
 ## 六、后台布局预设与布局模式
 

@@ -7,7 +7,7 @@
 - [ ] 页面实现完成后已明确说明使用 Codex 内置浏览器自查，未用外部 Chrome、`agent-browser` 或仅看源码代替
 - [ ] 页面、页面私有组件、Composable、API、类型和 i18n 职责分离
 - [ ] i18n 已按全项目、业务域、页面专属三层复用；新增 key 前已搜索同义文案，跨页面重复文案未落入各自业务目录
-- [ ] 已解析 API/OpenAPI/类型中的枚举与 `@dictKey`，并逐项核对筛选、表格、详情和表单；字典筛选/表单使用 `DictSelect` 或项目字典选项，表格使用 `DictTag`，详情使用 `DictText`，没有硬编码枚举或对应 `*Name` 直出
+- [ ] 已解析 API/OpenAPI/类型中的枚举与 `@dictKey`，并逐项核对筛选、表格、详情和表单；字典筛选/表单使用 `AuraDictSelect` 或项目字典选项，表格使用 `AuraDictTag`，详情使用 `AuraDictText`，没有硬编码枚举或对应 `*Name` 直出
 - [ ] 用户可见 label、title、placeholder、按钮、列名、卡片、Dialog/Drawer、空态、校验和消息均走 `t()` / `$t()`；已复用 common，跨两个及以上业务模块的文案已上提到业务域 i18n，zh/en key 同步存在
 - [ ] 所有可编辑或筛选控件均有 i18n placeholder；例外使用 `data-placeholder-exempt` 并有相邻中文原因说明
 - [ ] 路由页只保留布局、查询主状态和子组件编排；两个及以上业务 Dialog/Drawer 已拆为页面私有组件，复杂单弹窗也未内联堆积列表、表单和请求状态
@@ -23,7 +23,7 @@
 
 - [ ] 已按[已有业务对象的数据加载约束](../references/business-object-loading.md)确定数据来源；页面、Tab、面板、抽屉、弹窗均按实际场景加载详情，入口只传标识与上下文，操作类型没有由 ID 是否存在统一推断
 - [ ] 未将表格行、卡片、树节点、地图点位、Props、路由 state 或缓存直接作为详情/表单；回填与提交显式映射，加载失败不回退入口快照，旧请求不覆盖新目标
-- [ ] 请求统一使用 `/@/utils/request`，未直接创建 axios 实例
+- [ ] 请求统一使用 `/@/config/aura/request`，未直接创建 axios 实例
 - [ ] API 命名遵循当前业务域与最新版规范，未强制旧版五段式
 - [ ] 字段名、类型、必填性和单值/数组结构与明确接口契约一致
 - [ ] 未硬编码域名、IP、Token、Cookie、密码或部署前缀
@@ -55,7 +55,7 @@
 
 ## 消息提示与弹出框
 
-- [ ] 只使用 `import { useMessage, useMessageBox } from '/@/hooks/message';`
+- [ ] 只使用 `import { useMessage, useMessageBox } from '/@/config/aura/index';`
 - [ ] 普通提示使用 `useMessage().info/warning/success/error`
 - [ ] 弹出框使用 `useMessageBox().confirm/warning/success/error/info/prompt`
 - [ ] 未从 `element-plus` 导入或调用 `ElMessage`、`ElMessageBox`、`Message`、`MessageBox`
@@ -67,14 +67,14 @@
 
 ## 组件与样式
 
-- [ ] 普通业务 UI 的组件选择顺序为全局组件/Hooks → Element Plus → 页面私有组件，未将 `@fxft/ui-plus` 作为通用优先复用层级
+- [ ] 普通业务 UI 的组件选择顺序为 aura-web-kit Hook / aura-ui 组件 → Element Plus → 页面私有组件，未将 `@fxft/ui-plus` 作为通用优先复用层级
 - [ ] 进入 Element Plus 选型阶段时，已使用 Codex 内置浏览器检查官方组件总览和候选组件文档，并核对当前项目版本支持的公开 API
 - [ ] 能由 Element Plus 官方组件或官方组合方案满足的业务 UI 未自行重写；确需自行实现时，职责清单和交付中已记录候选组件及不适用原因
 - [ ] 未将左侧强调条批量用于标题、卡片或内容分区；保留的强调条均表达明确的选中、状态、分类或项目既有设计语义
 - [ ] 普通视觉层级优先由字体、留白、布局、分隔或背景建立，同页及同业务模块不存在无语义的强调条重复
 - [ ] 顶部或摘要工具栏已有主操作时，空态未重复放置相同按钮；重试和状态独有恢复操作除外
 - [ ] 自定义可点击区域具备键盘焦点，非必要动效适配 `prefers-reduced-motion`
-- [ ] 生成前核对 `src/components/index.ts`，未虚构全局组件
+- [ ] 生成前核对已安装 aura-ui 导出、类型和 AuraUIResolver，未虚构组件
 - [ ] Flex 高度链路、`min-height: 0`、滚动区域和主题变量符合最新版样式规范
 - [ ] 普通内容滚动区域使用 `el-scrollbar`，未使用 `overflow: auto/scroll` 或 `overflow-auto/overflow-y-auto` 等原生滚动写法
 - [ ] `el-table`、`el-tree`、`el-select` 等已有内置滚动能力的组件使用自身能力，未额外嵌套 `el-scrollbar`

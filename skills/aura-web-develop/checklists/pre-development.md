@@ -15,7 +15,7 @@
 - [ ] 用户提供可访问原型时，已记录原型 URL、访问权限、目标状态和用户明确验收意见
 - [ ] 已检查 `package.json`、锁文件和实际 Node.js/pnpm 要求
 - [ ] 已检查 `vite.config.*`、Module Federation 配置和当前 `remoteName`
-- [ ] 已检查 `src/hooks/`、`src/components/index.ts`、相邻页面和相邻 API
+- [ ] 已检查 web-kit 公开能力、`src/config/aura/`、aura-ui 导出、相邻页面和 API
 - [ ] 已确认路径别名为 `/@/`
 - [ ] 已确认独立运行、远程运行或两者都需要验收
 
@@ -39,7 +39,7 @@
 - [ ] 已从用户资料、Apifox 或后端定义确认 URL、Method、字段和响应结构
 - [ ] 已检查当前业务域 API 命名，不强行套用历史五段式
 - [ ] 已确认业务消息统一导入：
-  `import { useMessage, useMessageBox } from '/@/hooks/message';`
+  `import { useMessage, useMessageBox } from '/@/config/aura/index';`
 - [ ] 已确认不会直接引入 Element Plus Message/MessageBox，也不会自行实现消息组件
 
 ## 表格与下拉

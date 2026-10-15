@@ -5,7 +5,7 @@ description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联�
 
 # Aura PIGX 模块联邦检查
 
-当前版本：`1.0.3`。
+当前版本：`1.1.0`。
 
 只读识别与审计 PIGX 综合端，提供改前基线、改后复检。配置实现由 `aura-web-develop` 主导；仅在用户明确要求修复时修改项目，不猜测部署地址、远程拓扑或后台菜单。
 
@@ -25,4 +25,4 @@ description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联�
 
 优先级：用户要求 → 项目源码、类型、实际依赖和产物 → [正式规范](knowledge/PIGX前端开发规范/模块联邦开发技术规范.md) → 规则矩阵与脚本。出现规范冲突或配置细节疑问时读取正式规范。
 
-有效模板基线包含 `element-plus@2.14.3` shared singleton，不沿用“Element Plus 不加入 shared”的旧规则。未命中的参考不加载；同一会话未变化的资料不重复读取。
+1.2.0 基线为 web-kit `1.6.15`、Element Plus `2.14.6` singleton 和 Node.js ≥22。只检查 1.2.0 公共包绑定；不得要求已迁移项目恢复本地运行时副本或旧 alias。公共入口和项目绑定见 [aura-web-kit 清单](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)。未命中的参考不加载；同一会话未变化的资料不重复读取。

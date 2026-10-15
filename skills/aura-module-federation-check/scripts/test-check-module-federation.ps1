@@ -17,16 +17,16 @@ function Write-FixtureFile {
 	[System.IO.File]::WriteAllText($fullPath, $Content, $utf8NoBom)
 }
 
-function New-IntegratedFixture {
+function New-IntegratedScaffold {
 	param([string]$Root)
 	New-Item -ItemType Directory -Path $Root -Force | Out-Null
 	Write-FixtureFile $Root 'package.json' @'
 {
   "name": "aura-order-web",
   "packageManager": "pnpm@10.28.0",
-  "engines": { "node": ">=20.12.0" },
+  "engines": { "node": ">=22" },
   "dependencies": {
-    "element-plus": "2.14.3",
+    "element-plus": "2.14.6",
     "vue": "3.5.13",
     "vue-router": "4.6.4",
     "vue-i18n": "9.2.2",
@@ -53,7 +53,7 @@ federation({
     'vue-router': { singleton: true, requiredVersion: '^4.6.4' },
     'vue-i18n': { singleton: true, requiredVersion: '^9.2.2' },
     pinia: { singleton: true, requiredVersion: '^2.3.1' },
-    'element-plus': { singleton: true, requiredVersion: '^2.14.3' }
+    'element-plus': { singleton: true, requiredVersion: '^2.14.6' }
   }
 });
 skipModuleFederationRemotePreload();
@@ -91,15 +91,6 @@ export const exposeModules = {
 };
 '@
 	Write-FixtureFile $Root 'src/utils/mitt.ts' 'export default {};'
-	Write-FixtureFile $Root 'src/utils/moduleFederationRegistry.ts' @'
-export const getModuleFederationLoader = () => null;
-const tree = { class: ['aura-mf-remote-scope'] };
-h(ModuleFederationElementProvider);
-const markers = ['loadError', 'refreshModuleFederationRemote', 'resetRemoteI18nCache', 'resetRemoteStyleCache', 'data-mf-load-error', '重新加载'];
-'@
-	Write-FixtureFile $Root 'src/utils/moduleFederationRemotes.ts' 'registerRemotes; normalizeRemoteEntry; getRemoteManifestEntry; refreshModuleFederationRemote;'
-	Write-FixtureFile $Root 'src/utils/moduleFederationI18n.ts' 'export const ensureRemoteI18nMessages = () => {};'
-	Write-FixtureFile $Root 'src/utils/moduleFederationStyles.ts' 'export const ensureRemoteExposeStyles = () => {};'
 	Write-FixtureFile $Root 'src/components/ModuleFederationElementProvider/index.vue' '<template><slot /></template>'
 	Write-FixtureFile $Root 'src/styles/moduleFederationTailwind.ts' "import './moduleFederationTailwind.css';"
 	Write-FixtureFile $Root 'src/styles/moduleFederationTailwind.css' '.aura-mf-remote-scope.aura-mf-remote-aura-order-web { width: 100%; }'
@@ -117,6 +108,44 @@ function Invoke-CheckerJson {
 	}
 }
 
+function New-KitFixture {
+	param([string]$Root)
+	New-IntegratedScaffold -Root $Root
+	$packageFile = Join-Path $Root 'package.json'
+	$package = Get-Content -LiteralPath $packageFile -Raw | ConvertFrom-Json
+	$package.engines.node = '>=22'
+	$package.dependencies.'element-plus' = '2.14.6'
+	$package.dependencies | Add-Member -NotePropertyName '@fxft/aura-web-kit' -NotePropertyValue '1.6.15'
+	Write-FixtureFile $Root 'package.json' ($package | ConvertTo-Json -Depth 5)
+	$vite = Get-Content -LiteralPath (Join-Path $Root 'vite.config.mts') -Raw
+	$vite += @'
+
+import { auraOptimizeDeps, stabilizeFederationModuleScan, pruneFederationSsrImports, stabilizeFederationDevOptimizer, createAuraAutoImports } from '@fxft/aura-web-kit/vite';
+stabilizeFederationModuleScan(); pruneFederationSsrImports(); stabilizeFederationDevOptimizer();
+createAuraAutoImports({ projectHooks: pathResolve('./src/config/aura/index.ts') });
+const include = [...auraOptimizeDeps];
+'@
+	Write-FixtureFile $Root 'vite.config.mts' $vite
+	Write-FixtureFile $Root 'postcss.config.js' "const { createAuraPostcssPlugins } = require('@fxft/aura-web-kit/postcss'); createAuraPostcssPlugins({ remoteScope: '.aura-mf-remote-scope.aura-mf-remote-aura-order-web' });"
+	$base = (Get-Content -LiteralPath (Join-Path $Root 'src/config/moduleFederationBaseConfig.ts') -Raw).Replace("'auraOrderWeb'", "'/aura/orderWeb'")
+	Write-FixtureFile $Root 'src/config/moduleFederationBaseConfig.ts' $base
+	Write-FixtureFile $Root '.env' 'VITE_PUBLIC_PATH=/aura/orderWeb/'
+	Write-FixtureFile $Root 'index.html' "<script>localStorage.getItem('aura-order-web:bootstrap-config')</script>"
+	Write-FixtureFile $Root 'src/config/aura/federation.ts' @'
+import { createFederationRemotes, createFederationStyles, createFederationI18n, createFederationRegistry } from '@fxft/aura-web-kit/federation';
+import { registerRemotes, loadRemote } from '@module-federation/enhanced/runtime';
+const remotes = createFederationRemotes({ entries: moduleFederationRemoteEntries, registerRemotes });
+const styles = createFederationStyles({ getRemoteManifestEntry: remotes.getRemoteManifestEntry });
+const i18n = createFederationI18n({ loadRemote });
+const registry = createFederationRegistry({ loadRemote, remotes, styles, i18n, elementProvider: ModuleFederationElementProvider, getRemoteScopeClass });
+export const { getModuleFederationLoader } = registry;
+'@
+	Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/package.json' @'
+{"version":"1.6.15","exports":{"./federation":{"types":"./dist/federation.d.ts"},"./federation/config":{},"./browser/assets":{},"./vite":{},"./postcss":{},"./types/remote-core":{"types":"./dist/types/remote-core.d.ts"}}}
+'@
+	Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/dist/types/remote-core.d.ts' "declare module 'aura-core/api/example.ts' { export const read: () => void; }"
+}
+
 function Assert-Equal {
 	param($Actual, $Expected, [string]$Message)
 	if ($Actual -ne $Expected) { throw "$Message，期望 $Expected，实际 $Actual。" }
@@ -130,10 +159,57 @@ function Assert-Rule {
 New-Item -ItemType Directory -Path $testRoot -Force | Out-Null
 try {
 	$integratedRoot = Join-Path $testRoot 'integrated'
-	New-IntegratedFixture -Root $integratedRoot
+	New-KitFixture -Root $integratedRoot
 	$result = Invoke-CheckerJson -ProjectPath $integratedRoot
 	Assert-Equal $result.Report.projectType 'Integrated' '综合端类型识别失败'
 	Assert-Equal $result.ExitCode 0 '合规综合端退出码错误'
+
+	$kitRoot = Join-Path $testRoot 'kit-integrated'
+	New-KitFixture -Root $kitRoot
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Equal $result.Report.projectType 'Integrated' '公共包综合端识别失败'
+	Assert-Equal $result.ExitCode 0 '1.2.0 绑定、多级路径或 >=22 约束误报'
+	Assert-Rule $result.Report 'MF-RUNTIME-007'
+
+	$bindingPath = Join-Path $kitRoot 'src/config/aura/federation.ts'
+	$binding = Get-Content -LiteralPath $bindingPath -Raw
+	Write-FixtureFile $kitRoot 'src/config/aura/federation.ts' ($binding.Replace('elementProvider: ModuleFederationElementProvider,', ''))
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Equal $result.ExitCode 1 '缺失 Provider 必须失败'
+	Assert-Rule $result.Report 'MF-RUNTIME-006'
+	Write-FixtureFile $kitRoot 'src/config/aura/federation.ts' $binding
+
+	$kitPackage = Get-Content -LiteralPath (Join-Path $kitRoot 'package.json') -Raw
+	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('>=22', '>=20'))
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Rule $result.Report 'MF-DEP-003'
+	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('1.6.15', '1.6.14'))
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Rule $result.Report 'MF-DEP-004'
+	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('2.14.6', '2.14.3'))
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Rule $result.Report 'MF-VITE-003'
+	Write-FixtureFile $kitRoot 'package.json' $kitPackage
+
+	$basePath = Join-Path $kitRoot 'src/config/moduleFederationBaseConfig.ts'
+	$kitBase = Get-Content -LiteralPath $basePath -Raw
+	Write-FixtureFile $kitRoot 'src/config/moduleFederationBaseConfig.ts' ($kitBase.Replace('/aura/orderWeb', '/aura/../orderWeb'))
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Rule $result.Report 'MF-ID-003'
+	Write-FixtureFile $kitRoot 'src/config/moduleFederationBaseConfig.ts' ($kitBase.Replace('moduleFederationRemoteNames = []', "moduleFederationRemoteNames = ['aura-core']"))
+	Write-FixtureFile $kitRoot 'src/config/remoteConfig.ts' "export const moduleFederationRemoteEntries = { 'aura-core': import.meta.env.VITE_CORE_ENTRY };"
+	Write-FixtureFile $kitRoot 'src/config/viteModuleFederationConfig.ts' "export const getModuleFederationRemoteEntries = (env) => ({ 'aura-core': env.VITE_CORE_ENTRY });"
+	Write-FixtureFile $kitRoot '.env' "VITE_PUBLIC_PATH=/aura/orderWeb/`nVITE_CORE_ENTRY=/core/mf-manifest.json"
+	Write-FixtureFile $kitRoot '.env.development' 'VITE_CORE_ENTRY=https://example.test'
+	$kitVite = Get-Content -LiteralPath (Join-Path $kitRoot 'vite.config.mts') -Raw
+	Write-FixtureFile $kitRoot 'vite.config.mts' ($kitVite + "`nconst proxy = { '/core': { target: env.VITE_CORE_ENTRY } };")
+	Write-FixtureFile $kitRoot 'src/views/example.ts' "import { read } from 'aura-core/api/example.ts';"
+	Write-FixtureFile $kitRoot 'src/types/framework.d.ts' "import '@fxft/aura-web-kit/types/remote-core';"
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Equal $result.ExitCode 0 ('已启用的包声明不应误报缺失：' + ($result.Report.findings | Where-Object severity -eq error | ConvertTo-Json -Compress))
+	Write-FixtureFile $kitRoot 'src/types/framework.d.ts' "// import '@fxft/aura-web-kit/types/remote-core';"
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Rule $result.Report 'MF-CONSUMER-005'
 
 	$providerRoot = Join-Path $testRoot 'provider'
 	Write-FixtureFile $providerRoot 'package.json' '{"name":"provider"}'

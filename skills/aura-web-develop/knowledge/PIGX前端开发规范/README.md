@@ -2,45 +2,21 @@
 
 本目录是模块联邦（综合端）业务开发的正式规范入口。规范以当前模板源码为准，适用于人工开发、代码生成、代码评审和交付验收。
 
-**规范版本：`1.1.9`（2026-09-21）**
+**规范版本：`1.2.0`（2026-10-15）**
 
-## 1.1.9 新增内容
+## 1.2.0 调整
 
-- 新增权限容器可见性约束：表格操作列、卡片操作区、受限工具栏分组、下拉菜单和批量选择列在所有子操作均无权限时不得保留空壳。
-- 容器按子操作权限并集使用 `permissions.any([...])`，具体按钮继续使用 `v-auth`，行状态仅用于权限通过后的业务条件细分。
+- 公共 TS 能力直接引用 `@fxft/aura-web-kit` 公开子路径；请求、Store、路由、消息等项目实例绑定集中在 `src/config/aura`。
+- 新增 [aura-web-kit 能力清单与接入规范](./aura-web-kit能力清单与接入规范.md)，按场景、入口、主要导出和项目绑定边界检索；基线为 `1.6.15`，公开入口已对照发布包验证。
+- 公共 UI 使用 `@fxft/aura-ui@1.1.2` 的 Aura 前缀组件与 `AuraUIResolver`；本地覆盖 Resolver 按实际覆盖项配置。
+- Node.js ≥22、Element Plus 2.14.6、VueUse 15.0.0；联邦运行时、构建插件与 PostCSS 公共实现收敛到 web-kit。
+- 支持多级 `remoteEntryName` 部署路径；启动缓存按 `remoteName` 隔离，认证存储按 `systemId` 隔离。
 
-## 1.1.7 新增内容
-
-- 模块联邦远程页面及其子组件使用按需注册、自动解析或自动导入组件时，提供方优先通过编译期 Resolver 注入组件代码与配套样式；宿主不得承担提供方组件库的安装或解析职责。
-- 不能仅凭 `components.d.ts` 或运行时全局注册判断组件可用；Resolver 必须核验构建产物的本地 import，并完成独立运行、远程加载和控制台 `Failed to resolve component` 检查。
-- 自动解析在 expose 场景失效时，优先修复项目级 Resolver、Windows 路径和 Resolver 顺序；确实无法覆盖时才使用组件内显式导入，并同步处理样式依赖，禁止只导入组件 JS。
-
-## 1.1.6 新增内容
-
-- `useForm` 新增 `validateForm`，统一处理表单未挂载、校验成功和校验失败的布尔结果。
-- 业务表单的校验、重置和历史校验清理统一通过 `validateForm/resetForm/clearFormValidate` 完成，页面不再直接调用表单实例的对应方法。
-- 页面布局示例统一使用 `layout-padding` 与 `layout-padding-auto layout-padding-view` 双层框架容器，业务 Flex 样式只挂载到业务类。
-
-## 1.1.5 新增内容
-
-- 普通内容滚动区域统一使用 Element Plus `el-scrollbar`，不再使用原生 CSS 或 Tailwind 的 `overflow: auto/scroll`。
-- `el-table`、`el-tree`、`el-select` 等已有内置滚动能力的组件继续使用组件自身能力，不额外嵌套 `el-scrollbar`。
-- 项目规则扫描新增原生滚动写法告警。
-
-## 1.1.4 新增内容
-
-- 仅供 Dialog/Drawer 使用的详情、候选项和业务列表，统一在公开的 `openDialog/openDrawer` 流程中按需加载，不由父页面或组件挂载阶段提前请求。
-- 同一路由页存在多个业务弹窗或单个复杂弹窗时，必须拆为页面私有组件；父页面只负责布局、主查询状态和子组件编排。
-- 顶部工具栏已有新增等主操作时，空态不再重复放置相同按钮；只保留说明、重试或当前状态独有的恢复操作。
-- 补充只读加载的局部错误态、视觉层级、键盘焦点、低动效偏好和真实浏览器验收规则。
-
-## 1.1.3 新增内容
-
-- 业务表单必须使用 `/@/hooks/form.ts` 暴露的 `useForm`，统一负责表单重置与校验状态清理。
-- `useForm` 新增 `clearFormValidate`，等待 Dialog 完成挂载后清除历史校验，避免新增校验错误残留到编辑弹窗。
-- 弹窗表单模式不再在页面中重复编写 `nextTick + clearValidate/resetFields`。
+- `1.6.15` 纳入公共登录枚举自动导入、`SocialLoginEnum.ALIPAY` 与 loading 生命周期规则；首次进入失败远程页应能结束全屏遮罩。
 
 ## 阅读顺序
+
+首次接入、工具或 Hook 选型时，先读 [aura-web-kit 能力清单与接入规范](./aura-web-kit能力清单与接入规范.md)。
 
 1. [PIGX 前端开发总览](./PIGX前端开发总览.md)
 2. [开发边界说明](./开发边界说明.md)
@@ -79,8 +55,8 @@
 ## 强制原则
 
 - 新项目创建后必须替换 `pigx-nexus`、`pigxNexus`，且部署环境内名称不可重复。
-- 业务请求统一使用 `/@/utils/request`，不得直接创建 axios 实例。
-- 业务表单统一使用 `/@/hooks/form.ts` 的 `validateForm/resetForm/clearFormValidate`，不得在页面中重复实现校验、重置和历史校验清理。
+- 业务请求统一使用 `/@/config/aura/request`，不得直接创建 axios 实例。
+- 业务表单统一使用 `@fxft/aura-web-kit/hooks/form` 的 `validateForm/resetForm/clearFormValidate`，不得在页面中重复实现校验、重置和历史校验清理。
 - 远程菜单路径第一段使用提供方 `remoteName`。
 - import 静态资源使用 `getStaticResourceUrl`，public 资源使用 `getPublicResourceUrl`。
 - 覆盖自动解析的第三方组件时，使用 Vite Resolver 在编译期注入本地实现，不依赖 `main.ts` 的同名全局注册。

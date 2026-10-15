@@ -20,6 +20,7 @@ $required = @(
   "references\codex-browser-review-workflow.md",
   "references\prettier-formatting-workflow.md",
   "knowledge\PIGX前端开发规范\README.md",
+  "knowledge\PIGX前端开发规范\aura-web-kit能力清单与接入规范.md",
   "knowledge\PIGX前端开发规范\PIGX前端开发总览.md",
   "knowledge\PIGX前端开发规范\工程与代码生成规范.md",
   "knowledge\PIGX前端开发规范\路由与菜单规范.md",
@@ -98,10 +99,10 @@ if (Test-Path -LiteralPath $skillFile) {
   $ruleDocuments = @{
     'references/business-object-loading.md' = @('入口上下文', '详情接口', 'keep-alive', '旧请求')
     'references/date-time-guidelines.md' = @('dayjs', 'isValid()', 'toDate()', 'YYYY-MM-DD HH:mm:ss')
-    'references/ui-data-contracts.md' = @('DictTag', 'DictText', '@dictKey', 'StrictUiContracts', 'data-placeholder-exempt')
-    'references/implementation-rules.md' = @('el-table--fit', 'el-scrollbar', 'overflow: auto/scroll', 'filterable', 'v-auth', '/@/hooks/form')
+    'references/ui-data-contracts.md' = @('AuraDictTag', 'AuraDictText', '@dictKey', 'StrictUiContracts', 'data-placeholder-exempt')
+    'references/implementation-rules.md' = @('el-table--fit', 'el-scrollbar', 'overflow: auto/scroll', 'filterable', 'v-auth', '@fxft/aura-web-kit/hooks/form')
     'references/component-selection.md' = @('Element Plus', 'Resolver', 'aura-module-federation-check')
-    'references/message-feedback-guidelines.md' = @("import { useMessage, useMessageBox } from '/@/hooks/message';")
+    'references/message-feedback-guidelines.md' = @("import { useMessage, useMessageBox } from '/@/config/aura/index';")
   }
   foreach ($relativeDocument in $ruleDocuments.Keys) {
     if (-not $skillContent.Contains($relativeDocument)) {
@@ -265,7 +266,7 @@ foreach ($file in $markdownFiles) {
 $hooksGuide = Join-Path $resolvedSkillPath "recipes\hooks-standards.md"
 if (Test-Path -LiteralPath $hooksGuide) {
 	$hooksContent = Get-Content -LiteralPath $hooksGuide -Raw -Encoding UTF8
-	foreach ($keyword in @('/@/hooks/form', 'validateForm', 'clearFormValidate', 'resetForm', '所有业务表单必须使用')) {
+	foreach ($keyword in @('@fxft/aura-web-kit/hooks/form', 'validateForm', 'clearFormValidate', 'resetForm', '所有业务表单必须使用')) {
 		if (-not $hooksContent.Contains($keyword)) {
 			$errors += "Hooks 规范缺少表单硬约束：$keyword"
 		}
@@ -282,9 +283,7 @@ if (Test-Path -LiteralPath $adminWorkflow) {
 
 $standardsRoot = Join-Path $resolvedSkillPath "knowledge\PIGX前端开发规范"
 $standardFiles = Get-ChildItem -LiteralPath $standardsRoot -Recurse -File -Filter "*.md"
-if ($standardFiles.Count -ne 20) {
-	$errors += "最新版 PIGX 规范快照应包含 20 份 Markdown，当前为 $($standardFiles.Count) 份"
-}
+# 通过必需入口与源文件集合核验，新增正式规范不应被固定数量误判。
 
 $npmrcExample = Join-Path $standardsRoot "公司组件库下载说明\.npmrc.example"
 if (Test-Path -LiteralPath $npmrcExample) {
@@ -300,6 +299,11 @@ if (Test-Path -LiteralPath $npmrcExample) {
 if ($SourceStandardsPath) {
   $resolvedSourcePath = (Resolve-Path -LiteralPath $SourceStandardsPath).Path
   $sourceFiles = Get-ChildItem -LiteralPath $resolvedSourcePath -Recurse -File -Filter "*.md"
+  $sourceRelativePaths = @($sourceFiles | ForEach-Object { $_.FullName.Substring($resolvedSourcePath.Length + 1) })
+  foreach ($standardFile in $standardFiles) {
+    $relativePath = $standardFile.FullName.Substring($standardsRoot.Length + 1)
+    if ($sourceRelativePaths -notcontains $relativePath) { $errors += "规范快照包含源目录中不存在的文档：$relativePath" }
+  }
 
   foreach ($sourceFile in $sourceFiles) {
     $relativePath = $sourceFile.FullName.Substring($resolvedSourcePath.Length + 1)

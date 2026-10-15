@@ -5,15 +5,15 @@
 所有业务页面、业务组件、Store、Composable 和工具函数只能从项目统一 Hook 导入：
 
 ```ts
-import { useMessage, useMessageBox } from '/@/hooks/message';
+import { useMessage, useMessageBox } from '/@/config/aura/index';
 ```
 
-`/@/hooks/message.ts` 是框架维护的统一实现边界。业务任务只调用公开 API，不复制、不改写、不二次封装。
+`/@/config/aura/index.ts` 是框架维护的统一实现边界。业务任务只调用公开 API，不复制、不改写、不二次封装。
 
 ## 标准用法
 
 ```ts
-import { useMessage, useMessageBox } from '/@/hooks/message';
+import { useMessage, useMessageBox } from '/@/config/aura/index';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -59,7 +59,7 @@ await useMessageBox().prompt(t('message.inputTip'));
 - 禁止自行开发 Toast、消息弹层、通知队列或重复消息 Hook。
 - 禁止使用 `const { message, messageBox } = useMessage()`；`useMessage()` 不返回这两个字段。
 - 禁止使用其他 UI 库的消息组件绕过项目统一样式、i18n 和交互约定。
-- 禁止在业务代码中复制 `/@/hooks/message.ts` 的底层 Element Plus 实现。
+- 禁止在业务代码中复制 `/@/config/aura/index.ts` 的底层 Element Plus 实现。
 
 ## 异常与取消
 
@@ -102,4 +102,4 @@ rg "from ['\"]element-plus['\"]" src
 rg "\{\s*message\s*,\s*messageBox\s*\}\s*=\s*useMessage" src
 ```
 
-命中后逐项判断：框架自带 `src/hooks/message.ts` 可作为底层实现存在；其他业务代码必须改用统一 Hook。
+命中后逐项判断：消息实现在公共包，项目通过 `src/config/aura/index.ts` 绑定，业务代码使用绑定后的统一 Hook。

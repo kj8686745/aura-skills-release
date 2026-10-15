@@ -2,7 +2,7 @@
 
 ## 通用组件选型
 
-按“综合端全局组件/Hooks → Element Plus → 页面私有业务组件 → 跨业务公共组件”的顺序选型。业务 UI 需要进入 Element Plus 选型阶段时，必须先使用 Codex 内置浏览器访问 [Element Plus 组件总览](https://element-plus.org/zh-CN/component/overview)，再阅读候选组件的官方文档，核对当前项目版本支持的 Props、Events、Slots 和公开方法；存在满足需求或可通过官方组合方式满足需求的组件时优先采用。只有综合端全局组件/Hooks 和 Element Plus 均确实无法满足时，才允许自行编写 UI 组件，并在职责清单和交付中记录已核对的候选组件及不适用原因；不得仅凭记忆、个人偏好或样式差异跳过官方组件。地图、视频等专项能力仍按对应专项规范选型，不适用本通用顺序。
+按“aura-web-kit 公共 Hook / aura-ui 公共组件 → 专项公司组件 → Element Plus → 页面私有业务组件”的顺序选型。公开入口与项目绑定见 [能力清单](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)。业务 UI 需要进入 Element Plus 选型阶段时，必须先使用 Codex 内置浏览器访问 [Element Plus 组件总览](https://element-plus.org/zh-CN/component/overview)，再阅读候选组件的官方文档，核对当前项目版本支持的 Props、Events、Slots 和公开方法；存在满足需求或可通过官方组合方式满足需求的组件时优先采用。只有综合端全局组件/Hooks 和 Element Plus 均确实无法满足时，才允许自行编写 UI 组件，并在职责清单和交付中记录已核对的候选组件及不适用原因；不得仅凭记忆、个人偏好或样式差异跳过官方组件。地图、视频等专项能力仍按对应专项规范选型，不适用本通用顺序。
 
 ## 模块联邦组件加载
 

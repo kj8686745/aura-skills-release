@@ -15,5 +15,5 @@
 消息提示只能使用：
 
 ```ts
-import { useMessage, useMessageBox } from '/@/hooks/message';
+import { useMessage, useMessageBox } from '/@/config/aura/index';
 ```

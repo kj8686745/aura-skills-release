@@ -9,6 +9,9 @@ function Invoke-IntegratedChecks {
 	$packagePath = Join-Path $ProjectPath 'package.json'
 	$packageContent = Get-Content -LiteralPath $packagePath -Raw -Encoding UTF8
 	$package = $packageContent | ConvertFrom-Json
+	$kitVersion = Get-MfPackageVersion -Package $package -Name '@fxft/aura-web-kit'
+	$elementBaseline = '2.14.6'
+	$minimumNode = [version]'22.0.0'
 
 	# 检查模板占位身份；规范文档目录不参与业务项目扫描。
 	foreach ($file in (Get-MfProjectAuditFiles -ProjectPath $ProjectPath)) {
@@ -56,9 +59,10 @@ function Invoke-IntegratedChecks {
 			-Suggestion '使用类似 aura-order-web 的小写短横线名称。' -File 'src/config/moduleFederationBaseConfig.ts' `
 			-Line (Get-MfLineNumber -Content $baseContent -Index $remoteNameMatch.Index)
 	}
-	if ($entryName -and $entryName -notmatch '^[a-z][a-zA-Z0-9]*$') {
-		Add-MfFinding -Findings $findings -RuleId 'MF-ID-003' -Severity 'error' -Message "remoteEntryName 不是 lowerCamelCase：$entryName" `
-			-Suggestion '使用类似 auraOrderWeb 的 lowerCamelCase 名称。' -File 'src/config/moduleFederationBaseConfig.ts' `
+	$entryPattern = '^/?[a-zA-Z0-9_-]+(?:/[a-zA-Z0-9_-]+)*/?$'
+	if ($entryName -and $entryName -notmatch $entryPattern) {
+		Add-MfFinding -Findings $findings -RuleId 'MF-ID-003' -Severity 'error' -Message "remoteEntryName 不是有效部署目录：$entryName" `
+			-Suggestion '1.2.0 支持 auraOrderWeb 或 /aura/orderWeb；不要填写域名、查询参数或相对跳转。' -File 'src/config/moduleFederationBaseConfig.ts' `
 			-Line (Get-MfLineNumber -Content $baseContent -Index $entryNameMatch.Index)
 	}
 
@@ -77,11 +81,12 @@ function Invoke-IntegratedChecks {
 	}
 
 	$cacheKeyMatch = Get-MfFirstCapture -Content $indexContent -Pattern 'localStorage\.getItem\(\s*[''"](?<value>[^''"]+):bootstrap-config'
-	if ($systemId -and (-not $cacheKeyMatch -or $cacheKeyMatch.Value -ne $systemId)) {
+	$cacheIdentity = $remoteName
+	if ($cacheIdentity -and (-not $cacheKeyMatch -or $cacheKeyMatch.Value -ne $cacheIdentity)) {
 		$actualCacheKey = if ($cacheKeyMatch) { $cacheKeyMatch.Value } else { '未配置' }
 		Add-MfFinding -Findings $findings -RuleId 'MF-ID-005' -Severity 'error' `
-			-Message "启动缓存键前缀与 systemId 不一致：$actualCacheKey / $systemId" `
-			-Suggestion '把 index.html 的 bootstrap-config 缓存键前缀改为 systemId。' -File 'index.html'
+			-Message "启动缓存键前缀与当前框架身份不一致：$actualCacheKey / $cacheIdentity" `
+			-Suggestion 'index.html 与 createAuraBootstrap 均使用 remoteName。' -File 'index.html'
 	}
 
 	if ($remoteName -and [string]$package.name -ne $remoteName) {
@@ -95,7 +100,7 @@ function Invoke-IntegratedChecks {
 	$publicPathMatch = Get-MfFirstCapture -Content $envContent -Pattern '(?m)^\s*VITE_PUBLIC_PATH\s*=\s*["'']?\s*(?<value>[^\s"'']+)'
 	if ($entryName -and $publicPathMatch -and $publicPathMatch.Value -ne '/') {
 		$normalizedPublicPath = '/' + $publicPathMatch.Value.Trim('/') + '/'
-		$expectedPublicPath = "/$entryName/"
+		$expectedPublicPath = '/' + $entryName.Trim('/') + '/'
 		if ($normalizedPublicPath -ne $expectedPublicPath) {
 			Add-MfFinding -Findings $findings -RuleId 'MF-ID-007' -Severity 'warning' `
 				-Message "VITE_PUBLIC_PATH 与 remoteEntryName 前缀不一致：$normalizedPublicPath / $expectedPublicPath" `
@@ -122,14 +127,16 @@ function Invoke-IntegratedChecks {
 	}
 
 	$nodeEngine = if ($package.engines) { [string]$package.engines.node } else { '' }
-	if ($nodeEngine -match '(?<major>\d+)\.(?<minor>\d+)') {
-		if ([int]$Matches.major -lt 20 -or ([int]$Matches.major -eq 20 -and [int]$Matches.minor -lt 12)) {
-			Add-MfFinding -Findings $findings -RuleId 'MF-DEP-003' -Severity 'error' -Message "Node 版本约束低于 20.12.0：$nodeEngine" `
-				-Suggestion '把 engines.node 调整到 >=20.12.0，并使用匹配运行环境。' -File 'package.json'
+	# 只静态解释常见的精确/最低版本约束，复杂 OR/上界约束留人工确认。
+	if ($nodeEngine -match '^\s*(?:>=|\^|~)?(?<major>\d+)(?:\.(?<minor>\d+))?(?:\.(?<patch>\d+))?\s*$') {
+		$declaredNode = [version]::new([int]$Matches.major, [int]$Matches.minor, [int]$Matches.patch)
+		if ($declaredNode -lt $minimumNode) {
+			Add-MfFinding -Findings $findings -RuleId 'MF-DEP-003' -Severity 'error' -Message "Node 版本约束低于 $minimumNode：$nodeEngine" `
+				-Suggestion "把 engines.node 调整到 >=$minimumNode，并使用匹配运行环境。" -File 'package.json'
 		}
 	} else {
 		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-003' -Severity 'warning' -Message '未声明可识别的 engines.node。' `
-			-Suggestion '在 package.json 中明确 Node >=20.12.0。' -File 'package.json'
+			-Suggestion "核对 engines.node 最低版本满足 $minimumNode；复杂约束需人工确认。" -File 'package.json'
 	}
 	$packageManager = [string]$package.packageManager
 	if ($packageManager -match '^pnpm@(?<major>\d+)\.(?<minor>\d+)') {
@@ -173,10 +180,11 @@ function Invoke-IntegratedChecks {
 		}
 	}
 	$elementVersion = Get-MfPackageVersion -Package $package -Name 'element-plus'
-	if ($elementVersion -ne '2.14.3' -or $viteContent -notmatch '[''"]element-plus[''"][^}]*requiredVersion\s*:\s*[''"]\^2\.14\.3[''"]') {
+	$elementPattern = '[''"]element-plus[''"][^}]*requiredVersion\s*:\s*[''"]\^' + [regex]::Escape($elementBaseline) + '[''"]'
+	if ($elementVersion -ne $elementBaseline -or $viteContent -notmatch $elementPattern) {
 		Add-MfFinding -Findings $findings -RuleId 'MF-VITE-003' -Severity 'error' `
-			-Message "Element Plus 版本或 shared requiredVersion 未对齐 2.14.3，当前依赖为 $elementVersion。" `
-			-Suggestion '把依赖锁定为 2.14.3，并把 requiredVersion 配为 ^2.14.3。' -File $viteRelative
+			-Message "Element Plus 版本或 shared requiredVersion 未对齐 $elementBaseline，当前依赖为 $elementVersion。" `
+			-Suggestion "核对当前框架基线；依赖 $elementBaseline，requiredVersion 为 ^$elementBaseline。" -File $viteRelative
 	}
 	if ($viteContent -notmatch 'modulePreload\s*:\s*false' -or $viteContent -notmatch 'skipModuleFederationRemotePreload\s*\(') {
 		Add-MfFinding -Findings $findings -RuleId 'MF-VITE-004' -Severity 'error' `
@@ -188,6 +196,20 @@ function Invoke-IntegratedChecks {
 			-Message 'bundleAllCSS 未明确配置为 false。' `
 			-Suggestion '保持 expose 级 CSS 拆分，以便消费端按 manifest 精确加载样式。' -File $viteRelative
 	}
+	if ($kitVersion -ne '1.6.15') {
+		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message '框架 1.2.0 必须固定 @fxft/aura-web-kit@1.6.15。' -File 'package.json'
+	}
+	foreach ($helper in @('stabilizeFederationModuleScan', 'pruneFederationSsrImports', 'stabilizeFederationDevOptimizer', 'createAuraAutoImports')) {
+		if ($viteContent -notmatch ($helper + '\s*\(')) {
+			Add-MfFinding -Findings $findings -RuleId 'MF-VITE-006' -Severity 'error' -Message "1.2.0 构建缺少公共插件调用：$helper" -File $viteRelative
+		}
+	}
+	if ($viteContent -notmatch '@fxft/aura-web-kit/vite' -or $viteContent -notmatch '\.\.\.auraOptimizeDeps\b') {
+		Add-MfFinding -Findings $findings -RuleId 'MF-VITE-006' -Severity 'error' -Message '预构建清单应直接使用 @fxft/aura-web-kit/vite 的 auraOptimizeDeps。' -File $viteRelative
+	}
+	if ($postcssContent -notmatch '@fxft/aura-web-kit/postcss' -or $postcssContent -notmatch 'createAuraPostcssPlugins\s*\(') {
+		Add-MfFinding -Findings $findings -RuleId 'MF-VITE-007' -Severity 'error' -Message 'PostCSS 未通过公共包工厂绑定 scope 与 Tailwind 入口。' -File 'postcss.config.js'
+	}
 
 	# 综合端运行时外壳和标准扩展口。
 	$requiredRuntimeFiles = @(
@@ -195,14 +217,11 @@ function Invoke-IntegratedChecks {
 		'src/config/viteModuleFederationConfig.ts',
 		'src/config/remoteConfig.ts',
 		'src/hooks/moduleFederation.ts',
-		'src/utils/moduleFederationRegistry.ts',
-		'src/utils/moduleFederationRemotes.ts',
-		'src/utils/moduleFederationI18n.ts',
-		'src/utils/moduleFederationStyles.ts',
 		'src/components/ModuleFederationElementProvider/index.vue',
 		'src/styles/moduleFederationTailwind.ts',
 		'src/styles/moduleFederationTailwind.css'
 	)
+	$requiredRuntimeFiles += 'src/config/aura/federation.ts'
 	foreach ($relativePath in $requiredRuntimeFiles) {
 		if (-not (Test-Path -LiteralPath (Join-Path $ProjectPath $relativePath) -PathType Leaf)) {
 			Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-001' -Severity 'error' -Message "缺少综合端标准文件：$relativePath" `
@@ -223,29 +242,34 @@ function Invoke-IntegratedChecks {
 			-Suggestion '恢复 styleExposes、i18nExposes 等分类合并。' -File 'src/hooks/moduleFederation.ts'
 	}
 
-	$registryPath = Join-Path $ProjectPath 'src\utils\moduleFederationRegistry.ts'
-	$registryContent = if (Test-Path -LiteralPath $registryPath) { Get-Content -LiteralPath $registryPath -Raw -Encoding UTF8 } else { '' }
-	$hasScopedProviderTree = $registryContent -match '(?s)class\s*:\s*\[[^\]]*[''"]aura-mf-remote-scope[''"][\s\S]*?h\(ModuleFederationElementProvider'
-	if (-not $hasScopedProviderTree) {
-		Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-003' -Severity 'error' `
-			-Message '远程路由未保持真实 scope 根节点并在其内部注入 Element Provider。' `
-			-Suggestion '保持 aura-mf-remote-scope 为真实 div 根节点，并把 ModuleFederationElementProvider 放在内部。' `
-			-File 'src/utils/moduleFederationRegistry.ts'
-	}
-	foreach ($marker in @('loadError', 'refreshModuleFederationRemote', 'resetRemoteI18nCache', 'resetRemoteStyleCache', 'data-mf-load-error', '重新加载')) {
-		if (-not $registryContent.Contains($marker)) {
-			Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-004' -Severity 'error' -Message "远程加载隔离或重试能力缺少标记：$marker" `
-				-Suggestion '恢复当前综合端模板的内容区错误隔离和强制刷新链路。' -File 'src/utils/moduleFederationRegistry.ts'
+	$bindingPath = Join-Path $ProjectPath 'src/config/aura/federation.ts'
+	$binding = if (Test-Path -LiteralPath $bindingPath) { Get-Content -LiteralPath $bindingPath -Raw -Encoding UTF8 } else { '' }
+	foreach ($factory in @('createFederationRemotes', 'createFederationStyles', 'createFederationI18n', 'createFederationRegistry')) {
+		$factoryImport = 'import\s*\{[^}]*\b' + $factory + '\b[^}]*\}\s*from\s*[''"]@fxft/aura-web-kit/federation[''"]'
+		if ($binding -notmatch $factoryImport -or $binding -notmatch ($factory + '\s*\(')) {
+			Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-006' -Severity 'error' -Message "联邦绑定缺少公开工厂导入或调用：$factory" -File 'src/config/aura/federation.ts'
 		}
 	}
-	$remotesPath = Join-Path $ProjectPath 'src\utils\moduleFederationRemotes.ts'
-	$remotesContent = if (Test-Path -LiteralPath $remotesPath) { Get-Content -LiteralPath $remotesPath -Raw -Encoding UTF8 } else { '' }
-	foreach ($marker in @('registerRemotes', 'normalizeRemoteEntry', 'getRemoteManifestEntry', 'refreshModuleFederationRemote')) {
-		if (-not $remotesContent.Contains($marker)) {
-			Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-005' -Severity 'error' -Message "运行时远程注册缺少能力：$marker" `
-				-Suggestion '恢复远程入口标准化、manifest 推导和刷新能力。' -File 'src/utils/moduleFederationRemotes.ts'
+	foreach ($pattern in @('elementProvider\s*:\s*ModuleFederationElementProvider', '\bgetRemoteScopeClass\b', '\bregisterRemotes\b', '\bmoduleFederationRemoteEntries\b', '\bgetModuleFederationLoader\b')) {
+		if ($binding -notmatch $pattern) {
+			Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-006' -Severity 'error' -Message "联邦绑定缺少运行时适配：$pattern" -File 'src/config/aura/federation.ts'
 		}
 	}
+	$installedPackage = Join-Path $ProjectPath 'node_modules/@fxft/aura-web-kit/package.json'
+	if (Test-Path -LiteralPath $installedPackage) {
+		$installed = Get-Content -LiteralPath $installedPackage -Raw -Encoding UTF8 | ConvertFrom-Json
+		foreach ($entry in @('./federation', './federation/config', './browser/assets', './vite', './postcss')) {
+			if (-not $installed.exports.PSObject.Properties[$entry]) {
+				Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message "已安装 web-kit 缺少公开入口：$entry" -File 'package.json'
+			}
+		}
+		if ($kitVersion -match '^\d+\.\d+\.\d+$' -and $installed.version -ne $kitVersion) {
+			Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message "web-kit 声明版本与安装版本不一致：$kitVersion / $($installed.version)" -File 'package.json'
+		}
+	} else {
+		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'manual' -Message '未安装 web-kit，无法核验发布包 exports 与版本；先安装锁文件依赖再复检。' -File 'package.json'
+	}
+	Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-007' -Severity 'manual' -Message '公共包负责 scope 根节点、失败隔离与缓存刷新；静态绑定检查不能证明运行行为，需验证宿主加载、失败重试和语言切换。' -File 'src/config/aura/federation.ts'
 
 	# 综合端作为提供方时，检查全部 expose 映射和国际化扫描目录。
 	$exposePattern = '[''"](?<key>\./[^''"]+)[''"]\s*:\s*[''"](?<path>\./src/[^''"]+)[''"]'
@@ -411,6 +435,22 @@ function Invoke-IntegratedChecks {
 
 	$typeFilesContent = (Get-ChildItem -LiteralPath (Join-Path $ProjectPath 'src') -Recurse -File -Filter '*.d.ts' -ErrorAction SilentlyContinue |
 		ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 }) -join "`n"
+	# 只读取项目明确启用的公开声明入口，不把安装包中未引用的声明算作可用。
+	$activeTypeContent = $typeFilesContent -replace '(?s)/\*.*?\*/', '' -replace '(?m)^\s*//(?!/\s*<reference)[^\r\n]*', ''
+	$kitTypePattern = '(?:import\s*[''"]|from\s*[''"]|<reference\s+types=[''"])@fxft/aura-web-kit/(?<entry>types/remote-core)[''"]'
+	foreach ($typeReference in [regex]::Matches($activeTypeContent, $kitTypePattern)) {
+		$kitPackagePath = Join-Path $ProjectPath 'node_modules/@fxft/aura-web-kit/package.json'
+		if (-not (Test-Path -LiteralPath $kitPackagePath)) { continue }
+		$kitPackage = Get-Content -LiteralPath $kitPackagePath -Raw -Encoding UTF8 | ConvertFrom-Json
+		$entryKey = './' + $typeReference.Groups['entry'].Value
+		$exportProperty = $kitPackage.exports.PSObject.Properties[$entryKey]
+		if (-not $exportProperty -or -not $exportProperty.Value.types) { continue }
+		$kitRoot = [System.IO.Path]::GetFullPath((Split-Path -Parent $kitPackagePath))
+		$declarationPath = [System.IO.Path]::GetFullPath((Join-Path $kitRoot $exportProperty.Value.types))
+		if ($declarationPath.StartsWith($kitRoot + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase) -and (Test-Path -LiteralPath $declarationPath)) {
+			$typeFilesContent += "`n" + (Get-Content -LiteralPath $declarationPath -Raw -Encoding UTF8)
+		}
+	}
 	$uniqueRemoteImports = @($remoteImports | Sort-Object Module -Unique)
 	foreach ($importRecord in $uniqueRemoteImports) {
 		if ($compileNames -notcontains $importRecord.RemoteName) {
