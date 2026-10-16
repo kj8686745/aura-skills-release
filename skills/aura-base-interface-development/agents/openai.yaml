@@ -1,0 +1,6 @@
+interface:
+  display_name: "AURA 接口与联调"
+  short_description: "按 AURA 接口规范编制模块契约并推进前后端联调"
+  default_prompt: "使用 $aura-base-interface-development 核对这个模块的接口契约与联调事项。"
+policy:
+  allow_implicit_invocation: true

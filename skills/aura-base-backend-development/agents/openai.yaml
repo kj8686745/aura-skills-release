@@ -1,0 +1,6 @@
+interface:
+  display_name: "AURA 后端基础编码"
+  short_description: "按 AURA 后端规范处理业务分层、数据事务与研发自测"
+  default_prompt: "使用 $aura-base-backend-development 按当前项目契约实现这个后端需求。"
+policy:
+  allow_implicit_invocation: true

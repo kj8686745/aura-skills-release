@@ -1,0 +1,6 @@
+interface:
+  display_name: "AURA 存量接口审查"
+  short_description: "审查已有接口契约、调用方和迁移调整顺序"
+  default_prompt: "使用 $aura-base-interface-review 先审查这个已有系统的接口现状和调用方，再输出契约差异与调整顺序。"
+policy:
+  allow_implicit_invocation: true
