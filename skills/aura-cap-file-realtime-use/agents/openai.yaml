@@ -1,6 +1,6 @@
 interface:
   display_name: "文件与实时交互能力使用"
-  short_description: "接入 AURA 文件、Excel、SSE 与 WebSocket，核对下载模块状态"
+  short_description: "接入 Excel、SSE、WebSocket 与 Socket.IO，核对文件任务边界"
   default_prompt: "使用 $aura-cap-file-realtime-use 在当前项目实现一个带权限校验的 Excel 导入接口。"
 policy:
   allow_implicit_invocation: true
