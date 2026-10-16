@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1792132200,
+  "generatedAt": 1792132565,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -20,6 +20,42 @@
       "description": "审查已开发一段时间的 AURA 前后端或服务间接口，识别现状、调用方和统一契约差异，输出可执行的调整顺序与验证结论；不替代新接口设计、后端实现或真实联调。",
       "name": "aura-base-interface-review",
       "path": "skills/aura-base-interface-review/SKILL.md",
+      "version": "0.1.0-draft"
+    },
+    {
+      "description": "新建或调整 AURA 业务工程、模块结构、命名、项目文档、依赖配置、构建或版本交付时，按基础编码规范确定工程落点与交付方式；不负责专项能力实现。",
+      "name": "aura-base-project-engineering",
+      "path": "skills/aura-base-project-engineering/SKILL.md",
+      "version": "0.1.0-draft"
+    },
+    {
+      "description": "AURA 后端业务开发需要统一响应、JSON、当前用户、权限、租户、缓存、日志审计、Feign 或文件存储等公共能力时使用；不处理公共包内部实现。",
+      "name": "aura-cap-base-use",
+      "path": "skills/aura-cap-base-use/SKILL.md",
+      "version": "0.2.0-draft"
+    },
+    {
+      "description": "在 AURA 后端业务应用中组合公共数据访问、基础实体、统一响应、安全上下文与本地事务入口时，按基础业务开发能力包定位接入方法和完整示例；通用分层与交付规则以基础编码规范为准。",
+      "name": "aura-cap-common-business-use",
+      "path": "skills/aura-cap-common-business-use/SKILL.md",
+      "version": "0.1.0-draft"
+    },
+    {
+      "description": "在 AURA 业务服务中接入动态数据源或 Snowflake 分布式编号，或核对跨服务事务模块当前能否接入时使用；普通单库 CRUD 与本地事务不触发本技能。",
+      "name": "aura-cap-data-infra-use",
+      "path": "skills/aura-cap-data-infra-use/SKILL.md",
+      "version": "0.1.0-draft"
+    },
+    {
+      "description": "在 AURA 业务应用中处理敏感字段脱敏、XSS 内容清理、实体字段保护或 HTTP 报文加密时使用；不替代认证、授权和租户开发。",
+      "name": "aura-cap-data-security-use",
+      "path": "skills/aura-cap-data-security-use/SKILL.md",
+      "version": "0.1.0-draft"
+    },
+    {
+      "description": "AURA 业务应用接入 Excel、SSE、WebSocket 或组合文件任务，或核对下载任务模块是否可接入时使用；单独文件存储接入转基础通用支撑能力技能。",
+      "name": "aura-cap-file-realtime-use",
+      "path": "skills/aura-cap-file-realtime-use/SKILL.md",
       "version": "0.1.0-draft"
     },
     {

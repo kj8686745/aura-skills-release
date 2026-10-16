@@ -1,0 +1,6 @@
+interface:
+  display_name: "数据与事务基础设施使用"
+  short_description: "接入 AURA 动态数据源与 Snowflake 编号，核对跨服务事务入口"
+  default_prompt: "使用 $aura-cap-data-infra-use 为当前项目设计并核对一个多数据源查询能力。"
+policy:
+  allow_implicit_invocation: true

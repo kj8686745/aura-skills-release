@@ -1,0 +1,6 @@
+interface:
+  display_name: "基础业务开发能力包使用技能"
+  short_description: "按 AURA 基础业务能力完成接口、分层、数据访问、事务和研发自测"
+  default_prompt: "使用 $aura-cap-common-business-use 完成一个带权限和租户边界的后端业务接口。"
+policy:
+  allow_implicit_invocation: true

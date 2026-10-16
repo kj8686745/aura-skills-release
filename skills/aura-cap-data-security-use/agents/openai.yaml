@@ -1,0 +1,6 @@
+interface:
+  display_name: "数据安全与内容防护使用"
+  short_description: "按 AURA 能力处理脱敏、XSS、实体保护和报文加密"
+  default_prompt: "使用 $aura-cap-data-security-use 为当前业务接口设计敏感字段展示与日志脱敏。"
+policy:
+  allow_implicit_invocation: true

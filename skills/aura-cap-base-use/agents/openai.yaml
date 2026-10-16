@@ -1,0 +1,6 @@
+interface:
+  display_name: "基础通用支撑能力包使用技能"
+  short_description: "按 AURA 公共能力规范接入后端业务，并核对权限、租户与结果边界"
+  default_prompt: "使用 $aura-cap-base-use 为设备详情接口接入当前用户、租户和缓存。"
+policy:
+  allow_implicit_invocation: true
