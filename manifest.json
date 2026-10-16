@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1792132565,
+  "generatedAt": 1792132960,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -56,6 +56,18 @@
       "description": "AURA 业务应用接入 Excel、SSE、WebSocket 或组合文件任务，或核对下载任务模块是否可接入时使用；单独文件存储接入转基础通用支撑能力技能。",
       "name": "aura-cap-file-realtime-use",
       "path": "skills/aura-cap-file-realtime-use/SKILL.md",
+      "version": "0.1.0-draft"
+    },
+    {
+      "description": "在 AURA 业务服务中接入 XXL-JOB 执行器、开发定时任务或核对调度结果时使用；不用于普通同步接口、消息消费或文件导出。",
+      "name": "aura-cap-job-use",
+      "path": "skills/aura-cap-job-use/SKILL.md",
+      "version": "0.1.0-draft"
+    },
+    {
+      "description": "在 AURA 网关或业务服务中设计动态路由、网关与 Feign 灰度、Servlet/Feign 保护或网关限流时使用；不处理业务授权和普通 CRUD。",
+      "name": "aura-cap-traffic-use",
+      "path": "skills/aura-cap-traffic-use/SKILL.md",
       "version": "0.1.0-draft"
     },
     {

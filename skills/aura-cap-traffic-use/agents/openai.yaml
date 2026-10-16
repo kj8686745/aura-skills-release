@@ -1,0 +1,6 @@
+interface:
+  display_name: "网关与流量治理使用"
+  short_description: "按 AURA 能力接入路由、灰度和流量保护"
+  default_prompt: "使用 $aura-cap-traffic-use 为当前服务设计网关路由与灰度流量接入。"
+policy:
+  allow_implicit_invocation: true

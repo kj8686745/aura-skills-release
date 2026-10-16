@@ -1,0 +1,6 @@
+interface:
+  display_name: "任务与调度能力使用"
+  short_description: "按 AURA 任务能力接入执行器并开发可触发的后台任务"
+  default_prompt: "使用 $aura-cap-job-use 在当前项目实现一个可调度、可核对结果的后台任务。"
+policy:
+  allow_implicit_invocation: true
