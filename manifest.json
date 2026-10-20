@@ -2,17 +2,19 @@
   "schemaVersion": 1,
   "repository": "kj8686745/aura-skills-release",
   "branch": "main",
-  "generatedAt": "2026-10-20T03:36:10.4607794Z",
+  "generatedAt": "2026-10-20T03:45:46.5038968Z",
   "sourceCommit": "1dc870038138e1c00fb869fb66ecb74ef5bb9099",
   "skills": [
     {
-      "name": "fmap-2d",
-      "version": "1.0.6",
-      "description": "公司 2D 地图业务开发规范技能，指导 Agent 在 Vue 3 + Vite 项目中接入 @fxft/ui-plus，并使用 FxftMap 完成地图页面、点位聚合、轨迹回放、热力图、绘制和 GeoJSON 渲染。",
+      "name": "aura-cap-common-business-use",
+      "version": "1.0.2",
+      "description": "在 AURA 后端业务应用中组合公共数据访问、基础实体、统一响应、安全上下文与本地事务入口时，按基础业务开发能力包定位接入方法和完整示例；通用分层与交付规则以基础编码规范为准。",
       "tags": [
-        null
+        "后端",
+        "能力包",
+        "使用"
       ],
-      "path": "skills/fmap-2d/SKILL.md"
+      "path": "skills/aura-cap-common-business-use/SKILL.md"
     },
     {
       "name": "aura-cap-traffic-use",
@@ -24,6 +26,36 @@
         "使用"
       ],
       "path": "skills/aura-cap-traffic-use/SKILL.md"
+    },
+    {
+      "name": "aura-base-interface-development",
+      "version": "1.0.2",
+      "description": "为 AURA 前后端或服务间协作设计接口契约、按业务模块编写接口文档并准备联调时使用；具体页面和服务内部实现分别交由前后端开发技能。",
+      "tags": [
+        "前端",
+        "后端",
+        "接口",
+        "开发"
+      ],
+      "path": "skills/aura-base-interface-development/SKILL.md"
+    },
+    {
+      "name": "aura-module-federation-check",
+      "version": "1.1.0",
+      "description": "自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联邦生产端或消费端，并检查 PIGX 综合端的模块联邦身份、依赖、Vite 配置、shared singleton、运行时外壳、i18n、样式、静态资源和构建产物。模块联邦配置由 Web 开发技能实现，本技能提供改前基线、改后复检与对外接入说明；首版生产端或消费端仅报告类型和证据。",
+      "tags": [
+        null
+      ],
+      "path": "skills/aura-module-federation-check/SKILL.md"
+    },
+    {
+      "name": "fmap-2d",
+      "version": "1.0.6",
+      "description": "公司 2D 地图业务开发规范技能，指导 Agent 在 Vue 3 + Vite 项目中接入 @fxft/ui-plus，并使用 FxftMap 完成地图页面、点位聚合、轨迹回放、热力图、绘制和 GeoJSON 渲染。",
+      "tags": [
+        null
+      ],
+      "path": "skills/fmap-2d/SKILL.md"
     },
     {
       "name": "aura-cap-base-use",
@@ -48,74 +80,15 @@
       "path": "skills/aura-cap-data-security-use/SKILL.md"
     },
     {
-      "name": "fxft-video",
-      "version": "2.0.6",
-      "description": "在 Vue 3 + Vite 项目中使用 @fxft/ui-plus 的 FxftWebVideo 与 FxftWebMultiVideo 实现直播、回放、点播、PTZ、分屏、拖拽、多选和通道管理。",
-      "tags": [
-        null
-      ],
-      "path": "skills/fxft-video/SKILL.md"
-    },
-    {
-      "name": "aura-cap-common-business-use",
+      "name": "aura-cap-file-realtime-use",
       "version": "1.0.2",
-      "description": "在 AURA 后端业务应用中组合公共数据访问、基础实体、统一响应、安全上下文与本地事务入口时，按基础业务开发能力包定位接入方法和完整示例；通用分层与交付规则以基础编码规范为准。",
+      "description": "AURA 业务应用接入 Excel、SSE、WebSocket、Socket.IO 或组合文件任务，或核对下载任务模块是否可接入时使用；单独文件存储接入转基础通用支撑能力技能。",
       "tags": [
         "后端",
         "能力包",
         "使用"
       ],
-      "path": "skills/aura-cap-common-business-use/SKILL.md"
-    },
-    {
-      "name": "aura-web-project-router",
-      "version": "1.0.3",
-      "description": "对当前框架未知的 Vue 3 + Vite 项目进行轻量只读识别，并在 PIGX 综合端开发、CRUD、路由菜单、权限、地图、视频或模块联邦配置时分流到对应技能；不实现业务，也不接管普通 Vue/Vite、React 或非 PIGX 项目。",
-      "tags": [
-        null
-      ],
-      "path": "skills/aura-web-project-router/SKILL.md"
-    },
-    {
-      "name": "aura-module-federation-check",
-      "version": "1.1.0",
-      "description": "自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联邦生产端或消费端，并检查 PIGX 综合端的模块联邦身份、依赖、Vite 配置、shared singleton、运行时外壳、i18n、样式、静态资源和构建产物。模块联邦配置由 Web 开发技能实现，本技能提供改前基线、改后复检与对外接入说明；首版生产端或消费端仅报告类型和证据。",
-      "tags": [
-        null
-      ],
-      "path": "skills/aura-module-federation-check/SKILL.md"
-    },
-    {
-      "name": "aura-cap-job-use",
-      "version": "1.0.2",
-      "description": "在 AURA 业务服务中接入 XXL-JOB 执行器、开发定时任务或核对调度结果时使用；不用于普通同步接口、消息消费或文件导出。",
-      "tags": [
-        "后端",
-        "能力包",
-        "使用"
-      ],
-      "path": "skills/aura-cap-job-use/SKILL.md"
-    },
-    {
-      "name": "aura-base-interface-development",
-      "version": "1.0.2",
-      "description": "为 AURA 前后端或服务间协作设计接口契约、按业务模块编写接口文档并准备联调时使用；具体页面和服务内部实现分别交由前后端开发技能。",
-      "tags": [
-        "前端",
-        "后端",
-        "接口",
-        "开发"
-      ],
-      "path": "skills/aura-base-interface-development/SKILL.md"
-    },
-    {
-      "name": "aura-web-develop",
-      "version": "1.3.0",
-      "description": "按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + TypeScript 业务，涵盖 CRUD、接口、菜单权限、组件复用与模块联邦实现；适用于 aura-pigx-cli nexus 项目及其业务远程模块。",
-      "tags": [
-        null
-      ],
-      "path": "skills/aura-web-develop/SKILL.md"
+      "path": "skills/aura-cap-file-realtime-use/SKILL.md"
     },
     {
       "name": "aura-base-backend-development",
@@ -128,15 +101,13 @@
       "path": "skills/aura-base-backend-development/SKILL.md"
     },
     {
-      "name": "aura-cap-data-infra-use",
-      "version": "1.0.2",
-      "description": "在 AURA 业务服务中接入动态数据源或 Snowflake 分布式编号，或核对跨服务事务模块当前能否接入时使用；普通单库 CRUD 与本地事务不触发本技能。",
+      "name": "fxft-video",
+      "version": "2.0.6",
+      "description": "在 Vue 3 + Vite 项目中使用 @fxft/ui-plus 的 FxftWebVideo 与 FxftWebMultiVideo 实现直播、回放、点播、PTZ、分屏、拖拽、多选和通道管理。",
       "tags": [
-        "后端",
-        "能力包",
-        "使用"
+        null
       ],
-      "path": "skills/aura-cap-data-infra-use/SKILL.md"
+      "path": "skills/fxft-video/SKILL.md"
     },
     {
       "name": "aura-base-interface-review",
@@ -151,17 +122,6 @@
       "path": "skills/aura-base-interface-review/SKILL.md"
     },
     {
-      "name": "aura-cap-file-realtime-use",
-      "version": "1.0.2",
-      "description": "AURA 业务应用接入 Excel、SSE、WebSocket、Socket.IO 或组合文件任务，或核对下载任务模块是否可接入时使用；单独文件存储接入转基础通用支撑能力技能。",
-      "tags": [
-        "后端",
-        "能力包",
-        "使用"
-      ],
-      "path": "skills/aura-cap-file-realtime-use/SKILL.md"
-    },
-    {
       "name": "aura-base-project-engineering",
       "version": "1.0.2",
       "description": "新建或调整 AURA 业务工程、模块结构、命名、项目文档、依赖配置、构建或版本交付时，按基础编码规范确定工程落点与交付方式；不负责专项能力实现。",
@@ -171,6 +131,46 @@
         "开发"
       ],
       "path": "skills/aura-base-project-engineering/SKILL.md"
+    },
+    {
+      "name": "aura-web-develop",
+      "version": "1.3.0",
+      "description": "按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + TypeScript 业务，涵盖 CRUD、接口、菜单权限、组件复用与模块联邦实现；适用于 aura-pigx-cli nexus 项目及其业务远程模块。",
+      "tags": [
+        null
+      ],
+      "path": "skills/aura-web-develop/SKILL.md"
+    },
+    {
+      "name": "aura-web-project-router",
+      "version": "1.0.3",
+      "description": "对当前框架未知的 Vue 3 + Vite 项目进行轻量只读识别，并在 PIGX 综合端开发、CRUD、路由菜单、权限、地图、视频或模块联邦配置时分流到对应技能；不实现业务，也不接管普通 Vue/Vite、React 或非 PIGX 项目。",
+      "tags": [
+        null
+      ],
+      "path": "skills/aura-web-project-router/SKILL.md"
+    },
+    {
+      "name": "aura-cap-job-use",
+      "version": "1.0.2",
+      "description": "在 AURA 业务服务中接入 XXL-JOB 执行器、开发定时任务或核对调度结果时使用；不用于普通同步接口、消息消费或文件导出。",
+      "tags": [
+        "后端",
+        "能力包",
+        "使用"
+      ],
+      "path": "skills/aura-cap-job-use/SKILL.md"
+    },
+    {
+      "name": "aura-cap-data-infra-use",
+      "version": "1.0.2",
+      "description": "在 AURA 业务服务中接入动态数据源或 Snowflake 分布式编号，或核对跨服务事务模块当前能否接入时使用；普通单库 CRUD 与本地事务不触发本技能。",
+      "tags": [
+        "后端",
+        "能力包",
+        "使用"
+      ],
+      "path": "skills/aura-cap-data-infra-use/SKILL.md"
     }
   ]
 }
