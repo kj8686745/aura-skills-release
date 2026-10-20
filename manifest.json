@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1792491513,
+  "generatedAt": 1792496055,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -26,7 +26,7 @@
         "接口",
         "审查"
       ],
-      "version": "1.1.2"
+      "version": "1.1.4"
     },
     {
       "description": "按 AURA 规范开发或重构 Java/Spring 后端业务和内外 API，并按需接入数据库、鉴权、文件、实时通信、调度及网关等框架能力；不用于独立技术设计文档、项目规范审查或框架能力包建设。",

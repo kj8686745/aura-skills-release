@@ -1,8 +1,8 @@
 {
   "skill": "aura-backend-compliance-review",
-  "skillVersion": "1.1.2",
+  "skillVersion": "1.1.4",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "3e6faf34623c41d5b568d083a52fe28e4d62c2fb",
+  "sourceCommit": "e4632a7cbac0f5d427c7e1951aa8777c26017521",
   "transformation": "仅移除登记的跨范围导航目标，保留链接文字；正文与示例不改写。",
   "modules": [
     {
@@ -587,8 +587,8 @@
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理/05-技能构建/审查结果包模板.md",
       "snapshot": "references/审查结果包模板.md",
-      "sourceSha256Lf": "5f6ff72b2b47379966d4e9a02ba899803e254e954832ee3fe747f2d0f5815107",
-      "snapshotSha256Lf": "5f6ff72b2b47379966d4e9a02ba899803e254e954832ee3fe747f2d0f5815107",
+      "sourceSha256Lf": "a4890dae7dfb4d3c3ae154cb664e0dbafb5bad368cbf72d37381414e4c94e1c6",
+      "snapshotSha256Lf": "a4890dae7dfb4d3c3ae154cb664e0dbafb5bad368cbf72d37381414e4c94e1c6",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
