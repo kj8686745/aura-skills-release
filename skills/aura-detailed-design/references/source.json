@@ -1,0 +1,45 @@
+{
+  "skill": "aura-detailed-design",
+  "documents": [
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-详细设计规范/01-详细设计规范.md",
+      "snapshot": "references/standards/02-详细设计规范/01-详细设计规范.md",
+      "navigationTargetsRemoved": [],
+      "sourceKind": "authority",
+      "authorityStatus": "matched",
+      "sourceSha256Lf": "67038551792da307beb153c54d424fa6d6a1df33fa2563868d5e73f3a0c2f783",
+      "snapshotSha256Lf": "67038551792da307beb153c54d424fa6d6a1df33fa2563868d5e73f3a0c2f783",
+      "inheritedSource": null,
+      "inheritedCommit": null
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-详细设计规范/02-技术详细设计文档模板.md",
+      "snapshot": "references/standards/02-详细设计规范/02-技术详细设计文档模板.md",
+      "navigationTargetsRemoved": [],
+      "sourceKind": "authority",
+      "authorityStatus": "matched",
+      "sourceSha256Lf": "b1c3b5550b0bd050bae77d042cc059d05b9d199739a26ae516d4a2f7f34ebc06",
+      "snapshotSha256Lf": "b1c3b5550b0bd050bae77d042cc059d05b9d199739a26ae516d4a2f7f34ebc06",
+      "inheritedSource": null,
+      "inheritedCommit": null
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-详细设计规范/03-技术详细设计文档示例-设备审核通知.md",
+      "snapshot": "references/standards/02-详细设计规范/03-技术详细设计文档示例-设备审核通知.md",
+      "navigationTargetsRemoved": [],
+      "sourceKind": "authority",
+      "authorityStatus": "matched",
+      "sourceSha256Lf": "f2e9f5b92bec4bf74737c6701f3ce65679581a4eec39a8dd4898e479863b00e1",
+      "snapshotSha256Lf": "f2e9f5b92bec4bf74737c6701f3ce65679581a4eec39a8dd4898e479863b00e1",
+      "inheritedSource": null,
+      "inheritedCommit": null
+    }
+  ],
+  "coverage": "仅登记本次同步的规范视图；其余既有快照未在本记录中重新绑定。",
+  "skillVersion": "0.1.1-draft",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceCommit": "876e63992dba16cfc29a50ab87c4311f32b2b94e",
+  "skillResources": [],
+  "transformation": "仅移除登记的跨范围导航目标，保留链接文字；正文与示例不改写。",
+  "behaviorValidation": "本次为来源与静态引用复核；未执行独立 Agent 任务或真实项目运行验证。"
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "AI 研发协作运用"
+  short_description: "按任务管理 AI 工作入口、会话、上下文与输出审阅"
+  default_prompt: "使用 $aura-ai-workflow 帮我收束当前研发会话，并给出下一会话所需的最小上下文。"
+policy:
+  allow_implicit_invocation: true

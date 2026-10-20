@@ -1,0 +1,101 @@
+{
+  "skill": "aura-ai-workflow",
+  "skillVersion": "0.1.0-draft",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceCommit": "2a760e5364ac80adcb1ff3b0c887c146c8f76c1e",
+  "documents": [
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/01-AI辅助开发基本规则.md",
+      "snapshot": "references/standards/02-AI开发运用规范/01-AI辅助开发基本规则.md",
+      "sourceSha256Lf": "2114b633082cf6abcaa8c89f9d0716c7ccd914f9bc21e8e02d6e35d179b55344",
+      "snapshotSha256Lf": "2114b633082cf6abcaa8c89f9d0716c7ccd914f9bc21e8e02d6e35d179b55344",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/02-AI工作入口初始化规范.md",
+      "snapshot": "references/standards/02-AI开发运用规范/02-AI工作入口初始化规范.md",
+      "sourceSha256Lf": "440ada2dcae326493a813fb000b5bd55cae617141e2f1480792ecea4bce94d10",
+      "snapshotSha256Lf": "440ada2dcae326493a813fb000b5bd55cae617141e2f1480792ecea4bce94d10",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/03-AI会话运用机制规范.md",
+      "snapshot": "references/standards/02-AI开发运用规范/03-AI会话运用机制规范.md",
+      "sourceSha256Lf": "9ce728b5c55b9685d91023266f556f067e208f4e7630c5d9d2ad3a9baf09731d",
+      "snapshotSha256Lf": "9ce728b5c55b9685d91023266f556f067e208f4e7630c5d9d2ad3a9baf09731d",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/04-AI上下文管理通用规范.md",
+      "snapshot": "references/standards/02-AI开发运用规范/04-AI上下文管理通用规范.md",
+      "sourceSha256Lf": "aeae8ac42f81062d09bf2e441ed709145a3cf5c3a6b6f414f1f2247914b20320",
+      "snapshotSha256Lf": "aeae8ac42f81062d09bf2e441ed709145a3cf5c3a6b6f414f1f2247914b20320",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/05-AI输出审查与人工确认.md",
+      "snapshot": "references/standards/02-AI开发运用规范/05-AI输出审查与人工确认.md",
+      "sourceSha256Lf": "16b11061e9d6eaf8d58369f3cf649fb70386e6a2e9870c18394daa50a1e6ac73",
+      "snapshotSha256Lf": "16b11061e9d6eaf8d58369f3cf649fb70386e6a2e9870c18394daa50a1e6ac73",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/06-常见任务使用流程.md",
+      "snapshot": "references/standards/02-AI开发运用规范/06-常见任务使用流程.md",
+      "sourceSha256Lf": "bf12124095fc8986ce609ccac888a8ac1f9cd0dde714ac56b3818fb470c653ce",
+      "snapshotSha256Lf": "bf12124095fc8986ce609ccac888a8ac1f9cd0dde714ac56b3818fb470c653ce",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/07-Codex触发机制示例.md",
+      "snapshot": "references/standards/02-AI开发运用规范/07-Codex触发机制示例.md",
+      "sourceSha256Lf": "bc828a14843e10a90e23a7876b8fff8939bf317c387332cc46db26b68f527524",
+      "snapshotSha256Lf": "bc828a14843e10a90e23a7876b8fff8939bf317c387332cc46db26b68f527524",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/08-使用示例.md",
+      "snapshot": "references/standards/02-AI开发运用规范/08-使用示例.md",
+      "sourceSha256Lf": "4e1bd4305f8595eb6337f5f6a2c3f6591e66e86dd90c6d1f47aaf00f06ab96f6",
+      "snapshotSha256Lf": "4e1bd4305f8595eb6337f5f6a2c3f6591e66e86dd90c6d1f47aaf00f06ab96f6",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/09-能力包任务入参规范.md",
+      "snapshot": "references/standards/02-AI开发运用规范/09-能力包任务入参规范.md",
+      "sourceSha256Lf": "ac60bdd3c8853592acd9971812b774264bf8b32ea719941b0afa7df449dc98a4",
+      "snapshotSha256Lf": "ac60bdd3c8853592acd9971812b774264bf8b32ea719941b0afa7df449dc98a4",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/目录说明.md",
+      "snapshot": "references/standards/02-AI开发运用规范/目录说明.md",
+      "sourceSha256Lf": "ad8a9b863745bf66b38a3656869a219e1af9ab4dfefe1073c231f9f11e67cfb6",
+      "snapshotSha256Lf": "ad8a9b863745bf66b38a3656869a219e1af9ab4dfefe1073c231f9f11e67cfb6",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/规范矩阵.md",
+      "snapshot": "references/standards/02-AI开发运用规范/规范矩阵.md",
+      "sourceSha256Lf": "9c557ee10a8a22965fd9d0e909c62be89c0d263dcbb509fb8d931b6b7c0d1be2",
+      "snapshotSha256Lf": "9c557ee10a8a22965fd9d0e909c62be89c0d263dcbb509fb8d931b6b7c0d1be2",
+      "sourceKind": "authority",
+      "navigationTargetsRemoved": []
+    }
+  ],
+  "transformation": "无内容转换，仅按 LF 归一化计算摘要。",
+  "validation": {
+    "behavior": "pending",
+    "note": "来源相同仅证明随包文档一致，不证明 SDK 制品、运行契约或任务行为已验收。"
+  }
+}
