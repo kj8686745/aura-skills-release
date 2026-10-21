@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1792542563,
+  "generatedAt": 1792553663,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -155,6 +155,19 @@
       "version": "1.0.2"
     },
     {
+      "description": "为 AURA 的某个能力域建设或更新能力包候选；从指定版本的源码、SDK 和公开契约核实真实能力，编写能力说明、使用规范、示例与候选使用技能，供内部复核。仅用于能力包建设，不用于业务项目直接接入或宣称发布。",
+      "name": "aura-capability-package-build",
+      "path": "skills/aura-capability-package-build/SKILL.md",
+      "releaseState": "ready",
+      "tags": [
+        "治理",
+        "能力包",
+        "构建"
+      ],
+      "version": "0.5.0",
+      "visibility": "internal"
+    },
+    {
       "description": "依据 AURA 技术详细设计规范，为影响模块、数据、状态、接口或运行边界的业务变更编写或复核技术详细设计；不负责直接实现代码或代替接口文档。",
       "name": "aura-detailed-design",
       "path": "skills/aura-detailed-design/SKILL.md",
@@ -175,6 +188,21 @@
         "审查"
       ],
       "version": "1.1.3"
+    },
+    {
+      "description": "为前端、后端或接口负责人开发和优化规范审查技能，构建规则路由、只读审查工作流与统一报告模板，并验证生成技能的结果包；不直接承担业务项目审查或代码整改。",
+      "name": "aura-review-skill-build",
+      "path": "skills/aura-review-skill-build/SKILL.md",
+      "releaseState": "ready",
+      "tags": [
+        "前端",
+        "后端",
+        "治理",
+        "审查",
+        "内部构建"
+      ],
+      "version": "0.2.1",
+      "visibility": "internal"
     },
     {
       "description": "按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + TypeScript 业务，涵盖 CRUD、接口、菜单权限、组件复用与模块联邦实现；适用于 aura-pigx-cli nexus 项目及其业务远程模块。",

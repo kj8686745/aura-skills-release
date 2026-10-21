@@ -1,0 +1,79 @@
+{
+  "skill": "aura-capability-package-build",
+  "skillVersion": "0.5.0",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceCommit": "622b7fc351af7df579551c118978bb92ee4759e2",
+  "sourceBinding": {
+    "status": "committed",
+    "note": "构建技能以 internal + ready 交付，产出仍为候选能力包；来源与结构已核对，真实任务行为验收后续进行。"
+  },
+  "documents": [
+    {
+      "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/能力包通用构建规范.md",
+      "snapshot": "governance/能力包通用构建规范.md",
+      "sourceSha256Lf": "bc6433467e0b9d25747ad7cad8fc4b54e8f162e4b3370d82a8edc4b000f9e930",
+      "snapshotSha256Lf": "91b50a2f60fe3fd148b54607be513c324e6841e1540b167d845e2c87e7155eb6",
+      "transformation": {
+        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/建设模板/能力包统一定义模板.md",
+      "snapshot": "governance/能力包统一定义模板.md",
+      "sourceSha256Lf": "206b4b3d21ad529f365fc511651beb9ad6e8148c5f7e5d32468c0fa440b59b4d",
+      "snapshotSha256Lf": "c807fd0d9cc5e53385abe48265f5f8127dee2f6ae1b564e7714a54b1b350ba2a",
+      "transformation": {
+        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/建设模板/能力包对外内容模板.md",
+      "snapshot": "governance/能力包对外内容模板.md",
+      "sourceSha256Lf": "439ebb4b90b8f05e2bb09c31b556d98fd4edeeba83824001d07cc75a653a0ec2",
+      "snapshotSha256Lf": "aa78f227c41bf0c3b5a672424e03a83ef54ac5afdc8e45d9471decb39f425525",
+      "transformation": {
+        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/01-规范治理/规范模板/平台能力使用说明模板.md",
+      "snapshot": "governance/平台能力使用说明模板.md",
+      "sourceSha256Lf": "949e3a11520affe1fa3d2a50c6d027cf41a9bbd2530d2da88cc96bcfd3420a39",
+      "snapshotSha256Lf": "949e3a11520affe1fa3d2a50c6d027cf41a9bbd2530d2da88cc96bcfd3420a39",
+      "transformation": {
+        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/01-规范治理/规范模板/对外API-SDK交付手册模板.md",
+      "snapshot": "governance/对外API-SDK交付手册模板.md",
+      "sourceSha256Lf": "280d99354e11472ddd1f6f164806a181322abfb34339339e637fed7db4cfaa95",
+      "snapshotSha256Lf": "280d99354e11472ddd1f6f164806a181322abfb34339339e637fed7db4cfaa95",
+      "transformation": {
+        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/10-对外能力交付规范.md",
+      "snapshot": "governance/10-对外能力交付规范.md",
+      "sourceSha256Lf": "257132c7458d07f356c37aebe20628bd04c0f1a33c885ce8e3cf528020448b76",
+      "snapshotSha256Lf": "257132c7458d07f356c37aebe20628bd04c0f1a33c885ce8e3cf528020448b76",
+      "transformation": {
+        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/研发人员能力包建设与归档指南.md",
+      "snapshot": "governance/研发人员能力包建设与归档指南.md",
+      "sourceSha256Lf": "fa231590a983ec67eaf9968d6d5c94d5fc699d8c822f916152adc9becb68ddcb",
+      "snapshotSha256Lf": "fa231590a983ec67eaf9968d6d5c94d5fc699d8c822f916152adc9becb68ddcb",
+      "transformation": {
+        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
+      }
+    }
+  ],
+  "validation": {
+    "behavior": "pending",
+    "note": "结构、链接与摘要检查不等于真实建设任务验收。"
+  }
+}

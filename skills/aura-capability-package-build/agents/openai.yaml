@@ -1,0 +1,6 @@
+interface:
+  display_name: "AURA 能力包构建"
+  short_description: "内部治理：核实真实能力，编制能力说明、接入示例及按需使用模块候选"
+  default_prompt: "使用 $aura-capability-package-build 根据指定版本的源码与公开契约建设能力包及使用模块候选，列出验证结果与缺口。"
+policy:
+  allow_implicit_invocation: true

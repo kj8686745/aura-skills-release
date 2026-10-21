@@ -1,0 +1,29 @@
+{
+  "skill": "aura-review-skill-build",
+  "skillVersion": "0.2.1",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceCommit": "e4632a7cbac0f5d427c7e1951aa8777c26017521",
+  "sourceRoot": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理",
+  "documents": [
+    {
+      "source": "01-管理规范/审查技能构建规范.md",
+      "snapshot": "governance/01-管理规范/审查技能构建规范.md",
+      "version": "1.0.0",
+      "sourceSha256Lf": "e47e1645aa0430a1de62038618ebd10e2f01c77a168c7d8a25ff0ea3972f1f1e",
+      "snapshotSha256Lf": "e47e1645aa0430a1de62038618ebd10e2f01c77a168c7d8a25ff0ea3972f1f1e",
+      "transformation": "保留规则及模板正文；未随包导航仅保留显示文字。"
+    },
+    {
+      "source": "05-技能构建/审查结果包模板.md",
+      "snapshot": "governance/05-技能构建/审查结果包模板.md",
+      "version": "1.0.0",
+      "sourceSha256Lf": "a4890dae7dfb4d3c3ae154cb664e0dbafb5bad368cbf72d37381414e4c94e1c6",
+      "snapshotSha256Lf": "a4890dae7dfb4d3c3ae154cb664e0dbafb5bad368cbf72d37381414e4c94e1c6",
+      "transformation": "保留规则及模板正文；未随包导航仅保留显示文字。"
+    }
+  ],
+  "validation": {
+    "behavior": "pending",
+    "note": "结构与来源检查不代替领域负责人完成首个生成技能及真实结果包验证。"
+  }
+}

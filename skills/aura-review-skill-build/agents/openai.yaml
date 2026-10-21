@@ -1,0 +1,6 @@
+interface:
+  display_name: "AURA 审查技能构建"
+  short_description: "供前后端负责人建设审查技能，统一工作流、规则证据与最终报告格式"
+  default_prompt: "使用 $aura-review-skill-build 为指定领域建设审查技能，按同版规范建立规则路由、自动审查流程和统一结果包，并验证实际产物。"
+policy:
+  allow_implicit_invocation: true
