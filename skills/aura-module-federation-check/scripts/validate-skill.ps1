@@ -15,6 +15,8 @@ $requiredFiles = @(
 	'USAGE.md',
 	'agents/openai.yaml',
 	'references/integrated-rule-matrix.md',
+	'references/prebuild-check.md',
+	'references/prebuild-entries.json',
 	'references/provider-consumer-handoff.md',
 	'checklists/integrated-validation.md',
 	'knowledge/PIGX前端开发规范/模块联邦开发技术规范.md',

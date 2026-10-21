@@ -196,8 +196,8 @@ function Invoke-IntegratedChecks {
 			-Message 'bundleAllCSS 未明确配置为 false。' `
 			-Suggestion '保持 expose 级 CSS 拆分，以便消费端按 manifest 精确加载样式。' -File $viteRelative
 	}
-	if ($kitVersion -ne '1.6.15') {
-		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message '框架 1.2.0 必须固定 @fxft/aura-web-kit@1.6.15。' -File 'package.json'
+	if ($kitVersion -ne '1.6.18') {
+		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message '框架 1.2.0 必须固定 @fxft/aura-web-kit@1.6.18。' -File 'package.json'
 	}
 	foreach ($helper in @('stabilizeFederationModuleScan', 'pruneFederationSsrImports', 'stabilizeFederationDevOptimizer', 'createAuraAutoImports')) {
 		if ($viteContent -notmatch ($helper + '\s*\(')) {
@@ -209,6 +209,29 @@ function Invoke-IntegratedChecks {
 	}
 	if ($postcssContent -notmatch '@fxft/aura-web-kit/postcss' -or $postcssContent -notmatch 'createAuraPostcssPlugins\s*\(') {
 		Add-MfFinding -Findings $findings -RuleId 'MF-VITE-007' -Severity 'error' -Message 'PostCSS 未通过公共包工厂绑定 scope 与 Tailwind 入口。' -File 'postcss.config.js'
+	}
+
+	# 候选审计不执行 Vite 配置，公共函数/spread 的静态缺失不认定为确定错误。
+	$catalog = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../references/prebuild-entries.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+	$optimizeMatch = [regex]::Match($viteContent, 'optimizeDeps\s*:\s*\{(?<body>[\s\S]*?)\binclude\s*:\s*\[(?<include>[\s\S]*?)\]')
+	$includeText = $optimizeMatch.Groups['include'].Value -replace '(?m)//[^\r\n]*', '' -replace '(?s)/\*.*?\*/', ''
+	$sourceFiles = @(Get-MfProjectSourceFiles -ProjectPath $ProjectPath)
+	foreach ($item in $catalog) {
+		$usage = $null
+		foreach ($file in $sourceFiles) {
+			if ($file.Extension -notin @('.vue', '.ts', '.tsx', '.js', '.jsx')) { continue }
+			$content = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
+			$content = $content -replace '(?s)<!--.*?-->', ''
+			$pattern = '(?<![\w-])(' + (($item.components | ForEach-Object { [regex]::Escape($_) }) -join '|') + ')(?![\w-])'
+			if ($content -cmatch $pattern) { $usage = $file; break }
+		}
+		if (-not $usage) { continue }
+		$present = $includeText -match ('[''"]' + [regex]::Escape($item.entry) + '[''"]')
+		$severity = if ($present) { 'manual' } else { 'warning' }
+		$message = if ($present) { "已发现公共组件预构建入口，仍需冷启动验证：$($item.entry)" } else { "已使用公共组件，但字面量 include 未发现入口：$($item.entry)" }
+		Add-MfFinding -Findings $findings -RuleId 'MF-VITE-008' -Severity $severity -Message $message `
+			-Suggestion '按 references/prebuild-check.md 核验 resolver、包版本、最终 include 与冷启动重载；函数/spread/通配符需人工确认，不全量预构建组件库。' `
+			-File (Get-MfRelativePath -ProjectPath $ProjectPath -FilePath $usage.FullName)
 	}
 
 	# 综合端运行时外壳和标准扩展口。

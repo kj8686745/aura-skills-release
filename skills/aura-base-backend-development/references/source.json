@@ -1,8 +1,8 @@
 {
   "skill": "aura-base-backend-development",
-  "skillVersion": "1.1.2",
+  "skillVersion": "1.1.3",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "3e6faf34623c41d5b568d083a52fe28e4d62c2fb",
+  "sourceCommit": "4b9b1469189df8a8e95ce52b3569152e92c37fbc",
   "transformation": "仅移除登记的跨范围导航目标，保留链接文字；正文与示例不改写。",
   "modules": [
     {
@@ -64,7 +64,7 @@
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/总入口.md",
       "snapshot": "references/standards/01-基础编码规范/总入口.md",
       "sourceSha256Lf": "a9acb16c31deb505389a7cd1e0fce054aba77e22ce1503062053943a78c930b9",
-      "snapshotSha256Lf": "047eb11024630b2463dc3c4cdba729d06db7d01059985986e0f53f2d6354fd63",
+      "snapshotSha256Lf": "874528e5d698326ae72eaf21499422b13635f91371d61650cb29b646b950a70a",
       "navigationTargetsRemoved": [
         "./04-前端基础编码规范/00-前端开发总览.md",
         "./04-前端基础编码规范/01-工程组织与页面状态.md",
@@ -91,8 +91,8 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/规范矩阵.md",
       "snapshot": "references/standards/01-基础编码规范/规范矩阵.md",
-      "sourceSha256Lf": "9d2afcfeb6244dfd2729101a60ee8e7dce8f39cd3ab8bd4946614844e0564e08",
-      "snapshotSha256Lf": "5485c69b807a80f5802ac481efd2b7009cac99d1bffac1dd4625a0c37cd8a98f",
+      "sourceSha256Lf": "24c2bc7152b998266f4a1fe2c53cad22faa62cdf35710690b31e0b289d52d7b1",
+      "snapshotSha256Lf": "2c1ba5071aa141bd351a82d80aafd58cc4e122da7fa0243462062ea557766c75",
       "navigationTargetsRemoved": [
         "./04-前端基础编码规范/01-工程组织与页面状态.md",
         "./04-前端基础编码规范/02-请求路由权限与数据适配.md",
@@ -379,7 +379,7 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/07-网关与流量治理能力包/能力详细说明.md",
       "snapshot": "references/standards/05-能力包/01-通用工具类/07-网关与流量治理能力包/能力详细说明.md",
-      "sourceSha256Lf": "3cc39f66bb863542ed5a2e2d6233989bf973a2409cf3f9133b37171099430083",
+      "sourceSha256Lf": "3c595631158124fc1d20c50938f0079dcb89232aa6ade33ff630e5df922bcd8b",
       "snapshotSha256Lf": "3cc39f66bb863542ed5a2e2d6233989bf973a2409cf3f9133b37171099430083",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
@@ -546,8 +546,8 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/01-接口规范.md",
       "snapshot": "references/standards/01-基础编码规范/05-接口规范体系/01-接口规范.md",
-      "sourceSha256Lf": "5d3ddafadd905abbef65a97b70d168d21e07bdf644ea9a817711eca492974cc7",
-      "snapshotSha256Lf": "5d3ddafadd905abbef65a97b70d168d21e07bdf644ea9a817711eca492974cc7",
+      "sourceSha256Lf": "e055cfe225f750ca4a897be7a2be01e978457f202d5766d83fa8dee6d21eeffc",
+      "snapshotSha256Lf": "e055cfe225f750ca4a897be7a2be01e978457f202d5766d83fa8dee6d21eeffc",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
@@ -568,8 +568,8 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/03-接口文档模板.md",
       "snapshot": "references/standards/01-基础编码规范/05-接口规范体系/03-接口文档模板.md",
-      "sourceSha256Lf": "d2584a3284cefb6bf596988ec0bb2b8306871db198f39933e8859e375e1dcf3d",
-      "snapshotSha256Lf": "d2584a3284cefb6bf596988ec0bb2b8306871db198f39933e8859e375e1dcf3d",
+      "sourceSha256Lf": "dffbd0d8cc0128e0ef82934f01e1f1c7424bfbc29b6cadf4c7a7a98328b62f6d",
+      "snapshotSha256Lf": "dffbd0d8cc0128e0ef82934f01e1f1c7424bfbc29b6cadf4c7a7a98328b62f6d",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,

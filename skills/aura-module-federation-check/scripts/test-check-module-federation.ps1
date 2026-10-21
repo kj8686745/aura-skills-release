@@ -115,7 +115,7 @@ function New-KitFixture {
 	$package = Get-Content -LiteralPath $packageFile -Raw | ConvertFrom-Json
 	$package.engines.node = '>=22'
 	$package.dependencies.'element-plus' = '2.14.6'
-	$package.dependencies | Add-Member -NotePropertyName '@fxft/aura-web-kit' -NotePropertyValue '1.6.15'
+	$package.dependencies | Add-Member -NotePropertyName '@fxft/aura-web-kit' -NotePropertyValue '1.6.18'
 	Write-FixtureFile $Root 'package.json' ($package | ConvertTo-Json -Depth 5)
 	$vite = Get-Content -LiteralPath (Join-Path $Root 'vite.config.mts') -Raw
 	$vite += @'
@@ -141,7 +141,7 @@ const registry = createFederationRegistry({ loadRemote, remotes, styles, i18n, e
 export const { getModuleFederationLoader } = registry;
 '@
 	Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/package.json' @'
-{"version":"1.6.15","exports":{"./federation":{"types":"./dist/federation.d.ts"},"./federation/config":{},"./browser/assets":{},"./vite":{},"./postcss":{},"./types/remote-core":{"types":"./dist/types/remote-core.d.ts"}}}
+{"version":"1.6.18","exports":{"./federation":{"types":"./dist/federation.d.ts"},"./federation/config":{},"./browser/assets":{},"./vite":{},"./postcss":{},"./types/remote-core":{"types":"./dist/types/remote-core.d.ts"}}}
 '@
 	Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/dist/types/remote-core.d.ts' "declare module 'aura-core/api/example.ts' { export const read: () => void; }"
 }
@@ -183,7 +183,7 @@ try {
 	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('>=22', '>=20'))
 	$result = Invoke-CheckerJson -ProjectPath $kitRoot
 	Assert-Rule $result.Report 'MF-DEP-003'
-	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('1.6.15', '1.6.14'))
+	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('1.6.18', '1.6.14'))
 	$result = Invoke-CheckerJson -ProjectPath $kitRoot
 	Assert-Rule $result.Report 'MF-DEP-004'
 	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('2.14.6', '2.14.3'))
@@ -269,6 +269,20 @@ import RemotePage from 'aura-license-center/views/page.vue';
 		Assert-Rule -Report $result.Report -RuleId $ruleId
 	}
 
+	$prebuildRoot = Join-Path $testRoot 'prebuild-integrated'
+	Copy-Item -LiteralPath $integratedRoot -Destination $prebuildRoot -Recurse
+	Write-FixtureFile $prebuildRoot 'src/views/map.vue' '<template><FxftMap /><fxft-web-multi-video /></template>'
+	$vitePath = Join-Path $prebuildRoot 'vite.config.mts'
+	$viteSource = Get-Content -LiteralPath $vitePath -Raw -Encoding UTF8
+	Write-FixtureFile $prebuildRoot 'vite.config.mts' ($viteSource + "`nconst auditOptions = { optimizeDeps: { include: ['@fxft/ui-plus'] } };")
+	$result = Invoke-CheckerJson -ProjectPath $prebuildRoot
+	$prebuildFindings = @($result.Report.findings | Where-Object ruleId -eq 'MF-VITE-008')
+	if (@($prebuildFindings | Where-Object severity -eq 'warning').Count -ne 2) { throw '根包 include 不能替代地图和多路视频入口。' }
+	Write-FixtureFile $prebuildRoot 'vite.config.mts' ($viteSource + "`nconst auditOptions = { optimizeDeps: { include: ['@fxft/ui-plus/dist/es/components/map/index.js', '@fxft/ui-plus/dist/es/components/web-multi-video/index.js'] } };")
+	$result = Invoke-CheckerJson -ProjectPath $prebuildRoot
+	$prebuildFindings = @($result.Report.findings | Where-Object ruleId -eq 'MF-VITE-008')
+	if (@($prebuildFindings | Where-Object severity -eq 'manual').Count -ne 2) { throw '已配置入口仍应要求冷启动人工验证。' }
+	if ($prebuildFindings.Message -match '/web-video/') { throw '未使用单路视频不应要求预构建。' }
 	Write-Host '✓ 模块联邦检查器回归测试通过。' -ForegroundColor Green
 } finally {
 	$resolvedTemp = [System.IO.Path]::GetFullPath($testRoot)

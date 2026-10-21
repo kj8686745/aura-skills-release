@@ -12,7 +12,8 @@
 | 提供模块/项目 | 设备公开服务（示例） |
 | 调用模块/项目 | 合作方系统（示例） |
 | 接口边界 | 对外 OpenAPI |
-| 网关路径 | `GET /open-api/v1/devices` |
+| 网关路径 | `GET /openapi/v1/devices` |
+| 平台 API 自动收录 | `@PlatfomApi(code = "device-query", version = "1.0.0", name = "查询设备列表", requestPath = "/openapi/v1/devices")` |
 | 唯一事实来源 | 本文仅示范公开契约写法；实际项目以已发布契约和配套 SDK 为准 |
 
 本单接口示例对应模块接口文档模板的“模块基本信息”“接口总览”“职责与调用边界”“统一认证与请求上下文”“接口逐项契约”“公共响应与错误”“幂等与兼容”“联调”“发布运行”和“完成自检”章节。由于本文只展示一个对外接口，未再单独拆分模块级接口总览文件。
@@ -22,7 +23,7 @@
 每次请求使用已登记的 HMAC 版本和签名头：
 
 ```http
-GET /open-api/v1/devices?pageNo=1&pageSize=20
+GET /openapi/v1/devices?pageNo=1&pageSize=20
 X-App-Id: app-demo
 X-Sign-Version: v1
 X-Timestamp: 1789954200

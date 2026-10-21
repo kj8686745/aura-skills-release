@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1792496055,
+  "generatedAt": 1792542563,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -26,7 +26,7 @@
         "接口",
         "审查"
       ],
-      "version": "1.1.4"
+      "version": "1.1.6"
     },
     {
       "description": "按 AURA 规范开发或重构 Java/Spring 后端业务和内外 API，并按需接入数据库、鉴权、文件、实时通信、调度及网关等框架能力；不用于独立技术设计文档、项目规范审查或框架能力包建设。",
@@ -38,7 +38,7 @@
         "开发",
         "能力使用"
       ],
-      "version": "1.1.2"
+      "version": "1.1.3"
     },
     {
       "description": "为 AURA 前后端、服务间或对外 OpenAPI 设计统一接口契约，按业务模块编写接口文档并准备联调；具体页面和服务内部实现分别交由前后端开发技能。",
@@ -51,7 +51,7 @@
         "接口",
         "开发"
       ],
-      "version": "1.0.7"
+      "version": "1.0.8"
     },
     {
       "description": "审查已开发一段时间的 AURA 前后端或服务间接口，识别现状、调用方和统一契约差异，输出可执行的调整顺序与验证结论；不替代新接口设计、后端实现或真实联调。",
@@ -169,10 +169,12 @@
       "description": "自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联邦生产端或消费端，并检查 PIGX 综合端的模块联邦身份、依赖、Vite 配置、shared singleton、运行时外壳、i18n、样式、静态资源和构建产物。模块联邦配置由 Web 开发技能实现，本技能提供改前基线、改后复检与对外接入说明；首版生产端或消费端仅报告类型和证据。",
       "name": "aura-module-federation-check",
       "path": "skills/aura-module-federation-check/SKILL.md",
+      "releaseState": "ready",
       "tags": [
-        null
+        "前端",
+        "审查"
       ],
-      "version": "1.1.0"
+      "version": "1.1.3"
     },
     {
       "description": "按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + TypeScript 业务，涵盖 CRUD、接口、菜单权限、组件复用与模块联邦实现；适用于 aura-pigx-cli nexus 项目及其业务远程模块。",

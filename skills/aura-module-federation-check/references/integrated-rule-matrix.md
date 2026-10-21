@@ -52,9 +52,10 @@
 | `MF-VITE-004` | error | 未禁用 Module Preload，或缺少远程预加载跳过插件。 |
 | `MF-VITE-005` | warning | `bundleAllCSS` 不是 `false`，可能破坏 expose 级样式加载。 |
 
-| `MF-DEP-004` | error / manual | web-kit 未固定 `1.6.15`、已安装关键 exports 缺失或版本不一致为 error；未安装为 manual。 |
+| `MF-DEP-004` | error / manual | web-kit 未固定 `1.6.18`、已安装关键 exports 缺失或版本不一致为 error；未安装为 manual。 |
 | `MF-VITE-006` | error | 公共包模式缺少联邦扫描、SSR 清理、dev 优化、AutoImport 工厂或 auraOptimizeDeps 接入。 |
 | `MF-VITE-007` | error | 公共包模式没有通过 createAuraPostcssPlugins 绑定 PostCSS。 |
+| `MF-VITE-008` | warning / manual | 源码使用已登记公共组件，但未在字面量 optimizeDeps.include 发现对应入口时 warning；已发现仍需 manual 核验最终配置、包版本与冷启动。静态扫描不执行 Vite 配置，不因根包 include 或组件库安装就判定覆盖。详见预构建检查及入口登记。 |
 
 ## 四、运行时外壳
 

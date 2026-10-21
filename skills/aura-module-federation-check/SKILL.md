@@ -5,7 +5,7 @@ description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联�
 
 # Aura PIGX 模块联邦检查
 
-当前版本：`1.1.0`。
+当前版本：`1.1.3`。
 
 只读识别与审计 PIGX 综合端，提供改前基线、改后复检。配置实现由 `aura-web-develop` 主导；仅在用户明确要求修复时修改项目，不猜测部署地址、远程拓扑或后台菜单。
 
@@ -18,6 +18,7 @@ description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联�
 1. 运行 `scripts/check-module-federation.ps1 -ProjectPath <项目路径>`。需要机器结果加 `-Json`，指定构建清单加 `-ManifestPath`，核验菜单传真实 `-ComponentPath`。
 2. 仅 `Integrated` 进入完整审计；`Provider` / `Consumer` 报告类型证据及专项审计尚未支持；`Unknown` 报告不足或冲突证据并停止，不猜测。
 3. 综合端审计读取 [规则矩阵](references/integrated-rule-matrix.md)，按 [验证清单](checklists/integrated-validation.md) 补充构建、独立运行和宿主加载检查。只报告实际执行结果。
+   涉及 resolver、公共组件、依赖升级或菜单首次进入重载时，按 [预构建检查](references/prebuild-check.md) 核对实际入口与冷启动证据；后续发现的公共入口持续登记。
 4. 类型解释、退出码或编写报告时读取 [类型与报告契约](references/audit-report-contract.md)。
 5. 综合端完成修改且复检无确定错误时，读取 [对外接入说明](references/provider-consumer-handoff.md) 并交付接入参数。用户明确指定消费方项目且要求接入时，按该文档边界修改真实配置。
 
@@ -25,4 +26,4 @@ description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联�
 
 优先级：用户要求 → 项目源码、类型、实际依赖和产物 → [正式规范](knowledge/PIGX前端开发规范/模块联邦开发技术规范.md) → 规则矩阵与脚本。出现规范冲突或配置细节疑问时读取正式规范。
 
-1.2.0 基线为 web-kit `1.6.15`、Element Plus `2.14.6` singleton 和 Node.js ≥22。只检查 1.2.0 公共包绑定；不得要求已迁移项目恢复本地运行时副本或旧 alias。公共入口和项目绑定见 [aura-web-kit 清单](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)。未命中的参考不加载；同一会话未变化的资料不重复读取。
+1.2.0 基线为 web-kit `1.6.18`、Element Plus `2.14.6` singleton 和 Node.js ≥22。只检查 1.2.0 公共包绑定；不得要求已迁移项目恢复本地运行时副本或旧 alias。公共入口和项目绑定见 [aura-web-kit 清单](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)。未命中的参考不加载；同一会话未变化的资料不重复读取。

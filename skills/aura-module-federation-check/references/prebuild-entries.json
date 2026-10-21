@@ -1,0 +1,101 @@
+[
+  {
+    "package": "@fxft/ui-plus",
+    "components": [
+      "FxftMap",
+      "fxft-map"
+    ],
+    "entry": "@fxft/ui-plus/dist/es/components/map/index.js",
+    "verifiedVersion": "1.1.3",
+    "evidence": "2026-10-16 冷启动首次加载地图时，dev 日志出现该入口 new dependencies optimized 与 reloading；resolver 在 Vue 转换阶段注入入口。"
+  },
+  {
+    "package": "@fxft/ui-plus",
+    "components": [
+      "FxftWebVideo",
+      "fxft-web-video"
+    ],
+    "entry": "@fxft/ui-plus/dist/es/components/web-video/index.js",
+    "verifiedVersion": "1.1.3",
+    "evidence": "2026-10-16 已有使用该组件的入口预构建配置；作为检查候选，缺失是否导致重载仍需冷启动验证。"
+  },
+  {
+    "package": "@fxft/ui-plus",
+    "components": [
+      "FxftWebMultiVideo",
+      "fxft-web-multi-video"
+    ],
+    "entry": "@fxft/ui-plus/dist/es/components/web-multi-video/index.js",
+    "verifiedVersion": "1.1.3",
+    "evidence": "2026-10-16 冷启动首次加载多路视频时，dev 日志出现该入口 new dependencies optimized 与 reloading；resolver 在 Vue 转换阶段注入入口。"
+  },
+  {
+    "package": "@fxft/aura-ui",
+    "verifiedVersion": "1.1.2",
+    "components": [
+      "AuraPagination",
+      "aura-pagination"
+    ],
+    "entry": "@fxft/aura-ui/dist/es/components/pagination/index.js",
+    "evidence": "2026-10-16 冷启动首次访问含分页的动态菜单，dev 日志出现该精确入口 new dependencies optimized 与 reloading；resolver 在 Vue 转换阶段注入。"
+  },
+  {
+    "package": "@fxft/aura-ui",
+    "verifiedVersion": "1.1.2",
+    "components": [
+      "AuraDictTag",
+      "aura-dict-tag"
+    ],
+    "entry": "@fxft/aura-ui/dist/es/components/dict-tag/index.js",
+    "evidence": "2026-10-16 冷启动首次访问含字典标签的动态菜单，dev 日志出现该精确入口 new dependencies optimized 与 reloading；resolver 在 Vue 转换阶段注入。"
+  },
+  {
+    "package": "@fxft/aura-ui",
+    "verifiedVersion": "1.1.2",
+    "components": [
+      "AuraDictText",
+      "aura-dict-text"
+    ],
+    "entry": "@fxft/aura-ui/dist/es/components/dict-text/index.js",
+    "evidence": "2026-10-16 已核对实际使用的 AuraDictText 与 resolver 输出的精确入口；属于已配置候选，未单独复现缺失导致重载。"
+  },
+  {
+    "package": "crypto-js",
+    "verifiedVersion": "4.2.0",
+    "components": [
+      "CryptoJS",
+      "crypto-js"
+    ],
+    "entry": "crypto-js",
+    "evidence": "2026-10-16 冷启动首屏 dev 日志出现 crypto-js new dependencies optimized 与 reloading；源码及公共 HTTP 入口使用。"
+  },
+  {
+    "evidence": "2026-10-16 冷启动首屏出现 axios new dependencies optimized 与 reloading；请求层惰性加载后补发现。",
+    "package": "axios",
+    "verifiedVersion": "1.18.1",
+    "components": [
+      "axios"
+    ],
+    "entry": "axios"
+  },
+  {
+    "evidence": "2026-10-16 冷启动首屏出现 echarts new dependencies optimized 与 reloading；实际图表模块在异步初始化时加载。",
+    "package": "echarts",
+    "verifiedVersion": "5.6.0",
+    "components": [
+      "echarts",
+      "useECharts"
+    ],
+    "entry": "echarts"
+  },
+  {
+    "package": "@fxft/aura-ui",
+    "verifiedVersion": "1.1.2",
+    "components": [
+      "AuraBusinessIconPicker",
+      "aura-business-icon-picker"
+    ],
+    "entry": "@fxft/aura-ui/dist/es/components/business-icon-picker/index.js",
+    "evidence": "2026-10-16 环境切换并重启dev后，首次菜单访问阶段日志出现该精确入口 new dependencies optimized 与 optimized dependencies changed. reloading；核对实际组件使用及 AuraUIResolver 输出一致。已复现补发现重载，尚未单独完成加入include后的冷启动对照，不将后续旧chunk缺失直接归因于该入口。"
+  }
+]

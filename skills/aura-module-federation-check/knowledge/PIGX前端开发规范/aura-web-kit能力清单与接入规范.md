@@ -2,7 +2,7 @@
 
 ## 一、版本与选用原则
 
-框架 **1.2.0** 验证基线：`@fxft/aura-web-kit@1.6.15`、`@fxft/aura-ui@1.1.2`、Element Plus `2.14.6`、VueUse `15.0.0`、Node.js `>=22`。核对日期：2026-10-15。下表依据已安装发布包的 `package.json.exports` 与 `.d.ts` 整理，覆盖 **113 个公开子入口**；后续版本先核对项目依赖、锁文件与已安装声明，不把源码仓库较新版本当作项目已可用能力。
+框架 **1.2.0** 验证基线：`@fxft/aura-web-kit@1.6.18`、`@fxft/aura-ui@1.1.2`、Element Plus `2.14.6`、VueUse `15.0.0`、Node.js `>=22`。核对日期：2026-10-15。下表依据已安装发布包的 `package.json.exports` 与 `.d.ts` 整理，覆盖 **113 个公开子入口**；后续版本先核对项目依赖、锁文件与已安装声明，不把源码仓库较新版本当作项目已可用能力。
 
 新增或修改公共 TS 时，先按场景查表，再读相应入口的声明和实现。包没有根入口；使用 `@fxft/aura-web-kit/<子路径>`，不引用 `src/`、`dist/` 或未导出的内部模块。表中列出主要导出用于检索，具体参数和完整导出以该版本声明为准。
 
@@ -210,7 +210,7 @@ Vite 直接引用 `/vite` 的 `auraOptimizeDeps`，配合 `getAuraOptimizeDeps(f
 
 公共 UI 不属于 web-kit；使用 aura-ui 的 `AuraUIResolver` 和 `provideAuraUiConfig`，见 《组件复用与公司基础组件库规范》。地图、视频按业务需要接入 ui-plus。
 
-## 五、1.6.15 使用要点
+## 五、1.6.18 使用要点
 +
 +- `SocialLoginEnum.ALIPAY` 已是 `/api/login` 的公共枚举项；登录协议由 `createLoginApi` 与用户 Store 使用，不在项目扩展同名枚举。
 +- `createAuraAutoImports` 包含 `LoginTypeEnum`、`LoginErrorEnum`、`SocialLoginEnum` 的按需运行时导入；类型由 `/types/ambient` 提供。自动导入与类型声明都需接入，不能只写全局类型而缺少运行时值。
