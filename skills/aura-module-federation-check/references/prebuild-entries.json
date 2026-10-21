@@ -61,13 +61,13 @@
   },
   {
     "package": "crypto-js",
-    "verifiedVersion": "4.2.0",
+    "verifiedVersion": "3.3.0",
     "components": [
       "CryptoJS",
       "crypto-js"
     ],
     "entry": "crypto-js",
-    "evidence": "2026-10-16 冷启动首屏 dev 日志出现 crypto-js new dependencies optimized 与 reloading；源码及公共 HTTP 入口使用。"
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "evidence": "2026-10-16 冷启动首屏出现 axios new dependencies optimized 与 reloading；请求层惰性加载后补发现。",
@@ -97,5 +97,140 @@
     ],
     "entry": "@fxft/aura-ui/dist/es/components/business-icon-picker/index.js",
     "evidence": "2026-10-16 环境切换并重启dev后，首次菜单访问阶段日志出现该精确入口 new dependencies optimized 与 optimized dependencies changed. reloading；核对实际组件使用及 AuraUIResolver 输出一致。已复现补发现重载，尚未单独完成加入include后的冷启动对照，不将后续旧chunk缺失直接归因于该入口。"
+  },
+  {
+    "package": "codemirror",
+    "verifiedVersion": "5.65.5",
+    "components": [
+      "codemirror"
+    ],
+    "entry": "codemirror",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "codemirror",
+    "verifiedVersion": "5.65.5",
+    "components": [
+      "codemirror/addon/selection/active-line"
+    ],
+    "entry": "codemirror/addon/selection/active-line",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "codemirror",
+    "verifiedVersion": "5.65.5",
+    "components": [
+      "codemirror/mode/velocity/velocity"
+    ],
+    "entry": "codemirror/mode/velocity/velocity",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "codemirror",
+    "verifiedVersion": "5.65.5",
+    "components": [
+      "codemirror/mode/go/go"
+    ],
+    "entry": "codemirror/mode/go/go",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "js-base64",
+    "verifiedVersion": "3.8.0",
+    "components": [
+      "js-base64"
+    ],
+    "entry": "js-base64",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "cherry-markdown",
+    "verifiedVersion": "0.9.3",
+    "components": [
+      "cherry-markdown"
+    ],
+    "entry": "cherry-markdown",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "markmap-lib",
+    "verifiedVersion": "0.15.8",
+    "components": [
+      "markmap-lib"
+    ],
+    "entry": "markmap-lib",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "markmap-view",
+    "verifiedVersion": "0.15.8",
+    "components": [
+      "markmap-view"
+    ],
+    "entry": "markmap-view",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "@vueuse/core",
+    "verifiedVersion": "15.0.0",
+    "components": [
+      "@vueuse/core"
+    ],
+    "entry": "@vueuse/core",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "lodash",
+    "verifiedVersion": "4.18.1",
+    "components": [
+      "lodash"
+    ],
+    "entry": "lodash",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "dompurify",
+    "verifiedVersion": "3.4.11",
+    "components": [
+      "dompurify"
+    ],
+    "entry": "dompurify",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "@microsoft/fetch-event-source",
+    "verifiedVersion": "2.0.1",
+    "components": [
+      "@microsoft/fetch-event-source"
+    ],
+    "entry": "@microsoft/fetch-event-source",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "marked",
+    "verifiedVersion": "12.0.2",
+    "components": [
+      "marked"
+    ],
+    "entry": "marked",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "mockjs",
+    "verifiedVersion": "1.1.0",
+    "components": [
+      "mockjs"
+    ],
+    "entry": "mockjs",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
+  },
+  {
+    "package": "xlsx",
+    "verifiedVersion": "0.18.5",
+    "components": [
+      "xlsx"
+    ],
+    "entry": "xlsx",
+    "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   }
 ]

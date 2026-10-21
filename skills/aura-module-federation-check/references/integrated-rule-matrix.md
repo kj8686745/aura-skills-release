@@ -43,19 +43,20 @@
 
 | 规则 | 级别 | 判定 |
 |---|---|---|
-| `MF-DEP-001` | error | 缺少 `@module-federation/vite` 或 `@module-federation/enhanced`。 |
+| `MF-DEP-001` | error | 缺少 `@module-federation/vite` 或 `@module-federation/enhanced`，或未对齐本轮 `1.23.5 / 2.9.2`。 |
 | `MF-DEP-002` | error | 仍使用 `@originjs/vite-plugin-federation` 或 `vite-plugin-top-level-await`。 |
-| `MF-DEP-003` | error | 1.2.0 的 Node 约束低于 `22`，或 pnpm 低于 `10.28.0`；复杂 Node 范围为 warning 待人工核对。 |
+| `MF-DEP-005` | error | 本轮综合端工具链应配套固定 TypeScript 5.9.3、ESLint 8.57.1、typescript-eslint parser/plugin 8.46.1；Vue parser 分层、实际安装与配置检查另行核验。 |
+| `MF-DEP-003` | error | 1.2.0 的 Node 约束低于 `22.12.0`，或 pnpm 低于 `10.28.0`；复杂 Node 范围为 warning 待人工核对。 |
 | `MF-VITE-001` | error | 缺少 federation 插件、当前容器名、`remoteEntry.js` 或 manifest。 |
 | `MF-VITE-002` | error | Vue、Vue Router、Vue I18n、Pinia、Element Plus 未配置 singleton。 |
 | `MF-VITE-003` | error | Element Plus 版本或 requiredVersion 未对齐：`2.14.6`。 |
 | `MF-VITE-004` | error | 未禁用 Module Preload，或缺少远程预加载跳过插件。 |
 | `MF-VITE-005` | warning | `bundleAllCSS` 不是 `false`，可能破坏 expose 级样式加载。 |
 
-| `MF-DEP-004` | error / manual | web-kit 未固定 `1.6.18`、已安装关键 exports 缺失或版本不一致为 error；未安装为 manual。 |
-| `MF-VITE-006` | error | 公共包模式缺少联邦扫描、SSR 清理、dev 优化、AutoImport 工厂或 auraOptimizeDeps 接入。 |
+| `MF-DEP-004` | error / manual | web-kit 未固定 `1.9.0`、已安装关键 exports 缺失或版本不一致为 error；未安装为 manual。 |
+| `MF-VITE-006` | error | 公共包模式缺少 SSR 清理、dev 优化、createAuraAutoImportPreset 或 auraAutoOptimizeDeps 调用；仍调用已移除的 stabilizeFederationModuleScan。静态模式核对标准名称，配置间接生成时需读取真实配置补证。 |
 | `MF-VITE-007` | error | 公共包模式没有通过 createAuraPostcssPlugins 绑定 PostCSS。 |
-| `MF-VITE-008` | warning / manual | 源码使用已登记公共组件，但未在字面量 optimizeDeps.include 发现对应入口时 warning；已发现仍需 manual 核验最终配置、包版本与冷启动。静态扫描不执行 Vite 配置，不因根包 include 或组件库安装就判定覆盖。详见预构建检查及入口登记。 |
+| `MF-VITE-008` | warning / manual | 源码使用已登记入口，缺少自动收集调用且字面量 include 无入口时 warning；存在自动收集或精确 include 时仍需 manual 核验发现报告、最终配置、包版本与冷启动。静态扫描不执行 Vite 配置，不因根包 include 或组件库安装就判定覆盖。详见预构建检查及入口登记。 |
 
 ## 四、运行时外壳
 

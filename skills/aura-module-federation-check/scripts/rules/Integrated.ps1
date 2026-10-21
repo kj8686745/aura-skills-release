@@ -11,7 +11,7 @@ function Invoke-IntegratedChecks {
 	$package = $packageContent | ConvertFrom-Json
 	$kitVersion = Get-MfPackageVersion -Package $package -Name '@fxft/aura-web-kit'
 	$elementBaseline = '2.14.6'
-	$minimumNode = [version]'22.0.0'
+	$minimumNode = [version]'22.12.0'
 
 	# 检查模板占位身份；规范文档目录不参与业务项目扫描。
 	foreach ($file in (Get-MfProjectAuditFiles -ProjectPath $ProjectPath)) {
@@ -119,6 +119,29 @@ function Invoke-IntegratedChecks {
 				-Suggestion '按当前综合端模板锁定的版本补齐依赖。' -File 'package.json'
 		}
 	}
+	foreach ($baseline in @(
+		@{ Name = '@module-federation/vite'; Version = '1.23.5' },
+		@{ Name = '@module-federation/enhanced'; Version = '2.9.2' }
+	)) {
+		$actual = Get-MfPackageVersion -Package $package -Name $baseline.Name
+		if ($actual -and $actual -ne $baseline.Version) {
+			Add-MfFinding -Findings $findings -RuleId 'MF-DEP-001' -Severity 'error' `
+				-Message "$($baseline.Name) 未对齐本轮综合端基线 $($baseline.Version)：$actual" -File 'package.json'
+		}
+	}
+	foreach ($baseline in @(
+		@{ Name = 'typescript'; Version = '5.9.3' },
+		@{ Name = 'eslint'; Version = '8.57.1' },
+		@{ Name = '@typescript-eslint/parser'; Version = '8.46.1' },
+		@{ Name = '@typescript-eslint/eslint-plugin'; Version = '8.46.1' }
+	)) {
+		$actual = Get-MfPackageVersion -Package $package -Name $baseline.Name
+		if ($actual -ne $baseline.Version) {
+			Add-MfFinding -Findings $findings -RuleId 'MF-DEP-005' -Severity 'error' `
+				-Message "TypeScript 配套工具链未对齐 $($baseline.Name)@$($baseline.Version)：$actual" `
+				-Suggestion '成对核对 parser/plugin、Vue parser 分层、锁文件与已安装版本；版本满足不代表配置类型检查或全量业务检查通过。' -File 'package.json'
+		}
+	}
 	foreach ($dependency in @('@originjs/vite-plugin-federation', 'vite-plugin-top-level-await')) {
 		if (Get-MfPackageVersion -Package $package -Name $dependency) {
 			Add-MfFinding -Findings $findings -RuleId 'MF-DEP-002' -Severity 'error' -Message "禁止使用旧模块联邦依赖：$dependency" `
@@ -196,16 +219,18 @@ function Invoke-IntegratedChecks {
 			-Message 'bundleAllCSS 未明确配置为 false。' `
 			-Suggestion '保持 expose 级 CSS 拆分，以便消费端按 manifest 精确加载样式。' -File $viteRelative
 	}
-	if ($kitVersion -ne '1.6.18') {
-		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message '框架 1.2.0 必须固定 @fxft/aura-web-kit@1.6.18。' -File 'package.json'
+	if ($kitVersion -ne '1.9.0') {
+		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message '本轮综合端必须固定 @fxft/aura-web-kit@1.9.0。' -File 'package.json'
 	}
-	foreach ($helper in @('stabilizeFederationModuleScan', 'pruneFederationSsrImports', 'stabilizeFederationDevOptimizer', 'createAuraAutoImports')) {
-		if ($viteContent -notmatch ($helper + '\s*\(')) {
-			Add-MfFinding -Findings $findings -RuleId 'MF-VITE-006' -Severity 'error' -Message "1.2.0 构建缺少公共插件调用：$helper" -File $viteRelative
+	$buildConfigContent = $viteContent -replace '(?s)/\*.*?\*/', '' -replace '(?m)//[^\r\n]*', ''
+	$hasAutoOptimizeDeps = $buildConfigContent -match '\bauraAutoOptimizeDeps\s*\('
+	foreach ($helper in @('pruneFederationSsrImports', 'stabilizeFederationDevOptimizer', 'createAuraAutoImportPreset', 'auraAutoOptimizeDeps')) {
+		if ($buildConfigContent -notmatch ('\b' + $helper + '\s*\(')) {
+			Add-MfFinding -Findings $findings -RuleId 'MF-VITE-006' -Severity 'error' -Message "本轮构建缺少公共插件或预设调用：$helper" -File $viteRelative
 		}
 	}
-	if ($viteContent -notmatch '@fxft/aura-web-kit/vite' -or $viteContent -notmatch '\.\.\.auraOptimizeDeps\b') {
-		Add-MfFinding -Findings $findings -RuleId 'MF-VITE-006' -Severity 'error' -Message '预构建清单应直接使用 @fxft/aura-web-kit/vite 的 auraOptimizeDeps。' -File $viteRelative
+	if ($buildConfigContent -notmatch '@fxft/aura-web-kit/vite' -or $buildConfigContent -match '\bstabilizeFederationModuleScan\s*\(') {
+		Add-MfFinding -Findings $findings -RuleId 'MF-VITE-006' -Severity 'error' -Message '公共构建能力应来自 @fxft/aura-web-kit/vite，且不得调用已移除的 stabilizeFederationModuleScan。' -File $viteRelative
 	}
 	if ($postcssContent -notmatch '@fxft/aura-web-kit/postcss' -or $postcssContent -notmatch 'createAuraPostcssPlugins\s*\(') {
 		Add-MfFinding -Findings $findings -RuleId 'MF-VITE-007' -Severity 'error' -Message 'PostCSS 未通过公共包工厂绑定 scope 与 Tailwind 入口。' -File 'postcss.config.js'
@@ -227,10 +252,10 @@ function Invoke-IntegratedChecks {
 		}
 		if (-not $usage) { continue }
 		$present = $includeText -match ('[''"]' + [regex]::Escape($item.entry) + '[''"]')
-		$severity = if ($present) { 'manual' } else { 'warning' }
-		$message = if ($present) { "已发现公共组件预构建入口，仍需冷启动验证：$($item.entry)" } else { "已使用公共组件，但字面量 include 未发现入口：$($item.entry)" }
+		$severity = if ($present -or $hasAutoOptimizeDeps) { 'manual' } else { 'warning' }
+		$message = if ($hasAutoOptimizeDeps) { "已接入自动发现，需核对实际收集与冷启动证据：$($item.entry)" } elseif ($present) { "已发现公共组件预构建入口，仍需冷启动验证：$($item.entry)" } else { "已使用公共组件，但未发现自动收集调用或字面量 include 入口：$($item.entry)" }
 		Add-MfFinding -Findings $findings -RuleId 'MF-VITE-008' -Severity $severity -Message $message `
-			-Suggestion '按 references/prebuild-check.md 核验 resolver、包版本、最终 include 与冷启动重载；函数/spread/通配符需人工确认，不全量预构建组件库。' `
+			-Suggestion '按 references/prebuild-check.md 核验独立 resolver 工厂、共用 AutoImport 映射、exposes、发现报告、最终 include 与冷启动重载；静态调用不证明覆盖，不全量预构建组件库。' `
 			-File (Get-MfRelativePath -ProjectPath $ProjectPath -FilePath $usage.FullName)
 	}
 

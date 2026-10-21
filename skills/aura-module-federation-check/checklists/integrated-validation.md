@@ -4,7 +4,7 @@
 
 - [ ] 只按 1.2.0 公共包绑定验收；不保留旧运行时文件与旧 alias 兼容。
 - [ ] 声明/锁定/已安装 web-kit 版本已核对；公开入口与类型真实存在。
-- [ ] 1.2.0 Node ≥22、Element Plus 2.14.6 singleton；auraOptimizeDeps、公共构建插件与 PostCSS 已接入。
+- [ ] 1.2.0 Node ≥22.12.0、Element Plus 2.14.6 singleton；auraAutoOptimizeDeps、共享 AutoImport 预设与 resolver 工厂、公共构建插件与 PostCSS 已接入。
 - [ ] 多级 remoteEntryName 与完整部署前缀一致，index.html 与 main.ts 启动缓存均按 remoteName。
 
 - [ ] 脚本识别结果为 `Integrated`。
@@ -44,3 +44,6 @@
 - [ ] 独立生产端或消费端项目未误用本技能的综合端通过结论。
 - [ ] 提供方交付时已列出 `remoteName`、`remoteEntryName`、待填 manifest 环境变量、业务/i18n/样式 expose、远程菜单 `componentPath` 与“带参”要求；未确认地址未被猜测。
 - [ ] 给定明确消费方项目时，运行时入口、环境变量和开发代理按真实现有结构接入；只有源码直接引入才增加编译期 remote、TypeScript 声明和异步组件边界。
+
+- [ ] TypeScript 5.9.3、ESLint 8.57.1、typescript-eslint parser/plugin 8.46.1 配套；Vue parser 分层、专用 tsconfig.vite.json、定向 tsc/lint/print-config 和构建分别留证，不宣称全量业务类型通过。
+- [ ] 自动发现报告与最终 optimizeDeps 覆盖实际入口，无旧扫描插件；独立 dev 与实际宿主冷启动首次菜单及往返分别留证。

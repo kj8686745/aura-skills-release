@@ -73,7 +73,7 @@ npx skills remove --all
 | aura-cap-traffic-use | 后端、能力包、使用 | 1.0.2 | 正式 | 在 AURA 网关或业务服务中设计动态路由、网关与 Feign 灰度、Servlet/Feign 保护或网关限流时使用；不处理业务授权和普通 CRUD。 |
 | aura-capability-package-build | 治理、能力包、构建 | 0.5.0 | 内部交付 | 为 AURA 的某个能力域建设或更新能力包候选；从指定版本的源码、SDK 和公开契约核实真实能力，编写能力说明、使用规范、示例与候选使用技能，供内部复核。仅用于能力包建设，不用于业务项目直接接入或宣称发布。 |
 | aura-detailed-design | 通用、设计 | 0.1.1-draft | 公开试用（待行为验收） | 依据 AURA 技术详细设计规范，为影响模块、数据、状态、接口或运行边界的业务变更编写或复核技术详细设计；不负责直接实现代码或代替接口文档。 |
-| aura-module-federation-check | 前端、审查 | 1.1.3 | 正式 | 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联邦生产端或消费端，并检查 PIGX 综合端的模块联邦身份、依赖、Vite 配置、shared singleton、运行时外壳、i18n、样式、静态资源和构建产物。模块联邦配置由 Web 开发技能实现，本技能提供改前基线、改后复检与对外接入说明；首版生产端或消费端仅报告类型和证据。 |
+| aura-module-federation-check | 前端、审查 | 1.1.4 | 正式 | 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联邦生产端或消费端，并检查 PIGX 综合端的模块联邦身份、依赖、Vite 配置、shared singleton、运行时外壳、i18n、样式、静态资源和构建产物。模块联邦配置由 Web 开发技能实现，本技能提供改前基线、改后复检与对外接入说明；首版生产端或消费端仅报告类型和证据。 |
 | aura-review-skill-build | 前端、后端、治理、审查、内部构建 | 0.2.1 | 内部交付 | 为前端、后端或接口负责人开发和优化规范审查技能，构建规则路由、只读审查工作流与统一报告模板，并验证生成技能的结果包；不直接承担业务项目审查或代码整改。 |
 | aura-web-develop | 前端、开发 | 1.3.2 | 正式 | 按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + TypeScript 业务，涵盖 CRUD、接口、菜单权限、组件复用与模块联邦实现；适用于 aura-pigx-cli nexus 项目及其业务远程模块。 |
 | aura-web-project-router | 前端、路由 | 1.0.4 | 正式 | 对框架未知的 Vue 3 + Vite 项目进行只读识别，为 Aura/PIGX 业务开发、前端规范审查、地图视频和模块联邦任务分流；不实现业务，不接管普通 Vue/Vite 或 React 项目。 |

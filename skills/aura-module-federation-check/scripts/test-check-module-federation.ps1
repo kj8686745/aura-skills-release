@@ -24,7 +24,7 @@ function New-IntegratedScaffold {
 {
   "name": "aura-order-web",
   "packageManager": "pnpm@10.28.0",
-  "engines": { "node": ">=22" },
+  "engines": { "node": ">=22.12.0" },
   "dependencies": {
     "element-plus": "2.14.6",
     "vue": "3.5.13",
@@ -33,9 +33,13 @@ function New-IntegratedScaffold {
     "pinia": "2.3.1"
   },
   "devDependencies": {
-    "@module-federation/vite": "1.18.2",
-    "@module-federation/enhanced": "2.8.0",
-    "vite": "6.4.3"
+    "@module-federation/vite": "1.23.5",
+    "@module-federation/enhanced": "2.9.2",
+    "vite": "6.4.3",
+    "typescript": "5.9.3",
+    "eslint": "8.57.1",
+    "@typescript-eslint/parser": "8.46.1",
+    "@typescript-eslint/eslint-plugin": "8.46.1"
   }
 }
 '@
@@ -113,17 +117,17 @@ function New-KitFixture {
 	New-IntegratedScaffold -Root $Root
 	$packageFile = Join-Path $Root 'package.json'
 	$package = Get-Content -LiteralPath $packageFile -Raw | ConvertFrom-Json
-	$package.engines.node = '>=22'
+	$package.engines.node = '>=22.12.0'
 	$package.dependencies.'element-plus' = '2.14.6'
-	$package.dependencies | Add-Member -NotePropertyName '@fxft/aura-web-kit' -NotePropertyValue '1.6.18'
+	$package.dependencies | Add-Member -NotePropertyName '@fxft/aura-web-kit' -NotePropertyValue '1.9.0'
 	Write-FixtureFile $Root 'package.json' ($package | ConvertTo-Json -Depth 5)
 	$vite = Get-Content -LiteralPath (Join-Path $Root 'vite.config.mts') -Raw
 	$vite += @'
 
-import { auraOptimizeDeps, stabilizeFederationModuleScan, pruneFederationSsrImports, stabilizeFederationDevOptimizer, createAuraAutoImports } from '@fxft/aura-web-kit/vite';
-stabilizeFederationModuleScan(); pruneFederationSsrImports(); stabilizeFederationDevOptimizer();
-createAuraAutoImports({ projectHooks: pathResolve('./src/config/aura/index.ts') });
-const include = [...auraOptimizeDeps];
+import { auraAutoOptimizeDeps, pruneFederationSsrImports, stabilizeFederationDevOptimizer, createAuraAutoImportPreset } from '@fxft/aura-web-kit/vite';
+pruneFederationSsrImports(); stabilizeFederationDevOptimizer();
+const autoImports = createAuraAutoImportPreset({ projectHooks: pathResolve('./src/config/aura/index.ts') });
+auraAutoOptimizeDeps({ resolvers: createComponentResolvers, imports: autoImports, exposes: exposeModules });
 '@
 	Write-FixtureFile $Root 'vite.config.mts' $vite
 	Write-FixtureFile $Root 'postcss.config.js' "const { createAuraPostcssPlugins } = require('@fxft/aura-web-kit/postcss'); createAuraPostcssPlugins({ remoteScope: '.aura-mf-remote-scope.aura-mf-remote-aura-order-web' });"
@@ -141,7 +145,7 @@ const registry = createFederationRegistry({ loadRemote, remotes, styles, i18n, e
 export const { getModuleFederationLoader } = registry;
 '@
 	Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/package.json' @'
-{"version":"1.6.18","exports":{"./federation":{"types":"./dist/federation.d.ts"},"./federation/config":{},"./browser/assets":{},"./vite":{},"./postcss":{},"./types/remote-core":{"types":"./dist/types/remote-core.d.ts"}}}
+{"version":"1.9.0","exports":{"./federation":{"types":"./dist/federation.d.ts"},"./federation/config":{},"./browser/assets":{},"./vite":{},"./postcss":{},"./types/remote-core":{"types":"./dist/types/remote-core.d.ts"}}}
 '@
 	Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/dist/types/remote-core.d.ts' "declare module 'aura-core/api/example.ts' { export const read: () => void; }"
 }
@@ -168,7 +172,7 @@ try {
 	New-KitFixture -Root $kitRoot
 	$result = Invoke-CheckerJson -ProjectPath $kitRoot
 	Assert-Equal $result.Report.projectType 'Integrated' '公共包综合端识别失败'
-	Assert-Equal $result.ExitCode 0 '1.2.0 绑定、多级路径或 >=22 约束误报'
+	Assert-Equal $result.ExitCode 0 '1.2.0 绑定、多级路径或 >=22.12.0 约束误报'
 	Assert-Rule $result.Report 'MF-RUNTIME-007'
 
 	$bindingPath = Join-Path $kitRoot 'src/config/aura/federation.ts'
@@ -180,16 +184,31 @@ try {
 	Write-FixtureFile $kitRoot 'src/config/aura/federation.ts' $binding
 
 	$kitPackage = Get-Content -LiteralPath (Join-Path $kitRoot 'package.json') -Raw
-	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('>=22', '>=20'))
+	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('>=22.12.0', '>=20'))
 	$result = Invoke-CheckerJson -ProjectPath $kitRoot
 	Assert-Rule $result.Report 'MF-DEP-003'
-	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('1.6.18', '1.6.14'))
+	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('1.9.0', '1.6.14'))
 	$result = Invoke-CheckerJson -ProjectPath $kitRoot
 	Assert-Rule $result.Report 'MF-DEP-004'
 	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('2.14.6', '2.14.3'))
 	$result = Invoke-CheckerJson -ProjectPath $kitRoot
 	Assert-Rule $result.Report 'MF-VITE-003'
 	Write-FixtureFile $kitRoot 'package.json' $kitPackage
+
+	foreach ($oldVersion in @('5.9.3', '8.57.1', '8.46.1')) {
+		Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace($oldVersion, '0.0.1'))
+		$result = Invoke-CheckerJson -ProjectPath $kitRoot
+		Assert-Rule $result.Report 'MF-DEP-005'
+	}
+	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('1.23.5', '1.18.2'))
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Rule $result.Report 'MF-DEP-001'
+	Write-FixtureFile $kitRoot 'package.json' $kitPackage
+	$modernVite = Get-Content -LiteralPath (Join-Path $kitRoot 'vite.config.mts') -Raw
+	Write-FixtureFile $kitRoot 'vite.config.mts' ($modernVite + "`nstabilizeFederationModuleScan();")
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Rule $result.Report 'MF-VITE-006'
+	Write-FixtureFile $kitRoot 'vite.config.mts' $modernVite
 
 	$basePath = Join-Path $kitRoot 'src/config/moduleFederationBaseConfig.ts'
 	$kitBase = Get-Content -LiteralPath $basePath -Raw
@@ -274,6 +293,11 @@ import RemotePage from 'aura-license-center/views/page.vue';
 	Write-FixtureFile $prebuildRoot 'src/views/map.vue' '<template><FxftMap /><fxft-web-multi-video /></template>'
 	$vitePath = Join-Path $prebuildRoot 'vite.config.mts'
 	$viteSource = Get-Content -LiteralPath $vitePath -Raw -Encoding UTF8
+	$result = Invoke-CheckerJson -ProjectPath $prebuildRoot
+	$prebuildFindings = @($result.Report.findings | Where-Object ruleId -eq 'MF-VITE-008')
+	Assert-Equal @($prebuildFindings | Where-Object severity -eq 'warning').Count 0 '自动收集不得要求重复手工 include'
+	Assert-Equal @($prebuildFindings | Where-Object severity -eq 'manual').Count 2 '自动收集仍需最终配置和冷启动补证'
+	$viteSource = $viteSource.Replace('auraAutoOptimizeDeps({ resolvers: createComponentResolvers, imports: autoImports, exposes: exposeModules });', '// auraAutoOptimizeDeps({});')
 	Write-FixtureFile $prebuildRoot 'vite.config.mts' ($viteSource + "`nconst auditOptions = { optimizeDeps: { include: ['@fxft/ui-plus'] } };")
 	$result = Invoke-CheckerJson -ProjectPath $prebuildRoot
 	$prebuildFindings = @($result.Report.findings | Where-Object ruleId -eq 'MF-VITE-008')

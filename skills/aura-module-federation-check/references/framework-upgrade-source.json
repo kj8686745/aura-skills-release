@@ -1,0 +1,43 @@
+{
+  "skill": "aura-module-federation-check",
+  "skillVersion": "1.1.4",
+  "updatedAt": "2026-10-21",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceCommit": null,
+  "sourceBaseCommit": "bb12cd8797be043305a0c2b694e228afd0f25314",
+  "bindingStatus": "pending-source-commit",
+  "referenceThread": "01a15347-1d0a-7213-b2b6-40d74329c041",
+  "implementationReference": {
+    "repository": "aura-iotbus-web",
+    "commit": "b8f728e378b323b410b61e26390dd1eaaf7a9a62",
+    "files": [
+      "package.json",
+      "pnpm-lock.yaml",
+      "vite.config.mts",
+      "tsconfig.vite.json",
+      ".eslintrc.js"
+    ],
+    "package": "@fxft/aura-web-kit@1.9.0",
+    "publicEntry": "dist/vite.d.ts"
+  },
+  "documents": [
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/06-aura-web-kit公共能力.md",
+      "snapshot": "knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md",
+      "sourceSha256Lf": "c61f1e686a250e234ed53296d094c9efdfbc58d393e47f835e263a3809e734fc",
+      "snapshotSha256Lf": "ec89472cf94d230eafa46eb3560b159741f9d30f76b463a20bbc019186f8a0db",
+      "transformation": "保留原技能知识库组织与既有正文；同步本轮构建、依赖和工具链条款，不宣称整份文件字节一致。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/08-模块联邦开发与构建.md",
+      "snapshot": "knowledge/PIGX前端开发规范/模块联邦开发技术规范.md",
+      "sourceSha256Lf": "7a0c250ee321098ceb3e93cae12b1fbc9df7da6832b2b4936270256740bf6a92",
+      "snapshotSha256Lf": "01b63855a0bd3013bdab46174186f20978d3f35f0937899bc4f906574d22217e",
+      "transformation": "保留原技能知识库组织与既有正文；同步本轮构建、依赖和工具链条款，不宣称整份文件字节一致。"
+    }
+  ],
+  "validation": {
+    "scope": "定向规范与静态检查器；不代表全量业务或浏览器复验",
+    "status": "static-and-checker-regression-passed; browser-not-rerun"
+  }
+}
