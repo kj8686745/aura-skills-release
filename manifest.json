@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1792565737,
+  "generatedAt": 1792566067,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -226,6 +226,18 @@
         "路由"
       ],
       "version": "1.0.4",
+      "visibility": "public"
+    },
+    {
+      "description": "审查 AURA/PIGX Vue 3 + Vite + TypeScript 前端项目、模块或代码变更，按前端规范取证并生成六文件审查结果包。适用于代码审查与整改复核；页面开发、依赖升级和审查技能建设由相应技能处理。",
+      "name": "aura-web-review",
+      "path": "skills/aura-web-review/SKILL.md",
+      "releaseState": "preview",
+      "tags": [
+        "前端",
+        "审查"
+      ],
+      "version": "0.1.0",
       "visibility": "public"
     },
     {

@@ -1,0 +1,164 @@
+[
+  {
+    "id": "AURA-BASE-FE-001",
+    "title": "按职责和领域组织",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/01-工程组织与页面状态.md"
+  },
+  {
+    "id": "AURA-BASE-FE-002",
+    "title": "领域聚合优先",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/01-工程组织与页面状态.md"
+  },
+  {
+    "id": "AURA-BASE-FE-003",
+    "title": "页面负责组合，组件负责明确职责",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/01-工程组织与页面状态.md"
+  },
+  {
+    "id": "AURA-BASE-FE-004",
+    "title": "状态来源单一",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/01-工程组织与页面状态.md"
+  },
+  {
+    "id": "AURA-BASE-FE-005",
+    "title": "页面状态真实表达",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/01-工程组织与页面状态.md"
+  },
+  {
+    "id": "AURA-BASE-FE-006",
+    "title": "请求集中封装",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/02-请求路由权限与数据适配.md"
+  },
+  {
+    "id": "AURA-BASE-FE-007",
+    "title": "前端可见性与权限上下文边界",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/02-请求路由权限与数据适配.md"
+  },
+  {
+    "id": "AURA-BASE-FE-008",
+    "title": "路由来源明确",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/02-请求路由权限与数据适配.md"
+  },
+  {
+    "id": "AURA-BASE-FE-009",
+    "title": "异步提交必须区分受理与完成",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/03-表单异步与资源反馈.md"
+  },
+  {
+    "id": "AURA-BASE-FE-010",
+    "title": "接口数据必须经过领域适配",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/02-请求路由权限与数据适配.md"
+  },
+  {
+    "id": "AURA-BASE-FE-011",
+    "title": "Mock 有明确边界",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/02-请求路由权限与数据适配.md"
+  },
+  {
+    "id": "AURA-BASE-FE-012",
+    "title": "页面展示模型与领域模型分离",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/02-请求路由权限与数据适配.md"
+  },
+  {
+    "id": "AURA-BASE-FE-013",
+    "title": "提交操作必须防止重复触发",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/03-表单异步与资源反馈.md"
+  },
+  {
+    "id": "AURA-BASE-FE-014",
+    "title": "并发请求必须处理竞态和过期响应",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/03-表单异步与资源反馈.md"
+  },
+  {
+    "id": "AURA-BASE-FE-015",
+    "title": "列表和大数据展示必须有分页或虚拟化边界",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/03-表单异步与资源反馈.md"
+  },
+  {
+    "id": "AURA-BASE-FE-016",
+    "title": "页面必须提供结果反馈与恢复入口",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/03-表单异步与资源反馈.md"
+  },
+  {
+    "id": "AURA-BASE-FE-017",
+    "title": "文件上传下载必须受控并反馈进度",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/03-表单异步与资源反馈.md"
+  },
+  {
+    "id": "AURA-BASE-FE-018",
+    "title": "时间、金额和枚举展示必须使用公共转换",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/03-表单异步与资源反馈.md"
+  },
+  {
+    "id": "AURA-BASE-FE-019",
+    "title": "使用模板约定生成与实现业务页面",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/工程与代码生成规范.md"
+  },
+  {
+    "id": "AURA-BASE-FE-020",
+    "title": "按框架保护区与业务扩展边界开发",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/开发边界说明.md"
+  },
+  {
+    "id": "AURA-BASE-FE-021",
+    "title": "通过公开子入口与项目实例绑定消费公共能力",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md"
+  },
+  {
+    "id": "AURA-BASE-FE-022",
+    "title": "按真实菜单与远程身份配置业务入口",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/路由与菜单规范.md"
+  },
+  {
+    "id": "AURA-BASE-FE-023",
+    "title": "保持综合端提供消费与构建契约一致",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/模块联邦开发技术规范.md"
+  },
+  {
+    "id": "AURA-BASE-FE-024",
+    "title": "使用框架布局主题与提供方资源地址",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/样式布局与静态资源规范.md"
+  },
+  {
+    "id": "AURA-BASE-FE-025",
+    "title": "复用公开 UI 并在编译期解析代码与样式",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md"
+  },
+  {
+    "id": "AURA-BASE-FE-026",
+    "title": "统一消费系统字体源与冲突校验结果",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/字体图标库规范.md"
+  },
+  {
+    "id": "AURA-BASE-FE-027",
+    "title": "按页面与远程实际行为完成自检",
+    "necessity": "必须",
+    "standard": "knowledge/PIGX前端开发规范/开发检查清单.md"
+  }
+]

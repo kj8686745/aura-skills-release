@@ -1,0 +1,3 @@
+@fxft:registry=https://repository.fxft.online/repository/npm-public/
+//repository.fxft.online/repository/npm-public/:_auth=${FXFT_NPM_AUTH}
+always-auth=true

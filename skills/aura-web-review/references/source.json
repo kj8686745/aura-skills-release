@@ -1,0 +1,217 @@
+{
+  "skill": "aura-web-review",
+  "skillVersion": "0.1.0",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceCommit": null,
+  "sourceBaseCommit": "bb12cd8797be043305a0c2b694e228afd0f25314",
+  "bindingStatus": "pending-source-commit",
+  "updatedAt": "2026-10-21",
+  "ruleCount": 27,
+  "documents": [
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/00-前端开发总览.md",
+      "snapshot": "knowledge/PIGX前端开发规范/PIGX前端开发总览.md",
+      "sourceSha256Lf": "98cbce42646e24e79210b77d6f08bf4662fae1fbda8c38974217c7960e7316b6",
+      "snapshotSha256Lf": "140143c28ad02db1ad8f0efd5fc17848981412e30842add8a9c9bba5e2ab8811",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/01-工程组织与页面状态.md",
+      "snapshot": "knowledge/PIGX前端开发规范/01-工程组织与页面状态.md",
+      "sourceSha256Lf": "f90c69d845ba227a1082a2eea9afa8ded9e890f57353dc8531a53e8fc013d17a",
+      "snapshotSha256Lf": "9dd3813db3b1dfc460ccd65a8b2570b31779a0c52137807de99001a534d61f7d",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/02-请求路由权限与数据适配.md",
+      "snapshot": "knowledge/PIGX前端开发规范/02-请求路由权限与数据适配.md",
+      "sourceSha256Lf": "446eb89855c0b31a5e2705cc3c2d2fb5a27d8dd838ee17badfda6c9d7fce47f2",
+      "snapshotSha256Lf": "27ba9a721ad9852c9ddba0e854bb6f0c0f0ab7db1ffe874deaf5c0179eab3675",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/03-表单异步与资源反馈.md",
+      "snapshot": "knowledge/PIGX前端开发规范/03-表单异步与资源反馈.md",
+      "sourceSha256Lf": "74657991454e10caf5416143237fe35df0bc5929f8eafeed36ba88e24ebd8325",
+      "snapshotSha256Lf": "e0db2f0e5f39385a1f7271a48b29e7d323259ba87b1d47f6709718325227f33c",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/04-工程与代码生成.md",
+      "snapshot": "knowledge/PIGX前端开发规范/工程与代码生成规范.md",
+      "sourceSha256Lf": "d78d5f805d403dfa5fbff0fcf58a4a17d2e8d6d2d640c75265befded81480c0e",
+      "snapshotSha256Lf": "35ae5a2dfc6ea13de07ca22692d8a33af1380e821716f0962196fcd74ffc49c3",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/05-开发边界与框架归属.md",
+      "snapshot": "knowledge/PIGX前端开发规范/开发边界说明.md",
+      "sourceSha256Lf": "dd1829f586f9de238e96d942e006353ddb2346666e60fe5d77a991cc5b41b219",
+      "snapshotSha256Lf": "949c1ecf44d47eaf7bf96d27a3cff448a8a73ed96bf97286a9f84f517af7a5f1",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/06-aura-web-kit公共能力.md",
+      "snapshot": "knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md",
+      "sourceSha256Lf": "c61f1e686a250e234ed53296d094c9efdfbc58d393e47f835e263a3809e734fc",
+      "snapshotSha256Lf": "46fea1fb76847739033ce5523e80a060fc939a3c39b043787c234c79700ef6d2",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/07-路由与菜单.md",
+      "snapshot": "knowledge/PIGX前端开发规范/路由与菜单规范.md",
+      "sourceSha256Lf": "f5c1ab36d6308a4eceec1a0c0d28ee64f472dd7622c1f6359c38b61ba50c45cd",
+      "snapshotSha256Lf": "27933ddadb7f4a3a700e8677dbadb7e6139294952b7a95e28e580ef86fb4f5d0",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/08-模块联邦开发与构建.md",
+      "snapshot": "knowledge/PIGX前端开发规范/模块联邦开发技术规范.md",
+      "sourceSha256Lf": "7a0c250ee321098ceb3e93cae12b1fbc9df7da6832b2b4936270256740bf6a92",
+      "snapshotSha256Lf": "a987ed9752b352140c3e2616a79a5796ff49e015e197b14323f735fda36e70ec",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/09-样式布局与静态资源.md",
+      "snapshot": "knowledge/PIGX前端开发规范/样式布局与静态资源规范.md",
+      "sourceSha256Lf": "2390118a89e1441bdd7c474a2613acafd5e8ba6ef75a27cb790fce139fb1c7e9",
+      "snapshotSha256Lf": "5ca109fa4862a78fa8c8e55be90110cf05345da87f18604e983eeefc1386fd2b",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/10-组件复用与公共UI.md",
+      "snapshot": "knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md",
+      "sourceSha256Lf": "9e7206e368cc2c9107c501d3f16ad360d66000980c9df1a5560cf8f4c6bdb4cc",
+      "snapshotSha256Lf": "5e47749af14ba716d2b1a5929af54dd2a5177b4527c793e29fa627a49b6d2989",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/11-字体图标库.md",
+      "snapshot": "knowledge/PIGX前端开发规范/字体图标库规范.md",
+      "sourceSha256Lf": "b5feb5ac237e7c226a312ae66a8fbcbe8a7a597cb9aad863deb40971975d55b6",
+      "snapshotSha256Lf": "86be7bba353f068be964e2fb4745cfcbb3594e1db09df31a4b086e74a70badf8",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+      "snapshot": "knowledge/PIGX前端开发规范/开发检查清单.md",
+      "sourceSha256Lf": "9cd0936ad49811aa37b18e0b071077a2bb30469e06da1a502a89c43e4422076b",
+      "snapshotSha256Lf": "fe516d69567b63e26d7c46b4692a2e53d173fd9680ba600d745345fad3bd1b23",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/13-参考页面样例.md",
+      "snapshot": "knowledge/PIGX前端开发规范/参考页面样例.md",
+      "sourceSha256Lf": "b17383cdf436baa53a9db06c050f9489e6c8c1e1333a286ac883d7c87f14bdd5",
+      "snapshotSha256Lf": "88c4dd74d229ffd0d83a233876daa01c57fbe42d2d8f5ef83d556e975dd18ba4",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/images/模块联邦菜单配置示意图.png",
+      "snapshot": "knowledge/PIGX前端开发规范/images/模块联邦菜单配置示意图.png",
+      "sourceSha256Lf": "92cf64a4ab8cb424ff34b417a2aacb0f2842cd385d5b3c1e3f036901a644465c",
+      "snapshotSha256Lf": "92cf64a4ab8cb424ff34b417a2aacb0f2842cd385d5b3c1e3f036901a644465c",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/接入说明/.npmrc.example",
+      "snapshot": "knowledge/PIGX前端开发规范/接入说明/.npmrc.example",
+      "sourceSha256Lf": "694b6d201b60a0ac0c9434db593d17a901fb806fc8364f7515fc14e2be0ad2de",
+      "snapshotSha256Lf": "694b6d201b60a0ac0c9434db593d17a901fb806fc8364f7515fc14e2be0ad2de",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/接入说明/公司组件库下载.md",
+      "snapshot": "knowledge/PIGX前端开发规范/接入说明/公司组件库下载.md",
+      "sourceSha256Lf": "38fe24eae3a4c154961dcdcaf87a63e2f893204fb92246cb55e0ac51708b10e2",
+      "snapshotSha256Lf": "32a4852346557c96fb7d7e5e9a339bc34ca8e1cd57049de639ba76eba22c2e91",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/Teleport嵌套页面模式.md",
+      "snapshot": "knowledge/PIGX前端开发规范/页面模式/Teleport嵌套页面模式.md",
+      "sourceSha256Lf": "ef57c5b03bda907dabd08b4c84bd0e0166f3169099970194b83abc683cc04049",
+      "snapshotSha256Lf": "38493633c8ea747612792acc5f56bb526dd8ba71ed926fc94051f495245d4fc9",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/左树右表页.md",
+      "snapshot": "knowledge/PIGX前端开发规范/页面模式/左树右表页.md",
+      "sourceSha256Lf": "490f529ca76668cf3beb0ffd6aa7c13163b0e9ab66dce134edbb865cd129341b",
+      "snapshotSha256Lf": "26dc1f5f14e64055d8e5a87ba9660ef79c8e583c6cafa6c66db7ed35964397cc",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/弹窗表单.md",
+      "snapshot": "knowledge/PIGX前端开发规范/页面模式/弹窗表单.md",
+      "sourceSha256Lf": "c4e353fec4e6b9b4aef5c36b28ff75ec26adad9e271c408b94ab970cd8d0105c",
+      "snapshotSha256Lf": "002d7ed5c24873bc40f015ff6c91dff84af09d674c1269708b68d093144c1bb7",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询卡片页.md",
+      "snapshot": "knowledge/PIGX前端开发规范/页面模式/查询卡片页.md",
+      "sourceSha256Lf": "86bf2e288f244b03df25e176c59a3e7fd03b2c4e1e5b728960ec45062c81e847",
+      "snapshotSha256Lf": "5e5d67e306bc5e7e42399138bc9cea7692c93768b9c04f6185eba4dc6fae997c",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询表格页.md",
+      "snapshot": "knowledge/PIGX前端开发规范/页面模式/查询表格页.md",
+      "sourceSha256Lf": "c481fcedfec3f16a455495dde660c321fcc0b106a358a9b20891ab9c34ca9ab0",
+      "snapshotSha256Lf": "12124a298ac0e4b762e1f2a9fce10e97b072f87b3aef3deb33c4fec3e6e9beab",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/看板页.md",
+      "snapshot": "knowledge/PIGX前端开发规范/页面模式/看板页.md",
+      "sourceSha256Lf": "281ebebb231a2576e2056a4393b2e1d8da076b01e3167bf58114046030cc8870",
+      "snapshotSha256Lf": "8b272374af173947188351f30af49bfbcd9dc811da31bfce60aa13ddc1d0865d",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/详情页与抽屉.md",
+      "snapshot": "knowledge/PIGX前端开发规范/页面模式/详情页与抽屉.md",
+      "sourceSha256Lf": "efb1b9bd91ffb6a4e316f431ca572d93c70dfce9c6b8209448ee511900d89214",
+      "snapshotSha256Lf": "02b5362ec5408b65981c3e154fb5fbec76c08c20efb052c26f17d90650aa51a3",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/06-其他平台能力/01-二维地图/01-前端接入规范.md",
+      "snapshot": "knowledge/PIGX前端开发规范/2D地图开发规范.md",
+      "sourceSha256Lf": "9d4f5151895e0a4541001166eca9f467216a6e0294ab39eae90a7a858e842359",
+      "snapshotSha256Lf": "3b40eaf35b4ce7a2c1793cab5ea507028c1fef356b34f1b0dffdfff1df76c581",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/03-视频中台/01-前端接入规范.md",
+      "snapshot": "knowledge/PIGX前端开发规范/视频开发规范.md",
+      "sourceSha256Lf": "5b64e4018bd64173195d8c2a680f423abfb377ec4657987dbc02e909045aab66",
+      "snapshotSha256Lf": "d8bfecfd8ee9fd8e66c99f5acb8b2c876b5df46b9d29fa5f7895a906cf18945a",
+      "transformation": "保留前端规则ID和必要性，沿用knowledge组织并闭合链接；按用户范围裁剪非前端实现描述，改为前端接口消费视角；aura-ui本轮排除，ui-plus单独纳入。非原文逐字副本。"
+    }
+  ],
+  "reportTemplate": {
+    "snapshot": "references/审查结果包模板.md",
+    "sha256": "a4890dae7dfb4d3c3ae154cb664e0dbafb5bad368cbf72d37381414e4c94e1c6",
+    "origin": "原用户提供模板，报告格式版本1.0.0，保持原六文件结构",
+    "snapshotSha256Lf": "1d0e195b7a5e17a50c66c51af149a97691162dda583cf793805156d53bf3e8f6",
+    "transformation": "保留原六文件、字段、状态与统计结构，限定前端范围，补中文规范对照和aura-ui/ui-plus分列说明。"
+  },
+  "limitations": [
+    "aura-ui明确排除；ui-plus单独审查",
+    "不建设能力包",
+    "来源含本地未提交规范，待精确提交绑定",
+    "辅助脚本与结构检查通过不证明Agent全量审查或运行验收；最新项目扫描由用户手动发起"
+  ],
+  "validation": {
+    "powershell": "7.6.5",
+    "helperTests": 26,
+    "skillStructure": "passed",
+    "catalog": "passed",
+    "routerRegression": "passed",
+    "gitDiffCheck": "passed",
+    "actualProjects": "先前局部试跑，最新技能未再执行真实项目扫描；用户手动运行",
+    "prettier": "目标技能仓库无本地Prettier与配置，未安装额外工具"
+  }
+}

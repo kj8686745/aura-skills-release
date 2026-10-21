@@ -1,0 +1,6 @@
+interface:
+  display_name: "AURA 前端代码审查"
+  short_description: "审查天玑前端代码与模块联邦配置，结合规则证据输出原六文件审查结果包"
+  default_prompt: "使用 $aura-web-review 审查指定前端项目，连续完成规则取证、候选判定与原六文件结果包，保留未证实项，不修改业务源码。"
+policy:
+  allow_implicit_invocation: true
