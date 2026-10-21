@@ -1,79 +1,84 @@
 {
   "skill": "aura-capability-package-build",
-  "skillVersion": "0.5.0",
+  "skillVersion": "0.7.0",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "622b7fc351af7df579551c118978bb92ee4759e2",
+  "sourceCommit": "55f347a26a89fadd8a29e7b56b505ecf6846d198",
   "sourceBinding": {
-    "status": "committed",
-    "note": "构建技能以 internal + ready 交付，产出仍为候选能力包；来源与结构已核对，真实任务行为验收后续进行。"
+    "status": "committed"
   },
   "documents": [
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/能力包通用构建规范.md",
       "snapshot": "governance/能力包通用构建规范.md",
-      "sourceSha256Lf": "bc6433467e0b9d25747ad7cad8fc4b54e8f162e4b3370d82a8edc4b000f9e930",
-      "snapshotSha256Lf": "91b50a2f60fe3fd148b54607be513c324e6841e1540b167d845e2c87e7155eb6",
-      "transformation": {
-        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
-      }
+      "sourceSha256Lf": "8597f11baee38f3a1edaccf1bdd249a62cc9ff14583ea42bfbc98eac145f5a2b",
+      "snapshotSha256Lf": "81ec59df9f6c040f4562546d7b25c0d07c160bc9fa2bc5b34e574956afec5183",
+      "navigationTargetsRemoved": [
+        "../../../AURA天玑公司级框架规范/05-能力包/能力包索引.md",
+        "../01-规范治理/规范模板/对外API-SDK交付手册模板.md",
+        "../01-规范治理/规范模板/平台能力使用说明模板.md",
+        "./建设模板/能力包对外内容模板.md",
+        "./建设模板/能力包统一定义模板.md",
+        "./研发人员能力包建设与归档指南.md"
+      ]
     },
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/建设模板/能力包统一定义模板.md",
       "snapshot": "governance/能力包统一定义模板.md",
-      "sourceSha256Lf": "206b4b3d21ad529f365fc511651beb9ad6e8148c5f7e5d32468c0fa440b59b4d",
-      "snapshotSha256Lf": "c807fd0d9cc5e53385abe48265f5f8127dee2f6ae1b564e7714a54b1b350ba2a",
-      "transformation": {
-        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
-      }
+      "sourceSha256Lf": "833cb76b0ed080980b23f146caa45032450a22047f83453a242e4cfef9020273",
+      "snapshotSha256Lf": "a4e511c394e0c0b2e17fad915c2c3ed64d81c65829bdec54c72ed9359a537803",
+      "navigationTargetsRemoved": [
+        "../能力包通用构建规范.md"
+      ]
     },
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/建设模板/能力包对外内容模板.md",
       "snapshot": "governance/能力包对外内容模板.md",
-      "sourceSha256Lf": "439ebb4b90b8f05e2bb09c31b556d98fd4edeeba83824001d07cc75a653a0ec2",
-      "snapshotSha256Lf": "aa78f227c41bf0c3b5a672424e03a83ef54ac5afdc8e45d9471decb39f425525",
-      "transformation": {
-        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
-      }
+      "sourceSha256Lf": "ddaf270b89bb309219292de19328af430883e6832e2fa5e2dfac399ca3910371",
+      "snapshotSha256Lf": "8d08b67ff0ee65e8245772b5c121f115b45ad995bc47bbe5a04677ec5c79f7c8",
+      "navigationTargetsRemoved": [
+        "../../01-规范治理/规范模板/对外API-SDK交付手册模板.md",
+        "../../01-规范治理/规范模板/平台能力使用说明模板.md"
+      ]
     },
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/01-规范治理/规范模板/平台能力使用说明模板.md",
       "snapshot": "governance/平台能力使用说明模板.md",
-      "sourceSha256Lf": "949e3a11520affe1fa3d2a50c6d027cf41a9bbd2530d2da88cc96bcfd3420a39",
-      "snapshotSha256Lf": "949e3a11520affe1fa3d2a50c6d027cf41a9bbd2530d2da88cc96bcfd3420a39",
-      "transformation": {
-        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
-      }
+      "sourceSha256Lf": "6c1696a332029243afc312106bb0d1387f494f72a60fbe726183e0da60d205fc",
+      "snapshotSha256Lf": "6c1696a332029243afc312106bb0d1387f494f72a60fbe726183e0da60d205fc",
+      "navigationTargetsRemoved": []
     },
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/01-规范治理/规范模板/对外API-SDK交付手册模板.md",
       "snapshot": "governance/对外API-SDK交付手册模板.md",
-      "sourceSha256Lf": "280d99354e11472ddd1f6f164806a181322abfb34339339e637fed7db4cfaa95",
-      "snapshotSha256Lf": "280d99354e11472ddd1f6f164806a181322abfb34339339e637fed7db4cfaa95",
-      "transformation": {
-        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
-      }
+      "sourceSha256Lf": "4e9f1731f38c70daeb5dcef2574b06d136076e8336cb56066100bc94ebe48ad6",
+      "snapshotSha256Lf": "4e9f1731f38c70daeb5dcef2574b06d136076e8336cb56066100bc94ebe48ad6",
+      "navigationTargetsRemoved": []
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/10-对外能力交付规范.md",
       "snapshot": "governance/10-对外能力交付规范.md",
-      "sourceSha256Lf": "257132c7458d07f356c37aebe20628bd04c0f1a33c885ce8e3cf528020448b76",
-      "snapshotSha256Lf": "257132c7458d07f356c37aebe20628bd04c0f1a33c885ce8e3cf528020448b76",
-      "transformation": {
-        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
-      }
+      "sourceSha256Lf": "c75fb531482af462da48fd324862f79af19632d2ef8693ac5af2747395d31379",
+      "snapshotSha256Lf": "c75fb531482af462da48fd324862f79af19632d2ef8693ac5af2747395d31379",
+      "navigationTargetsRemoved": []
     },
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/研发人员能力包建设与归档指南.md",
       "snapshot": "governance/研发人员能力包建设与归档指南.md",
-      "sourceSha256Lf": "fa231590a983ec67eaf9968d6d5c94d5fc699d8c822f916152adc9becb68ddcb",
-      "snapshotSha256Lf": "fa231590a983ec67eaf9968d6d5c94d5fc699d8c822f916152adc9becb68ddcb",
-      "transformation": {
-        "links": "同包治理资料链接改为当前目录相对路径；对外能力包索引改为规范仓库定位文字；模板代码块内占位链接保留。"
-      }
+      "sourceSha256Lf": "f0b1b72d5911368d30d8f83fe40d66c37d42b9a833100abbc5e43059eea9453c",
+      "snapshotSha256Lf": "f0b1b72d5911368d30d8f83fe40d66c37d42b9a833100abbc5e43059eea9453c",
+      "navigationTargetsRemoved": []
     }
   ],
-  "validation": {
-    "behavior": "pending",
-    "note": "结构、链接与摘要检查不等于真实建设任务验收。"
-  }
+  "sourceRoot": "",
+  "snapshotRoot": "references",
+  "skillResources": [
+    {
+      "path": "scripts/check-capability-delivery.py",
+      "kind": "script",
+      "sha256Lf": "bcfe43380f1832c24adf7e23dd4e86d930f72e32a0bfd250d132b42a461f3877"
+    }
+  ],
+  "coverage": "登记本技能全部随包规范与模板；任务导航和确定性工具单独登记。",
+  "transformation": "仅移除逐文档登记的导航目标，保留链接文字和正文；摘要仅归一化CRLF为LF。",
+  "behaviorValidation": "共用隔离回归32场景通过（AI12、能力交付20）。独立Agent按源码分发0.1.0建设3份公开候选和1份内部记录，覆盖单一真实函数、3条规则相邻正反例及完整任务；未改源码或创建实际使用技能。主Agent读取全部产物，重跑交付检查0错误/0不完整，并执行3个规则片段及完整场景，输入3文件摘要未变。仅验证隔离源码样本，不证明真实公司能力、制品兼容或发布。"
 }

@@ -1,6 +1,6 @@
 interface:
   display_name: "AURA 后端与接口规范审查"
-  short_description: "后端审查：按项目或接口专项范围取证、判定规范偏差并交付统一结果包"
-  default_prompt: "使用 $aura-backend-compliance-review 一次性完成项目版本冻结、全量规范审查、构建补证和完整结果包输出；缺少运行条件时在结果包中标记未证实，不要逐项询问。"
+  short_description: "后端审查：按变更、接口专项或全项目取证，核查基础能力复用并交付报告"
+  default_prompt: "使用 $aura-backend-compliance-review 连续完成指定范围的只读审查；变更交一份报告，全项目交六文件包，核查基础能力复用，保留未查与未证实项。"
 policy:
   allow_implicit_invocation: true

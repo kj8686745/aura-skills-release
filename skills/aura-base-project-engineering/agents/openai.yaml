@@ -1,6 +1,6 @@
 interface:
-  display_name: "AURA 工程与架构开发"
-  short_description: "按 AURA 工程结构、架构边界和构建规范处理项目变更"
-  default_prompt: "使用 $aura-base-project-engineering 规划当前 AURA 项目的模块结构并核对构建入口。"
+  display_name: "AURA 系统初始化与工程维护"
+  short_description: "初始化工程、增加模块或局部维护配置与构建，核对结构和文档且不生成空壳"
+  default_prompt: "使用 $aura-base-project-engineering 按本次范围调整工程，核对模块依赖、文档入口和实际构建结果。"
 policy:
   allow_implicit_invocation: true

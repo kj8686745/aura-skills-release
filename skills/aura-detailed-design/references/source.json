@@ -10,7 +10,8 @@
       "sourceSha256Lf": "67038551792da307beb153c54d424fa6d6a1df33fa2563868d5e73f3a0c2f783",
       "snapshotSha256Lf": "67038551792da307beb153c54d424fa6d6a1df33fa2563868d5e73f3a0c2f783",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "67038551792da307beb153c54d424fa6d6a1df33fa2563868d5e73f3a0c2f783"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-详细设计规范/02-技术详细设计文档模板.md",
@@ -21,7 +22,8 @@
       "sourceSha256Lf": "b1c3b5550b0bd050bae77d042cc059d05b9d199739a26ae516d4a2f7f34ebc06",
       "snapshotSha256Lf": "b1c3b5550b0bd050bae77d042cc059d05b9d199739a26ae516d4a2f7f34ebc06",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "b1c3b5550b0bd050bae77d042cc059d05b9d199739a26ae516d4a2f7f34ebc06"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-详细设计规范/03-技术详细设计文档示例-设备审核通知.md",
@@ -29,17 +31,35 @@
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "f2e9f5b92bec4bf74737c6701f3ce65679581a4eec39a8dd4898e479863b00e1",
-      "snapshotSha256Lf": "f2e9f5b92bec4bf74737c6701f3ce65679581a4eec39a8dd4898e479863b00e1",
+      "sourceSha256Lf": "c1890c226d8dc3c0969844066dbe9f986ced6a9ee105f2013ac6a4a0725ea208",
+      "snapshotSha256Lf": "c1890c226d8dc3c0969844066dbe9f986ced6a9ee105f2013ac6a4a0725ea208",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "f2e9f5b92bec4bf74737c6701f3ce65679581a4eec39a8dd4898e479863b00e1"
     }
   ],
-  "coverage": "仅登记本次同步的规范视图；其余既有快照未在本记录中重新绑定。",
-  "skillVersion": "0.1.1-draft",
+  "coverage": "覆盖本技能全部三份同版规范、模板和示例；任务导航与只读检查脚本单独登记。",
+  "skillVersion": "0.2.0-draft",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "876e63992dba16cfc29a50ab87c4311f32b2b94e",
-  "skillResources": [],
+  "sourceCommit": "55f347a26a89fadd8a29e7b56b505ecf6846d198",
+  "sourceRoot": "",
+  "snapshotRoot": "",
+  "sourceBinding": {
+    "status": "pending",
+    "reason": "设备审核通知示例0.1.1-draft修订尚未提交；保留三份提交基线与工作树摘要。"
+  },
+  "skillResources": [
+    {
+      "path": "references/任务路由.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "48c09b1bd5a76bc0a32a95ce797edd52744b984a8d164e1d359b3f3f04c96de0"
+    },
+    {
+      "path": "scripts/check-detailed-design.py",
+      "kind": "script",
+      "sha256Lf": "cbca8ed4d67411891f436eb6e3255c091cc566dfcaca2ecea27f4c120da6da91"
+    }
+  ],
   "transformation": "仅移除登记的跨范围导航目标，保留链接文字；正文与示例不改写。",
-  "behaviorValidation": "本次为来源与静态引用复核；未执行独立 Agent 任务或真实项目运行验证。"
+  "behaviorValidation": "26个文档工具隔离用例通过。独立只读复核发现原示例三处语义缺口；修正为示例0.1.1-draft后由新的独立Agent复核，确认未知结果/处理权恢复及分步准入已表达，又发现时序图、M-03迁移及路线图遗漏。主Agent逐项补齐并核对最终3模块/3契约，机械检查通过；未再独立复核最终图表。新建/局部修订行为及真实项目未验收，未发布。"
 }

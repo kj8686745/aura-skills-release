@@ -1,8 +1,8 @@
 {
   "skill": "aura-ai-workflow",
-  "skillVersion": "0.1.0-draft",
+  "skillVersion": "0.2.0-draft",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "2a760e5364ac80adcb1ff3b0c887c146c8f76c1e",
+  "sourceCommit": "55f347a26a89fadd8a29e7b56b505ecf6846d198",
   "documents": [
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-AI开发运用规范/01-AI辅助开发基本规则.md",
@@ -93,9 +93,24 @@
       "navigationTargetsRemoved": []
     }
   ],
-  "transformation": "无内容转换，仅按 LF 归一化计算摘要。",
-  "validation": {
-    "behavior": "pending",
-    "note": "来源相同仅证明随包文档一致，不证明 SDK 制品、运行契约或任务行为已验收。"
-  }
+  "transformation": "无内容转换，摘要仅归一化CRLF为LF。",
+  "sourceRoot": "",
+  "snapshotRoot": "",
+  "sourceBinding": {
+    "status": "committed"
+  },
+  "skillResources": [
+    {
+      "path": "scripts/inspect-ai-context.py",
+      "kind": "script",
+      "sha256Lf": "399095a1ae29cf7c196f9b9bee30b47be8087cad4f16c79b210997807b1d69af"
+    },
+    {
+      "path": "references/任务导航.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "18bf59eb43c1907f5d42c7de1dc52998c645b4ffe79a3e7fbca3d71b8e14e778"
+    }
+  ],
+  "coverage": "登记本技能全部随包规范与模板；任务导航和确定性工具单独登记。",
+  "behaviorValidation": "共用隔离回归32场景通过（AI12、能力交付20）。独立Agent在5文件隔离项目按阶段收束任务纠正旧完成结论，只更新原任务记录；读取会话规范与必要文件，代码摘要不变，无新增状态文件。主Agent复核产物并执行最终采集，0错误/0不完整。未据此验收所有初始化/切换或真实项目，未发布。"
 }

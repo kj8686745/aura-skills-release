@@ -1,6 +1,6 @@
 interface:
   display_name: "AURA 接口与联调"
-  short_description: "按统一契约编制内部与对外 API 文档并推进联调"
-  default_prompt: "使用 $aura-base-interface-development 核对这个模块的接口契约与联调事项。"
+  short_description: "按模块维护统一接口契约，盘点代码、核对接口文档并准备联调"
+  default_prompt: "使用 $aura-base-interface-development 盘点指定模块的接口，维护同一份接口文档，运行静态核对并列出待联调项。"
 policy:
   allow_implicit_invocation: true

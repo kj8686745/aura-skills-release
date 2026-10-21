@@ -1,6 +1,6 @@
 interface:
   display_name: "AURA 技术详细设计"
-  short_description: "按规范编写或复核跨模块业务变更的技术详细设计"
-  default_prompt: "使用 $aura-detailed-design 根据当前项目事实编写技术详细设计，并标明待确认的关键问题。"
+  short_description: "基于代码与公开契约新建、局部修订或只读复核多模块技术详细设计"
+  default_prompt: "使用 $aura-detailed-design 基于当前项目事实处理技术详细设计，沿用有效内容并标明编码准入依据与未决问题。"
 policy:
   allow_implicit_invocation: true

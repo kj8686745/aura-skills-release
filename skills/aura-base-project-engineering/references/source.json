@@ -141,8 +141,8 @@
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "5d3ddafadd905abbef65a97b70d168d21e07bdf644ea9a817711eca492974cc7",
-      "snapshotSha256Lf": "5d3ddafadd905abbef65a97b70d168d21e07bdf644ea9a817711eca492974cc7",
+      "sourceSha256Lf": "e055cfe225f750ca4a897be7a2be01e978457f202d5766d83fa8dee6d21eeffc",
+      "snapshotSha256Lf": "e055cfe225f750ca4a897be7a2be01e978457f202d5766d83fa8dee6d21eeffc",
       "inheritedSource": null,
       "inheritedCommit": null
     },
@@ -163,8 +163,8 @@
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "d2584a3284cefb6bf596988ec0bb2b8306871db198f39933e8859e375e1dcf3d",
-      "snapshotSha256Lf": "d2584a3284cefb6bf596988ec0bb2b8306871db198f39933e8859e375e1dcf3d",
+      "sourceSha256Lf": "dffbd0d8cc0128e0ef82934f01e1f1c7424bfbc29b6cadf4c7a7a98328b62f6d",
+      "snapshotSha256Lf": "dffbd0d8cc0128e0ef82934f01e1f1c7424bfbc29b6cadf4c7a7a98328b62f6d",
       "inheritedSource": null,
       "inheritedCommit": null
     },
@@ -458,8 +458,6 @@
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/总入口.md",
       "snapshot": "references/standards/01-基础编码规范/总入口.md",
       "navigationTargetsRemoved": [
-        "../05-能力包/03-视频中台/01-前端接入规范.md",
-        "../05-能力包/06-其他平台能力/01-二维地图/01-前端接入规范.md",
         "./04-前端基础编码规范/00-前端开发总览.md",
         "./04-前端基础编码规范/01-工程组织与页面状态.md",
         "./04-前端基础编码规范/02-请求路由权限与数据适配.md",
@@ -473,7 +471,9 @@
         "./04-前端基础编码规范/10-组件复用与公共UI.md",
         "./04-前端基础编码规范/11-字体图标库.md",
         "./04-前端基础编码规范/12-研发自检与交付.md",
-        "./04-前端基础编码规范/13-参考页面样例.md"
+        "./04-前端基础编码规范/13-参考页面样例.md",
+        "../05-能力包/06-其他平台能力/01-二维地图/01-前端接入规范.md",
+        "../05-能力包/03-视频中台/01-前端接入规范.md"
       ],
       "sourceKind": "authority",
       "authorityStatus": "matched",
@@ -497,29 +497,38 @@
         "./04-前端基础编码规范/09-样式布局与静态资源.md",
         "./04-前端基础编码规范/10-组件复用与公共UI.md",
         "./04-前端基础编码规范/11-字体图标库.md",
-        "./04-前端基础编码规范/12-研发自检与交付.md"
+        "./04-前端基础编码规范/12-研发自检与交付.md",
+        "./05-接口规范体系/10-对外能力交付规范.md"
       ],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "9d2afcfeb6244dfd2729101a60ee8e7dce8f39cd3ab8bd4946614844e0564e08",
-      "snapshotSha256Lf": "5485c69b807a80f5802ac481efd2b7009cac99d1bffac1dd4625a0c37cd8a98f",
+      "sourceSha256Lf": "a2b3441407b870879b968607a225f035eb316fbf14fe1c9277c1aaba94a051b2",
+      "snapshotSha256Lf": "a7885990d607418eb1dd942012e79781129865d505841bfdb773b5072647bfb8",
       "inheritedSource": null,
       "inheritedCommit": null
     }
   ],
   "coverage": "覆盖本技能 references/standards 下全部规范视图；技能自有导航单独登记。",
-  "skillVersion": "1.0.6",
+  "skillVersion": "1.1.0",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "3e6faf34623c41d5b568d083a52fe28e4d62c2fb",
+  "sourceCommit": "55f347a26a89fadd8a29e7b56b505ecf6846d198",
   "skillResources": [
     {
-      "path": "references/AI任务触发索引.md",
+      "path": "references/任务路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "eba23989226c126d4968a75b6661d4d11e45844c6e92f614503bb214b7ada61f",
-      "originCommit": "b52ebd5",
-      "originPath": "skills/aura-base-project-engineering/references/standards/01-基础编码规范/AI任务触发索引.md"
+      "sha256Lf": "cb79f9c4c755b51a5a712605e1db6ba86673bc45b9c671b03f601fb9698d30c4"
+    },
+    {
+      "path": "scripts/check-project-engineering.ps1",
+      "kind": "script",
+      "sha256Lf": "423fa1bcc6dd2ff1022e2cee61d03a087bbf1e48cbc82828785785ea414ae958"
     }
   ],
-  "transformation": "仅移除登记的未随包提供或越界导航目标，保留链接文字；规则正文与示例不改写。",
-  "behaviorValidation": "当前版本仅完成来源与静态引用复核，独立任务行为尚未验收。"
+  "transformation": "仅剥除逐文档明确登记的包外导航，保留完整正文与章节；摘要仅归一化 CRLF 为 LF。",
+  "behaviorValidation": "30 个隔离工具场景通过；独立 Agent 完成局部默认值与既有配置说明同步，以及纯 Java 公共模块、父工程登记、根/模块文档。主 Agent 复核并用最终工具检查两个模块及根构建入口。单类 JDK17 编译和 Maven 离线 validate 通过；离线 package 因隔离缓存缺插件失败，未联网。未验收全新框架工程、真实服务或消费者运行。",
+  "sourceRoot": "",
+  "snapshotRoot": "",
+  "sourceBinding": {
+    "status": "committed"
+  }
 }
