@@ -2,7 +2,7 @@
 
 ## 一、版本与选用原则
 
-框架 **1.2.0** 验证基线：`@fxft/aura-web-kit@1.6.15`、`@fxft/aura-ui@1.1.2`、Element Plus `2.14.6`、VueUse `15.0.0`、Node.js `>=22`。核对日期：2026-10-15。下表依据已安装发布包的 `package.json.exports` 与 `.d.ts` 整理，覆盖 **113 个公开子入口**；后续版本先核对项目依赖、锁文件与已安装声明，不把源码仓库较新版本当作项目已可用能力。
+框架 **1.2.0** 验证基线：`@fxft/aura-web-kit@1.9.0`、`@fxft/aura-ui@1.1.2`、Element Plus `2.14.6`、VueUse `15.0.0`、Node.js `>=22.12.0`、TypeScript `5.9.3`、ESLint `8.57.1`、typescript-eslint parser/plugin `8.46.1`。核对日期：2026-10-21。下表依据已安装发布包的 `package.json.exports` 与 `.d.ts` 整理，覆盖 **113 个公开子入口**；后续版本先核对项目依赖、锁文件与已安装声明，不把源码仓库较新版本当作项目已可用能力。
 
 新增或修改公共 TS 时，先按场景查表，再读相应入口的声明和实现。包没有根入口；使用 `@fxft/aura-web-kit/<子路径>`，不引用 `src/`、`dist/` 或未导出的内部模块。表中列出主要导出用于检索，具体参数和完整导出以该版本声明为准。
 
@@ -56,7 +56,7 @@ Vite 与 TypeScript 仅保留 `/@` 源码映射；旧 `/@/utils/request`、`/@/h
 | `/runtime` | `AURA_CONTEXT_KEY`、`createAuraContext`、`captureAuraContext`、`provideAuraContext` | 应用上下文与服务契约 | 浏览器 |
 | `/framework` | `createAuraFrameworkContext` | 框架请求、Pinia、语言服务预设 | 浏览器；使用项目绑定 |
 | `/api/common` | `createCommonApi` | 字典与参数 API 工厂 | 浏览器 |
-| `/hooks/table` | `useTable`、`createTableHook` | 表格分页、排序、查询 | 浏览器；使用项目绑定 |
+| `/hooks/table` | `useTable`、`createTableHook`、`PageQuery`、`PageResult<T>`、`OrderItem` | 标准 current/size 分页、排序、查询 | 浏览器；使用项目绑定 |
 | `/hooks/message` | `createElementPlusMessageServices`、`useMessage`、`useMessageBox`、`createMessageHooks` | 消息、确认框与重复合并 | 浏览器；使用项目绑定 |
 | `/hooks/dict` | `createDictHook`、`useDict` | 字典查询与缓存 | 浏览器；使用项目绑定 |
 | `/hooks/param` | `createParamHook`、`useParam` | 系统参数查询与缓存 | 浏览器；使用项目绑定 |
@@ -201,12 +201,12 @@ Vite 与 TypeScript 仅保留 `/@` 源码映射；旧 `/@/utils/request`、`/@/h
 | 公开入口 | 主要导出或类型 | 用途 | 运行环境 / 绑定要求 |
 | --- | --- | --- | --- |
 | `/vite/component-overrides` | `createComponentOverrideResolver` | 本地组件编译期覆盖 | Node 构建 |
-| `/vite` | `generateI18nImports`、`createGitBuildInfo`、`stabilizeFederationModuleScan`、`pruneFederationSsrImports` | 语言生成、自动导入、预构建和联邦构建插件 | Node 构建 |
+| `/vite` | `generateI18nImports`、`createGitBuildInfo`、`auraAutoOptimizeDeps`、`createAuraAutoImportPreset`、`pruneFederationSsrImports`、`stabilizeFederationDevOptimizer` | 语言生成、自动导入、预构建和联邦构建插件 | Node 构建 |
 | `/postcss` | `createAuraPostcssPlugins` | Tailwind scope 与样式兼容插件 | Node 构建 |
 
 ## 四、构建与 UI 配套
 
-Vite 直接引用 `/vite` 的 `auraOptimizeDeps`，配合 `getAuraOptimizeDeps(federationExposes)`、`createAuraAutoImports` 和联邦稳定插件；不复制预构建清单。PostCSS 引用 `/postcss` 的 `createAuraPostcssPlugins`。公共包的浏览器入口元数据排除构建和声明入口；UI 依赖由实际引用发现。详情见 [模块联邦规范](./模块联邦开发技术规范.md)。
+Vite 使用 `/vite` 的 `auraAutoOptimizeDeps`，复用实际组件 resolver 工厂、`createAuraAutoImportPreset` 映射与 exposes；不再展开固定全量预构建清单。移除 `stabilizeFederationModuleScan`，保留 SSR 清理、dev 优化和远程预加载跳过插件。PostCSS 沿用 `/postcss` 的 `createAuraPostcssPlugins`。TypeScript 配套工具链、配置和冷启动取证见模块联邦规范的“工具链与自动预构建基线（2026-10-21）”。
 
 公共 UI 不属于 web-kit；使用 aura-ui 的 `AuraUIResolver` 和 `provideAuraUiConfig`，见 《组件复用与公司基础组件库规范》。地图、视频按业务需要接入 ui-plus。
 

@@ -5,7 +5,7 @@ description: 按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + 
 
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.3.0`（2026-10-15）。
+当前版本：`1.3.2`（2026-10-21）。
 
 ## 执行入口
 
@@ -16,7 +16,7 @@ description: 按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + 
 
 ## 始终遵守
 
-- 仅面向框架 1.2.0 与 `@fxft/aura-web-kit@1.6.15`，不保留旧实现与入口兼容。公共工具、Hook、运行时和构建修复先查公开能力；通用实现进入公共包，项目只绑定实例、环境和资源。公共 UI 使用 `@fxft/aura-ui` 的 Aura 前缀组件。
+- 仅面向框架 1.2.0 与 `@fxft/aura-web-kit@1.9.0`，不保留旧实现与入口兼容。公共工具、Hook、运行时和构建修复先查公开能力；通用实现进入公共包，项目只绑定实例、环境和资源。公共 UI 使用 `@fxft/aura-ui` 的 Aura 前缀组件。
 - 只处理授权范围，保留工作区已有改动；接口、Hook、组件和权限以真实契约为准，不虚构。
 - 请求使用 `/@/config/aura/request`；消息使用 `/@/config/aura/index`；表单生命周期使用 `useForm`。不复制框架底层实现。
 - 需要已有对象完整信息或当前状态时按 ID 查询详情，入口快照不能作为详情；日期时间处理必须使用 `dayjs`；用户可见文案走 i18n。具体边界按下表读取。
@@ -62,3 +62,5 @@ description: 按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + 
 - 业务代码修改在构建前运行 `scripts/check-project-rules.ps1 -ProjectPath <项目路径> -StrictUiContracts`，处理错误，再执行项目可用 build/typecheck、lint；可见交互按浏览器流程验收，模块联邦任务验证独立和远程运行。
 - 维护技能本身运行 `scripts/validate-skill.ps1`；能力清单变更时运行 `scripts/check-web-kit-catalog.ps1 -PackagePath <已安装的 aura-web-kit 包目录>`，不启动业务项目的构建或浏览器流程。
 - 交付说明改动、验证结果、未验证项及待决策内容；详细证据按需要引用，不机械输出空栏目。
+
+本轮 MF Vite 1.23.5、web-kit 1.9.0 与 TypeScript 5.9.3 配套基线及来源见 [升级来源记录](references/framework-upgrade-source.json)；按模块联邦规范接入自动预构建和 ESLint 配套配置，不沿用旧扫描插件或强制手工清单。

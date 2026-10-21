@@ -7,7 +7,7 @@
 ## 1.2.0 调整
 
 - 公共 TS 能力直接引用 `@fxft/aura-web-kit` 公开子路径；请求、Store、路由、消息等项目实例绑定集中在 `src/config/aura`。
-- 新增 [aura-web-kit 能力清单与接入规范](./aura-web-kit能力清单与接入规范.md)，按场景、入口、主要导出和项目绑定边界检索；基线为 `1.6.15`，公开入口已对照发布包验证。
+- 新增 [aura-web-kit 能力清单与接入规范](./aura-web-kit能力清单与接入规范.md)，按场景、入口、主要导出和项目绑定边界检索；本轮基线为 `1.9.0`，公开入口已对照发布包验证。
 - 公共 UI 使用 `@fxft/aura-ui@1.1.2` 的 Aura 前缀组件与 `AuraUIResolver`；本地覆盖 Resolver 按实际覆盖项配置。
 - Node.js ≥22、Element Plus 2.14.6、VueUse 15.0.0；联邦运行时、构建插件与 PostCSS 公共实现收敛到 web-kit。
 - 支持多级 `remoteEntryName` 部署路径；启动缓存按 `remoteName` 隔离，认证存储按 `systemId` 隔离。
@@ -63,3 +63,7 @@
 - 后台主布局、布局预设和主题运行时由 `aura-core` 统一提供，业务项目不得复制或替换实现。
 - 2D 地图使用 `FxftMap`；单路和多路视频分别使用 `FxftVideoPlayer`、`FxftMultiVideoPlayer`。
 - 中文文档、注释和提示使用 UTF-8 无 BOM。
+
+## 2026-10-21 模块联邦与工具链补充
+
+本轮同步 MF Vite 1.23.5、enhanced 2.9.2、web-kit 1.9.0、Vite 6.4.3、TypeScript 5.9.3 和配套 ESLint 版本；以模块联邦规范的工具链与自动预构建章节为准。这里只更新命中的规范，不代表其他历史章节已全量重新验收。

@@ -12,13 +12,13 @@ PIGX 模块联邦（综合端）是基于 Vue 3 的模块联邦前端项目。�
 
 | 分类       | 当前实现                                                              |
 | ---------- | --------------------------------------------------------------------- |
-| 视图       | Vue 3.5、TypeScript、`<script setup>`                                 |
-| 构建       | Vite 6、pnpm 10、Node.js 22 及以上                                 |
+| 视图       | Vue 3.5、TypeScript 5.9.3、`<script setup>`                                 |
+| 构建       | Vite 6.4.3、pnpm 10、Node.js >=22.12.0                                 |
 | UI         | Element Plus 2.14.6，Module Federation singleton                      |
 | 状态与路由 | Pinia 2、Vue Router 4                                                 |
 | 国际化     | Vue I18n 9                                                            |
 | 请求       | Axios，经 `/@/config/aura/request` 懒加载封装                               |
-| 模块联邦   | `@module-federation/vite@1.18.2`、`@module-federation/enhanced@2.8.0` |
+| 模块联邦   | `@module-federation/vite@1.23.5`、`@module-federation/enhanced@2.9.2` |
 | 样式       | SCSS、Tailwind CSS、主题 CSS 变量、远程 scoped Tailwind               |
 
 禁止恢复 `@originjs/vite-plugin-federation`、`vite-plugin-top-level-await` 或旧静态远程注册表。
@@ -33,7 +33,7 @@ pnpm dev
 pnpm build
 ```
 
-模板要求 Node.js 22 及以上。包管理器以 `packageManager` 和 `pnpm-lock.yaml` 为准，不混用 npm、yarn。
+模板要求 Node.js >=22.12.0；配套 ESLint 8.57.1、typescript-eslint parser/plugin 8.46.1，具体配置与验证见模块联邦规范的工具链基线。包管理器以 `packageManager` 和 `pnpm-lock.yaml` 为准，不混用 npm、yarn。
 
 ## 四、目录职责
 

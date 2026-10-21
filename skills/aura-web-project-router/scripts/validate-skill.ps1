@@ -1,4 +1,4 @@
-# PIGX 项目分流技能结构与脚本校验
+﻿# PIGX 项目分流技能结构与脚本校验
 
 [CmdletBinding()]
 param([string]$SkillPath = (Join-Path $PSScriptRoot '..'))
@@ -19,7 +19,7 @@ if (Test-Path -LiteralPath $skillPath) {
   if ($content -notmatch '(?m)^name:\s*aura-web-project-router\s*$') { [void]$errors.Add('SKILL.md name 不正确。') }
   if ($content -notmatch '(?m)^description:\s*\S.+$') { [void]$errors.Add('SKILL.md description 不能为空。') }
   if ($version -and -not $content.Contains("当前版本：``$version``")) { [void]$errors.Add('SKILL.md 展示版本与 VERSION 不一致。') }
-  foreach ($keyword in @('currentRemoteConfig', 'exposeModules', 'getModuleFederationLoader', '@module-federation/vite', 'NotPIGX', 'IncompleteCandidate', '首次调用提示', 'fmap-2d', 'fxft-video', '技能安装检查', '明确授权不得安装')) {
+  foreach ($keyword in @('currentRemoteConfig', 'exposeModules', '@fxft/aura-web-kit/federation', '@module-federation/vite', 'aura-web-review', 'NotPIGX', 'IncompleteCandidate', '首次调用提示', 'fmap-2d', 'fxft-video', '技能安装检查', '明确授权不得安装')) {
     if (-not $content.Contains($keyword)) { [void]$errors.Add("SKILL.md 缺少分流关键字：$keyword") }
   }
 }
@@ -31,7 +31,7 @@ if ((Test-Path -LiteralPath $usagePath) -and -not ((Get-Content -LiteralPath $us
 
 Get-ChildItem -LiteralPath $root -Recurse -File | ForEach-Object {
   $bytes = [System.IO.File]::ReadAllBytes($_.FullName)
-  if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) { [void]$errors.Add("文件包含 UTF-8 BOM：$($_.FullName.Substring($root.Length + 1))") }
+  if ($_.Extension -ne '.ps1' -and $bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) { [void]$errors.Add("非脚本文件包含 UTF-8 BOM：$($_.FullName.Substring($root.Length + 1))") }
 }
 
 Get-ChildItem -LiteralPath (Join-Path $root 'scripts') -File -Filter '*.ps1' | ForEach-Object {

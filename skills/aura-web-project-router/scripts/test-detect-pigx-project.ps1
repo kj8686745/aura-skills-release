@@ -1,4 +1,4 @@
-# 分流器三类项目与正反例回归测试
+﻿# 分流器三类项目与正反例回归测试
 
 [CmdletBinding()]
 param()
@@ -19,7 +19,11 @@ function Write-FixtureFile {
 function Invoke-Detector {
   param([string]$ProjectPath, [string]$Task, [string[]]$AvailableSkills)
   $arguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $detector, '-ProjectPath', $ProjectPath, '-TaskDescription', $Task, '-Json')
-  if ($PSBoundParameters.ContainsKey('AvailableSkills')) { $arguments += '-AvailableSkills'; $arguments += ($AvailableSkills -join ',') }
+  if ($PSBoundParameters.ContainsKey('AvailableSkills')) {
+    $arguments += '-AvailableSkills'
+    # 5.1 启动子进程时丢弃空字符串；逗号经脚本拆分/Trim 后仍表示空集合。
+    $arguments += $(if ($AvailableSkills.Count) { $AvailableSkills -join ',' } else { ',' })
+  }
   $output = & $powerShellExe @arguments
   if ($LASTEXITCODE -ne 0) { throw "识别脚本退出码错误：$LASTEXITCODE" }
   return (($output -join "`n") | ConvertFrom-Json)
@@ -42,7 +46,7 @@ try {
   $integrated = Join-Path $testRoot 'integrated'
   Write-FixtureFile $integrated 'src/config/moduleFederationBaseConfig.ts' 'export const currentRemoteConfig = {};'
   Write-FixtureFile $integrated 'src/hooks/moduleFederation.ts' 'export const exposeModules = {};'
-  Write-FixtureFile $integrated 'src/utils/moduleFederationRegistry.ts' 'export const getModuleFederationLoader = () => null;'
+  Write-FixtureFile $integrated 'src/config/aura/federation.ts' "export * from '@fxft/aura-web-kit/federation';"
   Write-FixtureFile $integrated 'vite.config.ts' "import { federation } from '@module-federation/vite'; federation({});"
   $result = Invoke-Detector $integrated '新增订单 CRUD 页面和正式菜单按钮'
   Assert-Equal $result.projectType 'Integrated' 'PIGX 综合端识别失败'
@@ -73,6 +77,13 @@ try {
   $result = Invoke-Detector $integrated '审计模块联邦配置'
   Assert-Equal @($result.recommendedSkills).Count 1 '纯审计不应进入 Web 开发流程'
   Assert-Equal $result.recommendedSkills[0] 'aura-module-federation-check' '纯审计技能错误'
+  $result = Invoke-Detector $integrated '审查前端代码和规范，生成六文件结果包，不修改代码'
+  Assert-Skills $result.recommendedSkills @('aura-web-review') '综合前端审查应选择审查技能'
+  $result = Invoke-Detector $integrated '检查当前模块联邦配置，只做审计，不修改代码'
+  Assert-Skills $result.recommendedSkills @('aura-module-federation-check') '不修改代码不应误触发开发或综合审查'
+  $result = Invoke-Detector $integrated '审查前端规范' @()
+  Assert-Skills $result.recommendedSkills @() '审查技能缺失不能假称可用'
+  Assert-Skills $result.unavailableSkills @('aura-web-review') '应说明缺失审查技能'
 
   $notPigx = Join-Path $testRoot 'vue-vite'
   Write-FixtureFile $notPigx 'package.json' '{"dependencies":{"vue":"3.5.0","vite":"6.0.0"}}'
@@ -88,6 +99,15 @@ try {
   $result = Invoke-Detector $incomplete '配置模块联邦 remote'
   Assert-Equal $result.projectType 'IncompleteCandidate' '不完整候选识别失败'
   Assert-Equal @($result.recommendedSkills).Count 0 '不完整候选不应自动接管'
+  $result = Invoke-Detector $incomplete '审查前端代码规范'
+  Assert-Skills $result.recommendedSkills @() '仅模块联邦插件不是 Aura 专有证据'
+  Write-FixtureFile $incomplete 'src/config/moduleFederationBaseConfig.ts' 'export const currentRemoteConfig = {};'
+  Write-FixtureFile $incomplete 'src/hooks/moduleFederation.ts' 'export const exposeModules = {};'
+  $result = Invoke-Detector $incomplete '审查前端代码规范'
+  Assert-Equal $result.projectType 'IncompleteCandidate' '缺当前运行时绑定应保留候选类型'
+  Assert-Skills $result.recommendedSkills @('aura-web-review') '明确规范审查应允许有 Aura 证据的候选'
+  $result = Invoke-Detector $incomplete '新增业务页面'
+  Assert-Skills $result.recommendedSkills @() '候选审查不能降低业务开发门槛'
 
   $reactMf = Join-Path $testRoot 'react-mf'
   Write-FixtureFile $reactMf 'package.json' '{"dependencies":{"react":"19.0.0"}}'
@@ -98,5 +118,8 @@ try {
 
   Write-Host '✓ PIGX 项目分流器回归测试通过。' -ForegroundColor Green
 } finally {
+  $resolvedTestRoot = [IO.Path]::GetFullPath($testRoot)
+  $tempParent = [IO.Path]::GetFullPath([IO.Path]::GetTempPath()).TrimEnd('\', '/') + [IO.Path]::DirectorySeparatorChar
+  if (-not $resolvedTestRoot.StartsWith($tempParent, [StringComparison]::OrdinalIgnoreCase) -or [IO.Path]::GetFileName($resolvedTestRoot) -notmatch '^aura-pigx-router-[0-9a-f]{32}$') { throw '测试目录边界异常。' }
   if (Test-Path -LiteralPath $testRoot) { Remove-Item -LiteralPath $testRoot -Recurse -Force }
 }

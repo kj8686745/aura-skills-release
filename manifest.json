@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1792553663,
+  "generatedAt": 1792565737,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -208,19 +208,25 @@
       "description": "按 PIGX 模块联邦综合端规范开发和评审 Vue 3 + Vite + TypeScript 业务，涵盖 CRUD、接口、菜单权限、组件复用与模块联邦实现；适用于 aura-pigx-cli nexus 项目及其业务远程模块。",
       "name": "aura-web-develop",
       "path": "skills/aura-web-develop/SKILL.md",
+      "releaseState": "ready",
       "tags": [
-        null
+        "前端",
+        "开发"
       ],
-      "version": "1.3.0"
+      "version": "1.3.2",
+      "visibility": "public"
     },
     {
-      "description": "对当前框架未知的 Vue 3 + Vite 项目进行轻量只读识别，并在 PIGX 综合端开发、CRUD、路由菜单、权限、地图、视频或模块联邦配置时分流到对应技能；不实现业务，也不接管普通 Vue/Vite、React 或非 PIGX 项目。",
+      "description": "对框架未知的 Vue 3 + Vite 项目进行只读识别，为 Aura/PIGX 业务开发、前端规范审查、地图视频和模块联邦任务分流；不实现业务，不接管普通 Vue/Vite 或 React 项目。",
       "name": "aura-web-project-router",
       "path": "skills/aura-web-project-router/SKILL.md",
+      "releaseState": "ready",
       "tags": [
-        null
+        "前端",
+        "路由"
       ],
-      "version": "1.0.3"
+      "version": "1.0.4",
+      "visibility": "public"
     },
     {
       "description": "公司 2D 地图业务开发规范技能，指导 Agent 在 Vue 3 + Vite 项目中接入 @fxft/ui-plus，并使用 FxftMap 完成地图页面、点位聚合、轨迹回放、热力图、绘制和 GeoJSON 渲染。",
