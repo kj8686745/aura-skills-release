@@ -1,6 +1,6 @@
 #requires -Version 7.0
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$ProjectPath,[string[]]$ModulePath=@('.'),[string]$OutputPath,[switch]$Json)
+param([Parameter(Mandatory)][string]$ProjectPath,[string[]]$ModulePath=@('.'),[ValidateSet('Auto','Required')][string]$ApiMode='Auto',[string]$OutputPath,[switch]$Json)
 $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'backend-common.ps1')
 $unresolved=[Collections.Generic.List[object]]::new()
@@ -39,10 +39,11 @@ try{
   }
   if(-not $builds.Count){$unresolved.Add(@{path='';reason='范围内无 Maven/Gradle 构建声明；需核对父工程，不自动扩大扫描范围'})}
   if(-not $sources.Count){$unresolved.Add(@{path='';reason='未找到生产 Java 类型，不证明模块无后端实现'})}
-  $api=Invoke-BackendApiInventory $scope
+  $api=Invoke-BackendApiInventory $scope $ApiMode
   foreach($issue in $api.unresolved){$unresolved.Add($issue)}
   foreach($path in $scope.skipped){$unresolved.Add(@{path=$path;reason='跳过重解析点'})}
   $result=[ordered]@{schemaVersion=1;status=$(if($unresolved.Count){'partial'}else{'complete'});project=$scope.root;modules=$ModulePath;builds=@($builds.ToArray());sources=@($sources.ToArray());configurationFiles=@($config.ToArray());documentation=@($docs.ToArray());testFiles=@($tests.ToArray());api=$api;unresolved=@($unresolved.ToArray());limitations=@('依赖为声明而非已解析依赖树；类型角色为静态线索；不输出配置值，不执行构建或访问服务。','只处理指定目录；父 POM、调用方、DTO 字段、网关改写与能力生效需继续核对。')}
+  $result['reviewFocus']=@(Get-BackendReviewFocus $scope)
   $code=if($unresolved.Count){2}else{0}
 }catch{$result=@{schemaVersion=1;status='failed';unresolved=@(@{reason=$_.Exception.Message})};$code=1}
 Write-BackendResult $result $OutputPath $Json "后端盘点：$($result.status)，源码类型=$($sources.Count)，构建声明=$($builds.Count)，待核实=$(@($result.unresolved).Count)"

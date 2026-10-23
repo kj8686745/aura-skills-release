@@ -1,8 +1,8 @@
 {
   "skill": "aura-backend-compliance-review",
-  "skillVersion": "1.2.0",
+  "skillVersion": "1.12.0",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "55f347a26a89fadd8a29e7b56b505ecf6846d198",
+  "sourceCommit": "138603e83ac4e06b7360b6e659e3e71f0cf22839",
   "transformation": "仅移除登记的跨范围导航目标，保留链接文字；正文与示例不改写。",
   "modules": [
     {
@@ -636,14 +636,15 @@
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理/05-技能构建/审查结果包模板.md",
       "snapshot": "references/审查结果包模板.md",
-      "sourceSha256Lf": "9cdd2b6d7467a400e2b4f3859e8778081427d5a422ed23791524f007b91cf80e",
-      "snapshotSha256Lf": "9cdd2b6d7467a400e2b4f3859e8778081427d5a422ed23791524f007b91cf80e",
+      "sourceSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e",
+      "snapshotSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
-      "authorityStatus": "pending",
+      "authorityStatus": "matched",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "committedSourceSha256Lf": "a4890dae7dfb4d3c3ae154cb664e0dbafb5bad368cbf72d37381414e4c94e1c6"
+      "committedSourceSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e",
+      "version": "1.2.0"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/01-基础业务开发能力包/总入口.md",
@@ -884,8 +885,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "pending",
-      "committedSourceSha256Lf": "19eb3cee38e09edc9b3f0e2c4cc9a03fd0e6713b94d00e245577fd3d08b45617"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "bfc9013b7056dc50f6155882272d8da929f1d973001b437effeb77351e5e744b"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/07-网关与流量治理能力包/能力清单与边界.md",
@@ -952,63 +953,75 @@
       "snapshot": "references/standards/01-基础编码规范/05-接口规范体系/10-对外能力交付规范.md",
       "sourceSha256Lf": "c75fb531482af462da48fd324862f79af19632d2ef8693ac5af2747395d31379",
       "snapshotSha256Lf": "c75fb531482af462da48fd324862f79af19632d2ef8693ac5af2747395d31379",
-      "committedSourceSha256Lf": "c75fb531482af462da48fd324862f79af19632d2ef8693ac5af2747395d31379",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "c75fb531482af462da48fd324862f79af19632d2ef8693ac5af2747395d31379"
     }
   ],
-  "behaviorValidation": "受限四规则隔离样本：独立 Agent 产出单报告后执行中断，主 Agent 复核并续接六文件专项包；两格式各4条规则（通过2、偏差1、未证实1）、1项P2发现、4候选、7证据，自检均0错误/0不完整，15份输入摘要不变。仅静态模拟契约；未完成独立六文件行为验证、全项目全规则、真实依赖/运行、安装后自动触发或相邻任务误触发验收。",
+  "behaviorValidation": "历史 1.2.0：受限四规则隔离样本：独立 Agent 产出单报告后执行中断，主 Agent 复核并续接六文件专项包；两格式各4条规则（通过2、偏差1、未证实1）、1项P2发现、4候选、7证据，自检均0错误/0不完整，15份输入摘要不变。仅静态模拟契约；未完成独立六文件行为验证、全项目全规则、真实依赖/运行、安装后自动触发或相邻任务误触发验收。 本轮结果见 currentRevisionValidation。",
   "skillResources": [
     {
       "path": "scripts/backend-common.ps1",
       "kind": "script",
-      "sha256Lf": "3faf1758e1b3fb1f62d54038cb6caf1ba7391bcdec51d1c9072b7174e62d41ba",
+      "sha256Lf": "891722ace1c4ed514d17d27be92e682288995c6f113289892018c3aa1b0828a9",
       "originPath": "skills/aura-base-backend-development/scripts/backend-common.ps1",
-      "originSha256Lf": "3faf1758e1b3fb1f62d54038cb6caf1ba7391bcdec51d1c9072b7174e62d41ba",
+      "originSha256Lf": "891722ace1c4ed514d17d27be92e682288995c6f113289892018c3aa1b0828a9",
       "originStatus": "working-tree"
     },
     {
       "path": "scripts/inspect-backend-project.ps1",
       "kind": "script",
-      "sha256Lf": "1d4c704f220e104193d393c62b7691b2ed3baaa60630b9bd14c06fe0bc0dc9e7",
+      "sha256Lf": "fc54f2707f1c0e1cb5af7f950b996710a4054a4d52477de4c7ff63c6bd69776e",
       "originPath": "skills/aura-base-backend-development/scripts/inspect-backend-project.ps1",
-      "originSha256Lf": "1d4c704f220e104193d393c62b7691b2ed3baaa60630b9bd14c06fe0bc0dc9e7",
+      "originSha256Lf": "fc54f2707f1c0e1cb5af7f950b996710a4054a4d52477de4c7ff63c6bd69776e",
       "originStatus": "working-tree"
     },
     {
       "path": "scripts/check-backend-rules.ps1",
       "kind": "script",
-      "sha256Lf": "43ce5db7d8ecb6eca0df97d046981a325c5cc600312592d92a3ad5f0bfcf7db5",
+      "sha256Lf": "7daf35aae1ae6747bf177b9e2ced9be70f250ee21f2afb843f76d5834dbe8226",
       "originPath": "skills/aura-base-backend-development/scripts/check-backend-rules.ps1",
-      "originSha256Lf": "43ce5db7d8ecb6eca0df97d046981a325c5cc600312592d92a3ad5f0bfcf7db5",
+      "originSha256Lf": "7daf35aae1ae6747bf177b9e2ced9be70f250ee21f2afb843f76d5834dbe8226",
       "originStatus": "working-tree"
     },
     {
       "path": "scripts/inventory-api-contracts.ps1",
       "kind": "script",
-      "sha256Lf": "1526f665281b8ebf0721315fdfd22e6bb1ec73c00589aff42ac8a85eb98bbe4e",
+      "sha256Lf": "8950d5a9d17245493d85ae51c62c11114e13e5f3c11ec5336077c2800da816d2",
       "originPath": "skills/aura-base-backend-development/scripts/inventory-api-contracts.ps1",
-      "originSha256Lf": "1526f665281b8ebf0721315fdfd22e6bb1ec73c00589aff42ac8a85eb98bbe4e",
+      "originSha256Lf": "8950d5a9d17245493d85ae51c62c11114e13e5f3c11ec5336077c2800da816d2",
       "originStatus": "working-tree"
     },
     {
       "path": "scripts/check-review-result.ps1",
       "kind": "script",
-      "sha256Lf": "5307b761c2dfcc81123f91be30d3aef9dd3446c8f82110549a5a915db4f227fe",
+      "sha256Lf": "1ec7a203f72a3630e626e67fbfc5676fd4c6a224419623c8658786022331137b",
       "originPath": "skills/aura-review-skill-build/scripts/check-review-result.ps1",
-      "originSha256Lf": "5307b761c2dfcc81123f91be30d3aef9dd3446c8f82110549a5a915db4f227fe",
+      "originSha256Lf": "1ec7a203f72a3630e626e67fbfc5676fd4c6a224419623c8658786022331137b",
+      "originStatus": "working-tree"
+    },
+    {
+      "path": "scripts/inspect-review-scope.ps1",
+      "kind": "script",
+      "sha256Lf": "425bf1640df652b3c361bbf7a0583ef5c6020a2ee6fb7304e91b34080f13d9b4",
+      "originStatus": "working-tree"
+    },
+    {
+      "path": "scripts/capability-candidates.ps1",
+      "kind": "script",
+      "sha256Lf": "f375cb6cb37b7a3543785af25fe15fec67d6b91d08e59640d4f13bfb032b169c",
       "originStatus": "working-tree"
     },
     {
       "path": "references/后端审查执行路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "79d2006e4bb222b3b981825216b0435f17f0bf6d53f6853a07d48fed73ff568d"
+      "sha256Lf": "e723af86e932d9577dcfcf68969a13a2ab9da1819efdb0f615dc980ad95d29a6"
     },
     {
       "path": "references/后端审查完成门槛.md",
       "kind": "skill-navigation",
-      "sha256Lf": "0d6214cf08e4daca0cd177af564b69fc71231835a2fc1854f0e0e517a720d316"
+      "sha256Lf": "9183210202d930cb26df74befa1143f743034a9107d073147d6a4d4a4b884537"
     },
     {
       "path": "references/专项/接口专项/审查入口.md",
@@ -1024,12 +1037,77 @@
       "path": "references/专项/接口专项/references/任务路由.md",
       "kind": "skill-navigation",
       "sha256Lf": "d79a72598d4e75611aaa69b66b79cbcd4f22fa35809d9a374f1053ab3ec00dbb"
+    },
+    {
+      "path": "scripts/select-json-summary.ps1",
+      "kind": "script",
+      "sha256Lf": "1f6960ca5a0414b0bee7cd2473842c15fd00fdc158a0c057a8e128ae15c85c5f",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/check-review-matrix.ps1",
+      "kind": "script",
+      "sha256Lf": "3671ec77ec8df4597b2db5f8258cfe1584d9945eabbef93795771f415dbaef44",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/check-review-evidence.ps1",
+      "kind": "script",
+      "sha256Lf": "c40d7c8d7cb063ad2efa5449e542b29861de1fe0681d2fbbebd35bea161f2c7e",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/check-capability-ledger.ps1",
+      "kind": "script",
+      "sha256Lf": "bd0cda1363a56fae51772c424c70cbc1c64f20621fdda147ecb2a2bc20099ba0",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/check-capability-ledger-report.ps1",
+      "kind": "script",
+      "sha256Lf": "260f4742bb346cb1cd62a2792522a91fe468e32fddfa61220b3ab1970f23c23c",
+      "origin": "人工维护，不作为权威技术规则源"
     }
   ],
   "sourceRoot": "",
   "snapshotRoot": "",
   "sourceBinding": {
-    "status": "pending",
-    "reason": "双模式报告模板1.1.0及网关入口锚点修复尚未提交；分别记录工作树、随包和提交基线摘要。"
+    "status": "matched",
+    "note": "来源文件已与规范仓库提交基线绑定；来源绑定不代表行为验收或发布。"
+  },
+  "currentRevisionValidation": {
+    "reportToolCasesPassed": 45,
+    "reportFormat": "1.2.0",
+    "interfaceContractToolCasesPassed": 51,
+    "interfaceContractToolVersion": "1.3.1",
+    "backendBehaviorTrial": "independent-four-rule-project-sample-passed",
+    "backendTrialResult": {
+      "javaFiles": 7,
+      "rules": 4,
+      "pass": 2,
+      "deviation": 1,
+      "unproven": 1,
+      "findings": 1,
+      "candidates": 5,
+      "evidence": 8,
+      "reportErrors": 0,
+      "reportIncomplete": 0
+    },
+    "limits": "当前记录包含四规则隔离六文件专项、报告工具以及共用接口契约工具的静态验证；未重新验证构建技能生成新技能全过程、1.3.0单报告独立行为、全项目314规则、真实运行、安装触发或发布。接口工具的 51 项通过只表示脚本场景通过，不代表真实项目接口或运行契约已验收。",
+    "evidenceArchive": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端审查技能1.3.0隔离验证样本与结果-20261021.zip",
+    "evidenceArchiveSha256": "76187ae258d333ff121c7ca3ce07525733f868e69b0d853a49c85a9e2cb500f9",
+    "capabilityCandidateRevision": "1.5.2",
+    "capabilityCandidateCasesPassed": 30,
+    "capabilityCandidateRealSample": {"project":"ocean-ship-govern","commit":"208d22300848997210e2be65bb86790b9d93dd75","extractedFiles":10,"scannedFiles":9,"productionJava":6,"signals":8,"duplicateCandidatesBefore":1,"duplicateCandidatesAfter":0,"sourceHashesUnchanged":true,"sourceStatusUnchanged":true},
+    "capabilityCandidateEvidenceArchive": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端复用候选1.5.1小样本验证-20261022.zip",
+    "capabilityCandidateEvidenceSha256": "aa92c7b1079b3e5cf694fbd871b9a2b21f208509b849dc223f4187165e998da7",
+    "capabilityCandidateLimits": "30 项隔离夹具及真实部门树10文件抽取样本静态验证；人工核对 R.ok、currentUser 及 Mapper/SQL 参数链，排除未使用 JdbcTemplate import。盲测暴露并更正受限样本把测试文件缺口扩大为业务偏差的问题。不是全项目审查；共享工具其他方法不计入链路覆盖。未执行独立 Agent、编译/数据库/运行、安装或发布验收。",
+    "blindBehaviorTrial": {"skillVersion":"1.5.1-input/1.5.2-boundary","project":"ocean-ship-govern","sampleFiles":10,"rules":12,"initial":{"pass":5,"deviation":2,"unproven":5,"findings":1},"corrected":{"pass":5,"deviation":0,"unproven":7,"findings":0,"candidates":6,"excluded":3,"pending":3},"reportCheckExit":0,"evidenceArchive":"AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端审查技能1.5.2盲测结果-20261022.zip","evidenceArchiveSha256":"c1dfe9ddb39719851a42526f0e672037e813905f6f7fe22df340b2af5d3f268b","limits":"独立 Agent 首轮报告误将受限清单的全注释测试扩大为业务偏差；主代理质询后按证据边界更正。首轮与更正报告均保留。未运行构建/测试、未读取范围外项目、未修改输入或技能。"},
+    "scopeToolRevision": "1.5.2",
+    "scopeToolCasesPassed": 17,
+    "scopeToolLimits": "本轮 test-review-scope.ps1 验证 Git 范围、配置元数据不含键值、解析异常正文抑制、Windows 分类及输出文件排除。历史同源后端工具 38 项不计入此数；未重新验证独立 Agent、通用秘密扫描或真实项目运行。1.6.0 新增摘要脚本，隔离 JSON 验证计数、筛选和字段不回显；不替代报告证据和人工结论。",
+    "tokenBudgetRevision": {"skillVersion":"1.12.0","summaryToolCasesPassed":3,"matrixConsistencyToolCasesPassed":3,"evidenceScanCasesPassed":3,"capabilityLedgerCasesPassed":3,"capabilityLedgerReportCasesPassed":2,"defaultPolicy":"变更或接口专项按命中路由审查；启用能力候选后必须回写同一结果包；详细 JSON 写结果目录后摘要筛选；能力、文件和字段候选按需打开"},
+    "capabilityLedgerValidation": {"isolatedCasesPassed":2,"realSample":{"module":"aura-iotbus-biz","capabilityCount":2,"signalCount":1178,"duplicateCandidateCount":99,"unevaluatedCount":2,"status":"passed"},"reportBackfillSample":{"mode":"Change","reportCapabilityCount":0,"missingCapabilityCount":2,"unclassifiedCapabilityCount":0,"status":"partial"},"limits":"只验证候选账本结构和证据字段，以及候选是否回写结果包；静态线索不等于能力复用、重复实现或规范偏差，最终结论仍需沿真实调用链和公开契约人工核对。"},
+    "matrixConsistencyValidation": {"resultToolCasesPassed":2,"realSample":{"mode":"Change","referencedRules":5,"matrixRules":359,"unknownRules":0,"unreferencedRules":354},"limits":"只验证规则 ID 来源和覆盖统计，不判断规则适用性、证据真实性或项目合规。"}
   }
 }

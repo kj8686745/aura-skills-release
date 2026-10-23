@@ -1,43 +1,70 @@
 {
   "skill": "aura-review-skill-build",
-  "skillVersion": "0.3.0",
+  "skillVersion": "0.5.0",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "55f347a26a89fadd8a29e7b56b505ecf6846d198",
+  "sourceCommit": "138603e83ac4e06b7360b6e659e3e71f0cf22839",
   "sourceRoot": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理",
   "documents": [
     {
       "source": "01-管理规范/审查技能构建规范.md",
       "snapshot": "governance/01-管理规范/审查技能构建规范.md",
-      "version": "1.1.0",
-      "sourceSha256Lf": "24faecb9af8a7abac81c034b07655a74a34ecd59a20e62c54158cfc1724762e2",
-      "snapshotSha256Lf": "24faecb9af8a7abac81c034b07655a74a34ecd59a20e62c54158cfc1724762e2",
-      "committedSourceSha256Lf": "e47e1645aa0430a1de62038618ebd10e2f01c77a168c7d8a25ff0ea3972f1f1e",
-      "navigationTargetsRemoved": []
+      "version": "1.2.1",
+      "sourceSha256Lf": "bdd46c0b9a58882203ea7157af1115f6e847b4fdad0d3fb96f1a9bb252e85240",
+      "snapshotSha256Lf": "bdd46c0b9a58882203ea7157af1115f6e847b4fdad0d3fb96f1a9bb252e85240",
+      "navigationTargetsRemoved": [],
+      "committedSourceSha256Lf": "bdd46c0b9a58882203ea7157af1115f6e847b4fdad0d3fb96f1a9bb252e85240"
     },
     {
       "source": "05-技能构建/审查结果包模板.md",
       "snapshot": "governance/05-技能构建/审查结果包模板.md",
-      "version": "1.1.0",
-      "sourceSha256Lf": "9cdd2b6d7467a400e2b4f3859e8778081427d5a422ed23791524f007b91cf80e",
-      "snapshotSha256Lf": "9cdd2b6d7467a400e2b4f3859e8778081427d5a422ed23791524f007b91cf80e",
-      "committedSourceSha256Lf": "a4890dae7dfb4d3c3ae154cb664e0dbafb5bad368cbf72d37381414e4c94e1c6",
-      "navigationTargetsRemoved": []
+      "version": "1.2.0",
+      "sourceSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e",
+      "snapshotSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e",
+      "navigationTargetsRemoved": [],
+      "committedSourceSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e"
     }
   ],
   "validation": {
     "behavior": "isolated-build-and-dual-report-sample-passed",
-    "note": "21 个报告工具场景通过；独立 Agent 在隔离文档样本构建技能并自测单报告与六文件包，主 Agent 复核四条规则判断、证据、统计及最终脚本输出均一致。仅覆盖给定文档样本；未验证安装后自动触发、相邻任务误触发、真实领域大型项目或运行验收。"
+    "note": "21 个报告工具场景通过；独立 Agent 在隔离文档样本构建技能并自测单报告与六文件包，主 Agent 复核四条规则判断、证据、统计及最终脚本输出均一致。仅覆盖给定文档样本；未验证安装后自动触发、相邻任务误触发、真实领域大型项目或运行验收。",
+    "scopeVersion": "0.3.0 (historical); current changes are recorded in currentRevisionValidation"
   },
   "snapshotRoot": "references",
   "sourceBinding": {
-    "status": "pending",
-    "reason": "双模式构建规范及报告模板 1.1.0 尚未提交；分别登记工作树与基线提交摘要。"
+    "status": "matched",
+    "note": "来源文件已与规范仓库提交基线绑定；来源绑定不代表行为验收或发布。"
   },
   "skillResources": [
     {
       "path": "scripts/check-review-result.ps1",
       "kind": "script",
-      "sha256Lf": "5307b761c2dfcc81123f91be30d3aef9dd3446c8f82110549a5a915db4f227fe"
+      "sha256Lf": "1ec7a203f72a3630e626e67fbfc5676fd4c6a224419623c8658786022331137b"
+    },
+    {
+      "path": "scripts/check-review-matrix.ps1",
+      "kind": "script",
+      "sha256Lf": "3671ec77ec8df4597b2db5f8258cfe1584d9945eabbef93795771f415dbaef44"
     }
-  ]
+  ],
+  "currentRevisionValidation": {
+    "reportToolCasesPassed": 45,
+    "matrixConsistencyToolCasesPassed": 2,
+    "reportFormat": "1.2.0",
+    "backendBehaviorTrial": "independent-four-rule-project-sample-passed",
+    "backendTrialResult": {
+      "javaFiles": 7,
+      "rules": 4,
+      "pass": 2,
+      "deviation": 1,
+      "unproven": 1,
+      "findings": 1,
+      "candidates": 5,
+      "evidence": 8,
+      "reportErrors": 0,
+      "reportIncomplete": 0
+    },
+    "limits": "仅验证四规则隔离六文件专项及报告工具；新增规则矩阵来源校验已通过有效/未知规则隔离用例和真实变更报告复核；未重新验证构建技能生成新技能全过程、全项目规则适用性、真实运行、安装触发或发布。",
+    "evidenceArchive": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端审查技能1.3.0隔离验证样本与结果-20261021.zip",
+    "evidenceArchiveSha256": "76187ae258d333ff121c7ca3ce07525733f868e69b0d853a49c85a9e2cb500f9"
+  }
 }

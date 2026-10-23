@@ -583,9 +583,9 @@
     }
   ],
   "coverage": "覆盖本技能 references/standards 下全部规范视图；技能自有导航单独登记。",
-  "skillVersion": "1.1.0",
+  "skillVersion": "1.4.0",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "55f347a26a89fadd8a29e7b56b505ecf6846d198",
+  "sourceCommit": "07c97c41c2a34e5b04b130dfe37af833dc71a23d",
   "skillResources": [
     {
       "path": "references/任务路由.md",
@@ -596,22 +596,28 @@
     {
       "path": "scripts/inventory-api-contracts.ps1",
       "kind": "skill-owned",
-      "sha256Lf": "1526f665281b8ebf0721315fdfd22e6bb1ec73c00589aff42ac8a85eb98bbe4e",
+      "sha256Lf": "8950d5a9d17245493d85ae51c62c11114e13e5f3c11ec5336077c2800da816d2",
       "origin": "人工维护，不作为权威技术规则源"
     },
     {
       "path": "scripts/check-api-document.ps1",
       "kind": "skill-owned",
-      "sha256Lf": "f7c2a7fde24b6d90d6cb1be0be294b044379ddab2e16a28c75cf83d0cc7c7d72",
+      "sha256Lf": "176cc2c43e2dda9cc1226632702eeb98e92645f87312d03d9dab4543af7759c1",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/select-json-summary.ps1",
+      "kind": "skill-owned",
+      "sha256Lf": "1f6960ca5a0414b0bee7cd2473842c15fd00fdc158a0c057a8e128ae15c85c5f",
       "origin": "人工维护，不作为权威技术规则源"
     }
   ],
   "transformation": "仅按各文档 navigationTargetsRemoved 移除未随包提供的导航目标并保留文字，不裁剪规范章节或改写规则。",
-  "behaviorValidation": "26 个工具隔离场景通过；一次独立模块文档维护已复核，明确保留 DTO/运行契约缺口；未执行真实服务联调。",
+  "behaviorValidation": "51 个工具隔离场景通过；新增代码返回类型与成功 data 形状、显式响应类型、响应 DTO 字段表和请求体 DTO 字段表比对；未知文档版式只返回待核对，不自动判定接口缺失；字段解析遇到继承、序列化注解、重复模型、集合请求体和复杂成员时保留待核对；一次独立模块文档维护及船舶预警详情小样本已复核，明确保留 DTO/运行契约缺口；未执行真实服务联调。1.4.0 新增摘要脚本，隔离 JSON 三份副本验证通过，不回显完整字段。",
   "sourceRoot": "",
   "snapshotRoot": "",
   "sourceBinding": {
     "status": "committed",
-    "note": "50 份权威视图绑定本提交；只移除登记的未随包导航，不裁剪正文。"
+    "note": "随包依据已逐份核对本规范提交；来源绑定不代表行为验收或远端技能发布。"
   }
 }

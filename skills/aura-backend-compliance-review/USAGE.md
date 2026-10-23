@@ -2,6 +2,8 @@
 
 提供项目位置、范围和可得版本即可；技能一次执行到报告交付，不需要逐个模块发“下一步”。不指定版本时记录本地当前版本，不切分支或覆盖工作树。远程项目先按已有访问方式定位，不能将缺少权限猜成代码缺陷。
 
+上下文预算：有差异或接口范围时只读取对应路由和命中条款，不预加载全项目矩阵、全部能力入口或 SDK 内部。详细 JSON 写入结果目录后，先用摘要脚本提取计数、发现和待核对项；只有当前范围需要时才打开逐文件、能力候选或字段候选。
+
 ## 常见请求
 
 > 使用 $aura-backend-compliance-review 审查当前项目相对指定基线的设备模块修改，包含工作树差异。只检查变更与受影响链路，交一份报告，不改代码。
@@ -18,6 +20,59 @@
 
 ## 工具与边界
 
+大项目在同一结果包内按批次继续，区分待执行静态工作与外部补证；上下文中断后从队列恢复，不每个模块等用户确认。报告列具体单元、规则和证据，不能用候选命中清单冒充覆盖。范围含调用方与提供方时同时给出可由源码完成的契约比对；无联调环境只限制运行结论。
+
 技能已包含盘点、接口采集、候选检索和报告检查脚本，PowerShell 7 执行。调用示例见 SKILL；`-ModulePath` 限定目录，默认 `.` 扫描项目，不能用默认值代替变更范围。候选工具输出不直接成为发现，报告脚本退出 0 也不代表证据真实或项目通过。
 
+盘点和候选工具支持 `-ApiMode Auto/Required`：默认无 HTTP 线索时返回 `api.status=not-triggered`，不将纯工具目录的零接口写成错误或接口规则通过；任务明确包含 HTTP 时用 Required 保留无法解析的映射。`reviewFocus` 仅提供范围内选读方向，仍按规范和真实单元判断适用性，不能计为覆盖数。
+
 审查不包含代码整改、依赖安装、Git 提交、发布或真实环境验收。构建失败保留原始证据并继续其余核对，不修改项目或锁文件。无需另装接口审查、后端开发或内部构建技能。
+## SDK 依赖审查边界
+
+当项目引用 SDK、Starter 或 Feign Client 时，审查当前项目的依赖声明、版本、配置、调用位置、参数/响应适配、超时与异常处理以及公开契约使用方式。行为链在项目内 `Client/Adapter` 调用出口停止；不读取 `.m2`/Gradle 缓存、JAR 内部、反编译源码或邻仓库，也不把 SDK 内部规范问题计入项目结果。需要审查 SDK 本身时，另行建立明确范围的 SDK 审查任务。
+
+范围盘点使用：
+
+```powershell
+./scripts/inspect-review-scope.ps1 -ProjectPath '<项目根>' -ModulePath '<模块>' -Json
+# 冻结 Git 基线并纳入当前工作树
+./scripts/inspect-review-scope.ps1 -ProjectPath '<项目根>' -ModulePath '<模块>' -BaseRef '<基线提交>' -HeadRef '<目标提交>' -IncludeWorkingTree -Json
+# 需要逐文件清单时追加：-IncludeFiles
+./scripts/select-json-summary.ps1 -InputPath '<临时 JSON>' -PathFilter '<模块或文件>' -RuleId '<规则>' -ApiPath '<接口路径>' -MaxItems 20
+./scripts/check-review-result.ps1 -Mode Change -ResultPath '<单报告.md>' -MatrixPath '<技能目录>/references/standards/01-基础编码规范/规范矩阵.md' -Json
+./scripts/check-review-evidence.ps1 -Mode Change -ResultPath '<单报告.md>' -Json
+./scripts/check-capability-ledger.ps1 -InputPath '<范围盘点 JSON>' -Json
+./scripts/check-capability-ledger-report.ps1 -LedgerPath '<范围盘点 JSON>' -ResultPath '<审查报告或结果包>' -Mode Change -Json
+```
+
+结果检查入口传入 `-MatrixPath` 后自动校验规则 ID 来源；未引用规则只作为覆盖统计，不要求一次局部审查加载完整矩阵。需要单独统计时再使用 `check-review-matrix.ps1`。
+
+证据扫描只识别明显凭据和范围越界线索：凭据命中返回错误，`.m2`、JAR、反编译或邻仓库线索返回待复核；输出不包含原始命中值。
+
+能力候选检查支持两种输入：范围盘点的完整 JSON，或单独的 `capabilityReuse` 账本。检查通过只表示候选结构和证据字段完整；`candidate-only`、`not-evaluated` 是正常状态，最终复用结论仍写回审查结果包。
+
+回写检查将候选账本与审查报告/结果包对照：能力 ID 未进入结果包或仍未分类时返回 `partial`；这表示交付资料不完整，不表示项目违规。审查技能不得跳过该状态继续写“审查完成”。未触发的专项能力按原有规则记录依据，不要求强制创建能力行。
+
+脚本默认只返回文件数量、路径摘要和排除信息，避免把大项目的完整文件名清单塞入上下文；需要建立逐文件资产目录时再追加 `-IncludeFiles`。输出中的 `dependencies`、`sdkCandidates` 和 `localUsageCandidates` 只是项目内取证队列，不是复用正确性或规范偏差结论。
+
+使用 `BaseRef/HeadRef` 时，输出会增加 `git` 范围冻结信息：提交、分支、工作树、未跟踪文件、排除项和 `scopeId`。`-IncludeWorkingTree` 用于把当前暂存/未暂存改动纳入范围；未提供 `BaseRef` 时只能记录工作树，结果标记为 `partial`，不能替代完整差异基线。
+
+## 报告一致性补充
+
+报告自检同时核对发现卡是否有偏差矩阵行回指；无回指返回确定错误。相同 F 的多条整改记录返回待复核，需明确初审与复核基线，不自动删除历史记录。通过行引用 F 作为对照仍允许。工具不判断证据真实性或业务合规。
+
+限定样本不代表完整交付。某测试全注释、样本未提供配置或文档时，只记录可确认事实；没有完整资产范围、明确交付承诺或直接冲突证据，不推断业务整体不满足要求。缺口进入未证实/待补证，不据此计入已确认发现；可以补充其他有效材料，不机械要求恢复指定旧文件。
+
+## 范围与配置证据
+
+`configurationEvidence` 为当前模块中 `application*`、`bootstrap*` 的 YAML/Properties 文件提供路径、字节长度、原始字节 SHA-256，不输出键和值。XML 解析失败保留文件及异常类型，不输出可能含配置原文的异常消息。此策略不覆盖手工摘录的源码、日志或任意密钥形式。
+
+`scope.scanPolicy` 记录模块、配置匹配规则、重解析点策略及分类重叠口径；配置文件也可能计为测试资源，分类不能直接相加充当去重文件数。`includedFileDigest` 只摘要排序后的路径，不证明内容未变。只有显式 `OutputPath` 文件会从扫描清单中排除；同目录其他历史报告不会自动排除，应选择源码模块目录。重复执行不把本次输出计入文件数。
+
+## 基础能力复用候选
+
+复用审查时，在首次范围盘点追加 `-IncludeCapabilityCandidates`。工具按需载入随包 `capability-candidates.ps1`，结果在 `capabilityReuse.items`；不需要安装其他技能或另生成一份账本文件。只要开启该开关，审查结束前必须运行回写检查，并在同一报告/结果包补齐能力复用结论。
+
+每项包含能力编号、随包公开资料位置、依赖声明、配置文件位置、符号/import/静态成员调用线索和可能的替代实现。两类基础能力始终保留，`not-observed` 只表示未找到登记线索，不是不适用；所有项为 `reviewStatus=not-evaluated`。聚合依赖不自动展开，版本表达式不自动解析，目标版本需核对公开契约。
+
+Agent 沿路径与行号解析真实类型、注入和调用链，将判断写回现有报告的能力复用章节并关联 U/E/F。实例调用、YAML 层级配置、自定义别名和传递依赖仍需人工核对；文件列表不证明其属于某项能力。同名类、ObjectMapper、厂商客户端等只是替代实现线索，可能是合理适配，不直接判重复。仅 import 的替代类型保留在原始线索中，不单独列为重复实现候选；共享工具中其他方法的命中也不自动计入本次业务链。配置线索只返回位置，不输出键值或源码片段；基础能力之外的专项仍按任务触发，不自动加载全部能力包。

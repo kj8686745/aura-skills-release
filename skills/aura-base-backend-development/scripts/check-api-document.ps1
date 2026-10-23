@@ -25,6 +25,55 @@ function Get-ParameterRows([string]$Body) {
   }
   return $result.ToArray()
 }
+function Get-ResponseFieldRows([string]$Body) {
+  $Body=[regex]::Replace($Body,'(?ms)^\s*(`{3,}|~{3,})[^\n]*\n.*?^\s*\1\s*$','')
+  $columns=@();$result=[Collections.Generic.List[object]]::new()
+  foreach($line in ($Body -split "`n")){
+    if($line -notmatch '^\s*\|'){$columns=@();continue}
+    $cells=@(($line.Trim().Trim('|') -split '(?<!\\)\|') | ForEach-Object {Normalize-Cell $_})
+    if($cells.Count -and $cells[0] -match '^:?-+:?$'){continue}
+    if($cells -contains '字段' -or $cells -contains '字段名'){$columns=$cells;continue}
+    if(-not $columns.Count -or $cells.Count -ne $columns.Count){continue}
+    $nameAt=[array]::IndexOf($columns,'字段');if($nameAt -lt 0){$nameAt=[array]::IndexOf($columns,'字段名')};$typeAt=[array]::IndexOf($columns,'类型')
+    if($nameAt -ge 0){$result.Add(@{name=$cells[$nameAt];type=$(if($typeAt -ge 0){$cells[$typeAt]}else{''})})}
+  }
+  return $result.ToArray()
+}
+function Get-SectionBody([string]$Body,[string]$Title) {
+  $match=[regex]::Match($Body,'(?ms)^#{1,6}[^\n]*'+[regex]::Escape($Title)+'\s*\n(?<body>.*?)(?=^#{1,6}\s|\z)')
+  if($match.Success){return $match.Groups['body'].Value}
+  return ''
+}
+function Get-ResponseShape($Data) {
+  if($null -eq $Data){return 'null'}
+  if($Data -is [bool]){return 'boolean'}
+  if($Data -is [string]){return 'string'}
+  if($Data -is [byte] -or $Data -is [int16] -or $Data -is [int32] -or $Data -is [int64] -or $Data -is [decimal] -or $Data -is [double]){return 'number'}
+  if($Data -is [Collections.IDictionary]){return 'object'}
+  if($Data -is [Collections.IEnumerable]){return 'array'}
+  return 'object'
+}
+function Get-ReturnShape([string]$ReturnType) {
+  $type=([string]$ReturnType -replace '\s+','').Trim()
+  $inner=$type
+  $match=[regex]::Match($type,'^(?:R|ResponseEntity)\s*<(?<inner>.+)>$')
+  if($match.Success){$inner=$match.Groups['inner'].Value}
+  if($inner -match '^(?:Void|void)$'){return 'null'}
+  if($inner -match '(?:List|Set|Collection|Iterable|ArrayList|LinkedList|Deque|Queue|\[\])'){return 'array'}
+  if($inner -match '^(?:Boolean|boolean)$'){return 'boolean'}
+  if($inner -match '^(?:Byte|Short|Integer|Long|Float|Double|BigInteger|BigDecimal|byte|short|int|long|float|double)$'){return 'number'}
+  if($inner -match '^(?:String|CharSequence|char|Character)$'){return 'string'}
+  return 'object'
+}
+function Get-DocumentedResponseType([string]$Body) {
+  foreach($line in ($Body -split "`n")){
+    if($line -notmatch '^\s*\|'){continue}
+    $cells=@(($line.Trim().Trim('|') -split '(?<!\\)\|') | ForEach-Object {Normalize-Cell $_})
+    if($cells.Count -ge 2 -and $cells[0] -match '^(响应类型|返回类型)$' -and $cells[1]){return $cells[1]}
+  }
+  return $null
+}
+function Normalize-ContractType([string]$Value){return ([string]$Value).Replace('`','') -replace '\s+',''}
 try {
   $file=(Resolve-Path -LiteralPath $DocumentPath).Path
   $text=[IO.File]::ReadAllText($file).Replace("`r`n","`n")
@@ -91,6 +140,10 @@ try {
     foreach($envelope in $envelopes) {
       if($envelope.code -isnot [int] -and $envelope.code -isnot [long]){Issue error invalid_response_code $card.line "$($api.id) 的 code 不是整数"}
     }
+    $success=$envelopes | Where-Object {$_.code -eq 200} | Select-Object -First 1
+    $cardMap[$api.id].successShape=$(if($success){Get-ResponseShape $success.data}else{$null})
+    $documentedType=Get-DocumentedResponseType $body
+    $cardMap[$api.id].documentedResponseType=$documentedType
     # HTTP example or request path listing must agree with the overview.
     $requests=@([regex]::Matches(($body+"`n"+$common),'(?m)(?:^\s*|`)(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS|TRACE)\s+(/[^`\s?]+)(?:\?[^`\s]*)?(?:`|\s*$)'))
     if(-not @($requests | Where-Object {$_.Groups[1].Value -eq $api.method -and (Path-Key $_.Groups[2].Value) -eq (Path-Key $api.path)}).Count) {
@@ -104,9 +157,38 @@ try {
     foreach($route in @($inventory.routes | Where-Object {$null -ne $_})) {
       $rows=@($apiRows | Where-Object {$_.method -eq $route.method -and (Path-Key $_.path) -eq (Path-Key $route.path)})
       if($route.method -eq 'ANY'){Issue incomplete wildcard_method 0 "$($route.source):$($route.line) 需核对实际 HTTP 方法";continue}
-      if(-not $rows.Count){Issue error undocumented_endpoint 0 "未列入模块文档：$($route.method) $($route.path)；$($route.source):$($route.line)";continue}
+      if(-not $rows.Count){
+        if(-not $apiRows.Count){Issue incomplete route_coverage_unresolved 0 "文档接口身份结构未识别，无法核对：$($route.method) $($route.path)；需核对其他有效版式"}
+        else{Issue error undocumented_endpoint 0 "未列入模块文档：$($route.method) $($route.path)；$($route.source):$($route.line)"}
+        continue
+      }
       foreach($row in $rows) {
         if(-not $cardMap.ContainsKey($row.id)){continue};$body=$cardMap[$row.id].body+"`n"+$common
+        $card=$cardMap[$row.id]
+        $expectedShape=Get-ReturnShape $route.returnType
+        if($card.successShape -and $expectedShape -ne $card.successShape){Issue error response_shape_mismatch $row.line "$($row.id) 代码返回类型 $($route.returnType) 期望 data=$expectedShape，成功示例实际为 data=$($card.successShape)"}
+        if($card.documentedResponseType -and (Normalize-ContractType $card.documentedResponseType) -ne (Normalize-ContractType $route.returnType)){Issue error documented_response_type_mismatch $row.line "$($row.id) 文档响应类型 $($card.documentedResponseType) 与代码返回类型 $($route.returnType) 不一致"}
+        if($route.responseModel -and $route.responseFields){
+          $responseSection=Get-SectionBody $card.body '响应字段'
+          if(-not $responseSection){$responseSection=Get-SectionBody $card.body '响应契约'}
+          $documentedFields=@(Get-ResponseFieldRows $responseSection)
+          if(-not $documentedFields.Count){Issue error missing_response_fields_table $row.line "$($row.id) 代码返回模型 $($route.responseModel) 已可解析，但文档缺少响应字段表"}
+          else{
+            foreach($field in @($route.responseFields | Where-Object {$_.name -notmatch '^serialVersionUID$'})){if(-not @($documentedFields | Where-Object {$_.name -eq $field.name}).Count){Issue $(if($route.responseModelComplete){'error'}else{'incomplete'}) undocumented_response_field $row.line "$($row.id) 响应字段表未说明候选字段 $($field.name)，模型不完整时需先核实公开字段"}}
+            foreach($field in @($documentedFields)){if(-not @($route.responseFields | Where-Object {$_.name -eq $field.name}).Count){Issue incomplete documented_unknown_response_field $row.line "$($row.id) 文档字段 $($field.name) 未在直接响应模型中找到，需核对继承/序列化或文档错误"}}
+          }
+        }
+        if($route.requestModel -and $route.requestFields){
+          $requestSection=Get-SectionBody $card.body '请求字段'
+          if(-not $requestSection){$requestSection=Get-SectionBody $card.body '请求契约'}
+          $documentedRequestFields=@(Get-ResponseFieldRows $requestSection)
+          if(-not $documentedRequestFields.Count){$documentedRequestFields=@(Get-ParameterRows $requestSection | Where-Object {$_.location -in @('body','请求体')})}
+          if(-not $documentedRequestFields.Count){Issue incomplete missing_request_fields_table $row.line "$($row.id) 未定位请求模型 $($route.requestModel) 的字段表，需核对共享模型或其他有效组织形式"}
+          else{
+            foreach($field in @($route.requestFields | Where-Object {$_.name -notmatch '^serialVersionUID$'})){if(-not @($documentedRequestFields | Where-Object {$_.name -eq $field.name}).Count){Issue $(if($route.requestModelComplete){'error'}else{'incomplete'}) undocumented_request_field $row.line "$($row.id) 请求字段表未说明候选字段 $($field.name)，模型不完整时需先核实公开字段"}}
+            foreach($field in @($documentedRequestFields)){if(-not @($route.requestFields | Where-Object {$_.name -eq $field.name}).Count){Issue incomplete documented_unknown_request_field $row.line "$($row.id) 文档请求字段 $($field.name) 未在直接请求模型中找到，需核对继承/序列化或文档错误"}}
+          }
+        }
         $documentedParams=@(Get-ParameterRows $body)
         foreach($param in @($route.parameters | Where-Object {$_.location -in @('path','query','header','part')})) {
           if(-not @($documentedParams | Where-Object {$_.name -eq $param.wireName -and (-not $_.location -or $_.location -eq $param.location)}).Count){Issue error undocumented_parameter $row.line "$($row.id) 参数表未说明 $($param.location) 参数 $($param.wireName)"}

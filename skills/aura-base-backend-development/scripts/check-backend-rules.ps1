@@ -1,6 +1,6 @@
 #requires -Version 7.0
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$ProjectPath,[string[]]$ModulePath=@('.'),[string]$OutputPath,[switch]$Json)
+param([Parameter(Mandatory)][string]$ProjectPath,[string[]]$ModulePath=@('.'),[ValidateSet('Auto','Required')][string]$ApiMode='Auto',[string]$OutputPath,[switch]$Json)
 $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'backend-common.ps1')
 $candidates=[Collections.Generic.List[object]]::new();$unresolved=[Collections.Generic.List[object]]::new()
@@ -29,7 +29,7 @@ try{
     if($markers.Count){$reuse.Add(@{path=$rel;symbols=$markers;status='reference-only';review='追踪真实公开类型和调用链；符号/import 存在不证明复用或运行生效。'})}
   }
   if(-not $checked.Count){$unresolved.Add(@{path='';reason='指定范围无生产 Java 文件'})}
-  $api=Invoke-BackendApiInventory $scope
+  $api=Invoke-BackendApiInventory $scope $ApiMode
   foreach($issue in $api.unresolved){$unresolved.Add($issue)}
   foreach($route in $api.routes){
     if($route.returnType -match '\b(?:IPage|Page|OpenPage)\s*<'){
@@ -54,6 +54,8 @@ try{
   }
   foreach($path in $scope.skipped){$unresolved.Add(@{path=$path;reason='跳过重解析点'})}
   $result=[ordered]@{schemaVersion=1;status=$(if($candidates.Count -or $unresolved.Count){'needs-review'}else{'scan-complete'});project=$scope.root;modules=$ModulePath;files=@($checked.ToArray());candidates=@($candidates.ToArray());capabilityReferences=@($reuse.ToArray());unresolved=@($unresolved.ToArray());coverage=@('入口底层数据访问线索','线程创建','同名基础入口','直接 HTTP 响应/分页/Entity 类型','OpenAPI 路径与平台注解');requiredSemanticReview=@('基础业务和公共支撑对应功能是否沿真实公开入口复用；未命中符号不能判断无复用。','DTO 全字段、权限/租户、事务/缓存/幂等和调用方兼容，按改动范围核对。');limitations=@('所有命中都是待复核候选，不自动整改或给出整个项目合规结论。','只扫描指定目录，排除测试与生成产物；继承、动态或组合映射需补证，网关及运行未验证。')}
+  $result['api']=@{status=$api.status;limitations=@($api.limitations)}
+  $result['reviewFocus']=@(Get-BackendReviewFocus $scope)
   $code=if($candidates.Count -or $unresolved.Count){2}else{0}
 }catch{$result=@{schemaVersion=1;status='failed';candidates=@();unresolved=@(@{reason=$_.Exception.Message})};$code=1}
 Write-BackendResult $result $OutputPath $Json "后端静态候选：$($result.status)，文件=$($checked.Count)，候选=$($candidates.Count)，待补证=$(@($result.unresolved).Count)"

@@ -17,11 +17,15 @@ description: "为 AURA 前后端、服务间或对外 OpenAPI 设计统一接口
 
 身份、数据表达、OpenAPI、实时事件、外部调用或具体示例命中时，再从[专项资料与执行细节](references/任务路由.md)选择对应项。只读相关条款和必要上下文；完整规范矩阵用于人工全局核查，不作为普通任务前置。
 
+默认只读取本技能、一个契约任务路由和一个命中的规范/正反例；不加载来源文件全文、完整规范矩阵或后端审查技能。普通后端 CRUD 不加载本技能；契约变化时由本技能提供接口文档和联调约束，后端技能提供实现，已读条款不重复装载。
+
 ## 脚本辅助
 
-Java/Spring MVC 模块先运行随包 [inventory-api-contracts.ps1](scripts/inventory-api-contracts.ps1)，显式传项目和模块范围，输出盘点文件后读取摘要与命中项。它提取直接映射、方法、参数绑定、返回类型及平台注解，不解析 DTO 全部字段、继承、组合注解或网关运行改写；未解析项回到源码确认，不猜测。
+Java/Spring MVC 模块先运行随包 [inventory-api-contracts.ps1](scripts/inventory-api-contracts.ps1)，显式传项目和模块范围，输出盘点文件后读取摘要与命中项。它提取直接映射、方法、参数绑定、返回类型及平台注解；需要做代码与文档响应字段比对时追加 `-IncludeResponseFields`，需要请求体字段候选时追加 `-IncludeRequestFields`，仅对能静态定位的直接 DTO/record 字段生成候选。继承、序列化注解、重复模型、复杂成员、集合请求体或组合注解保留未解析，回到源码确认，不猜测。
 
 文档完成后运行 [check-api-document.ps1](scripts/check-api-document.ps1)，与同范围盘点核对总览、接口卡片、参数表、成功/错误示例及 OpenAPI 登记。调用参数见[脚本说明](USAGE.md#脚本调用)。脚本源码只在排错或维护时读取，`0/1/2` 分别表示请求的静态检查无阻断项、确定错误、检查不完整；静态通过不证明业务字段充分或联调通过。
+
+盘点结果较大时先用 `select-json-summary.ps1 -InputPath '<临时 JSON>' -ApiPath '<接口路径>' -MaxItems 20` 提取计数和命中项；不要把完整盘点 JSON 作为会话上下文。请求/响应字段候选保持关闭，只有需要逐字段比对时显式打开。
 
 ## 实施与交付
 

@@ -1,6 +1,6 @@
 #requires -Version 7.0
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$ResultPath,[Parameter(Mandatory)][ValidateSet('Change','Project')][string]$Mode,[switch]$Json)
+param([Parameter(Mandatory)][string]$ResultPath,[Parameter(Mandatory)][ValidateSet('Change','Project')][string]$Mode,[string]$MatrixPath='', [switch]$Json)
 $ErrorActionPreference='Stop'
 $issues=[Collections.Generic.List[object]]::new();$tables=[Collections.Generic.List[object]]::new();$texts=@{}
 function Add-Issue($Level,$Code,$Path,$Message){$issues.Add(@{level=$Level;code=$Code;path=$Path;message=$Message})}
@@ -53,17 +53,20 @@ try{
   }
   foreach($path in $texts.Keys){Read-Tables $texts[$path] $path}
   $all=($texts.Values -join "`n").Replace('`','')
-  $baseline=Select-Table '^基线$' '^内容$';$executionState=''
+  $baseline=Select-Table '^基线$' '^内容$';$executionState='';$formatVersion=''
   if($baseline){
     $keys=$baseline.rows | ForEach-Object {$_.cells[0]}
     foreach($field in @('项目','仓库|提交|版本证据','规范','技能','执行状态','未覆盖|未验证','时间|开始|结束')){if(($keys -join ' ') -notmatch $field){Add-Issue incomplete baseline_field $baseline.path "基线缺可解析字段：$field"}}
     foreach($row in $baseline.rows){
+      if($row.cells[0] -match '格式版本'){$formatVersion=[regex]::Match($row.cells[1],'\b\d+\.\d+\.\d+\b').Value}
       if($row.cells[0] -match '执行状态'){
         $states=@([regex]::Matches($row.cells[1],'阻断|部分完成|抽查完成|变更审查完成|静态审查完成|发布准入审查完成') | ForEach-Object Value | Sort-Object -Unique)
         if($states.Count -eq 1){$executionState=$states[0]}else{Add-Issue incomplete execution_state $baseline.path '执行状态缺失或有多种未裁定状态'}
       }
     }
   }
+  $progressFormat=$false
+  if($formatVersion){$progressFormat=([version]$formatVersion -ge [version]'1.2.0')}
   foreach($name in $texts.Keys){
     $base=if($Mode -eq 'Change'){[IO.Path]::GetDirectoryName($resolved)}else{$resolved}
     foreach($m in [regex]::Matches($texts[$name],'\[[^\]\r\n]+\]\((?<href>[^\s)]+)\)')){
@@ -89,10 +92,12 @@ try{
     $findings[$id]=@{rules=$ruleIds;evidence=$refs;body=$body}
   }
   $matrix=Select-Table '^规则\s*ID' '^状态$';$ruleStates=@{};$ruleRows=[Collections.Generic.List[object]]::new()
-  $units=Select-Table '^单元\s*ID$' '^检查状态$';$unitIds=[Collections.Generic.HashSet[string]]::new()
-  if($units){foreach($row in $units.rows){if($row.cells[0] -notmatch '^U-\d{3,}$'){Add-Issue incomplete unit_format $units.path '单元编号无法解析'}elseif(-not $unitIds.Add($row.cells[0])){Add-Issue error duplicate_unit $units.path '单元编号重复'}}}
+  $units=Select-Table '^单元\s*ID$' '^检查状态$';$unitIds=[Collections.Generic.HashSet[string]]::new();$unitStates=@{}
+  if($units){$unitStateCol=Column $units '^检查状态$';foreach($row in $units.rows){if($row.cells[0] -notmatch '^U-\d{3,}$'){Add-Issue incomplete unit_format $units.path '单元编号无法解析'}elseif(-not $unitIds.Add($row.cells[0])){Add-Issue error duplicate_unit $units.path '单元编号重复'}else{$unitStates[$row.cells[0]]=$row.cells[$unitStateCol];if($progressFormat -and $row.cells[$unitStateCol] -notin @('已检查','未检查','排除')){Add-Issue error invalid_unit_state $units.path '检查状态须为已检查、未检查或排除'}}}}
   if($matrix){
     $statusCol=Column $matrix '^状态$';$evCol=Column $matrix '证据';$fCol=Column $matrix '^F[-/]|判定依据'
+    $progressCol=Column $matrix '^执行进度$';$gapCol=Column $matrix '^缺口类别$';$appCol=Column $matrix '^适用单元$';$checkedCol=Column $matrix '^已检查单元'
+    if($progressFormat -and @($progressCol,$gapCol,$appCol,$checkedCol | Where-Object {$_ -lt 0}).Count){Add-Issue incomplete missing_progress_columns $matrix.path '1.2.0 矩阵缺执行进度、缺口类别或适用/已检查单元列'}
     foreach($row in $matrix.rows){
       $ids=@([regex]::Matches($row.cells[0],$rulePattern) | ForEach-Object Value | Sort-Object -Unique)
       if($ids.Count -ne 1){Add-Issue incomplete rule_format $matrix.path '规则行需要能解析的唯一规则编号';continue}
@@ -104,10 +109,63 @@ try{
       if(-not $refs.Count){Add-Issue error missing_rule_evidence $matrix.path "$id 缺 E 证据引用"}
       $fs=if($fCol -ge 0){Ids $row.cells[$fCol] F}else{@()}
       if($state -eq '偏差' -and -not $fs.Count){Add-Issue error missing_rule_finding $matrix.path "$id 偏差未关联 F"}
-      $ruleRows.Add(@{id=$id;state=$state;findings=$fs;evidence=$refs})
+      $appUnits=if($appCol -ge 0){@(Ids $row.cells[$appCol] U)}else{@()}
+      $progress=if($progressCol -ge 0){$row.cells[$progressCol]}else{''}
+      if($progressFormat -and $progressCol -ge 0 -and $gapCol -ge 0){
+        $gap=$row.cells[$gapCol];$checkedUnits=if($checkedCol -ge 0){@(Ids $row.cells[$checkedCol] U)}else{@()}
+        $loc="$($matrix.path):$($row.line)"
+        if($progress -notin @('待执行','已执行','受阻')){Add-Issue error invalid_progress $loc "$id 执行进度不合法"}
+        if($gap -notin @('无','未执行','外部证据缺失','适用性待确认')){Add-Issue error invalid_gap $loc "$id 缺口类别不合法"}
+        if($progress -in @('待执行','受阻') -and $state -ne '未证实'){Add-Issue error unexecuted_conclusion $loc "$id 未执行却给出确定结论"}
+        if($progress -eq '待执行'){Add-Issue incomplete pending_rule_work $loc "$id 尚有静态检查未执行，不能以报告生成结束审查"}
+        if($progress -in @('待执行','受阻') -and $executionState -in @('变更审查完成','静态审查完成','发布准入审查完成')){Add-Issue error unfinished_rule_completion $loc "$id 未执行却声明审查完成"}
+        if(($progress -eq '待执行' -and $gap -ne '未执行') -or ($progress -eq '已执行' -and $gap -eq '未执行')){Add-Issue error progress_gap_mismatch $loc "$id 执行进度与缺口类别冲突"}
+        if($state -eq '未证实' -and $gap -eq '无'){Add-Issue incomplete missing_gap_reason $loc "$id 未证实但未分类缺口"}
+        foreach($u in $checkedUnits){if($u -notin $appUnits){Add-Issue error checked_unit_outside_scope $loc "$id 已检查单元 $u 不在本行适用范围"}}
+        if($state -eq '通过' -and (-not $appUnits.Count -or @($appUnits | Where-Object {$_ -notin $checkedUnits}).Count)){Add-Issue error incomplete_pass_coverage $loc "$id 通过但未覆盖全部适用单元"}
+        if($progress -in @('待执行','受阻')){foreach($u in $appUnits){if($unitStates[$u] -eq '已检查'){Add-Issue error checked_unit_unfinished_rule $loc "$u 标为已检查但 $id 尚未执行"}}}
+        if(($row.cells -join ' ') -match 'U-\d{3,}\s*[～~—–至]\s*U-\d{3,}'){Add-Issue incomplete unit_range_not_enumerated $loc "$id 单元区间需枚举，不能只校验两端"}
+      }
+      $basis=if($fCol -ge 0){$row.cells[$fCol]}else{''}
+      $ruleRows.Add(@{id=$id;state=$state;findings=$fs;evidence=$refs;units=$appUnits;progress=$progress;basis=$basis})
     }
   }
   if(-not $ruleStates.Count){Add-Issue incomplete no_rules '' '未解析到纳入规则，不能验证规则覆盖'}
+  # 重复文本只提示取证质量风险，不据此判项目违规；相同 E 本身不构成重复依据。
+  foreach($group in @($ruleRows | Where-Object {$_.basis.Length -ge 12 -and -not $_.findings.Count} | Group-Object basis | Where-Object Count -ge 3)){
+    Add-Issue incomplete repeated_rule_basis '' ('多条规则使用完全相同的笼统依据，需逐条复核支持关系：'+(($group.Group.id | Sort-Object -Unique) -join '、'))
+  }
+  if($all -match 'E中所列真实路径对应U单元|遵循关联规则'){Add-Issue incomplete generic_evidence_claim '' '出现泛化定位或期望标签，需核实是否缺少具体单元与实际行为'}
+  if($progressFormat){
+    $batches=Select-Table '^批次\s*ID$' '^进度$'
+    if($batches){
+      $batchProgress=Column $batches '^进度$';$nextCol=Column $batches '^剩余工作与下一步$';$batchRuleCol=Column $batches '^规则\s*ID$';$batchUnitCol=Column $batches '^单元\s*ID$';$batchEvidenceCol=Column $batches '^已完成证据$';$blockCol=Column $batches '^阻断原因$'
+      if(@($nextCol,$batchRuleCol,$batchUnitCol,$batchEvidenceCol,$blockCol | Where-Object {$_ -lt 0}).Count){Add-Issue incomplete missing_batch_columns $batches.path '批次缺规则、单元、证据、下一步或阻断原因列'}
+      $batchIds=[Collections.Generic.HashSet[string]]::new()
+      foreach($row in $batches.rows){
+        $bp=$row.cells[$batchProgress]
+        if($row.cells[0] -notmatch '^B-\d{3,}$' -or -not $batchIds.Add($row.cells[0])){Add-Issue error invalid_batch_id $batches.path '批次编号无效或重复'}
+        if($bp -notin @('待执行','已执行','受阻')){Add-Issue error invalid_batch_progress $batches.path '批次进度不合法'}
+        if($bp -eq '待执行'){Add-Issue incomplete unfinished_static_work $batches.path '仍有可执行批次，应继续审查；真实中断时保留此检查点'}
+        if($bp -in @('待执行','受阻') -and ($nextCol -lt 0 -or $row.cells[$nextCol] -in @('','无'))){Add-Issue incomplete missing_next_step $batches.path '未完成批次缺具体下一步'}
+        if($bp -eq '受阻' -and ($blockCol -lt 0 -or $row.cells[$blockCol] -in @('','无'))){Add-Issue incomplete missing_blocker $batches.path '受阻批次缺真实阻断原因'}
+        if($bp -eq '已执行' -and ($batchEvidenceCol -lt 0 -or -not @(Ids $row.cells[$batchEvidenceCol] E).Count)){Add-Issue incomplete missing_batch_evidence $batches.path '已执行批次缺 E 证据'}
+        if($batchRuleCol -ge 0){foreach($r in @([regex]::Matches($row.cells[$batchRuleCol],$rulePattern) | ForEach-Object Value)){if(-not $ruleStates.ContainsKey($r)){Add-Issue error unknown_batch_rule $batches.path "批次引用未纳入规则 $r"}}}
+        if($batchUnitCol -ge 0){foreach($u in (Ids $row.cells[$batchUnitCol] U)){if(-not $unitIds.Contains($u)){Add-Issue error unknown_batch_unit $batches.path "批次引用未定义单元 $u"}}}
+        if($bp -eq '待执行' -and $executionState -in @('变更审查完成','静态审查完成','发布准入审查完成')){Add-Issue error unfinished_batch_completion $batches.path '待执行批次与审查完成声明冲突'}
+      }
+    }
+    foreach($f in $findings.Keys){
+      if($findings[$f].body -match '置信度[^\r\n:：]*[:：]\s*S[1-4]\b'){Add-Issue incomplete confidence_type_confusion '' "$f 将证据类型当作置信度，需分别说明"}
+      $fu=@(Ids $findings[$f].body U)
+      if(-not $fu.Count){Add-Issue incomplete finding_unit_missing '' "$f 缺具体 U 编号，不能仅指向整个证据目录"}
+      foreach($u in $fu){if(-not $unitIds.Contains($u)){Add-Issue error unknown_finding_unit '' "$f 引用未定义 $u"}}
+      $linkedUnits=@($ruleRows | Where-Object {$_.state -eq '偏差' -and $f -in $_.findings} | ForEach-Object {$_.units} | Sort-Object -Unique)
+      # 卡片可提及对照或合理例外单元；不能把所有提及都当作偏差目标。
+      if($fu.Count -and $linkedUnits.Count -and -not @($fu | Where-Object {$_ -in $linkedUnits}).Count){Add-Issue error finding_unit_mismatch '' "$f 的具体单元与偏差规则行没有任何对应"}
+      foreach($u in $linkedUnits){if($u -notin $fu){Add-Issue incomplete finding_unit_coverage '' "$f 未明确列出偏差行关联的 $u"}}
+    }
+  }
   $counts=@{通过=0;偏差=0;未证实=0;不适用=0}
   foreach($id in $ruleStates.Keys){$values=$ruleStates[$id];$state=if($values.Contains('偏差')){'偏差'}elseif($values.Contains('未证实')){'未证实'}elseif($values.Contains('通过')){'通过'}else{'不适用'};$counts[$state]++}
   $summary=Select-Table '^规则域$' '^总规则$'
@@ -147,13 +205,39 @@ try{
   if($unchecked -gt 0 -and $executionState -in @('变更审查完成','静态审查完成','发布准入审查完成')){Add-Issue error false_completion '' '存在未检查纳入对象，却声明审查完成'}
   foreach($row in $ruleRows){foreach($f in $row.findings){if(-not $findings.ContainsKey($f)){Add-Issue error unknown_finding '' "$($row.id) 引用不存在的 $f"}elseif($row.state -eq '偏差' -and $row.id -notin $findings[$f].rules){Add-Issue error finding_rule_mismatch '' "$($row.id) 与 $f 卡片关联规则不一致"}}}
   foreach($id in $findings.Keys){foreach($rule in $findings[$id].rules){if(-not $ruleStates.ContainsKey($rule)){Add-Issue error unknown_rule '' "$id 引用未纳入矩阵的 $rule"}}}
+  foreach($id in $findings.Keys){
+    $linked=@($ruleRows | Where-Object {$_.state -eq '偏差' -and $id -in $_.findings})
+    if(-not $linked.Count){Add-Issue error orphan_finding '' "$id 没有偏差规则行回指，发现与矩阵结论不闭合"}
+  }
   foreach($id in (Ids $all E)){if(-not $eIds.Contains($id)){Add-Issue error unknown_evidence '' "引用证据未定义：$id"}}
   $remediation=@($tables | Where-Object {$_.headers[0] -match '^发现\s*ID$' -and (Column $_ '^当前状态$') -ge 0})
   $remediated=[Collections.Generic.HashSet[string]]::new()
   foreach($table in $remediation){foreach($row in $table.rows){$id=$row.cells[0];$null=$remediated.Add($id);if(-not $findings.ContainsKey($id)){Add-Issue error unknown_finding $table.path "整改引用不存在的 $id"};$closeCol=Column $table '^关闭条件$';if($closeCol -lt 0 -or -not $row.cells[$closeCol]){Add-Issue error missing_close_condition $table.path "$id 缺关闭条件"};$statusCol=Column $table '^当前状态$';if($row.cells[$statusCol] -eq '已关闭'){Add-Issue incomplete closure_manual_review $table.path "$id 已关闭，须人工复核新证据与关闭条件，工具不裁定真实关闭"}}}
   foreach($id in $findings.Keys){if(-not $remediated.Contains($id)){Add-Issue error missing_remediation '' "$id 缺整改及复核行"}}
+  $remediationRows=@($remediation | ForEach-Object {$_.rows})
+  foreach($group in @($remediationRows | Group-Object {$_.cells[0]} | Where-Object Count -gt 1)){
+    Add-Issue incomplete ambiguous_remediation '' ("同一发现有多条整改记录，需按初审/复核基线确认当前记录："+$group.Name)
+  }
+  $matrixCheck=$null
+  if($MatrixPath){
+    if(-not (Test-Path -LiteralPath $MatrixPath -PathType Leaf)){Add-Issue incomplete matrix_path_missing $MatrixPath '指定的规范矩阵不存在'}
+    else{
+      $matrixScript=Join-Path $PSScriptRoot 'check-review-matrix.ps1'
+      if(-not (Test-Path -LiteralPath $matrixScript -PathType Leaf)){Add-Issue incomplete matrix_checker_missing $matrixScript '结果检查包缺少规则矩阵校验脚本'}
+      else{
+        $matrixText=& pwsh -NoProfile -File $matrixScript -Mode $Mode -ResultPath $resolved -MatrixPath $MatrixPath -Json 2>$null
+        if($LASTEXITCODE -notin @(0,1,2)){Add-Issue incomplete matrix_checker_failed $matrixScript '规则矩阵校验脚本执行失败'}
+        else{
+          $matrixCheck=$matrixText | ConvertFrom-Json
+          foreach($item in @($matrixCheck.unknownRules)){Add-Issue error unknown_matrix_rule "$($item.file):$($item.line)" "报告引用不存在的规范矩阵规则：$($item.id)"}
+        }
+      }
+    }
+  }
   $errors=@($issues | Where-Object level -eq error).Count;$incomplete=@($issues | Where-Object level -eq incomplete).Count
-  $result=[ordered]@{schemaVersion=1;mode=$Mode;status=$(if($errors){'failed'}elseif($incomplete){'partial'}else{'passed'});summary=@{errors=$errors;incomplete=$incomplete;uniqueRules=$ruleStates.Count;findings=$findings.Count;candidates=$candidateIds.Count;evidence=$eIds.Count};issues=@($issues.ToArray());limitations=@('只验证可解析报告结构、ID 引用与统计；不证明规则覆盖完整、证据真实、例外有效、严重性正确或项目合规。','复杂 Markdown、多基线复核表及零项省略表可能需人工核对；原始源码、命令与运行行为未验证。')}
+  $summary=[ordered]@{errors=$errors;incomplete=$incomplete;uniqueRules=$ruleStates.Count;findings=$findings.Count;candidates=$candidateIds.Count;evidence=$eIds.Count}
+  if($matrixCheck){$summary.matrixRules=$matrixCheck.matrixRuleCount;$summary.matrixReferencedRules=$matrixCheck.referencedRuleCount;$summary.matrixUnknownRules=$matrixCheck.unknownRuleCount}
+  $result=[ordered]@{schemaVersion=1;mode=$Mode;formatVersion=$formatVersion;executionState=$executionState;status=$(if($errors){'failed'}elseif($incomplete){'partial'}else{'passed'});summary=$summary;issues=@($issues.ToArray());limitations=@('验证可解析报告结构、ID、统计、进度矛盾及重复依据风险；不证明规则覆盖完整、证据真实、例外有效、严重性正确或项目合规。','status 是工具检查状态，executionState 是报告自述执行状态，两者均不代替人工证据复核。旧版无执行进度时不外推其覆盖已完成。')}
   $code=if($errors){1}elseif($incomplete){2}else{0}
 }catch{$result=@{schemaVersion=1;mode=$Mode;status='failed';summary=@{errors=1;incomplete=0};issues=@(@{code='input_or_execution_error';message=$_.Exception.Message})};$code=1}
 if($Json){$result | ConvertTo-Json -Depth 12}else{"报告自检：$($result.status)，错误=$($result.summary.errors)，待复核=$($result.summary.incomplete)"}

@@ -4,6 +4,8 @@ param(
   [Parameter(Mandatory)][string]$ProjectPath,
   [string[]]$ModulePath = @('.'),
   [string]$OutputPath,
+  [switch]$IncludeResponseFields,
+  [switch]$IncludeRequestFields,
   [switch]$Json
 )
 $ErrorActionPreference = 'Stop'
@@ -109,6 +111,93 @@ function Read-Parameters($Text) {
   }
   return $result.ToArray()
 }
+function Get-ResponseModelName([string]$ReturnType) {
+  $type=([string]$ReturnType -replace '\s+','').Trim()
+  $match=[regex]::Match($type,'^(?:R|ResponseEntity)<(?<inner>.+)>$')
+  $inner=if($match.Success){$match.Groups['inner'].Value}else{$type}
+  $inner=[regex]::Replace($inner,'\[\]$','')
+  $generic=[regex]::Match($inner,'^(?:List|Set|Collection|Iterable|ArrayList|LinkedList)<(?<item>.+)>$')
+  if($generic.Success){$inner=$generic.Groups['item'].Value}
+  # Maps, page wrappers, nested generics and qualified names require type resolution.
+  if($inner -match '[<>?,.]'){return $null}
+  if($inner -match '^(?:Void|void|String|Boolean|boolean|Byte|Short|Integer|Long|Float|Double|BigInteger|BigDecimal|byte|short|int|long|float|double)$'){return $null}
+  return ($inner -split '\.')[-1]
+}
+function Get-SimpleModelName([string]$Type) {
+  $type=([string]$Type -replace '\s+','').Trim()
+  if($type -match '[<>?,\[\].]'){return $null}
+  if($type -match '^(?:Void|void|String|Boolean|boolean|Byte|Short|Integer|Long|Float|Double|BigInteger|BigDecimal|byte|short|int|long|float|double)$'){return $null}
+  return ($type -split '\.')[-1]
+}
+function Read-ResponseModels($Files,$Root) {
+  $models=@{}
+  foreach($file in $Files){
+    $relative=[IO.Path]::GetRelativePath($Root,$file.FullName).Replace('\','/')
+    $text=[IO.File]::ReadAllText($file.FullName);$mask=Mask-Java $text
+    foreach($decl in [regex]::Matches($mask,'\b(?<kind>class|record)\s+(?<name>[A-Za-z_$]\w*)(?<tail>[^\{;]*)\{')){
+      $name=$decl.Groups['name'].Value;$body=$decl.Index+$decl.Length-1;$end=Find-Close $mask $body '{' '}'
+      $declPrefix=$mask.Substring(0,$decl.Index)
+      if($declPrefix -match '@(?:[\w$]+\.)*(?:RestController|Controller)\b'){continue}
+      if($end -lt 0){$models[$name]=@{name=$name;source=$relative;fields=@();complete=$false;unresolved=@('类型大括号未闭合')};continue}
+      $fields=[Collections.Generic.List[object]]::new();$unresolvedModel=[Collections.Generic.List[string]]::new()
+      if($decl.Groups['tail'].Value -match '\b(?:extends|implements)\b'){$unresolvedModel.Add('存在继承/实现，未展开父类型字段')}
+      $bodyMask=$mask.Substring($body+1,$end-$body-1)
+      $lineOf={param($index) 1+[regex]::Matches($text.Substring(0,$index),"`n").Count}
+      if($mask -match '@(?:[\w$]+\.)*(?:Json\w*|SerializedName|Expose)\b'){$unresolvedModel.Add('存在序列化注解，字段名称/可见性需核对')}
+      if($decl.Groups['kind'].Value -eq 'record'){
+        $open=$mask.IndexOf('(',$decl.Groups['name'].Index+$name.Length);$close=if($open -ge 0 -and $open -lt $body){Find-Close $mask $open '(' ')'}else{-1}
+        if($open -lt 0 -or $close -lt 0 -or $close -gt $body){$unresolvedModel.Add('record 组件未解析')}else{
+          foreach($part in @(Split-JavaList $text.Substring($open+1,$close-$open-1))){
+            $cleanPart=($part -replace '@[\w.$]+(?:\([^)]*\))?\s*','').Trim()
+            $m=[regex]::Match($cleanPart,'^(?<type>[\w.$<>?,\[\] ]+)\s+(?<name>[A-Za-z_$]\w*)$')
+            if($m.Success){
+              $fields.Add(@{name=$m.Groups['name'].Value;type=($m.Groups['type'].Value -replace '\s+',' ');line=(& $lineOf $decl.Index)})
+            }else{
+              $unresolvedModel.Add('record 组件无法解析；不输出原始声明')
+            }
+          }
+        }
+      }else{
+        # Walk top-level members. Method bodies, initializer blocks and nested types never become fields.
+        $cursor=$body+1;$memberStart=$cursor
+        while($cursor -lt $end){
+          if($mask[$cursor] -eq '@'){
+            $a=Read-Annotation $text $mask $cursor
+            if($a){$cursor=$a.end;continue}
+          }
+          if($mask[$cursor] -eq '{'){
+            $close=Find-Close $mask $cursor '{' '}'
+            if($close -lt 0){$unresolvedModel.Add('成员块未闭合');break}
+            $header=$mask.Substring($memberStart,$cursor-$memberStart)
+            if($header -match '\b(?:get|is)[A-Z]\w*\s*\('){$unresolvedModel.Add('存在 getter，需核对计算属性及序列化字段')}
+            if($header -match '='){$unresolvedModel.Add('复杂字段初始化未展开')}
+            $cursor=$close+1;$memberStart=$cursor;continue
+          }
+          if($mask[$cursor] -eq ';'){
+            $statement=$mask.Substring($memberStart,$cursor-$memberStart)
+            $annotationMatches=@([regex]::Matches($statement,'@[\w.$]+'))
+            foreach($am in ($annotationMatches | Sort-Object Index -Descending)){
+              $a=Read-Annotation $text $mask ($memberStart+$am.Index)
+              if($a){$statement=$statement.Remove($am.Index,$a.end-$memberStart-$am.Index)}
+            }
+            $declaration=($statement -split '=',2)[0].Trim()
+            if($declaration -and $declaration -notmatch '\b(?:static|transient)\b'){
+              $m=[regex]::Match($declaration,'^(?:(?:public|protected|private|final|volatile)\s+)*(?<type>[\w.$]+(?:\s*<[^;=]+>)?(?:\[\])?)\s+(?<name>[A-Za-z_$]\w*)$')
+              if($m.Success){$fields.Add(@{name=$m.Groups['name'].Value;type=($m.Groups['type'].Value -replace '\s+',' ');line=(& $lineOf $memberStart)})}
+              else{$unresolvedModel.Add('存在无法确定的成员声明')}
+            }
+            $memberStart=$cursor+1
+          }
+          $cursor++
+        }
+      }
+      if(-not $fields.Count){$unresolvedModel.Add('未识别直接字段，不能推断空响应模型')}
+      if($models.ContainsKey($name)){$models[$name].complete=$false;$models[$name].unresolved+=@('同名模型存在多个定义，未自动选择');continue}
+      $models[$name]=@{name=$name;source=$relative;fields=@($fields.ToArray());complete=($unresolvedModel.Count -eq 0);unresolved=@($unresolvedModel.ToArray() | Sort-Object -Unique)}
+    }
+  }
+  return $models
+}
 try {
   $root=(Resolve-Path -LiteralPath $ProjectPath).Path
   $roots=[Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
@@ -183,9 +272,31 @@ try {
       }}}
     }
   }
+  $responseModels=@{}
+  if($IncludeResponseFields -or $IncludeRequestFields){
+    $responseModels=Read-ResponseModels $files $root
+    foreach($route in @($routes.ToArray())){
+      $modelNames=@()
+      if($IncludeResponseFields){$m=Get-ResponseModelName $route.returnType;if($m){$modelNames+=@(@{kind='response';name=$m})}}
+      if($IncludeRequestFields){
+        $bodies=@($route.parameters | Where-Object location -eq 'body')
+        if($bodies.Count -gt 1){Add-Unresolved $route.source $route.line '多个请求体参数，未自动选择字段模型'}
+        elseif($bodies.Count -eq 1){$m=Get-SimpleModelName $bodies[0].type;if($m){$modelNames+=@(@{kind='request';name=$m})}elseif($bodies[0].type -match '[<>?,\[\].]'){Add-Unresolved $route.source $route.line '请求体为集合/复杂泛型/全限定类型，需人工核对字段'}}
+      }
+      foreach($modelRef in $modelNames){$modelName=$modelRef.name
+        if($modelRef.kind -eq 'request'){$route.requestModel=$modelName}else{$route.responseModel=$modelName}
+        if($responseModels.ContainsKey($modelName)){
+          if($modelRef.kind -eq 'request'){$route.requestFields=$responseModels[$modelName].fields;$route.requestModelComplete=$responseModels[$modelName].complete;$route.requestModelSource=$responseModels[$modelName].source}
+          else{$route.responseFields=$responseModels[$modelName].fields;$route.responseModelComplete=$responseModels[$modelName].complete;$route.responseModelSource=$responseModels[$modelName].source}
+          if(-not $responseModels[$modelName].complete){Add-Unresolved $route.source $route.line ('模型 '+$modelName+' 字段不完整：'+($responseModels[$modelName].unresolved -join '；'))}
+        }
+        else{Add-Unresolved $route.source $route.line ('未找到 '+$modelRef.kind+' 模型 '+$modelName+' 的源码；无法进行字段级比对')}
+      }
+    }
+  }
   if(-not $filesChecked.Count){Add-Unresolved '' 0 '指定范围没有 Java 源码'}
   if(-not $routes.Count){Add-Unresolved '' 0 '未盘点到静态 HTTP 映射，不能推断模块无接口'}
-  $result=[ordered]@{schemaVersion=1;status=$(if($unresolved.Count){'partial'}else{'complete'});project=$root;modules=$ModulePath;exclusions=@('target','build','.git','node_modules','src/test');files=@($filesChecked.ToArray());routes=@($routes.ToArray());unresolved=@($unresolved.ToArray());limitations=@('仅解析 Java 文件直接声明的 Spring MVC 常用映射；不解析继承、自定义组合注解、运行时网关改写或 DTO 内部字段。')}
+  $result=[ordered]@{schemaVersion=1;status=$(if($unresolved.Count){'partial'}else{'complete'});project=$root;modules=$ModulePath;exclusions=@('target','build','.git','node_modules','src/test');files=@($filesChecked.ToArray());routes=@($routes.ToArray());responseModels=@($responseModels.Values);fieldOptions=@{response=[bool]$IncludeResponseFields;request=[bool]$IncludeRequestFields};unresolved=@($unresolved.ToArray());limitations=@('仅解析 Java 文件直接声明的 Spring MVC 常用映射；不解析继承、自定义组合注解或运行时网关改写。','字段模型仅在显式使用 -IncludeResponseFields/-IncludeRequestFields 时生成；responseModels 为兼容的共用模型索引，不证明序列化、继承、嵌套字段、约束或运行时输出。')}
   $exit=if($unresolved.Count){2}else{0}
 } catch {
   $result=@{schemaVersion=1;status='failed';routes=@($routes.ToArray());unresolved=@(@{reason=$_.Exception.Message});limitations=@('盘点失败，不证明范围完整。')};$exit=1
