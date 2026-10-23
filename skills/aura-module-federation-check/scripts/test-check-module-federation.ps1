@@ -113,13 +113,15 @@ function Invoke-CheckerJson {
 }
 
 function New-KitFixture {
-	param([string]$Root)
+	param([string]$Root, [string]$DeclaredVersion = '1.9.0', [string]$InstalledVersion = '1.9.0')
 	New-IntegratedScaffold -Root $Root
 	$packageFile = Join-Path $Root 'package.json'
 	$package = Get-Content -LiteralPath $packageFile -Raw | ConvertFrom-Json
 	$package.engines.node = '>=22.12.0'
 	$package.dependencies.'element-plus' = '2.14.6'
-	$package.dependencies | Add-Member -NotePropertyName '@fxft/aura-web-kit' -NotePropertyValue '1.9.0'
+	if ($DeclaredVersion) {
+		$package.dependencies | Add-Member -NotePropertyName '@fxft/aura-web-kit' -NotePropertyValue $DeclaredVersion
+	}
 	Write-FixtureFile $Root 'package.json' ($package | ConvertTo-Json -Depth 5)
 	$vite = Get-Content -LiteralPath (Join-Path $Root 'vite.config.mts') -Raw
 	$vite += @'
@@ -144,10 +146,13 @@ const i18n = createFederationI18n({ loadRemote });
 const registry = createFederationRegistry({ loadRemote, remotes, styles, i18n, elementProvider: ModuleFederationElementProvider, getRemoteScopeClass });
 export const { getModuleFederationLoader } = registry;
 '@
-	Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/package.json' @'
+	$installedPackage = @'
 {"version":"1.9.0","exports":{"./federation":{"types":"./dist/federation.d.ts"},"./federation/config":{},"./browser/assets":{},"./vite":{},"./postcss":{},"./types/remote-core":{"types":"./dist/types/remote-core.d.ts"}}}
 '@
-	Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/dist/types/remote-core.d.ts' "declare module 'aura-core/api/example.ts' { export const read: () => void; }"
+	if ($InstalledVersion) {
+		Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/package.json' ($installedPackage.Replace('1.9.0', $InstalledVersion))
+		Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/dist/types/remote-core.d.ts' "declare module 'aura-core/api/example.ts' { export const read: () => void; }"
+	}
 }
 
 function Assert-Equal {
@@ -175,6 +180,50 @@ try {
 	Assert-Equal $result.ExitCode 0 '1.2.0 绑定、多级路径或 >=22.12.0 约束误报'
 	Assert-Rule $result.Report 'MF-RUNTIME-007'
 
+	# 每例使用独立项目，并同时设置声明与安装，低版本必须由最低版本门槛检出。
+	$versionCases = @(
+		@{ Name = 'minimum'; Declared = '1.9.0'; Installed = '1.9.0'; Errors = 0; Manual = 0 },
+		@{ Name = 'patch'; Declared = '1.9.1'; Installed = '1.9.1'; Errors = 0; Manual = 0 },
+		@{ Name = 'minor'; Declared = '1.10.0'; Installed = '1.10.0'; Errors = 0; Manual = 0 },
+		@{ Name = 'major'; Declared = '2.0.0'; Installed = '2.0.0'; Errors = 0; Manual = 0 },
+		@{ Name = 'double-digit-major'; Declared = '10.0.0'; Installed = '10.0.0'; Errors = 0; Manual = 0 },
+		@{ Name = 'metadata'; Declared = '1.9.0+build.1'; Installed = '1.9.0+build.1'; Errors = 0; Manual = 0 },
+		@{ Name = 'low-minor'; Declared = '1.8.99'; Installed = '1.8.99'; Errors = 1; Manual = 0 },
+		@{ Name = 'low-major'; Declared = '0.99.99'; Installed = '0.99.99'; Errors = 1; Manual = 0 },
+		@{ Name = 'minimum-prerelease'; Declared = '1.9.0-rc.1'; Installed = '1.9.0-rc.1'; Errors = 1; Manual = 0 },
+		@{ Name = 'higher-prerelease'; Declared = '1.10.0-rc.1'; Installed = '1.10.0-rc.1'; Errors = 0; Manual = 1 },
+		@{ Name = 'range-installed'; Declared = '^1.9.0'; Installed = '1.9.1'; Errors = 0; Manual = 0 },
+		@{ Name = 'range-installed-low'; Declared = '>=1.8.0'; Installed = '1.8.99'; Errors = 1; Manual = 0 },
+		@{ Name = 'exact-mismatch'; Declared = '1.9.0'; Installed = '1.9.1'; Errors = 1; Manual = 0 },
+		@{ Name = 'installed-low-priority'; Declared = '1.9.1'; Installed = '1.8.99'; Errors = 2; Manual = 0 },
+		@{ Name = 'invalid-installed'; Declared = '^1.9.0'; Installed = 'unknown'; Errors = 0; Manual = 1 },
+		@{ Name = 'invalid-leading-zero'; Declared = '*'; Installed = '01.9.0'; Errors = 0; Manual = 1 },
+		@{ Name = 'range-uninstalled'; Declared = '^1.9.0'; Installed = ''; Errors = 0; Manual = 2 },
+		@{ Name = 'tag-uninstalled'; Declared = 'latest'; Installed = ''; Errors = 0; Manual = 2 },
+		@{ Name = 'exact-uninstalled'; Declared = '1.10.0'; Installed = ''; Errors = 0; Manual = 1 },
+		@{ Name = 'low-uninstalled'; Declared = '1.8.99'; Installed = ''; Errors = 1; Manual = 1 },
+		@{ Name = 'undeclared'; Declared = ''; Installed = '1.9.1'; Errors = 1; Manual = 0 }
+	)
+	foreach ($case in $versionCases) {
+		$versionRoot = Join-Path $testRoot ('version-' + $case.Name)
+		New-KitFixture -Root $versionRoot -DeclaredVersion $case.Declared -InstalledVersion $case.Installed
+		$result = Invoke-CheckerJson -ProjectPath $versionRoot
+		$versionFindings = @($result.Report.findings | Where-Object ruleId -eq 'MF-DEP-004')
+		Assert-Equal @($versionFindings | Where-Object severity -eq 'error').Count $case.Errors "web-kit $($case.Name) 错误数"
+		Assert-Equal @($versionFindings | Where-Object severity -eq 'manual').Count $case.Manual "web-kit $($case.Name) 待确认数"
+		$expectedExit = if ($case.Errors -gt 0) { 1 } else { 0 }
+		Assert-Equal $result.ExitCode $expectedExit "web-kit $($case.Name) 退出码"
+	}
+	$missingExportRoot = Join-Path $testRoot 'missing-kit-export'
+	New-KitFixture -Root $missingExportRoot -DeclaredVersion '1.9.1' -InstalledVersion '1.9.1'
+	$exportPackagePath = 'node_modules/@fxft/aura-web-kit/package.json'
+	$exportPackage = Get-Content -LiteralPath (Join-Path $missingExportRoot $exportPackagePath) -Raw | ConvertFrom-Json
+	$exportPackage.exports.PSObject.Properties.Remove('./vite')
+	Write-FixtureFile $missingExportRoot $exportPackagePath ($exportPackage | ConvertTo-Json -Depth 5)
+	$result = Invoke-CheckerJson -ProjectPath $missingExportRoot
+	Assert-Equal $result.ExitCode 1 '更高 web-kit 版本缺失公开入口仍须失败'
+	Assert-Equal @($result.Report.findings | Where-Object { $_.ruleId -eq 'MF-DEP-004' -and $_.severity -eq 'error' }).Count 1 '缺失入口错误未保留'
+
 	$bindingPath = Join-Path $kitRoot 'src/config/aura/federation.ts'
 	$binding = Get-Content -LiteralPath $bindingPath -Raw
 	Write-FixtureFile $kitRoot 'src/config/aura/federation.ts' ($binding.Replace('elementProvider: ModuleFederationElementProvider,', ''))
@@ -187,9 +236,6 @@ try {
 	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('>=22.12.0', '>=20'))
 	$result = Invoke-CheckerJson -ProjectPath $kitRoot
 	Assert-Rule $result.Report 'MF-DEP-003'
-	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('1.9.0', '1.6.14'))
-	$result = Invoke-CheckerJson -ProjectPath $kitRoot
-	Assert-Rule $result.Report 'MF-DEP-004'
 	Write-FixtureFile $kitRoot 'package.json' ($kitPackage.Replace('2.14.6', '2.14.3'))
 	$result = Invoke-CheckerJson -ProjectPath $kitRoot
 	Assert-Rule $result.Report 'MF-VITE-003'

@@ -219,9 +219,6 @@ function Invoke-IntegratedChecks {
 			-Message 'bundleAllCSS 未明确配置为 false。' `
 			-Suggestion '保持 expose 级 CSS 拆分，以便消费端按 manifest 精确加载样式。' -File $viteRelative
 	}
-	if ($kitVersion -ne '1.9.0') {
-		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message '本轮综合端必须固定 @fxft/aura-web-kit@1.9.0。' -File 'package.json'
-	}
 	$buildConfigContent = $viteContent -replace '(?s)/\*.*?\*/', '' -replace '(?m)//[^\r\n]*', ''
 	$hasAutoOptimizeDeps = $buildConfigContent -match '\bauraAutoOptimizeDeps\s*\('
 	foreach ($helper in @('pruneFederationSsrImports', 'stabilizeFederationDevOptimizer', 'createAuraAutoImportPreset', 'auraAutoOptimizeDeps')) {
@@ -304,18 +301,47 @@ function Invoke-IntegratedChecks {
 		}
 	}
 	$installedPackage = Join-Path $ProjectPath 'node_modules/@fxft/aura-web-kit/package.json'
+	$effectiveKitVersion = $kitVersion
+	$kitVersionSource = '声明'
+	# 仅解析精确 SemVer；范围或标签不能通过删除前缀伪装为已安装版本。
+	$kitSemverPattern = '\A(?<major>0|[1-9][0-9]*)\.(?<minor>0|[1-9][0-9]*)\.(?<patch>0|[1-9][0-9]*)(?:-(?<pre>[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?\z'
+	if (-not $kitVersion) {
+		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message '缺少 @fxft/aura-web-kit 依赖声明。' -File 'package.json'
+	}
 	if (Test-Path -LiteralPath $installedPackage) {
 		$installed = Get-Content -LiteralPath $installedPackage -Raw -Encoding UTF8 | ConvertFrom-Json
+		$effectiveKitVersion = [string]$installed.version
+		$kitVersionSource = '已安装'
 		foreach ($entry in @('./federation', './federation/config', './browser/assets', './vite', './postcss')) {
 			if (-not $installed.exports.PSObject.Properties[$entry]) {
 				Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message "已安装 web-kit 缺少公开入口：$entry" -File 'package.json'
 			}
 		}
-		if ($kitVersion -match '^\d+\.\d+\.\d+$' -and $installed.version -ne $kitVersion) {
+		if ($kitVersion -match $kitSemverPattern -and $installed.version -ne $kitVersion) {
 			Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message "web-kit 声明版本与安装版本不一致：$kitVersion / $($installed.version)" -File 'package.json'
 		}
 	} else {
 		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'manual' -Message '未安装 web-kit，无法核验发布包 exports 与版本；先安装锁文件依赖再复检。' -File 'package.json'
+	}
+	$kitMatch = [regex]::Match($effectiveKitVersion, $kitSemverPattern)
+	if ($kitMatch.Success) {
+		# 分段按数值比较，避免把 1.10.0 判为低于 1.9.0；元数据不影响优先级。
+		$comparison = 0
+		$minimumKitParts = @(1, 9, 0)
+		$kitParts = @('major', 'minor', 'patch')
+		for ($part = 0; $part -lt 3; $part++) {
+			$comparison = ([bigint]$kitMatch.Groups[$kitParts[$part]].Value).CompareTo([bigint]$minimumKitParts[$part])
+			if ($comparison -ne 0) { break }
+		}
+		$hasPrerelease = $kitMatch.Groups['pre'].Success
+		if ($comparison -lt 0 -or ($comparison -eq 0 -and $hasPrerelease)) {
+			Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message "web-kit $kitVersionSource 版本低于框架最低版本 1.9.0：$effectiveKitVersion" -File 'package.json'
+		} elseif ($hasPrerelease) {
+			Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'manual' -Message "web-kit $kitVersionSource 版本为预发布版，需确认稳定版能力与兼容性：$effectiveKitVersion" -File 'package.json'
+		}
+	} else {
+		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'manual' -Message "无法确定 web-kit $kitVersionSource 版本是否满足最低稳定版 1.9.0：$effectiveKitVersion" `
+			-Suggestion '核对锁文件与已安装 package.json 的精确版本；范围、标签或无效版本不能作为通过证据。' -File 'package.json'
 	}
 	Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-007' -Severity 'manual' -Message '公共包负责 scope 根节点、失败隔离与缓存刷新；静态绑定检查不能证明运行行为，需验证宿主加载、失败重试和语言切换。' -File 'src/config/aura/federation.ts'
 

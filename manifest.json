@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1792571767,
+  "generatedAt": 1792719049,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -193,7 +193,7 @@
         "前端",
         "审查"
       ],
-      "version": "1.1.4",
+      "version": "1.1.5",
       "visibility": "public"
     },
     {

@@ -1,11 +1,12 @@
 {
   "skill": "aura-module-federation-check",
-  "skillVersion": "1.1.4",
-  "updatedAt": "2026-10-21",
+  "skillVersion": "1.1.5",
+  "updatedAt": "2026-10-22",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
   "sourceCommit": null,
   "sourceBaseCommit": "bb12cd8797be043305a0c2b694e228afd0f25314",
   "bindingStatus": "pending-source-commit",
+  "pendingChanges": "web-kit 1.9.0 改为最低稳定版本；源规范已本地修订，随包 knowledge 保留原交付视图，待规范提交后重新绑定并生成。",
   "referenceThread": "01a15347-1d0a-7213-b2b6-40d74329c041",
   "implementationReference": {
     "repository": "aura-iotbus-web",
@@ -31,7 +32,7 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/08-模块联邦开发与构建.md",
       "snapshot": "knowledge/PIGX前端开发规范/模块联邦开发技术规范.md",
-      "sourceSha256Lf": "7a0c250ee321098ceb3e93cae12b1fbc9df7da6832b2b4936270256740bf6a92",
+      "sourceSha256Lf": "931ee72897871848963bc7ee96eb72bbc98c54c6f3de78a6dbed3de242114a4d",
       "snapshotSha256Lf": "01b63855a0bd3013bdab46174186f20978d3f35f0937899bc4f906574d22217e",
       "transformation": "保留原技能知识库组织与既有正文；同步本轮构建、依赖和工具链条款，不宣称整份文件字节一致。"
     }
