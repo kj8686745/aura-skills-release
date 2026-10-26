@@ -105,7 +105,7 @@ import { useDict } from '/@/config/aura/index';
 const { common_status } = useDict('common_status');
 ```
 
-字典展示和选择优先复用 `AuraDictTag`、`AuraDictSelect` 等组件，生成前检查已安装 aura-ui 的导出、类型与 `AuraUIResolver` 配置。
+字典标签/文本展示必须使用 `AuraDictTag` / `AuraDictText`；选择使用 `AuraDictSelect` 或项目字典选项，生成前检查已安装 aura-ui 的导出、类型与 `AuraUIResolver` 配置。
 
 ## useParam
 

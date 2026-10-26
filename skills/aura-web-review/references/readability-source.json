@@ -1,0 +1,309 @@
+{
+  "skill": "aura-web-review",
+  "skillVersion": "0.2.2",
+  "updatedAt": "2026-10-26",
+  "change": "增加 development-self-check 语义模式，正式六文件交付按模式限定",
+  "maintenanceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-skills.git",
+  "baseCommit": "e8f9f30c6ce9958a74ec9852eb9b250a16b17135",
+  "changeCommit": null,
+  "bindingStatus": "local-working-tree-change",
+  "authority": "本次用户明确授权直接维护技能仓库的规则、模板和示例；不修改规范源仓库，不读取用户排除的治理标准。",
+  "requirements": "用户确认的 aura-web-develop代码可读性与开发审阅优化方案及本次分页前端传参与显示对应范围补充；本次用户要求业务枚举展示强制使用AuraDictTag/AuraDictText，正式审查和开发自检纳入两个组件；本轮用户实测追加：方法JSDoc用途与标签分行，国际化模板字段逐项中文注释，关键方法各业务步骤相邻行注释需具体解释做什么、为何、不满足结果",
+  "implementation": [
+    "SKILL.md",
+    "references/development-self-check.md",
+    "references/审查路由.md",
+    "references/取证与报告.md",
+    "references/审查结果包模板.md",
+    "checklists/审查交付.md",
+    "USAGE.md",
+    "agents/openai.yaml",
+    "VERSION",
+    "knowledge/PIGX前端开发规范/工程与代码生成规范.md",
+    "knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md",
+    "knowledge/PIGX前端开发规范/开发检查清单.md",
+    "references/source.json",
+    "knowledge/PIGX前端开发规范/aura-ui组件库/README.md",
+    "knowledge/PIGX前端开发规范/aura-ui组件库/DictTag.md",
+    "knowledge/PIGX前端开发规范/aura-ui组件库/DictText.md",
+    "knowledge/PIGX前端开发规范/aura-ui组件库/DictSelect.md"
+  ],
+  "supplementaryChecks": {
+    "source": "本次用户确认方案的技能补充要求，非既有 FE 规则",
+    "ids": [
+      "READ-01",
+      "READ-02",
+      "READ-03",
+      "READ-04"
+    ],
+    "ruleSet": "references/rules.json 保留原 27 条规则，不将补充项冒充 FE 规则"
+  },
+  "existingSourceRecord": "references/source.json",
+  "existingSourceStatus": "原记录对应 0.1.0 规范快照与正式报告模板基线，保留其来源摘要及 pending-source-commit 状态。本次模板增加正式模式用途说明和字典展示范围补充，当前模板已产生本地差异；原模板摘要不代表本次工作区文件，当前差异由本记录及 Git diff 追溯。 本轮字典条款及审查范围也有本地差异，当前文件不再以旧摘要证明字节一致。",
+  "releaseStatus": "source-change-only; not-installed; not-published",
+  "validationBoundary": "未改 Collect/Check 脚本接口；结构和既有脚本测试不能证明开发自检语义有效，实际行为验证及增量复核由主代理协调。",
+  "dictionarySupplement": {
+    "authority": "本轮用户明确授权的本地规则补充，未修改规范源",
+    "package": "@fxft/aura-ui",
+    "components": [
+      "AuraDictTag",
+      "AuraDictText",
+      "AuraDictSelect"
+    ],
+    "verifiedEvidence": "aura-web-sdk/packages/ui/package.json 为 @fxft/aura-ui@1.1.5 源码；已核实安装版 @fxft/aura-ui@1.1.2 的 index.d.ts:45,47 及 dist/es/components/dict-{tag,text}/index.d.ts 公开两组件；目标项目仍需核对实际安装版本。 本轮补核1.1.2 AuraDictSelect根导出、子入口声明/产物、Resolver及上游dict-select.md。",
+    "scope": "三个字典组件的公开接入；筛选/表单Select与展示Tag/Text的真实消费；非SDK底层审计，review其余aura-ui仍排除",
+    "sourceBinding": "命中knowledge正文和审查路线已产生本地差异；保留既有来源提交和摘要作为原始快照证据，不宣称当前文件与原来源字节同版。",
+    "validation": {
+      "quickValidate": "passed",
+      "developValidateSkill": "passed",
+      "reviewHelperTests": "26 passed; PowerShell 7.6.5; existing helper behavior only",
+      "internalReferences": "259 markdown links passed; 27 unique rule IDs and standard paths passed",
+      "gitDiffCheck": "passed",
+      "prettier": "仓库未提供本地 Prettier 或配置，遵循现有格式，未安装工具",
+      "behaviorBoundary": "本次为语义规则修订，无新增扫描器；辅助脚本与结构通过不证明真实项目语义，独立行为验收由主代理协调",
+      "logs": ".planning/2026-10-23-aura-readability-20261023/artifacts/dict-skill/"
+    },
+    "publicContract": {
+      "reference": "knowledge/PIGX前端开发规范/aura-ui组件库/README.md",
+      "maintainedBy": "aura-web-develop",
+      "copyPolicy": "aura-web-review 随包只读副本，四份文件分别与 develop 对应文件字节一致；先读入口，再按实际组件加载，不依赖跨技能安装",
+      "packageVersion": "1.1.2",
+      "upstreamCommit": "3e9d3701bc14d500b5ebcd0df002546dd3b1ee78",
+      "upstreamVersion": "1.1.5",
+      "upstreamWorktree": "所读 docs 与 packages/ui 无 tracked 差异；存在未跟踪构建/打包资料，未修改",
+      "evidence": [
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "package.json",
+          "sha256": "665c43b1b251231ebf993e8add7a38e58ebcee62497ee0d0b40d2a3823892ef5"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "index.d.ts",
+          "sha256": "b91186894b01498295edddc22febffcf0a9392b1b0a881669fc365d54ac75d27"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/index.js",
+          "sha256": "e7fd756851fda2b5d5194382d207340b8810d2e0e14309423bac998d3880aaa5"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "components/dict-tag/index.d.ts",
+          "sha256": "67f284d79385f5b7506843ee299f7e893e8659a794fbfb10b989d7afa4656e26"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "components/dict-text/index.d.ts",
+          "sha256": "49af0715358c81e618d291dbd68ef1880ba26f17a2dc6ea11674b2260a8bb8cd"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/components/dict-tag/index.d.ts",
+          "sha256": "67f284d79385f5b7506843ee299f7e893e8659a794fbfb10b989d7afa4656e26"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/components/dict-text/index.d.ts",
+          "sha256": "49af0715358c81e618d291dbd68ef1880ba26f17a2dc6ea11674b2260a8bb8cd"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/components/dict-tag/index.js",
+          "sha256": "68e9480f035eba214c037a4e5ea9d3146c3aa29c92ef71e544463986d4f24b09"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/components/dict-text/index.js",
+          "sha256": "c3806c06181af82e5a5bbe288d981401dc22a37a3d2ff58828843ac9d3d2f127"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/components/dict-tag/dict-tag.vue.js",
+          "sha256": "a0e5257117aa9bc4d3901f2c7f571f5e683cf34afd88b5b3de552e6d66b48676"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/components/dict-text/dict-text.vue.js",
+          "sha256": "8552a846ab1a867ec9e9295ddd4dbd3e95193d004803c89c69231130e0574b2a"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "types/dict.d.ts",
+          "sha256": "988cedb0ffd7def8231448ecc9b05fac0cfdbc0e9c49fa36674d42e20ea9701c"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/types/dict.d.ts",
+          "sha256": "988cedb0ffd7def8231448ecc9b05fac0cfdbc0e9c49fa36674d42e20ea9701c"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "resolver.mjs",
+          "sha256": "673f38b3298d0101373b3ae48a9378d359e4e1585b5d996f70ef3d07c1ff5751"
+        },
+        {
+          "root": "aura-web-sdk@3e9d3701bc14d500b5ebcd0df002546dd3b1ee78",
+          "path": "docs/component/dict-tag.md",
+          "sha256": "5d36e17a56866b80429943a0e7f0d3e1c4bb90448a8d48425608adc192d9af64"
+        },
+        {
+          "root": "aura-web-sdk@3e9d3701bc14d500b5ebcd0df002546dd3b1ee78",
+          "path": "docs/component/dict-text.md",
+          "sha256": "1e8061cef298c97b1fbac053534fd697e6590c9df5a5b4449a014a535855d4cf"
+        },
+        {
+          "root": "aura-web-sdk@3e9d3701bc14d500b5ebcd0df002546dd3b1ee78",
+          "path": "packages/ui/package.json",
+          "sha256": "c4925ab16a33dac0cb07c49989f794f964712bc6e6fe52f56c84d815149bc988"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "components/dict-select/index.d.ts",
+          "sha256": "80e305a28d0390d66c7d8a0d7f3ff3cdba5d89ebf3ce7d10143a3d42ddafd372"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/components/dict-select/index.d.ts",
+          "sha256": "80e305a28d0390d66c7d8a0d7f3ff3cdba5d89ebf3ce7d10143a3d42ddafd372"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/components/dict-select/index.js",
+          "sha256": "82fc3d30e5164ec66c9319c99b6060e130554a5d278e25b678d68b1ba8b92378"
+        },
+        {
+          "root": "@fxft/aura-ui@1.1.2",
+          "path": "dist/es/components/dict-select/dict-select.vue.js",
+          "sha256": "0c3a682c3794a1a110b326b9d236ea023c6e1671d9b6504ab16020a3d69afbc4"
+        },
+        {
+          "root": "aura-web-sdk@3e9d3701bc14d500b5ebcd0df002546dd3b1ee78",
+          "path": "docs/component/dict-select.md",
+          "sha256": "2eaca6316f7ca114c8604d1f6026f2fe57f9823b87c7f87cd657003ec1e99a1c"
+        }
+      ],
+      "behaviorValidation": "文档契约据声明和产物核对；运行行为独立测试由主代理协调",
+      "validation": {
+        "quickValidate": "passed",
+        "developValidateSkill": "passed",
+        "resolverEntryFiles": "passed; two component resolutions and exported types/import/require plus resolver JS/CSS paths exist",
+        "sameByteCopies": "passed; README.md / DictTag.md / DictText.md pairwise raw byte hashes equal",
+        "relativeLinks": "passed; 278 checked",
+        "behaviorBoundary": "实际独立行为测试由主代理协调，不将文档/结构与入口文件检查作为运行通过"
+      },
+      "files": [
+        {
+          "path": "knowledge/PIGX前端开发规范/aura-ui组件库/README.md",
+          "sha256": "9057b052be6da52aa31a59c5552514a84c7de16dabf4257346d3b65e55319b62"
+        },
+        {
+          "path": "knowledge/PIGX前端开发规范/aura-ui组件库/DictTag.md",
+          "sha256": "e47e2a162345a520926656b2186535d53eae44038ab2eda529a1ad272756cc96"
+        },
+        {
+          "path": "knowledge/PIGX前端开发规范/aura-ui组件库/DictText.md",
+          "sha256": "46a98e970ad95f0f49232ac7e299b09038501fda3b5490855f7a3c15ab989eac"
+        },
+        {
+          "path": "knowledge/PIGX前端开发规范/aura-ui组件库/DictSelect.md",
+          "sha256": "12172ec8c837f9829289d53282e5e8ff8c9fe8911a7fc56625ecaea1d49cbc43"
+        }
+      ]
+    },
+    "selectFeedback": {
+      "authority": "本轮用户补漏AuraDictSelect，保持同一working版本",
+      "verified": "1.1.2根/子入口声明、运行产物、Resolver及上游dict-select.md",
+      "differences": "modelValue非value；number/string原样，多选数组；filterable是ElSelect透传非自身Prop；无emptyText/fallback；request运行默认null但d.ts类型未含null；无暴露方法/自定义Slots；update:modelValue后同载荷change",
+      "validation": {
+        "quickValidate": "both passed",
+        "developValidateSkill": "passed",
+        "resolverRootSubEntries": "passed; actual resolver output, root runtime/type exports, sub-entry types/import/require and JS/CSS files checked",
+        "internalReferences": "283 links passed",
+        "sameByteCopies": "four corresponding documents passed raw SHA256 comparison",
+        "scope": "DictSelect documentation and review rules only; frozen comment rule text unchanged",
+        "behavior": "no claim of mounted component behavior; independent test coordinated by parent"
+      }
+    },
+    "fallbackBoundary": {
+      "authority": "本轮用户问字典兜底来源，按真实组件默认行为澄清",
+      "rule": "组件默认行为仅是公开契约事实，不意味着业务必须自行增加兜底。fallback 或未知值展示按真实需求配置；未经要求不新增转换、硬编码或覆盖值，不用自设 fallback 掩盖字典类型、选项来源或编码匹配错误。说明当前用途时写具体业务语义，不把组件默认行为描述成业务额外实现。",
+      "scope": "未改SDK或业务，仅补契约消费边界；保持working版本"
+    }
+  },
+  "readabilityFeedback": {
+    "authority": "本轮用户实际阅读代码反馈，直接维护本地技能，不修改规范源",
+    "jsdoc": "方法多行块，用途独占行，空行后各param/returns/实际throws独占行，详细说明续行；短字段注释可保留",
+    "template": "具体业务表单用途，每个国际化表单项/筛选项/业务表格列旁中文含义，主要操作分组与状态区真实说明；无业务语义普通布局和重复按钮文案不机械注释",
+    "executionSteps": "关键方法沿执行顺序对每个业务阶段/校验/字段转换/异步恢复/状态副作用写相邻行注释，说明做什么、为何及不满足结果；复杂业务详细状态条件、数据来源去向和顺序；不以只Why/代码自解释/防噪音压缩业务解释",
+    "verification": "READ-01/03/04逐项核对具体方法步骤/字段/操作，不能仅看文件头、大区块或有注释；真实行为验收由主代理协调",
+    "version": "同一未发布working版本，保持1.4.1/0.2.1",
+    "validation": {
+      "quickValidate": "passed for both skills",
+      "developValidateSkill": "passed",
+      "internalReferences": "279 links passed; no broken relative links",
+      "gitDiffCheck": "passed",
+      "prettier": "仓库无本地Prettier及配置，沿现有格式，未安装工具",
+      "logs": ".planning/2026-10-23-aura-readability-20261023/artifacts/dict-skill/*comments.log; comment-exit-codes.json",
+      "independentBehavior": "由主代理以无本轮纠正上下文的更新既有业务请求独立调用技能验证"
+    },
+    "commentForms": {
+      "authority": "本轮用户纠正简短Props/Emits块注释可读性",
+      "templates": "现有code-comment-guidelines.md单处维护三场景模板，不新增冗余模板文件",
+      "shortFields": "字段/Props/Emits事件签名默认同行尾部//；复杂约束或IDE文档可在上方独立JSDoc，禁止块与声明挤同行",
+      "steps": "业务步骤上方相邻//，必要多行；保留逐阶段详细业务语义",
+      "methods": "方法上方多行JSDoc，各标签独行；字段/事件类型不是方法实现，不逐属性生成@param",
+      "version": "同一working版本1.4.1/0.2.1，未发布",
+      "validation": {
+        "quickValidate": "both passed",
+        "developValidate": "passed",
+        "relativeLinks": "283 passed",
+        "scope": "existing comment reference and semantic self-check only; component documents unchanged",
+        "independentBehavior": "parent coordinates fresh ordinary update request without correction context"
+      }
+    },
+    "authorizationBoundary": {
+      "authority": "用户本轮指出纯补注释被越界功能整改，明确任务优先",
+      "pureDocumentation": "仅注释及说明；不改DOM属性/组件/import/状态/接口/控制流/依赖配置；旧FE功能偏差记录原有问题与建议，不自动修，不停止独立整理",
+      "completion": "纯整理以READ可读性和行为保持通过交限定整理审阅报告，不宣称整体FE合规；明确全规范目标遇旧偏差则阻断该目标并列需授权事项",
+      "featureTasks": "新开发/功能修改在用户原授权内整改到必需项通过，不额外反复问授权",
+      "version": "同一working版本1.4.1/0.2.1"
+    },
+    "stateAndTemplatePosition": {
+      "authority": "本轮用户截图反馈，直接维护本地技能",
+      "declarations": "常规业务const/ref/reactive/computed、组件ref、各loading/ready/default业务常量及业务局部变量逐项中文用途；默认尾//，复杂状态上方多行取值/更新时机/影响，不以自解释省略；技术导入/解构服务可组说明",
+      "template": "字段说明必须紧邻语义所有者el-form-item/el-table-column/筛选项上方；无FormItem才最外业务控件上方，不藏内部span/t()，不改条件链语义",
+      "selfCheck": "READ02/03逐项声明覆盖与注释位置核验，缺项整改，不只统计注释",
+      "authorization": "保留纯注释仅注释文档与行为保持，不新增状态或修功能",
+      "version": "保持1.4.1/0.2.1同一working版本"
+    },
+    "semanticObjectCoverage": {
+      "authority": "本轮用户要求从源码统一盘点业务对象覆盖，并确认组件实例规则使用通用表述，不举具体组件名",
+      "process": "实际源码盘点→语义对象覆盖表→实施→逐对象检查内容位置与实现一致→对象/用途状态/注释位置/结论记录；漏项整改，非数量或截图检查",
+      "scope": "变量服务、模板区块与语义元素、业务组件实例的组件类型/当前业务职责/关键配置输入/组件引用/事件绑定/显示条件及已有生命周期、业务步骤；按实际存在说明，普通布局和技术import不逐层重复",
+      "authorization": "仍仅注释/说明，不新增功能、组件、状态或API",
+      "version": "same working 1.4.1/0.2.1"
+    },
+    "fieldEvidence": "本轮用户纠正：先查项目docs/API/OpenAPI/类型和实际消费，以资料确认编码单位空值并记录来源；用户确认的共用约定可跨接口取证，不因章节不同机械拒绝；不无证据跨字段套用，确实无法确认才列缺口。",
+    "businessDocumentFormat": {
+      "authority": "2026-10-26 用户明确授权的本地技能补充改进；沿用 local-working-tree-change，不虚构规范来源提交",
+      "default": "docs/业务说明/<中文模块>/业务总览.md 与 <中文功能>.md；既有约定优先，用户明确中文则迁移本次涉及说明并修链接",
+      "functionTemplate": "按真实业务场景组织，可裁剪示例；每场景就近说明入口/操作/条件/状态变化/成功失败结果，不固定六段、操作表或字段章节；保留真实流转图和简洁代码阅读入口",
+      "fields": "正文以是否帮助理解业务选择/操作条件/状态变化/可见结果取舍，避免把字段表改写为技术段落；业务字段按需融入操作规则，必要时小表；全量类型/协议/字段映射引用已有类型或接口文档，内部状态/计算/组件配置由源码注释承载；READ-02及逐对象注释核验独立保留",
+      "overview": "模块用途/功能关系整体图/阅读索引/共享规则，独立功能才拆页；不无故新增目录索引或迁移所有历史文件",
+      "process": "业务说明解释当前业务，development-reviews供人工阅读结论变更，development-checks保存接入/已知缺陷/失败测试/整改复查历史；业务正文只写必要使用影响",
+      "reportNames": "<中文功能名>-开发审阅报告.md 或 注释说明整理审阅报告.md，沿既有报告目录",
+      "reportReading": "先结论/变更/人工重点，再代码与业务说明入口、验证摘要与限制、版本范围证据；当前/受后续变更影响待复查/历史状态明确，旧记录保留原范围证据并链接后续记录，不显示为当前通过",
+      "selfCheck": "READ-04按语义完整性及真实一致性核验；无固定标题/顺序/表格门槛，独立安装不必读开发技能；字段与源码注释独立判定",
+      "version": "aura-web-develop 1.4.2 / aura-web-review 0.2.2；仅源码变更，未安装或发布",
+      "validation": "本轮待主代理协调验证；本文件其他 validation 与过去版本段落保留为历史证据，不代表本轮通过"
+    },
+    "recursiveTemplateCoverage": {
+      "authority": "本轮用户实测子语义节点漏注释，要求源码树递归盘点",
+      "rule": "父职责不替子独立语义，按层级分支识别动态文案/条件分支/循环集合与项/模型事件/loading空态及注释归属；仅class布局可省；FormItem上方与子语义所有者位置保留",
+      "example": "develop注释规范单处通用多子节点模板，review采用递归语义核验，不复制模板",
+      "authorization": "只注释文档，原有条件偏差记录不修，不新增数字门槛",
+      "version": "same working 1.4.1/0.2.1"
+    }
+  }
+}
