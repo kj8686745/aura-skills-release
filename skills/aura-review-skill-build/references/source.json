@@ -1,8 +1,8 @@
 {
   "skill": "aura-review-skill-build",
-  "skillVersion": "0.5.0",
+  "skillVersion": "0.5.1",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "138603e83ac4e06b7360b6e659e3e71f0cf22839",
+  "sourceCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
   "sourceRoot": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理",
   "documents": [
     {
@@ -32,13 +32,13 @@
   "snapshotRoot": "references",
   "sourceBinding": {
     "status": "matched",
-    "note": "来源文件已与规范仓库提交基线绑定；来源绑定不代表行为验收或发布。"
+    "note": "两份来源均与db5df7e内容摘要一致，与后端审查统一绑定精确提交；来源绑定不代表行为验收或发布。"
   },
   "skillResources": [
     {
       "path": "scripts/check-review-result.ps1",
       "kind": "script",
-      "sha256Lf": "1ec7a203f72a3630e626e67fbfc5676fd4c6a224419623c8658786022331137b"
+      "sha256Lf": "669f5d943ebadf21fe2f2feb71434de9169c043ac7b438273bb1e35c8b8294af"
     },
     {
       "path": "scripts/check-review-matrix.ps1",
@@ -46,6 +46,12 @@
       "sha256Lf": "3671ec77ec8df4597b2db5f8258cfe1584d9945eabbef93795771f415dbaef44"
     }
   ],
+  "reportClosureRevision": {
+    "skillVersion": "0.5.1",
+    "reportToolCasesPassed": 53,
+    "scope": "报告工具区分历史卡片、完整关闭记录和当前偏差，支持重新打开；与后端审查携带同源脚本",
+    "limits": "关闭记录结构完整不代表真实关闭；未重验新技能生成全过程、全项目行为、安装或发布。"
+  },
   "currentRevisionValidation": {
     "reportToolCasesPassed": 45,
     "matrixConsistencyToolCasesPassed": 2,

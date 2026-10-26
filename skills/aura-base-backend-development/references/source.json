@@ -1,8 +1,8 @@
 {
   "skill": "aura-base-backend-development",
-  "skillVersion": "1.24.0",
+  "skillVersion": "1.26.0",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
+  "sourceCommit": "e2dd5da3f68fdb8b346e559bcd8359483050dbd6",
   "transformation": "仅移除逐文档登记的包外导航，保留完整正文与章节；摘要仅归一化 CRLF 为 LF。",
   "modules": [
     {
@@ -299,14 +299,14 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/04-文件任务与实时交互能力包/能力详细说明.md",
       "snapshot": "references/standards/05-能力包/01-通用工具类/04-文件任务与实时交互能力包/能力详细说明.md",
-      "sourceSha256Lf": "7dee60b94db27d9de6f3d594c33988d5546ba540946940bba639914590731fb7",
-      "snapshotSha256Lf": "7dee60b94db27d9de6f3d594c33988d5546ba540946940bba639914590731fb7",
+      "sourceSha256Lf": "ed760fe2fb50c3e029d9c77adc6f65b6310fb4a3988cd9535a3d099553bc6df9",
+      "snapshotSha256Lf": "ed760fe2fb50c3e029d9c77adc6f65b6310fb4a3988cd9535a3d099553bc6df9",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
       "authorityStatus": "matched",
-      "committedSourceSha256Lf": "7dee60b94db27d9de6f3d594c33988d5546ba540946940bba639914590731fb7"
+      "committedSourceSha256Lf": "ed760fe2fb50c3e029d9c77adc6f65b6310fb4a3988cd9535a3d099553bc6df9"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/05-数据与事务基础设施能力包/总入口.md",
@@ -985,7 +985,7 @@
     {
       "path": "references/capabilities/05-文件与实时/references/任务路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "513adf446f0593f044cdf5faa3a99fc7a4c5d1259824c7a4133824ac2156a423"
+      "sha256Lf": "6483e7525144e83afbe699f7c4739861341403f7737cd914d1dead88068e8347"
     },
     {
       "path": "references/capabilities/05-文件与实时/能力入口.md",
@@ -1015,7 +1015,7 @@
     {
       "path": "references/任务路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "175afa9e53b183dbea0376e23cd98e2a9484262c3d69eafe8656aaa3ee936dcf"
+      "sha256Lf": "60e51f1bc586cb6e72cb27457729e785b7a67fb0cb04bad3e58321e30e7bf011"
     },
     {
       "path": "references/能力使用索引.md",
@@ -1165,13 +1165,34 @@
       "kind": "script",
       "sha256Lf": "781f64c20bc1fd788a1bef0b35bbda279a1098cf2dcc50063fc5be66a8daeb6e",
       "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "checklists/validation.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "5613603b83e54c3398150ef672ff0bf5a0b1b6ba1e0eae999697b9115e142921"
+    },
+    {
+      "path": "references/文件与批处理开发.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "7ef2b6897441c4f59b1845cfa47fca6584c6a6569f7b8fb8494a69ff23ff144c"
+    },
+    {
+      "path": "scripts/inspect-file-batch.ps1",
+      "kind": "script",
+      "sha256Lf": "9b452064be5c13ad984da277a9364f2d9561803ace897ab49ba482d29067817e",
+      "origin": "与审查技能同源，人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "references/文件与批处理开发.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "7ef2b6897441c4f59b1845cfa47fca6584c6a6569f7b8fb8494a69ff23ff144c"
     }
   ],
   "sourceRoot": "",
   "snapshotRoot": "",
   "sourceBinding": {
-    "status": "pending",
-    "note": "数据库查询与结构演进新增规范已绑定提交db5df7e；规范仓库仍存在其他未提交工作树变更，因此保留pending，不代表双仓正式绑定或发布。"
+    "status": "committed",
+    "note": "文件能力说明已绑定规范提交e2dd5da；随包能力视图与来源摘要一致。来源绑定不代表行为验收、安装或发布。"
   },
   "currentRevisionValidation": {
     "skillVersion": "1.24.0",
@@ -1228,6 +1249,19 @@
         "followupFix": "画像工作树限当前项目并标注外层仓库上下文；无框架注解的普通Java类保留摘要；新增隔离断言及原样本复核通过"
       }
     }
+  },
+  "deliveryEvidenceRevision": {
+    "skillVersion": "1.24.1",
+    "scope": "按既有SELF-002、BE-027、SEC-001/004/006补强交付断言、状态修改与身份授权的证据核对；未新增规范或脚本",
+    "validation": "独立开发Agent使用1.24.1工作树完善隔离日常任务样本，12项JUnit实际通过；主Agent重跑12/12。独立审查识别验证入口假绿，主Agent在样本中修正；零测试、容器失败、测试中止、编译失败4个负场景修复后均正确拒绝。",
+    "limits": "Java17编译、Java25运行，缓存Spring6.2.15/MyBatis-Plus3.5.15与原工程不同；H2通过JDBC执行注解SQL，不证明MyBatis绑定、Spring事务、认证或HTTP。试用后补了失败记录失效、截断补读与脚本参数提示，未再次独立Agent试用这些末次提示；不计入真实项目验收、安装或发布。"
+  },
+  "fileBatchRevision": {
+    "skillVersion": "1.26.0",
+    "scope": "按现有文件/安全/批次规则建设场景路由、上传下载/表格/批次使用流程和限定文件盘点；不新增独立技能或通用任务框架",
+    "toolIsolatedCasesPassed": 15,
+    "codeEvidence": "只读aura-core-common e311702的FileTemplate及Excel解析器/默认监听器，确认有效行与错误分别累积；aura-core-upms c8850c3的文件公开客户端用于核对已有入口。",
+    "limits": "本轮工具测试不等于文件服务、Excel库、HTTP、事务或实际导入导出验证；最小语义样本8项通过但不替代真实组件。复杂批次策略仍由项目契约决定，未构建自动业务生成器、安装或发布。"
   },
   "databaseQueryEvolutionRevision": {
     "skillVersion": "1.24.0",

@@ -205,14 +205,41 @@ try{
   if($unchecked -gt 0 -and $executionState -in @('变更审查完成','静态审查完成','发布准入审查完成')){Add-Issue error false_completion '' '存在未检查纳入对象，却声明审查完成'}
   foreach($row in $ruleRows){foreach($f in $row.findings){if(-not $findings.ContainsKey($f)){Add-Issue error unknown_finding '' "$($row.id) 引用不存在的 $f"}elseif($row.state -eq '偏差' -and $row.id -notin $findings[$f].rules){Add-Issue error finding_rule_mismatch '' "$($row.id) 与 $f 卡片关联规则不一致"}}}
   foreach($id in $findings.Keys){foreach($rule in $findings[$id].rules){if(-not $ruleStates.ContainsKey($rule)){Add-Issue error unknown_rule '' "$id 引用未纳入矩阵的 $rule"}}}
+  $remediation=@($tables | Where-Object {$_.headers[0] -match '^发现\s*ID$' -and (Column $_ '^当前状态$') -ge 0})
+  $closureTables=@($tables | Where-Object {$_.headers[0] -match '^发现\s*ID$' -and (Column $_ '^新\s*E[-－]?编号$') -ge 0})
+  $remediated=[Collections.Generic.HashSet[string]]::new()
+  $closedFindings=[Collections.Generic.HashSet[string]]::new()
+  $closureClaims=[Collections.Generic.HashSet[string]]::new()
+  $remediationById=@{}
+  foreach($table in $remediation){foreach($row in $table.rows){
+    $id=$row.cells[0];$null=$remediated.Add($id)
+    if(-not $findings.ContainsKey($id)){Add-Issue error unknown_finding $table.path "整改引用不存在的 $id"}
+    $closeCol=Column $table '^关闭条件$';$statusCol=Column $table '^当前状态$'
+    $condition=if($closeCol -ge 0){$row.cells[$closeCol]}else{''}
+    if($condition -in @('','无','待补充','未提供')){Add-Issue error missing_close_condition $table.path "$id 缺关闭条件"}
+    if(-not $remediationById.ContainsKey($id)){$remediationById[$id]=[Collections.Generic.List[object]]::new()}
+    $remediationById[$id].Add(@{state=$row.cells[$statusCol];condition=$condition;text=($row.cells -join ' ');path=$table.path})
+  }}
+  foreach($id in $findings.Keys){
+    $records=@($remediationById[$id] | Where-Object {$null -ne $_})
+    if($records.Count -ne 1 -or $records[0].state -ne '已关闭'){continue}
+    $null=$closureClaims.Add($id)
+    $initialLine=[regex]::Match(($findings[$id].body.Replace('**','')),'(?m)^[^\r\n]*?证据\s*[:：][^\r\n]*\r?$').Value
+    $initialRefs=@(Ids $initialLine E)
+    $closeText=$records[0].text
+    foreach($table in $closureTables){foreach($row in $table.rows){if($row.cells[0] -eq $id){$closeText+=' '+($row.cells -join ' ')}}}
+    $closeRefs=@(Ids $closeText E)
+    $freshRefs=@($closeRefs | Where-Object {$_ -notin $initialRefs -and $eIds.Contains($_)})
+    if($records[0].condition -notin @('','无','待补充','未提供') -and $initialRefs.Count -and $freshRefs.Count -and -not @($closeRefs | Where-Object {-not $eIds.Contains($_)}).Count){
+      $null=$closedFindings.Add($id)
+    }else{Add-Issue incomplete closure_manual_review $records[0].path "$id 关闭记录缺可解析的新增已定义E证据或关闭条件，需补充并人工复核"}
+  }
   foreach($id in $findings.Keys){
     $linked=@($ruleRows | Where-Object {$_.state -eq '偏差' -and $id -in $_.findings})
-    if(-not $linked.Count){Add-Issue error orphan_finding '' "$id 没有偏差规则行回指，发现与矩阵结论不闭合"}
+    if($closureClaims.Contains($id) -and $linked.Count){Add-Issue error closed_finding_deviation '' "$id 已标关闭但仍关联当前偏差，需核对复核基线"}
+    if(-not $linked.Count -and -not $closedFindings.Contains($id)){Add-Issue error orphan_finding '' "$id 既无当前偏差回指，也无完整关闭记录"}
   }
   foreach($id in (Ids $all E)){if(-not $eIds.Contains($id)){Add-Issue error unknown_evidence '' "引用证据未定义：$id"}}
-  $remediation=@($tables | Where-Object {$_.headers[0] -match '^发现\s*ID$' -and (Column $_ '^当前状态$') -ge 0})
-  $remediated=[Collections.Generic.HashSet[string]]::new()
-  foreach($table in $remediation){foreach($row in $table.rows){$id=$row.cells[0];$null=$remediated.Add($id);if(-not $findings.ContainsKey($id)){Add-Issue error unknown_finding $table.path "整改引用不存在的 $id"};$closeCol=Column $table '^关闭条件$';if($closeCol -lt 0 -or -not $row.cells[$closeCol]){Add-Issue error missing_close_condition $table.path "$id 缺关闭条件"};$statusCol=Column $table '^当前状态$';if($row.cells[$statusCol] -eq '已关闭'){Add-Issue incomplete closure_manual_review $table.path "$id 已关闭，须人工复核新证据与关闭条件，工具不裁定真实关闭"}}}
   foreach($id in $findings.Keys){if(-not $remediated.Contains($id)){Add-Issue error missing_remediation '' "$id 缺整改及复核行"}}
   $remediationRows=@($remediation | ForEach-Object {$_.rows})
   foreach($group in @($remediationRows | Group-Object {$_.cells[0]} | Where-Object Count -gt 1)){
@@ -235,9 +262,9 @@ try{
     }
   }
   $errors=@($issues | Where-Object level -eq error).Count;$incomplete=@($issues | Where-Object level -eq incomplete).Count
-  $summary=[ordered]@{errors=$errors;incomplete=$incomplete;uniqueRules=$ruleStates.Count;findings=$findings.Count;candidates=$candidateIds.Count;evidence=$eIds.Count}
+  $summary=[ordered]@{errors=$errors;incomplete=$incomplete;uniqueRules=$ruleStates.Count;findings=$findings.Count;closedFindings=$closedFindings.Count;activeFindings=$findings.Count-$closedFindings.Count;candidates=$candidateIds.Count;evidence=$eIds.Count}
   if($matrixCheck){$summary.matrixRules=$matrixCheck.matrixRuleCount;$summary.matrixReferencedRules=$matrixCheck.referencedRuleCount;$summary.matrixUnknownRules=$matrixCheck.unknownRuleCount}
-  $result=[ordered]@{schemaVersion=1;mode=$Mode;formatVersion=$formatVersion;executionState=$executionState;status=$(if($errors){'failed'}elseif($incomplete){'partial'}else{'passed'});summary=$summary;issues=@($issues.ToArray());limitations=@('验证可解析报告结构、ID、统计、进度矛盾及重复依据风险；不证明规则覆盖完整、证据真实、例外有效、严重性正确或项目合规。','status 是工具检查状态，executionState 是报告自述执行状态，两者均不代替人工证据复核。旧版无执行进度时不外推其覆盖已完成。')}
+  $result=[ordered]@{schemaVersion=1;mode=$Mode;formatVersion=$formatVersion;executionState=$executionState;status=$(if($errors){'failed'}elseif($incomplete){'partial'}else{'passed'});summary=$summary;issues=@($issues.ToArray());limitations=@('验证可解析报告结构、ID、统计、进度矛盾及重复依据风险；不证明规则覆盖完整、证据真实、例外有效、严重性正确或项目合规。','findings保留全部历史卡片；closedFindings仅表示关闭记录含条件及不同于初审的已定义E引用，不裁定真实关闭；activeFindings为其余卡片。','status 是工具检查状态，executionState 是报告自述执行状态，两者均不代替人工证据复核。旧版无执行进度时不外推其覆盖已完成。')}
   $code=if($errors){1}elseif($incomplete){2}else{0}
 }catch{$result=@{schemaVersion=1;mode=$Mode;status='failed';summary=@{errors=1;incomplete=0};issues=@(@{code='input_or_execution_error';message=$_.Exception.Message})};$code=1}
 if($Json){$result | ConvertTo-Json -Depth 12}else{"报告自检：$($result.status)，错误=$($result.summary.errors)，待复核=$($result.summary.incomplete)"}

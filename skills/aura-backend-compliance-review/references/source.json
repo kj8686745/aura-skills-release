@@ -1,8 +1,8 @@
 {
   "skill": "aura-backend-compliance-review",
-  "skillVersion": "1.19.1",
+  "skillVersion": "1.21.0",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
+  "sourceCommit": "e2dd5da3f68fdb8b346e559bcd8359483050dbd6",
   "transformation": "仅移除登记的跨范围导航目标，保留链接文字；正文与示例不改写。",
   "modules": [
     {
@@ -796,14 +796,14 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/04-文件任务与实时交互能力包/能力详细说明.md",
       "snapshot": "references/standards/05-能力包/01-通用工具类/04-文件任务与实时交互能力包/能力详细说明.md",
-      "sourceSha256Lf": "7dee60b94db27d9de6f3d594c33988d5546ba540946940bba639914590731fb7",
-      "snapshotSha256Lf": "7dee60b94db27d9de6f3d594c33988d5546ba540946940bba639914590731fb7",
+      "sourceSha256Lf": "ed760fe2fb50c3e029d9c77adc6f65b6310fb4a3988cd9535a3d099553bc6df9",
+      "snapshotSha256Lf": "ed760fe2fb50c3e029d9c77adc6f65b6310fb4a3988cd9535a3d099553bc6df9",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
       "authorityStatus": "matched",
-      "committedSourceSha256Lf": "7dee60b94db27d9de6f3d594c33988d5546ba540946940bba639914590731fb7"
+      "committedSourceSha256Lf": "ed760fe2fb50c3e029d9c77adc6f65b6310fb4a3988cd9535a3d099553bc6df9"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/05-数据与事务基础设施能力包/总入口.md",
@@ -997,9 +997,9 @@
     {
       "path": "scripts/check-review-result.ps1",
       "kind": "script",
-      "sha256Lf": "1ec7a203f72a3630e626e67fbfc5676fd4c6a224419623c8658786022331137b",
+      "sha256Lf": "669f5d943ebadf21fe2f2feb71434de9169c043ac7b438273bb1e35c8b8294af",
       "originPath": "skills/aura-review-skill-build/scripts/check-review-result.ps1",
-      "originSha256Lf": "1ec7a203f72a3630e626e67fbfc5676fd4c6a224419623c8658786022331137b",
+      "originSha256Lf": "669f5d943ebadf21fe2f2feb71434de9169c043ac7b438273bb1e35c8b8294af",
       "originStatus": "working-tree"
     },
     {
@@ -1017,12 +1017,12 @@
     {
       "path": "references/后端审查执行路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "a05ed270ca152d9493749d5a8f4fa1ff982c0839266f647127810bb48dba944e"
+      "sha256Lf": "33108062fc05595e2a34e3b7a0ad2e2549af71e7869482a6971f6811dd2182c8"
     },
     {
       "path": "references/后端审查完成门槛.md",
       "kind": "skill-navigation",
-      "sha256Lf": "9183210202d930cb26df74befa1143f743034a9107d073147d6a4d4a4b884537"
+      "sha256Lf": "6b46604d84a1694a904f0b560b74b7551423ea7d432769f06512ccb47adfc5e2"
     },
     {
       "path": "references/专项/接口专项/审查入口.md",
@@ -1066,7 +1066,7 @@
     {
       "path": "scripts/check-capability-ledger-report.ps1",
       "kind": "script",
-      "sha256Lf": "260f4742bb346cb1cd62a2792522a91fe468e32fddfa61220b3ab1970f23c23c",
+      "sha256Lf": "23990fa01812ad1591ac5c58a51362dab3144560a9d3bb18840f462bebff892b",
       "origin": "人工维护，不作为权威技术规则源"
     },
     {
@@ -1076,13 +1076,21 @@
       "originPath": "skills/aura-base-backend-development/scripts/inspect-database-changes.ps1",
       "originSha256Lf": "781f64c20bc1fd788a1bef0b35bbda279a1098cf2dcc50063fc5be66a8daeb6e",
       "originStatus": "working-tree"
+    },
+    {
+      "path": "scripts/inspect-file-batch.ps1",
+      "kind": "script",
+      "sha256Lf": "9b452064be5c13ad984da277a9364f2d9561803ace897ab49ba482d29067817e",
+      "originPath": "skills/aura-base-backend-development/scripts/inspect-file-batch.ps1",
+      "originSha256Lf": "9b452064be5c13ad984da277a9364f2d9561803ace897ab49ba482d29067817e",
+      "originStatus": "working-tree"
     }
   ],
   "sourceRoot": "",
   "snapshotRoot": "",
   "sourceBinding": {
-    "status": "pending",
-    "note": "数据库查询与结构演进新增规范已绑定提交db5df7e；规范仓库仍存在其他未提交工作树变更，因此保留pending，不代表双仓正式绑定或发布。"
+    "status": "committed",
+    "note": "文件能力说明已绑定规范提交e2dd5da；随包能力视图与来源摘要一致。来源绑定不代表行为验收、安装或发布。"
   },
   "currentRevisionValidation": {
     "reportToolCasesPassed": 45,
@@ -1204,6 +1212,29 @@
       "limits": "只验证规则 ID 来源和覆盖统计，不判断规则适用性、证据真实性或项目合规。"
     },
     "skillVersion": "1.19.1"
+  },
+  "deliveryEvidenceRevision": {
+    "skillVersion": "1.19.2",
+    "scope": "零候选时仍核查本次适用的状态修改、身份授权与实际测试断言；沿既有规则取证，不自动判定业务违规",
+    "validation": "前轮独立静态核查11文件识别旧样本断言与状态写入缺口；本轮另一独立Agent审查开发产物，形成六章单报告并发现验证入口假绿。主Agent用4个负场景复现后修正样本入口，再重跑12项业务测试通过；发现与复核归并同一报告。",
+    "limits": "本轮只验证限定变更单报告，不代表全项目、六文件模式或自动触发；业务测试由开发Agent和主Agent运行，审查Agent只读取证据。外部授权、MyBatis映射、Spring事务和HTTP仍未证实；末次脚本参数措辞调整未重新做独立试用，未安装或发布。",
+    "knownReportToolIssues": [
+      "1.19.2试用发现关闭历史F误报orphan_finding；已在1.19.3修正，见reportClosureRevision。",
+      "1.19.2试用发现能力工具不能消费报告人工分类；已在1.19.3支持原模板能力表，不改原始候选。"
+    ]
+  },
+  "reportClosureRevision": {
+    "skillVersion": "1.19.3",
+    "reportToolCasesPassed": 53,
+    "capabilityReportCasesPassed": 49,
+    "scope": "历史发现关闭/重新打开的结构核对；原始候选与报告能力人工状态分离；Change与Project共用既有模板，不新增表单",
+    "limits": "工具回归只验证可解析结构、状态与引用；通过不证明真实关闭、能力实际复用或项目合规。未重跑业务测试、独立Agent项目审查、安装或发布。"
+  },
+  "fileBatchRevision": {
+    "skillVersion": "1.21.0",
+    "scope": "沿授权、存储/解析、批次写入、实际提交结果及下载链检查；与开发携带同源文件盘点工具",
+    "toolIsolatedCasesPassed": 15,
+    "limits": "静态词法候选不判内容安全、事务或权限生效；最小语义样本8项通过但不替代真实组件；未执行本轮独立项目审查、文件服务或表格运行、安装或发布。"
   },
   "databaseQueryEvolutionRevision": {
     "skillVersion": "1.19.1",
