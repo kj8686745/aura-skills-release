@@ -5,7 +5,7 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.4.4`（2026-10-26）。
+当前版本：`1.4.5`（2026-10-26）。
 
 ## 执行入口
 
@@ -70,3 +70,5 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 本次可读性与自检流程直接维护于本技能仓库，来源及未发布状态见[本地变更记录](references/readability-source.json)；不替换既有规范来源记录。
 
 业务枚举/字典展示强制使用 `@fxft/aura-ui` 的 `AuraDictTag` / `AuraDictText`，禁止手写展示转换；选项、非展示编码判断及公开契约取证边界见[字典契约](references/ui-data-contracts.md)。
+
+API/类型注释任务按[声明字段门槛](references/code-comment-guidelines.md#声明字段完整性门槛)固定完整文件清单，逐文件运行随包只读检查器并核对每字段自己的中文语义；未检查或缺项不通过。用户仅维护技能时只读业务资料，用隔离副本验证，不修业务源码。

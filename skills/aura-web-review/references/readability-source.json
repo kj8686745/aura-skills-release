@@ -1,6 +1,6 @@
 {
   "skill": "aura-web-review",
-  "skillVersion": "0.2.4",
+  "skillVersion": "0.2.5",
   "updatedAt": "2026-10-26",
   "change": "增加 development-self-check 语义模式，正式六文件交付按模式限定",
   "maintenanceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-skills.git",
@@ -10,6 +10,7 @@
   "authority": "本次用户明确授权直接维护技能仓库的规则、模板和示例；不修改规范源仓库，不读取用户排除的治理标准。",
   "requirements": "用户确认的 aura-web-develop代码可读性与开发审阅优化方案及本次分页前端传参与显示对应范围补充；本次用户要求业务枚举展示强制使用AuraDictTag/AuraDictText，正式审查和开发自检纳入两个组件；本轮用户实测追加：方法JSDoc用途与标签分行，国际化模板字段逐项中文注释，关键方法各业务步骤相邻行注释需具体解释做什么、为何、不满足结果",
   "implementation": [
+    "scripts/check-api-comments.cjs",
     "SKILL.md",
     "references/development-self-check.md",
     "references/审查路由.md",
@@ -313,5 +314,16 @@
       "authorization": "只注释文档，原有条件偏差记录不修，不新增数字门槛",
       "version": "same working 1.4.1/0.2.1"
     }
+  },
+  "strictDeclarationComments": {
+    "authority": "2026-10-26 用户纠正：仅维护两技能，授权范围内每个声明字段须有自己对应的中文注释，禁止用少量文件验证声称整批通过。",
+    "version": "aura-web-develop 1.4.5 / aura-web-review 0.2.5",
+    "bindingStatus": "local-working-tree-change; source-change-only; not-installed; not-published",
+    "scope": "显式完整文件清单；逐文件盘点interface/type literal/class、内联/嵌套/交叉/数组内属性、索引签名、枚举成员；每个声明字段相邻中文独立核验；公共继承追踪真实声明，依赖缺项单列。",
+    "checker": "scripts/check-api-comments.cjs；develop维护事实源，review字节一致独立随包副本；仅Node builtins与--project已安装TypeScript，无自动安装/全项目typecheck/源文件写入。",
+    "gate": "明确scope逐文件状态；结构检查0与中文业务语义自检均满足才可限定范围通过；1缺项/重复声明，2不完整；未检查、未支持或能力不足不通过。",
+    "authorization": "用户仅要求维护技能时，只读业务资料，行为验证使用仓库内隔离样本；不修改业务代码、签名或依赖，不构建/安装/提交/发布。",
+    "validation": "20/20独立隔离用例通过；枚举逗号后尾注释误报已修复并回归。两quick_validate、develop validate-skill、两node --check、版本/JSON/副本/引用及git diff --check通过。随后对aura-iotbus-web明确8份API只读运行：exit1、635个声明字段缺独立中文，另列方法/入参等缺项；8/8运行前后SHA256一致，未修改业务代码。证据 .planning/2026-10-26-business-doc-structure/validation/strict-comment-tests/{final-summary.md,fixture-results.md,real-api-summary.md,real-api-report.json}；结构检测不等于中文业务语义或运行验收。",
+    "formatting": "仓库无本地Prettier及配置，遵循现有格式，不安装工具。"
   }
 }
