@@ -1,6 +1,6 @@
 {
   "skill": "aura-web-review",
-  "skillVersion": "0.2.2",
+  "skillVersion": "0.2.4",
   "updatedAt": "2026-10-26",
   "change": "增加 development-self-check 语义模式，正式六文件交付按模式限定",
   "maintenanceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-skills.git",
@@ -285,6 +285,14 @@
       "version": "same working 1.4.1/0.2.1"
     },
     "fieldEvidence": "本轮用户纠正：先查项目docs/API/OpenAPI/类型和实际消费，以资料确认编码单位空值并记录来源；用户确认的共用约定可跨接口取证，不因章节不同机械拒绝；不无证据跨字段套用，确实无法确认才列缺口。",
+    "apiFieldCoverage": {
+      "authority": "2026-10-26 用户指出普通接口字段缺中文说明，授权完善注释技能",
+      "scope": "API具名函数/导出箭头方法的各入参及对象子字段；查询/请求体/表单提交/详情列表/导入导出/错误结果及嵌套数组内联交叉类型；普通字段与字典字段同样核对中文含义，公共继承定义按真实入口核对",
+      "verification": "沿方法→各参数→类型或内联字段→中文含义及注释位置核验；仅对象总说明/类型名/英文标识/工具标记不算通过；源码注释与业务文档独立核验",
+      "authorization": "按授权业务范围；明确整文件整理才覆盖该文件全部业务字段，不扩展无关模块，不虚构契约，不修改执行行为",
+      "version": "aura-web-develop 1.4.4 / aura-web-review 0.2.4；源码维护，未安装或发布",
+      "validation": "两技能quick_validate、develop validate-skill、版本与来源JSON一致性、内部引用及git diff --check通过；真实asset-tag/asset-type-template两API已补44个字段与18个方法，项目本地Prettier/只读ESLint/去注释AST含类型及转译JS等价检查通过。证据见.planning/2026-10-26-business-doc-structure/validation/{validation-summary.txt,api-field-comments.md}；未安装、发布或运行真实接口验收"
+    },
     "businessDocumentFormat": {
       "authority": "2026-10-26 用户明确授权的本地技能补充改进；沿用 local-working-tree-change，不虚构规范来源提交",
       "default": "docs/业务说明/<中文模块>/业务总览.md 与 <中文功能>.md；既有约定优先，用户明确中文则迁移本次涉及说明并修链接",
@@ -296,7 +304,7 @@
       "reportReading": "先结论/变更/人工重点，再代码与业务说明入口、验证摘要与限制、版本范围证据；当前/受后续变更影响待复查/历史状态明确，旧记录保留原范围证据并链接后续记录，不显示为当前通过",
       "selfCheck": "READ-04按语义完整性及真实一致性核验；无固定标题/顺序/表格门槛，独立安装不必读开发技能；字段与源码注释独立判定",
       "version": "aura-web-develop 1.4.2 / aura-web-review 0.2.2；仅源码变更，未安装或发布",
-      "validation": "本轮待主代理协调验证；本文件其他 validation 与过去版本段落保留为历史证据，不代表本轮通过"
+      "validation": "该次业务说明修订已完成结构/引用检查及隔离视频试写，监控中心六份文档已按源码重新生成并验证；证据 .planning/2026-10-26-business-doc-structure/validation/validation-summary.txt。本结论仅为对应修订，不代替后续版本检查或运行验收"
     },
     "recursiveTemplateCoverage": {
       "authority": "本轮用户实测子语义节点漏注释，要求源码树递归盘点",

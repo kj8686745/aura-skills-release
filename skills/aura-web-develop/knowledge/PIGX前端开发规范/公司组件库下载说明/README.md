@@ -88,21 +88,7 @@ pnpm info @fxft/ui-plus
 npm view @fxft/ui-plus
 ```
 
-正常结果应包含：
-
-```text
-福信富通的vue3组件库
-
-keywords: vue3, element-plus
-
-dist-tags:
-latest: 1.0.37
-
-dist.tarball:
-https://repository.fxft.online/repository/npm-store/@fxft/ui-plus/-/ui-plus-1.0.37.tgz
-```
-
-tarball也可能通过 `npm-public` 仓库组返回，只要域名是 `repository.fxft.online`，并且能够读取 `@fxft/ui-plus@1.0.37`，即表示配置和下载权限正常。
+正常结果应包含包信息、`dist-tags` 和 `dist.tarball`。核对实际返回版本与项目批准版本，tarball 可以经 `npm-store` 或 `npm-public` 仓库组返回；能够读取项目所需精确版本，才表示对应下载权限正常。不将历史示例版本或 `latest` 自动作为项目升级目标。
 
 常见失败：
 
@@ -113,10 +99,6 @@ tarball也可能通过 `npm-public` 仓库组返回，只要域名是 `repositor
 | `E404` | 检查 `@fxft:registry`、包名和版本；部分权限问题也可能返回404 |
 | `ENOTFOUND`、`ETIMEDOUT` | 检查公司网络、VPN、DNS或代理 |
 
-权限检查成功后安装固定版本：
-
-```bash
-pnpm add @fxft/ui-plus@1.0.37 --save-exact
-```
+权限检查成功后，按项目批准的精确版本安装并使用 `--save-exact`，保存对应锁文件。
 
 该 `.npmrc.example` 仅限公司内部使用，不得对外分发；由模板生成的含认证值 `.npmrc` 不得提交到代码仓库或对外分发。

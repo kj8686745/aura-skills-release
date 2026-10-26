@@ -44,7 +44,7 @@ const state = reactive<BasicTableProps>({
 const { getDataList, tableStyle } = useTable(state);
 ```
 
-web-kit `1.6.18` 起只支持 `current/size` 请求与 `records/total` 分页响应，可选返回 `pages`。接口启用排序时使用 `orders: [{ column, asc }]`；API 不再转换为其他分页字段。响应不符合该契约时先核对接口，不配置已移除的 `props.item/props.totalCount` 或添加多字段兼容。
+web-kit `1.6.18` 起只支持 `current/size` 请求与 `records/total` 分页响应，可选返回 `pages`。接口启用排序时使用 `orders: [{ column, asc }]`；接口协议不同的，只在项目已有 API 适配边界按真实契约明确转换请求与响应，公共 Hook 和页面仍使用统一分页结构；不配置已移除的 `props.item/props.totalCount`，不维护多套分页状态或添加多字段兼容。
 
 ## 5. 发起真实请求
 

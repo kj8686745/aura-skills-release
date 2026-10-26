@@ -2,7 +2,7 @@
 
 ## 一、版本与选用原则
 
-框架 **1.2.0** 验证基线：`@fxft/aura-web-kit@1.9.0`、`@fxft/aura-ui@1.1.2`、Element Plus `2.14.6`、VueUse `15.0.0`、Node.js `>=22.12.0`、TypeScript `5.9.3`、ESLint `8.57.1`、typescript-eslint parser/plugin `8.46.1`。核对日期：2026-10-21。下表依据已安装发布包的 `package.json.exports` 与 `.d.ts` 整理，覆盖 **113 个公开子入口**；后续版本先核对项目依赖、锁文件与已安装声明，不把源码仓库较新版本当作项目已可用能力。
+框架 **1.2.0** 验证基线：`@fxft/aura-web-kit@1.9.0`、`@fxft/aura-ui@1.1.2`、Element Plus `2.14.6`、VueUse `15.0.0`、Node.js `>=22.12.0`、TypeScript `5.9.3`、ESLint `8.57.1`、typescript-eslint parser/plugin `8.46.1`。核对日期：2026-10-21。下表依据已安装发布包的 `package.json.exports` 与 `.d.ts` 整理，覆盖 **113 个公开子入口**；本规范以 web-kit 精确版本 `1.9.0` 为准，核对依赖声明、锁文件与实际安装版本一致；不将更高版本自动视为符合本基线，也不把源码仓库较新版本当作项目已可用能力。
 
 新增或修改公共 TS 时，先按场景查表，再读相应入口的声明和实现。包没有根入口；使用 `@fxft/aura-web-kit/<子路径>`，不引用 `src/`、`dist/` 或未导出的内部模块。表中列出主要导出用于检索，具体参数和完整导出以该版本声明为准。
 

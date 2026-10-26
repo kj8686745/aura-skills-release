@@ -180,29 +180,31 @@ try {
 	Assert-Equal $result.ExitCode 0 '1.2.0 绑定、多级路径或 >=22.12.0 约束误报'
 	Assert-Rule $result.Report 'MF-RUNTIME-007'
 
-	# 每例使用独立项目，并同时设置声明与安装，低版本必须由最低版本门槛检出。
+	# 每例使用独立项目，并同时设置声明与安装，声明与安装均按精确1.9.0检出偏差。
 	$versionCases = @(
-		@{ Name = 'minimum'; Declared = '1.9.0'; Installed = '1.9.0'; Errors = 0; Manual = 0 },
-		@{ Name = 'patch'; Declared = '1.9.1'; Installed = '1.9.1'; Errors = 0; Manual = 0 },
-		@{ Name = 'minor'; Declared = '1.10.0'; Installed = '1.10.0'; Errors = 0; Manual = 0 },
-		@{ Name = 'major'; Declared = '2.0.0'; Installed = '2.0.0'; Errors = 0; Manual = 0 },
-		@{ Name = 'double-digit-major'; Declared = '10.0.0'; Installed = '10.0.0'; Errors = 0; Manual = 0 },
-		@{ Name = 'metadata'; Declared = '1.9.0+build.1'; Installed = '1.9.0+build.1'; Errors = 0; Manual = 0 },
-		@{ Name = 'low-minor'; Declared = '1.8.99'; Installed = '1.8.99'; Errors = 1; Manual = 0 },
-		@{ Name = 'low-major'; Declared = '0.99.99'; Installed = '0.99.99'; Errors = 1; Manual = 0 },
-		@{ Name = 'minimum-prerelease'; Declared = '1.9.0-rc.1'; Installed = '1.9.0-rc.1'; Errors = 1; Manual = 0 },
-		@{ Name = 'higher-prerelease'; Declared = '1.10.0-rc.1'; Installed = '1.10.0-rc.1'; Errors = 0; Manual = 1 },
-		@{ Name = 'range-installed'; Declared = '^1.9.0'; Installed = '1.9.1'; Errors = 0; Manual = 0 },
-		@{ Name = 'range-installed-low'; Declared = '>=1.8.0'; Installed = '1.8.99'; Errors = 1; Manual = 0 },
+		@{ Name = 'baseline'; Declared = '1.9.0'; Installed = '1.9.0'; Errors = 0; Manual = 0 },
+		@{ Name = 'patch'; Declared = '1.9.1'; Installed = '1.9.1'; Errors = 2; Manual = 0 },
+		@{ Name = 'minor'; Declared = '1.10.0'; Installed = '1.10.0'; Errors = 2; Manual = 0 },
+		@{ Name = 'major'; Declared = '2.0.0'; Installed = '2.0.0'; Errors = 2; Manual = 0 },
+		@{ Name = 'double-digit-major'; Declared = '10.0.0'; Installed = '10.0.0'; Errors = 2; Manual = 0 },
+		@{ Name = 'metadata'; Declared = '1.9.0+build.1'; Installed = '1.9.0+build.1'; Errors = 2; Manual = 0 },
+		@{ Name = 'low-minor'; Declared = '1.8.99'; Installed = '1.8.99'; Errors = 2; Manual = 0 },
+		@{ Name = 'low-major'; Declared = '0.99.99'; Installed = '0.99.99'; Errors = 2; Manual = 0 },
+		@{ Name = 'minimum-prerelease'; Declared = '1.9.0-rc.1'; Installed = '1.9.0-rc.1'; Errors = 2; Manual = 0 },
+		@{ Name = 'higher-prerelease'; Declared = '1.10.0-rc.1'; Installed = '1.10.0-rc.1'; Errors = 2; Manual = 0 },
+		@{ Name = 'range-installed'; Declared = '^1.9.0'; Installed = '1.9.1'; Errors = 2; Manual = 0 },
+		@{ Name = 'range-installed-low'; Declared = '>=1.8.0'; Installed = '1.8.99'; Errors = 2; Manual = 0 },
 		@{ Name = 'exact-mismatch'; Declared = '1.9.0'; Installed = '1.9.1'; Errors = 1; Manual = 0 },
 		@{ Name = 'installed-low-priority'; Declared = '1.9.1'; Installed = '1.8.99'; Errors = 2; Manual = 0 },
-		@{ Name = 'invalid-installed'; Declared = '^1.9.0'; Installed = 'unknown'; Errors = 0; Manual = 1 },
-		@{ Name = 'invalid-leading-zero'; Declared = '*'; Installed = '01.9.0'; Errors = 0; Manual = 1 },
-		@{ Name = 'range-uninstalled'; Declared = '^1.9.0'; Installed = ''; Errors = 0; Manual = 2 },
-		@{ Name = 'tag-uninstalled'; Declared = 'latest'; Installed = ''; Errors = 0; Manual = 2 },
-		@{ Name = 'exact-uninstalled'; Declared = '1.10.0'; Installed = ''; Errors = 0; Manual = 1 },
+		@{ Name = 'invalid-installed'; Declared = '^1.9.0'; Installed = 'unknown'; Errors = 2; Manual = 0 },
+		@{ Name = 'invalid-leading-zero'; Declared = '*'; Installed = '01.9.0'; Errors = 2; Manual = 0 },
+		@{ Name = 'range-uninstalled'; Declared = '^1.9.0'; Installed = ''; Errors = 1; Manual = 1 },
+		@{ Name = 'tag-uninstalled'; Declared = 'latest'; Installed = ''; Errors = 1; Manual = 1 },
+		@{ Name = 'baseline-uninstalled'; Declared = '1.9.0'; Installed = ''; Errors = 0; Manual = 1 },
+		@{ Name = 'range-installed-baseline'; Declared = '^1.9.0'; Installed = '1.9.0'; Errors = 1; Manual = 0 },
+		@{ Name = 'exact-uninstalled'; Declared = '1.10.0'; Installed = ''; Errors = 1; Manual = 1 },
 		@{ Name = 'low-uninstalled'; Declared = '1.8.99'; Installed = ''; Errors = 1; Manual = 1 },
-		@{ Name = 'undeclared'; Declared = ''; Installed = '1.9.1'; Errors = 1; Manual = 0 }
+		@{ Name = 'undeclared'; Declared = ''; Installed = '1.9.1'; Errors = 2; Manual = 0 }
 	)
 	foreach ($case in $versionCases) {
 		$versionRoot = Join-Path $testRoot ('version-' + $case.Name)
@@ -215,13 +217,13 @@ try {
 		Assert-Equal $result.ExitCode $expectedExit "web-kit $($case.Name) 退出码"
 	}
 	$missingExportRoot = Join-Path $testRoot 'missing-kit-export'
-	New-KitFixture -Root $missingExportRoot -DeclaredVersion '1.9.1' -InstalledVersion '1.9.1'
+	New-KitFixture -Root $missingExportRoot -DeclaredVersion '1.9.0' -InstalledVersion '1.9.0'
 	$exportPackagePath = 'node_modules/@fxft/aura-web-kit/package.json'
 	$exportPackage = Get-Content -LiteralPath (Join-Path $missingExportRoot $exportPackagePath) -Raw | ConvertFrom-Json
 	$exportPackage.exports.PSObject.Properties.Remove('./vite')
 	Write-FixtureFile $missingExportRoot $exportPackagePath ($exportPackage | ConvertTo-Json -Depth 5)
 	$result = Invoke-CheckerJson -ProjectPath $missingExportRoot
-	Assert-Equal $result.ExitCode 1 '更高 web-kit 版本缺失公开入口仍须失败'
+	Assert-Equal $result.ExitCode 1 '基线 web-kit 缺失公开入口仍须失败'
 	Assert-Equal @($result.Report.findings | Where-Object { $_.ruleId -eq 'MF-DEP-004' -and $_.severity -eq 'error' }).Count 1 '缺失入口错误未保留'
 
 	$bindingPath = Join-Path $kitRoot 'src/config/aura/federation.ts'

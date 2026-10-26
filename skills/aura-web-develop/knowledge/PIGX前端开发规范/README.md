@@ -61,7 +61,7 @@
 - import 静态资源使用 `getStaticResourceUrl`，public 资源使用 `getPublicResourceUrl`。
 - 覆盖自动解析的第三方组件时，使用 Vite Resolver 在编译期注入本地实现，不依赖 `main.ts` 的同名全局注册。
 - 后台主布局、布局预设和主题运行时由 `aura-core` 统一提供，业务项目不得复制或替换实现。
-- 2D 地图使用 `FxftMap`；单路和多路视频分别使用 `FxftVideoPlayer`、`FxftMultiVideoPlayer`。
+- 2D 地图使用 `FxftMap`；单路和多路视频分别使用 `FxftWebVideo`、`FxftWebMultiVideo`。
 - 中文文档、注释和提示使用 UTF-8 无 BOM。
 
 ## 2026-10-21 模块联邦与工具链补充

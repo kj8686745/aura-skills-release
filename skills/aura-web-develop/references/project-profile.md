@@ -4,11 +4,11 @@
 
 ## 当前基线
 
-- Vue 3.5、TypeScript、`<script setup>`
-- Vite 6、pnpm 10、Node.js >=22
-- Element Plus 2.11
+- Vue 3.5、TypeScript 5.9.3、`<script setup>`
+- Vite 6.4.3、pnpm 10、Node.js >=22.12.0
+- Element Plus 2.14.6
 - Pinia 2、Vue Router 4、Vue I18n 9
-- `@module-federation/vite@1.18.2`、`@module-federation/enhanced@2.8.0`
+- `@module-federation/vite@1.23.5`、`@module-federation/enhanced@2.9.2`
 - SCSS、Tailwind CSS、主题 CSS 变量、远程 scoped Tailwind
 - 项目内部别名：`/@/`
 
@@ -20,7 +20,7 @@
 - 消息提示和弹框统一从 `/@/config/aura/index` 使用 `useMessage`、`useMessageBox`。
 - 远程页面加载时不会执行提供方 `index.html` 和 `main.ts`。
 - import 静态资源经 `getStaticResourceUrl`；public 资源经 `getPublicResourceUrl`。
-- Element Plus 保持本地依赖，不加入 Module Federation shared。
+- Element Plus 保持本地依赖，并在 Module Federation shared 中配置 singleton，requiredVersion 为 ^2.14.6。
 - API、组件、Hook 和全局组件名称必须从当前项目真实源码确认。
 
 ## 开发前检查

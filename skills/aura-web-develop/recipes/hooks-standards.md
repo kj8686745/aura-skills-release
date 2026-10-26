@@ -52,9 +52,9 @@ const {
 - 保留当前页刷新调用 `getDataList(false)`。
 - 文本、数字等差异化对齐通过 `tableAlign` 按列 `prop` 配置。
 - 不从返回值解构 `state`，不手写重复的分页、排序和下载逻辑。
-- web-kit `1.6.18` 起，分页请求仅使用 `current/size`，响应读取 `records/total`，`pages` 为可选返回字段。API 层不得转换为 `pageNum/pageSize/pageNo/currentPage`，也不得把 `total/records/pages` 作为请求参数。
+- web-kit `1.6.18` 起，分页请求仅使用 `current/size`，响应读取 `records/total`，`pages` 为可选返回字段。接口协议不同的，只在项目已有 API 适配边界按真实契约明确转换请求与响应；公共 Hook 和页面仍使用统一分页结构，不把 `total/records/pages` 作为请求参数。
 - 接口启用排序时使用 `orders: OrderItem[]`（`column`、`asc`）；未配置或清空后省略，不发送 `descs/ascs`。GET 对象数组使用 `orders[0].column`、`orders[0].asc`，POST JSON 使用对象数组，复用公共请求序列化。
-- `pageSizes/layout` 只用于分页组件。旧 `props.item/props.totalCount` 映射已移除；响应契约不一致时先确认接口，不增加字段别名或多字段兜底。
+- `pageSizes/layout` 只用于分页组件。旧 `props.item/props.totalCount` 映射已移除；响应契约不一致时先确认接口，在已有 API 适配边界转换为标准结构；不恢复 Hook 内映射、不维护多套分页状态或添加多字段兜底。
 
 ## useForm
 

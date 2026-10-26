@@ -19,6 +19,6 @@
 - 不根据历史技能示例猜测 `aura-core` 的 expose key；先检查当前 manifest、配置和类型。
 - 远程页面不会执行提供方 `index.html` 与 `main.ts`，不能只依赖全局注册副作用。
 - 远程 i18n、Tailwind 和页面 CSS 按最新版规范加载。
-- Element Plus 保持本地依赖，不加入 Module Federation shared。
+- Element Plus 保持本地依赖，并在 Module Federation shared 中配置 singleton，requiredVersion 为 ^2.14.6。
 - import 静态资源经 `getStaticResourceUrl`；public 资源经 `getPublicResourceUrl`。
 - 加载失败只影响当前内容区，并提供符合项目约定的重试能力。

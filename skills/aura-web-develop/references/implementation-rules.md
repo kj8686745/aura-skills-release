@@ -33,6 +33,6 @@
 - 业务开发需要颜色时，按 `--el-*` → `--next-*` → `--fxft-*` 的顺序从现有主题变量中选用；变量含义和场景以 `knowledge/PIGX前端开发规范/样式布局与静态资源规范.md` 为准。
 - 除非用户明确要求，业务开发不得新增或修改 `.el-*`、`:deep(.el-*)`、`--el-*` 重写及全局 Element Plus 样式覆盖；正常使用 Element Plus 组件公开 props 不受影响。
 - 不直接创建 axios 实例，不自行处理认证失效，不硬编码域名、IP、Token、Cookie、密码或部署前缀。
-- Element Plus 保持本地依赖，不加入 Module Federation shared；Vue、Vue Router、Vue I18n、Pinia 按最新版模块联邦规范共享。
-- 地图使用 `FxftMap`；单路和多路视频使用 `FxftVideoPlayer`、`FxftMultiVideoPlayer`，不得重复封装底层 SDK。
+- Element Plus 保持本地依赖，并在 Module Federation shared 中配置 singleton，requiredVersion 为 ^2.14.6；Vue、Vue Router、Vue I18n、Pinia 按最新版模块联邦规范共享。
+- 地图使用 `FxftMap`；单路和多路视频使用 `FxftWebVideo`、`FxftWebMultiVideo`，不得重复封装底层 SDK。
 - 中文文档、注释、提示和新增文本文件使用 UTF-8 无 BOM。

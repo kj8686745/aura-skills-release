@@ -5,7 +5,7 @@ description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联�
 
 # Aura PIGX 模块联邦检查
 
-当前版本：`1.1.5`。
+当前版本：`1.1.6`。
 
 只读识别与审计 PIGX 综合端，提供改前基线、改后复检。配置实现由 `aura-web-develop` 主导；仅在用户明确要求修复时修改项目，不猜测部署地址、远程拓扑或后台菜单。
 
@@ -26,6 +26,6 @@ description: 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联�
 
 优先级：用户要求 → 项目源码、类型、实际依赖和产物 → [正式规范](knowledge/PIGX前端开发规范/模块联邦开发技术规范.md) → 规则矩阵与脚本。出现规范冲突或配置细节疑问时读取正式规范。
 
-1.2.0 公共包绑定的 web-kit 最低稳定版本为 `1.9.0`，更高稳定版满足版本门槛；优先核对实际安装版本，并保留声明一致性与必要公开入口检查。Element Plus `2.14.6` singleton 和 Node.js ≥22.12.0 要求不变。不得要求已迁移项目恢复本地运行时副本或旧 alias。公共入口和项目绑定见 [aura-web-kit 清单](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)。未命中的参考不加载；同一会话未变化的资料不重复读取。
+1.2.0 公共包绑定的 web-kit 统一使用精确版本 `1.9.0`；核对依赖声明、锁文件与实际安装版本一致，版本范围、预发布版及其他版本不作为通过依据，并保留必要公开入口检查。Element Plus `2.14.6` singleton 和 Node.js ≥22.12.0 要求不变。不得要求已迁移项目恢复本地运行时副本或旧 alias。公共入口和项目绑定见 [aura-web-kit 清单](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)。未命中的参考不加载；同一会话未变化的资料不重复读取。
 
-本轮 MF Vite 1.23.5、web-kit 最低 1.9.0 与 TypeScript 5.9.3 配套基线及来源见 [升级来源记录](references/framework-upgrade-source.json)；按模块联邦规范接入自动预构建和 ESLint 配套配置，不沿用旧扫描插件或强制手工清单。
+本轮 MF Vite 1.23.5、web-kit 精确 1.9.0 与 TypeScript 5.9.3 配套基线及来源见 [升级来源记录](references/framework-upgrade-source.json)；按模块联邦规范接入自动预构建和 ESLint 配套配置，不沿用旧扫描插件或强制手工清单。

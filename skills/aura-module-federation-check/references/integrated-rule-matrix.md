@@ -53,7 +53,7 @@
 | `MF-VITE-004` | error | 未禁用 Module Preload，或缺少远程预加载跳过插件。 |
 | `MF-VITE-005` | warning | `bundleAllCSS` 不是 `false`，可能破坏 expose 级样式加载。 |
 
-| `MF-DEP-004` | error / manual | web-kit 最低稳定版为 `1.9.0`，按数值比较版本段，更高稳定版通过版本门槛，构建元数据不影响优先级。优先使用实际安装版本；低于最低版本（包括 `1.9.0` 的预发布版）、缺少依赖声明、已安装关键 exports 缺失或精确声明与安装不一致为 error。未安装时仅以精确声明判断版本门槛，exports 仍为 manual；范围或不可解析版本无法判定时为 manual，高于最低版本的预发布版仍须 manual 确认。 |
+| `MF-DEP-004` | error / manual | web-kit 必须为精确版本 `1.9.0`；缺少依赖声明、声明为范围/标签/其他版本、实际安装不为1.9.0、关键 exports 缺失均为 error。未安装时只可确认声明，发布包版本和 exports 仍为 manual；不自动接受更高版本或预发布版。锁文件一致性须结合项目依赖记录核对。 |
 | `MF-VITE-006` | error | 公共包模式缺少 SSR 清理、dev 优化、createAuraAutoImportPreset 或 auraAutoOptimizeDeps 调用；仍调用已移除的 stabilizeFederationModuleScan。静态模式核对标准名称，配置间接生成时需读取真实配置补证。 |
 | `MF-VITE-007` | error | 公共包模式没有通过 createAuraPostcssPlugins 绑定 PostCSS。 |
 | `MF-VITE-008` | warning / manual | 源码使用已登记入口，缺少自动收集调用且字面量 include 无入口时 warning；存在自动收集或精确 include 时仍需 manual 核验发现报告、最终配置、包版本与冷启动。静态扫描不执行 Vite 配置，不因根包 include 或组件库安装就判定覆盖。详见预构建检查及入口登记。 |
