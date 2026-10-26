@@ -5,6 +5,8 @@ description: "只读审查 AURA Java/Spring 后端变更、存量接口或全项
 
 # AURA 后端与接口规范审查
 
+每次审查必须先交付人类可读的结果总览，再交付详细报告和机器证据。总览只保留结论、范围、已确认事实、未证实项和下一步；JSON、完整候选和逐文件清单放在同一项目结果目录中作为证据，不作为默认阅读入口。
+
 一次调用连续完成可执行审查并交付报告，不按模块反复等待确认。只读目标源码、锁文件和配置；补证不能隐含修改业务、访问生产或发布。版本见 `VERSION`，来源见[规范来源与验证](references/规范来源与验证.md)。
 
 ## 先选择任务
@@ -45,6 +47,7 @@ PowerShell 7；在技能目录执行，项目及模块路径换为实际范围�
 ./scripts/inspect-review-scope.ps1 -ProjectPath '<项目根>' -ModulePath 'device' -BaseRef '<基线提交>' -HeadRef '<目标提交>' -IncludeWorkingTree -Json
 # 只有需要逐文件资产目录时追加：-IncludeFiles
 ./scripts/check-backend-rules.ps1 -ProjectPath '<项目根>' -ModulePath 'device' -Json
+./scripts/inspect-database-changes.ps1 -ProjectPath '<项目根>' -FilePath @('<本次Mapper.xml>','<本次迁移.sql>') -OutputPath 'docs/临时验证物料/后端规范审查/查询迁移候选.json' -Json
 ./scripts/check-review-result.ps1 -Mode Change -ResultPath '<单报告.md>' -MatrixPath '<技能目录>/references/standards/01-基础编码规范/规范矩阵.md' -Json
 ./scripts/check-review-evidence.ps1 -Mode Change -ResultPath '<单报告.md>' -Json
 ./scripts/check-capability-ledger.ps1 -InputPath '<范围盘点 JSON>' -Json
@@ -54,7 +57,7 @@ PowerShell 7；在技能目录执行，项目及模块路径换为实际范围�
 
 盘点/候选工具复用后端开发同源实现，完整携带依赖，不要求另装开发技能。它们仅处理指定模块；变更时可对所属模块采集上下文，但区分差异对象、关联对象和未审对象，不能把盘点到的文件全算已查。按需可直接调用 `inventory-api-contracts.ps1`，需要代码返回模型字段候选时追加 `-IncludeResponseFields`，请求体字段候选时追加 `-IncludeRequestFields`，避免重复接口采集。详情与工具边界见执行路由。
 
-结果 JSON 继续定位时使用 `select-json-summary.ps1 -InputPath '<临时 JSON>' -PathFilter '<模块或文件>' -RuleId '<规则>' -ApiPath '<接口路径>'`，只把摘要和命中项带回会话；完整文件清单、字段候选和能力候选不作为默认上下文。
+结果 JSON 继续定位时使用 `select-json-summary.ps1 -InputPath '<临时 JSON>' -PathFilter '<模块或文件>' -RuleId '<规则>' -ApiPath '<接口路径>'`，只把摘要和命中项带回会话；完整文件清单、字段候选和能力候选不作为默认上下文。交付目录固定先放 `00-审查结果总览.md`，变更模式的详细报告放在 `01-变更审查报告.md` 或同目录既定报告名，原始 JSON 放入 `证据/` 或以“证据”前缀命名。
 
 结果检查入口传入 `-MatrixPath` 后会自动将报告引用的规则 ID 与随包正式规范矩阵比对；只阻断不存在的规则 ID，不把未引用规则当作偏差或要求局部审查覆盖全矩阵。`check-review-matrix.ps1` 仍可单独用于排错和统计。
 
@@ -68,6 +71,7 @@ PowerShell 7；在技能目录执行，项目及模块路径换为实际范围�
 
 `ModulePath` 是项目相对目录，不接收文件。`api.status=not-triggered` 只表示当前范围无 HTTP 线索、未执行接口盘点，不是接口域通过；已知涉及 HTTP 时用 `-ApiMode Required`。`reviewFocus` 只帮助选读，不能代替规范矩阵、适用性判定或规则覆盖统计。
 
-配置证据默认只输出路径、字节数和内容 SHA-256，不输出键值；扫描口径及输出排除见 `scope.scanPolicy`。需要代码/日志片段时仍须先人工脱敏，不把该工具当通用秘密扫描器。
+配置证据默认只输出路径、字节数和内容 SHA-256，不输出键值；`check-backend-rules.ps1` 会对指定范围内 Java 的受控字符串/字符数组声明生成敏感配置候选，只记录字段名和行号，并过滤环境变量引用与常见占位符。候选仍须人工区分真实凭据、测试夹具和示例值；该扫描不覆盖历史提交、镜像、日志和二进制。
+
 
 退出 `0` 表示所请求静态处理未识别到问题，不代表项目合规；`1` 为执行/格式错误；`2` 为候选待复核或不完整。报告自检检查的是报告，不代替业务取证。敏感值落盘前脱敏；工具没有覆盖的规则仍须人工核对。

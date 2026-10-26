@@ -5,13 +5,18 @@ $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'backend-common.ps1')
 $candidates=[Collections.Generic.List[object]]::new();$unresolved=[Collections.Generic.List[object]]::new()
 $checked=[Collections.Generic.List[string]]::new();$reuse=[Collections.Generic.List[object]]::new()
+$boundary=[ordered]@{external=0;internalCandidate=0;unresolved=0;platformAnnotationOnInternal=0}
 function Add-Candidate($Rule,$Path,$Line,$Message,$Review){$candidates.Add(@{ruleId=$Rule;path=$Path;line=$Line;status='candidate';message=$Message;review=$Review})}
 try{
   $scope=Get-BackendScope $ProjectPath $ModulePath
   foreach($file in $scope.files){
     $rel=[IO.Path]::GetRelativePath($scope.root,$file).Replace('\','/')
+    $text=[IO.File]::ReadAllText($file)
+    foreach($secret in @(Get-BackendSensitiveCandidates $text $rel)){
+      Add-Candidate 'AURA-BASE-CONF-001' $secret.path $secret.line $secret.message $secret.review
+    }
     if($rel -notlike '*.java' -or $rel -match '(^|/)src/test/'){continue}
-    $checked.Add($rel);$text=[IO.File]::ReadAllText($file);$mask=Get-BackendMask $text
+    $checked.Add($rel);$mask=Get-BackendMask $text
     $controller=$mask -match '@(?:[\w.]+\.)?(RestController|Controller)\b'
     $service=$mask -match '@(?:[\w.]+\.)?Service\b'
     if($controller -or $service){
@@ -32,6 +37,8 @@ try{
   $api=Invoke-BackendApiInventory $scope $ApiMode
   foreach($issue in $api.unresolved){$unresolved.Add($issue)}
   foreach($route in $api.routes){
+    $public=$route.path -match '^/openapi(?:/|$)';$platform=$route.platformApi
+    if($public){$boundary.external++}elseif($platform){$boundary.platformAnnotationOnInternal++;$boundary.unresolved++;Add-Candidate 'AURA-BASE-API-026' $route.source $route.line '内部路径发现 @PlatfomApi，需确认是否误标对外平台 API' '内部接口不应为自动收录添加平台注解；确认边界后保留或移除。'}else{$boundary.internalCandidate++}
     if($route.returnType -match '\b(?:IPage|Page|OpenPage)\s*<'){
       Add-Candidate 'AURA-BASE-API-014' $route.source $route.line 'HTTP 签名暴露 ORM 或独立分页类型' '解析实际类型与适配层，按统一公共分页目标核对；框架缺公共类型时报告缺口，不新造同名类型。'
     }
@@ -41,7 +48,6 @@ try{
     if($route.returnType -match '\b\w+Entity\b'){
       Add-Candidate 'AURA-BASE-BE-006' $route.source $route.line 'HTTP 签名包含 Entity 命名类型' '查类型是否为持久化实体，以及是否有公开模型转换；名称不是最终证据。'
     }
-    $public=$route.path -match '^/openapi(?:/|$)';$platform=$route.platformApi
     if($public -and -not $platform){Add-Candidate 'AURA-BASE-API-026' $route.source $route.line '公开路径未发现直接 @PlatfomApi 登记' '核对方法、注解和平台收录；不向内部接口统一补注解。'}
     if($platform){
       if(-not $public){Add-Candidate 'AURA-BASE-API-026' $route.source $route.line '平台 API 注解路径未以 /openapi 开头' '确认接口是否对外及网关最终路径，不根据类名推断边界。'}
@@ -53,7 +59,7 @@ try{
     }
   }
   foreach($path in $scope.skipped){$unresolved.Add(@{path=$path;reason='跳过重解析点'})}
-  $result=[ordered]@{schemaVersion=1;status=$(if($candidates.Count -or $unresolved.Count){'needs-review'}else{'scan-complete'});project=$scope.root;modules=$ModulePath;files=@($checked.ToArray());candidates=@($candidates.ToArray());capabilityReferences=@($reuse.ToArray());unresolved=@($unresolved.ToArray());coverage=@('入口底层数据访问线索','线程创建','同名基础入口','直接 HTTP 响应/分页/Entity 类型','OpenAPI 路径与平台注解');requiredSemanticReview=@('基础业务和公共支撑对应功能是否沿真实公开入口复用；未命中符号不能判断无复用。','DTO 全字段、权限/租户、事务/缓存/幂等和调用方兼容，按改动范围核对。');limitations=@('所有命中都是待复核候选，不自动整改或给出整个项目合规结论。','只扫描指定目录，排除测试与生成产物；继承、动态或组合映射需补证，网关及运行未验证。')}
+  $result=[ordered]@{schemaVersion=1;status=$(if($candidates.Count -or $unresolved.Count){'needs-review'}else{'scan-complete'});project=$scope.root;modules=$ModulePath;files=@($checked.ToArray());candidates=@($candidates.ToArray());capabilityReferences=@($reuse.ToArray());unresolved=@($unresolved.ToArray());apiBoundary=$boundary;coverage=@('入口底层数据访问线索','线程创建','同名基础入口','直接 HTTP 响应/分页/Entity 类型','OpenAPI 路径与平台注解','敏感配置字面值候选');requiredSemanticReview=@('基础业务和公共支撑对应功能是否沿真实公开入口复用；未命中符号不能判断无复用。','DTO 全字段、权限/租户、事务/缓存/幂等和调用方兼容，按改动范围核对。','接口边界需由任务/文档/网关事实确认；internalCandidate 不是内部结论，external 需核对公开登记。','敏感配置候选必须区分真实凭据、测试夹具、占位符和环境变量引用，不回显字面值。');limitations=@('所有命中都是待复核候选，不自动整改或给出整个项目合规结论。','只扫描指定目录，排除测试与生成文件；继承、动态或组合映射需补证，网关及运行未验证。','敏感配置扫描覆盖受控的 Java 字符串/字符数组声明及常见配置资源，不替代历史提交、镜像、日志和二进制扫描。')}
   $result['api']=@{status=$api.status;limitations=@($api.limitations)}
   $result['reviewFocus']=@(Get-BackendReviewFocus $scope)
   $code=if($candidates.Count -or $unresolved.Count){2}else{0}

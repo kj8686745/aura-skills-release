@@ -40,6 +40,35 @@ function Get-BackendMask([string]$Text) {
   return -join $chars
 }
 function Get-BackendLine([string]$Text,[int]$Index){return 1+[regex]::Matches($Text.Substring(0,$Index),"`n").Count}
+function Get-BackendSensitiveCandidates([string]$Text,[string]$RelativePath){
+  $masked=Get-BackendMask $Text
+  $configExtensions=@('.properties','.yml','.yaml','.conf','.env','.json','.toml','.xml','.gradle','.kts')
+  $extension=[IO.Path]::GetExtension($RelativePath).ToLowerInvariant()
+  if($extension -in $configExtensions){
+    $configPattern='(?im)^\s*["'']?(?<name>[A-Za-z0-9_.-]*(?:password|passwd|secret|token|access(?:code|token)?|api(?:key|token)?|client(?:secret|key)|privatekey|credential|key)[A-Za-z0-9_.-]*)["'']?\s*[:=]\s*["'']?(?<value>[^,"''\r\n#]+)["'']?'
+    foreach($match in [regex]::Matches($Text,$configPattern)){
+      $name=[string]$match.Groups['name'].Value;$value=[string]$match.Groups['value'].Value.Trim()
+      if($name -match '(?i)(?:timeout|ttl|duration|interval|size|length|count|port|url)$'){continue}
+      if($value -match '(?i)^(?:\$\{[^}]+\}|<[^>]+>|CHANGE_ME|TODO|YOUR[_-]?|EXAMPLE|PLACEHOLDER|DO[-_ ]?NOT[-_ ]?OUTPUT(?:[-_ ].*)?|NOT[-_ ]?REAL|SAMPLE|NULL|NONE|TRUE|FALSE)$'){continue}
+      $minimum=if($name -match '(?i)(?:^|[-_.])(?:key|clientkey)$'){16}else{8}
+      if($value.Length -lt $minimum){continue}
+      [pscustomobject]@{path=$RelativePath;line=(Get-BackendLine $Text $match.Index);name=$name;message='疑似敏感配置硬编码（仅记录字段名和行号）';review='区分真实凭据、测试夹具、占位符和环境变量引用；确认后按 CONF-001 判定，不回显字面值。'}
+    }
+    return
+  }
+  $pattern='(?<![A-Za-z0-9_])(?:(?:public|protected|private)\s+)?(?:(?:static)\s+)?(?:(?:final)\s+)?(?:String|char\[\])\s+(?<name>[A-Za-z_][A-Za-z0-9_]*)\s*=\s*"(?<value>(?:\\.|[^"\\])*)"\s*;'
+  $namePattern='(?i)^(?:password|passwd|secret|token|access(?:code|token)?|api(?:key|token)?|client(?:secret|key)|privatekey|credential|key)$'
+  foreach($match in [regex]::Matches($Text,$pattern)){
+    $maskedPart=$masked.Substring($match.Index,[Math]::Min($match.Length,$masked.Length-$match.Index))
+    if($maskedPart -notmatch '\b(?:String|char\[\])\b'){continue}
+    $name=[string]$match.Groups['name'].Value;$value=[string]$match.Groups['value'].Value
+    if($name -notmatch $namePattern){continue}
+    if($value -match '(?i)^\s*(?:\$\{[^}]+\}|<[^>]+>|CHANGE_ME|TODO|YOUR[_-]?|EXAMPLE|PLACEHOLDER|NULL|NONE)\s*$'){continue}
+    $minimum=if($name -match '(?i)^(?:key|clientkey)$'){16}else{8}
+    if($value.Length -lt $minimum){continue}
+    [pscustomobject]@{path=$RelativePath;line=(Get-BackendLine $Text $match.Index);name=$name;message='疑似敏感配置硬编码（仅记录字段名和行号）';review='区分真实凭据、测试夹具、占位符和环境变量引用；确认后按 CONF-001 判定，不回显字面值。'}
+  }
+}
 function Invoke-BackendApiInventory($Scope,[ValidateSet('Auto','Required')][string]$ApiMode='Auto') {
   if($Scope.skipped.Count){return @{status='partial';routes=@();unresolved=@(@{reason='范围含重解析点，未执行递归接口盘点；请指定不含链接的源码目录'})}}
   if($ApiMode -eq 'Auto'){

@@ -1,8 +1,8 @@
 {
   "skill": "aura-base-backend-development",
-  "skillVersion": "1.4.0",
+  "skillVersion": "1.24.0",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "138603e83ac4e06b7360b6e659e3e71f0cf22839",
+  "sourceCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
   "transformation": "仅移除逐文档登记的包外导航，保留完整正文与章节；摘要仅归一化 CRLF 为 LF。",
   "modules": [
     {
@@ -58,7 +58,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "7ce75e5b9ee3f9a37c0fa50dd8a592b15251062c58a4d634aa6a13621534aa28"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/总入口.md",
@@ -86,13 +87,14 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "a9acb16c31deb505389a7cd1e0fce054aba77e22ce1503062053943a78c930b9"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/规范矩阵.md",
       "snapshot": "references/standards/01-基础编码规范/规范矩阵.md",
-      "sourceSha256Lf": "a2b3441407b870879b968607a225f035eb316fbf14fe1c9277c1aaba94a051b2",
-      "snapshotSha256Lf": "a7885990d607418eb1dd942012e79781129865d505841bfdb773b5072647bfb8",
+      "sourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0",
+      "snapshotSha256Lf": "faec56e09ce4b287ad1ed2bed6a66d50779c45b4231273a42721ddc35d5d8bab",
       "navigationTargetsRemoved": [
         "./04-前端基础编码规范/01-工程组织与页面状态.md",
         "./04-前端基础编码规范/02-请求路由权限与数据适配.md",
@@ -111,7 +113,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-详细设计规范/01-详细设计规范.md",
@@ -122,7 +125,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "67038551792da307beb153c54d424fa6d6a1df33fa2563868d5e73f3a0c2f783"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-详细设计规范/02-技术详细设计文档模板.md",
@@ -133,7 +137,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "b1c3b5550b0bd050bae77d042cc059d05b9d199739a26ae516d4a2f7f34ebc06"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-详细设计规范/03-技术详细设计文档示例-设备审核通知.md",
@@ -144,7 +149,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "c1890c226d8dc3c0969844066dbe9f986ced6a9ee105f2013ac6a4a0725ea208"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/01-基础业务开发能力包/总入口.md",
@@ -155,7 +161,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "79f5e25d63a748b9c98de434c48928512e96a481d852b743ca91de85c8d3c0b3"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/01-基础业务开发能力包/能力详细说明.md",
@@ -166,7 +173,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "ddbea57ffc3fcfb83c0f5f85021e08595bf96a38e2c20d544fa9eca0ff87205a"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/03-基础通用支撑能力包/01-总入口.md",
@@ -177,7 +185,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "7d9f3c083bc516603b083da9260cc1fd1f4b7599b747fc6d13e3eb85487a9a1c"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/03-基础通用支撑能力包/02-能力清单与边界.md",
@@ -188,7 +197,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "1edf2add065858eee740e5f995d3603983cb6edc01ae8d4f9ea874baca3c6027"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/03-基础通用支撑能力包/03-基础能力详细说明.md",
@@ -199,7 +209,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "3ec901be00887b22f3b66d4b2632e56c21473122087125b308cdfdf54f432ec5"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/03-基础通用支撑能力包/04-基础能力使用规范.md",
@@ -210,7 +221,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "5afcff8c72ce1158ed4d1a4a07443cdc86efa3a9d904291829606ae0ebc3afd2"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/03-基础通用支撑能力包/05-基础能力使用示例.md",
@@ -221,7 +233,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "2a167fa4276451ed9ae84d218722d04fe09aa539703a3d69bc36ad45d52cae1e"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/03-基础通用支撑能力包/06-通用工具目录.md",
@@ -232,7 +245,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "dcf17ac76a257f49c0ec2d3a65a9e4ddb576652f5024a8f84744fc7be52c3670"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/03-基础通用支撑能力包/07-通用工具使用说明.md",
@@ -243,7 +257,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "49be72e02596dcf206d69dc97cd1bf3f613037e2d30c6d05115a2a01e9524287"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/03-基础通用支撑能力包/08-文件存储能力说明.md",
@@ -254,7 +269,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "57beb42daa07fac798ae50b2b1e7db610d59977014018a21ebd1ec80306c6039"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/04-文件任务与实时交互能力包/总入口.md",
@@ -265,7 +281,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "64b6de53f51f09a39ed38f4ecd234f43b018dc91d5b03321802ea6f73dd15200"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/04-文件任务与实时交互能力包/能力清单与边界.md",
@@ -276,7 +293,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "dd1537d1a89dc5027e1ff92d365b18a0cce52b8b1acaa9b028805f4de581242d"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/04-文件任务与实时交互能力包/能力详细说明.md",
@@ -287,7 +305,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "7dee60b94db27d9de6f3d594c33988d5546ba540946940bba639914590731fb7"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/05-数据与事务基础设施能力包/总入口.md",
@@ -298,7 +317,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "3ccc1a7373d2d90b35d5cd3f45fd182449ec19cc60fad12abe81bc506b21c4d2"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/05-数据与事务基础设施能力包/能力清单与边界.md",
@@ -309,7 +329,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "83b20058abe257746455f87e6cc0f63dd10eeea57779c7bd41b60e29a2dd2f80"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/05-数据与事务基础设施能力包/能力详细说明.md",
@@ -320,7 +341,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "333afddaa112de892d49664f9f270bf04607bd6f41011967c2fea1e7f829b9cf"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/06-数据安全与内容防护能力包/总入口.md",
@@ -331,7 +353,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "0602ca25eb3e4018fcb1cab994e566297e82e5d3229217a5884f1943daae9840"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/06-数据安全与内容防护能力包/能力清单与边界.md",
@@ -342,7 +365,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "12422e0a02b91a43f51558a46fd4e21b4546e704aeff0e3d787236a8c061b0ac"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/06-数据安全与内容防护能力包/能力详细说明.md",
@@ -353,7 +377,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "fc2bad573968573aa1a407ed90ac02b413106f85f0b1c68228147ce5ef4cc926"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/07-网关与流量治理能力包/总入口.md",
@@ -364,7 +389,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "bfc9013b7056dc50f6155882272d8da929f1d973001b437effeb77351e5e744b"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/07-网关与流量治理能力包/能力清单与边界.md",
@@ -375,7 +401,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "72d958df524dc2b96093a93ba80af8512e0877a998aa10501e6b680caffead91"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/07-网关与流量治理能力包/能力详细说明.md",
@@ -386,7 +413,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "3c595631158124fc1d20c50938f0079dcb89232aa6ade33ff630e5df922bcd8b"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/08-任务与调度能力包/总入口.md",
@@ -397,7 +425,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "7095581a18349cb83b4281b6ee6bbdf205baece2c9c3a5bd4cedd0d0e975bb03"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/08-任务与调度能力包/能力清单与边界.md",
@@ -408,7 +437,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "ed6ce5c6754bc776f390804045e0244c3ac55ad7f6e14ac7fa469c80017e7bda"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/08-任务与调度能力包/能力详细说明.md",
@@ -419,7 +449,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "86d475aaf6e2f4904304431d7c98da150df05c473537210d9a496f1bf5e00a63"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/01-工程结构命名与项目文档规范/01-工程结构与代码组织.md",
@@ -432,7 +463,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "b8cb1e99327d3c495eb4fe4804f951e0aebbf2e45b37a8fb78a39c225578eb93"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/01-工程结构命名与项目文档规范/02-命名与代码表达.md",
@@ -443,7 +475,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "7ae0efcef9b096499bd2f04b98b84ca2dce06e5ddaad47954ba1bd6e96b92971"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/01-工程结构命名与项目文档规范/03-项目文档与资料组织.md",
@@ -454,7 +487,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "4df3a156fbdb0663221298769f4d2e457a9846576456b292ba4726251e4df656"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/02-架构分层与模块边界规范/01-职责分层与依赖方向.md",
@@ -465,7 +499,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "9cbd34139fe6537b0a617c54e17b0e79d82978a81301d829b30a89dda8a6bf8c"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/02-架构分层与模块边界规范/02-模块服务边界与规模适配.md",
@@ -476,7 +511,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "7d57731e16d2bfe1a66e5a6a33c3bb69ad63e64911748408420951f603f96e4c"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/01-代码组织与接口入口.md",
@@ -487,7 +523,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "66628c81f74b05b26e15e04f3e77e0a0d865206c645fe3d799a995d9e5079f93"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/02-应用用例与业务模型.md",
@@ -498,7 +535,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "7e1a1ee35f7a95a20417520d2ac16580553bc4c46fce72011a7592f40f930014"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/03-数据访问与缓存.md",
@@ -509,7 +547,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "4a1f33c4cb8b5b63b3d6cadcbf43fbb92067dd7204dac752a109940f9765af3e"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/04-外部调用与能力接入.md",
@@ -520,7 +559,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "e34c386d183fd876191c5994caabdcefb13e1c0e91a0545eff8413ec2a855199"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/05-异步批处理与并发.md",
@@ -531,7 +571,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "486c6fd4e976fbef76ed62223e641d70f0350aa23d3ff479734ce54bfc0104e0"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/06-异常上下文与实现质量.md",
@@ -542,7 +583,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "58916098f42097be694307577ac6e87b5b859fc452fe8cf7bf60d39af8ce408b"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/01-接口规范.md",
@@ -553,7 +595,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "e055cfe225f750ca4a897be7a2be01e978457f202d5766d83fa8dee6d21eeffc"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/02-接口文档规范.md",
@@ -564,7 +607,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "c2d5063bdc708e80f6ec329cfc704f61cb359e42eaa59816787a77465297ec09"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/03-接口文档模板.md",
@@ -575,18 +619,20 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "dffbd0d8cc0128e0ef82934f01e1f1c7424bfbc29b6cadf4c7a7a98328b62f6d"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/06-配置依赖环境与构建规范/01-配置管理.md",
       "snapshot": "references/standards/01-基础编码规范/06-配置依赖环境与构建规范/01-配置管理.md",
-      "sourceSha256Lf": "2a157ef5fc56f7afb2abfdf63557847a002b9a789cfdba656236d1f283ab7432",
-      "snapshotSha256Lf": "2a157ef5fc56f7afb2abfdf63557847a002b9a789cfdba656236d1f283ab7432",
+      "sourceSha256Lf": "99b771f5d8f30aceaa83311a00c9022126b1417c019c0ee9327da91e9dfb264f",
+      "snapshotSha256Lf": "99b771f5d8f30aceaa83311a00c9022126b1417c019c0ee9327da91e9dfb264f",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "99b771f5d8f30aceaa83311a00c9022126b1417c019c0ee9327da91e9dfb264f"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/06-配置依赖环境与构建规范/02-依赖管理.md",
@@ -597,7 +643,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "adeb626f59acbf57736cbffed935f79a6fa6674f00c3a1ab0cf8a09a5007a0ff"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/06-配置依赖环境与构建规范/03-环境与启动.md",
@@ -608,7 +655,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "155c49bf9b71568999ae1ab0bb9fe336c7b786616d189a98ba99810a6459a4d8"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/06-配置依赖环境与构建规范/04-构建与交付.md",
@@ -619,7 +667,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "dc7ea79cdd0087b8c796d0f1c05c4eab10ea1f7c8d33cf55246ea3bc3c6b7c14"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/07-安全身份权限与敏感信息规范/01-身份上下文与权限边界.md",
@@ -630,7 +679,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "007a61cc89441d24f7627a20754a6624d574ed2a294b535c4cdc1390ea1d865d"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/07-安全身份权限与敏感信息规范/02-敏感信息与输入安全.md",
@@ -641,7 +691,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "a775d5ec65c47914720805c1f4a9c2b2ca5452a6754b5f0a71433bca76a0de60"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/07-安全身份权限与敏感信息规范/03-前端会话与文件访问.md",
@@ -652,18 +703,20 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "35e8ee5692d6236400e2cbc33d3fd701e02d1184f1f885c0394357047ab62175"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/08-数据访问事务数据表达与生命周期规范/01-数据访问事务与生命周期.md",
       "snapshot": "references/standards/01-基础编码规范/08-数据访问事务数据表达与生命周期规范/01-数据访问事务与生命周期.md",
-      "sourceSha256Lf": "1498b653ebbda8dce37b639f3b21b90b6916c0022acb10dc110a9d50e833f167",
-      "snapshotSha256Lf": "1498b653ebbda8dce37b639f3b21b90b6916c0022acb10dc110a9d50e833f167",
+      "sourceSha256Lf": "eef32f05262b8ad980193ee3fd61a7107d967d42a114f9caf1c83e9fe5c9a696",
+      "snapshotSha256Lf": "eef32f05262b8ad980193ee3fd61a7107d967d42a114f9caf1c83e9fe5c9a696",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "eef32f05262b8ad980193ee3fd61a7107d967d42a114f9caf1c83e9fe5c9a696"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/08-数据访问事务数据表达与生命周期规范/02-时间标识与通用数据表达.md",
@@ -674,7 +727,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "57bbb168d1cc93059468a33d3f64bddde404b829d57b8aacf15d30b97e2d9880"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/09-异常日志审计与可观测性规范/01-异常与失败恢复.md",
@@ -685,7 +739,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "bc5350229a73342a974c50288134b3607448e547a3a492035b874efbc1d1cf63"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/09-异常日志审计与可观测性规范/02-日志与敏感信息.md",
@@ -696,7 +751,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "ae5cf17517ee32fb693d89690b472d4c157236b0bd8c939d4ad55b3d24577471"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/09-异常日志审计与可观测性规范/03-链路上下文与审计.md",
@@ -707,7 +763,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "9a9ca486ad009f62ca33a0d4f87c2200926d5ee8a3b99630d7826ad3f20d28c1"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/09-异常日志审计与可观测性规范/04-指标告警与综合场景.md",
@@ -718,7 +775,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "0d99ec2288e99b1de03f144fcc290386c6227655ee42fc7515a27ade3532cc6c"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/10-异步任务消息与外部系统集成规范/01-异步任务与消息处理.md",
@@ -729,7 +787,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "12d95430bb9bbd44cfc6a08faacba35173048997b9d55b25241e82bdb61a7481"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/10-异步任务消息与外部系统集成规范/02-外部系统集成与调用.md",
@@ -740,7 +799,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "cfe24e41953c3d45c43f0d9b2f6a1cd164d9d2141ae9d2ffd663884e73ecc0f1"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/01-启动与服务生命周期.md",
@@ -751,7 +811,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "92c323a7bbb0232ef2f6bcea7285a516694524e986abbe6ff9aa6d84a08d6bfd"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/02-运行时故障与诊断.md",
@@ -762,7 +823,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "6134ea918c6b451814e9393716be3b38722582463726379fccc69be4a49503f9"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/03-并发与共享资源.md",
@@ -773,7 +835,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "946cf4debb7ac6b7967a87c327a06348b6ed98622560d72ffd23b52aa0ceba13"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/04-文件批处理与性能边界.md",
@@ -784,7 +847,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/12-研发自测规范/01-范围与验证层级.md",
@@ -795,7 +859,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "08c22f5ff070faec778d7f4289bd39b0216c8932346d0ffcc7c093da843810bf"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/12-研发自测规范/02-静态性能兼容与测试数据.md",
@@ -806,7 +871,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "d8680b1f31f2b551d2cdbf5ed5cd4b45f66ba9608e35b7bbb61b2310a345ccea"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/12-研发自测规范/03-证据回归与交付结论.md",
@@ -817,7 +883,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "3a9581df5b43b9f2f85f1d37fb71991f06e6b1c4d6d44f3a7fbb4fc2e46f3afa"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/13-版本控制变更与交付规范/01-变更追踪与范围控制.md",
@@ -828,7 +895,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/13-版本控制变更与交付规范/02-版本兼容与迁移.md",
@@ -839,7 +907,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "fba2aad09235f6e9b18e4fdc6a6423146aa39e3962eeb05eb339bbd4dd0e548f"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/13-版本控制变更与交付规范/03-交付物一致性与恢复.md",
@@ -850,7 +919,8 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "abf27ef0371688ee06351bfd6e1204ea48f33aa3f8f1dc7c9d4654b8fceb85de"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/13-版本控制变更与交付规范/04-交付说明与恢复验证.md",
@@ -861,10 +931,11 @@
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched"
+      "authorityStatus": "matched",
+      "committedSourceSha256Lf": "c715145e1f5523c1231521c21ece0ca64d8363c2a1b7f876db6941470c1ea86f"
     }
   ],
-  "behaviorValidation": "历史 1.3.2：27 个隔离工具场景通过；独立 Agent 完成详情派生字段及同一模块文档变更，主 Agent 复核代码与最终脚本。后端/接口静态盘点无候选或未解析项；文档保留原样本缺错误 JSON 的 1 项确定缺口和 4 项待核实，不编造契约。未编译、运行服务或验收真实项目。试用后入口补充禁止无关全量来源读取；该路径收束未单独做第二次 Agent 验证。当前版本结果见 currentRevisionValidation。",
+  "behaviorValidation": "历史 1.3.2：27 个隔离工具场景通过；独立 Agent 完成设备配置模块的 Entity、Mapper、迁移脚本与缓存契约构建，主 Agent 复核代码与最终脚本。1.16.2 复核补充租户与设备复合查询条件，并验证查询作用域与缓存 scopeFields 一致；1.17.1 增加配置资源敏感候选扫描，后端工具隔离验证 43 项通过。数据库模板 8 项、缓存模板 3 项通过。未编译、运行服务或验收真实项目，租户授权语义、事务失效时机、缓存故障回源和真实运行行为仍需人工或真实环境验证。当前版本结果见 currentRevisionValidation。",
   "skillResources": [
     {
       "path": "references/capabilities/01-基础业务/references/任务路由.md",
@@ -944,7 +1015,7 @@
     {
       "path": "references/任务路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "70f0805ea6d0d7ddd1864ccc4294afcd8275c0037fedfa872d537d5cbe59b1e2"
+      "sha256Lf": "175afa9e53b183dbea0376e23cd98e2a9484262c3d69eafe8656aaa3ee936dcf"
     },
     {
       "path": "references/能力使用索引.md",
@@ -952,9 +1023,19 @@
       "sha256Lf": "60493e21a43849ec8ec7c9aade214d2e0208939b719a4cd0f7e56a04149a4e04"
     },
     {
+      "path": "references/后端项目初始化.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "734800a7b3a174a9806aeed3293250a289a8d16a40fb14b6805da4a2d0826a43"
+    },
+    {
+      "path": "references/后端项目研读.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "1ac8af087cdfb69446a3083ad91d7a1942604178122fd89688a3c899b2ce20ca"
+    },
+    {
       "path": "scripts/backend-common.ps1",
       "kind": "script",
-      "sha256Lf": "891722ace1c4ed514d17d27be92e682288995c6f113289892018c3aa1b0828a9"
+      "sha256Lf": "eaa0e4941304bb4f41a4e54e579a770224823052d33382a6ff799d376f43f601"
     },
     {
       "path": "scripts/check-api-document.ps1",
@@ -968,12 +1049,24 @@
     {
       "path": "scripts/check-backend-rules.ps1",
       "kind": "script",
-      "sha256Lf": "7daf35aae1ae6747bf177b9e2ced9be70f250ee21f2afb843f76d5834dbe8226"
+      "sha256Lf": "9da736d1e077f5cb5126a11667242161a033c8970541a6a9821c57185551cd20"
     },
     {
       "path": "scripts/inspect-backend-project.ps1",
       "kind": "script",
       "sha256Lf": "fc54f2707f1c0e1cb5af7f950b996710a4054a4d52477de4c7ff63c6bd69776e"
+    },
+    {
+      "path": "scripts/inspect-backend-onboarding.ps1",
+      "kind": "script",
+      "sha256Lf": "7c111fc6cee34e737d941850cf22f8dc6f860ce9e443e54cb095afe5704ec974",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/apply-backend-comment-plan.ps1",
+      "kind": "script",
+      "sha256Lf": "b594eece25a62634569adb8b38574967c736330b361b76c8f82ed4d00ef52a02",
+      "origin": "人工维护，不作为权威技术规则源"
     },
     {
       "path": "scripts/inventory-api-contracts.ps1",
@@ -989,21 +1082,157 @@
       "kind": "script",
       "sha256Lf": "1f6960ca5a0414b0bee7cd2473842c15fd00fdc158a0c057a8e128ae15c85c5f",
       "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/check-backend-project-init.ps1",
+      "kind": "script",
+      "sha256Lf": "ccecbe2a6dda51e245aa6a4c1551203ef35ffd883abee0d4249f2acac7e1e603",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/prepare-backend-project.ps1",
+      "kind": "script",
+      "sha256Lf": "ce987074d06ca0bd4f17dd234d9e192e7502d6de113a1632359918e8d7916053",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/test-backend-web-startup.ps1",
+      "kind": "script",
+      "sha256Lf": "b78cb2c5c70f1d42aa6a3a3ea1fcce2a6b4bf8a15d91712bb5231f25c969daf4",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/test-backend-startup.ps1",
+      "kind": "script",
+      "sha256Lf": "9e3a97ea7e1f49dad180dd98eff0c65d6dc7c4572db3490a1de85461899d4868",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "references/API边界与网关路由.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "872cb9dda61229bfcc523b8fb931cdbb7938d8dabeeb0d35ce961fe320b62eab"
+    },
+    {
+      "path": "references/数据库操作与事务路由.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "405a0b997b70422b23363908f6d3b984ef360ef51ea793e376b0abde6c97013f"
+    },
+    {
+      "path": "references/数据库操作模板.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "3d6a1b1e2067a1622f7931519cb4790ff6905e9f1e7673afaf78a9555dee7ad3"
+    },
+    {
+      "path": "references/templates/database/Entity.java.tpl",
+      "kind": "template",
+      "sha256Lf": "0dcd6f435a9232e443146823332ef2df0c09400c6a9e50059c0a3ecda21764b5"
+    },
+    {
+      "path": "references/templates/database/Mapper.java.tpl",
+      "kind": "template",
+      "sha256Lf": "fc72f5028c70f1760281066850f5a835d337a57b0669007f78f2f2b4346252f7"
+    },
+    {
+      "path": "references/templates/database/migration.sql.tpl",
+      "kind": "template",
+      "sha256Lf": "fd884d0b22c7adc87662e8e9b0e44e7e217d22b247bacffb4809619fb30d2fe1"
+    },
+    {
+      "path": "scripts/prepare-database-module.ps1",
+      "kind": "script",
+      "sha256Lf": "085dac456ccc8fd47a655f80b310398d61a78cc62fa3132816520fa673e2170a",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/check-database-module.ps1",
+      "kind": "script",
+      "sha256Lf": "8fb4f0b619759b5a3f7b0f96b0c29240831f53c2d1773cf8ba946e3e629e25ac",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "references/缓存操作模板.md",
+      "kind": "skill-navigation",
+      "sha256Lf": "efe692b025e41fb3eeb94a59e46ae887dde1c99da09af4f634e47571587187c9"
+    },
+    {
+      "path": "scripts/prepare-cache-module.ps1",
+      "kind": "script",
+      "sha256Lf": "51bbe3708df564459b08e02611aa470b5363714b86cf1085c77e4ebd5fe87f3e",
+      "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/inspect-database-changes.ps1",
+      "kind": "script",
+      "sha256Lf": "781f64c20bc1fd788a1bef0b35bbda279a1098cf2dcc50063fc5be66a8daeb6e",
+      "origin": "人工维护，不作为权威技术规则源"
     }
   ],
   "sourceRoot": "",
   "snapshotRoot": "",
   "sourceBinding": {
-    "status": "committed",
-    "note": "随包依据已逐份核对本规范提交；来源绑定不代表行为验收或远端技能发布。"
+    "status": "pending",
+    "note": "数据库查询与结构演进新增规范已绑定提交db5df7e；规范仓库仍存在其他未提交工作树变更，因此保留pending，不代表双仓正式绑定或发布。"
   },
   "currentRevisionValidation": {
-    "skillVersion": "1.4.0",
-    "backendToolCasesPassed": 38,
+    "skillVersion": "1.24.0",
+    "backendToolCasesPassed": 44,
+    "onboardingToolCasesPassed": 1,
+    "sensitiveConfigScanCasesPassed": 5,
     "interfaceContractToolCasesPassed": 51,
     "interfaceContractToolVersion": "1.3.1",
     "scope": "当前版本隔离脚本样本：目录与越界、非HTTP自动跳过、Required缺证据、符号提示、注释去噪、开发审查同源，以及共用接口盘点的请求/响应字段契约候选。",
-    "limits": "入口与清单已静态复核；接口字段解析遇到继承/序列化/复杂成员保留未解析；本轮尚未独立Agent行为验证、安装替换、真实业务构建或联调。字段工具 51 项为共用接口脚本验证，不代表真实项目接口或运行契约已验收。新增摘要脚本已用隔离 JSON 验证三份副本输出计数、筛选命中且不回显完整字段；不替代业务语义核对。",
-    "tokenBudgetRevision": {"skillVersion":"1.4.0","summaryToolCasesPassed":3,"defaultPolicy":"只读取命中路由与条款；详细 JSON 写临时文件后摘要筛选；普通 CRUD 不组合接口或审查技能"}
+    "limits": "入口与清单已静态复核；接口字段解析遇到继承/序列化/复杂成员保留未解析；本轮尚未独立Agent行为验证、安装替换、真实业务构建或联调。字段工具 51 项为共用接口脚本验证，不代表真实项目接口或运行契约已验收。新增摘要脚本已用隔离 JSON 验证三份副本输出计数、筛选命中且不回显完整字段；注释计划脚本只验证精确 anchor 写回，不替代 Agent 对业务语义的人工理解。",
+    "tokenBudgetRevision": {
+      "skillVersion": "1.4.0",
+      "summaryToolCasesPassed": 3,
+      "defaultPolicy": "只读取命中路由与条款；详细 JSON 写临时文件后摘要筛选；普通 CRUD 不组合接口或审查技能"
+    },
+    "initializationRevision": {
+      "skillVersion": "1.22.0",
+      "scope": "后端项目初始化入口、Plan/Apply 生成、可用 README/docs、启动入口、可选 Web 健康检查、Gradle 仓库配置、构建产物排除与静态初始化检查；API 边界说明区分内部/服务间与对外 OpenAPI；数据库操作与事务路由和数据库层模板按需加载",
+      "initCheckCasesPassed": 2,
+      "prepareScriptCasesPassed": 4,
+      "startupProbeCasesPassed": 1,
+      "webStartupProbeCasesPassed": 1,
+      "documentationExpansionCasesPassed": 1,
+      "apiBoundaryCasesPassed": 1,
+      "databaseTemplateCasesPassed": 8,
+      "cacheTemplateCasesPassed": 3
+    },
+    "onboardingDeliveryRevision": {
+      "skillVersion": "1.23.0",
+      "scope": "在既有研读路由补充面向接手研发的功能、类职责、真实流程和源码导航交付；机器盘点不替代人工说明",
+      "validation": "主Agent核实隔离项目知识来源子功能的11个类型、保存与同步及调度链路，生成模块docs说明和项目导航；21个文档链接存在，未新增业务代码",
+      "limits": "文档与路由已复核；此前1.22.1独立Java样本结果不外推为本版本真实后端运行通过。当前1.23.0自然语言试用见下条记录。",
+      "naturalLanguageTrial": {
+        "sample": "LeasePolicy 独立租约策略",
+        "prompt": "未指定技能名称；提出后端模块接手、逻辑注释及项目docs需求，并说明AURA项目定位",
+        "selection": "独立Agent选择已安装aura-base-backend-development 1.23.0并读取研读及注释规范",
+        "result": "实际写回类/方法/分支注释，交付可读docs说明；主Agent复核2个class前后hash一致、文档链接无失效",
+        "limits": "单次Agent自主选路样本，不证明所有自然语言自动选择或桌面注入。本轮未执行行为探针、依赖构建、服务或存储并发验证。"
+      }
+    },
+    "commentEnhancementRevision": {
+      "skillVersion": "1.22.1",
+      "testScript": "scripts/test-backend-comment-plan.ps1",
+      "isolatedCasesPassed": 9,
+      "scope": "预览不改源码、只新增注释并保留CRLF、重复执行、识别注解前已有JavaDoc、拒绝错误JavaDoc位置、注释外代码、失效和重复anchor、越界路径",
+      "limits": "只验证注释写回机制；真实样本的业务说明由主Agent复核，不代表所有类的注释质量或Java构建通过。纠正此前无独立测试依据的commentPlanCasesPassed=3记录。",
+      "independentTrial": {
+        "inputSkillVersion": "1.22.1",
+        "sample": "TaskLifecycle 状态迁移独立样本",
+        "invocation": "显式调用指定技能；未验证自动选择或相邻任务不误触发",
+        "result": "Agent 独立补充源码注释和项目内docs说明；主Agent编译前后4个class摘要相同，10个行为场景通过",
+        "runtime": "主Agent Corretto 17.0.10；子Agent Corretto 17.0.17；不代表AURA真实项目构建或JDK21验证",
+        "followupFixVersion": "1.22.2",
+        "followupFix": "画像工作树限当前项目并标注外层仓库上下文；无框架注解的普通Java类保留摘要；新增隔离断言及原样本复核通过"
+      }
+    }
+  },
+  "databaseQueryEvolutionRevision": {
+    "skillVersion": "1.24.0",
+    "scope": "查询与结构演进模板、限定文件候选工具和现有规则的细化示例",
+    "toolIsolatedCasesPassed": 19,
+    "limits": "仅静态、隔离工具和人工场景复核；不连接数据库，不证明真实执行计划、索引收益、迁移锁影响或数据恢复。独立复核发现的MySQL减号与PostgreSQL转义字符串问题已修正并回归。"
   }
 }

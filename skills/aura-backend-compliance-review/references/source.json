@@ -1,8 +1,8 @@
 {
   "skill": "aura-backend-compliance-review",
-  "skillVersion": "1.12.0",
+  "skillVersion": "1.19.1",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "138603e83ac4e06b7360b6e659e3e71f0cf22839",
+  "sourceCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
   "transformation": "仅移除登记的跨范围导航目标，保留链接文字；正文与示例不改写。",
   "modules": [
     {
@@ -57,8 +57,8 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/规范矩阵.md",
       "snapshot": "references/standards/01-基础编码规范/规范矩阵.md",
-      "sourceSha256Lf": "a2b3441407b870879b968607a225f035eb316fbf14fe1c9277c1aaba94a051b2",
-      "snapshotSha256Lf": "a36852a924c48e4a4c3e2f4e2bb9a2e0b164abbe54860941c7ffb38e57abb103",
+      "sourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0",
+      "snapshotSha256Lf": "faec56e09ce4b287ad1ed2bed6a66d50779c45b4231273a42721ddc35d5d8bab",
       "navigationTargetsRemoved": [
         "./04-前端基础编码规范/01-工程组织与页面状态.md",
         "./04-前端基础编码规范/02-请求路由权限与数据适配.md",
@@ -71,13 +71,14 @@
         "./04-前端基础编码规范/09-样式布局与静态资源.md",
         "./04-前端基础编码规范/10-组件复用与公共UI.md",
         "./04-前端基础编码规范/11-字体图标库.md",
-        "./04-前端基础编码规范/12-研发自检与交付.md"
+        "./04-前端基础编码规范/12-研发自检与交付.md",
+        "./05-接口规范体系/10-对外能力交付规范.md"
       ],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
       "authorityStatus": "matched",
-      "committedSourceSha256Lf": "a2b3441407b870879b968607a225f035eb316fbf14fe1c9277c1aaba94a051b2"
+      "committedSourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/01-工程结构命名与项目文档规范/01-工程结构与代码组织.md",
@@ -324,14 +325,14 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/06-配置依赖环境与构建规范/01-配置管理.md",
       "snapshot": "references/standards/01-基础编码规范/06-配置依赖环境与构建规范/01-配置管理.md",
-      "sourceSha256Lf": "2a157ef5fc56f7afb2abfdf63557847a002b9a789cfdba656236d1f283ab7432",
-      "snapshotSha256Lf": "2a157ef5fc56f7afb2abfdf63557847a002b9a789cfdba656236d1f283ab7432",
+      "sourceSha256Lf": "99b771f5d8f30aceaa83311a00c9022126b1417c019c0ee9327da91e9dfb264f",
+      "snapshotSha256Lf": "99b771f5d8f30aceaa83311a00c9022126b1417c019c0ee9327da91e9dfb264f",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
       "authorityStatus": "matched",
-      "committedSourceSha256Lf": "2a157ef5fc56f7afb2abfdf63557847a002b9a789cfdba656236d1f283ab7432"
+      "committedSourceSha256Lf": "99b771f5d8f30aceaa83311a00c9022126b1417c019c0ee9327da91e9dfb264f"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/06-配置依赖环境与构建规范/02-依赖管理.md",
@@ -408,14 +409,14 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/08-数据访问事务数据表达与生命周期规范/01-数据访问事务与生命周期.md",
       "snapshot": "references/standards/01-基础编码规范/08-数据访问事务数据表达与生命周期规范/01-数据访问事务与生命周期.md",
-      "sourceSha256Lf": "1498b653ebbda8dce37b639f3b21b90b6916c0022acb10dc110a9d50e833f167",
-      "snapshotSha256Lf": "1498b653ebbda8dce37b639f3b21b90b6916c0022acb10dc110a9d50e833f167",
+      "sourceSha256Lf": "eef32f05262b8ad980193ee3fd61a7107d967d42a114f9caf1c83e9fe5c9a696",
+      "snapshotSha256Lf": "eef32f05262b8ad980193ee3fd61a7107d967d42a114f9caf1c83e9fe5c9a696",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
       "authorityStatus": "matched",
-      "committedSourceSha256Lf": "1498b653ebbda8dce37b639f3b21b90b6916c0022acb10dc110a9d50e833f167"
+      "committedSourceSha256Lf": "eef32f05262b8ad980193ee3fd61a7107d967d42a114f9caf1c83e9fe5c9a696"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/08-数据访问事务数据表达与生命周期规范/02-时间标识与通用数据表达.md",
@@ -964,9 +965,9 @@
     {
       "path": "scripts/backend-common.ps1",
       "kind": "script",
-      "sha256Lf": "891722ace1c4ed514d17d27be92e682288995c6f113289892018c3aa1b0828a9",
+      "sha256Lf": "eaa0e4941304bb4f41a4e54e579a770224823052d33382a6ff799d376f43f601",
       "originPath": "skills/aura-base-backend-development/scripts/backend-common.ps1",
-      "originSha256Lf": "891722ace1c4ed514d17d27be92e682288995c6f113289892018c3aa1b0828a9",
+      "originSha256Lf": "eaa0e4941304bb4f41a4e54e579a770224823052d33382a6ff799d376f43f601",
       "originStatus": "working-tree"
     },
     {
@@ -980,9 +981,9 @@
     {
       "path": "scripts/check-backend-rules.ps1",
       "kind": "script",
-      "sha256Lf": "7daf35aae1ae6747bf177b9e2ced9be70f250ee21f2afb843f76d5834dbe8226",
+      "sha256Lf": "9da736d1e077f5cb5126a11667242161a033c8970541a6a9821c57185551cd20",
       "originPath": "skills/aura-base-backend-development/scripts/check-backend-rules.ps1",
-      "originSha256Lf": "7daf35aae1ae6747bf177b9e2ced9be70f250ee21f2afb843f76d5834dbe8226",
+      "originSha256Lf": "9da736d1e077f5cb5126a11667242161a033c8970541a6a9821c57185551cd20",
       "originStatus": "working-tree"
     },
     {
@@ -1004,7 +1005,7 @@
     {
       "path": "scripts/inspect-review-scope.ps1",
       "kind": "script",
-      "sha256Lf": "425bf1640df652b3c361bbf7a0583ef5c6020a2ee6fb7304e91b34080f13d9b4",
+      "sha256Lf": "6cb1960f2787cc5c2d429c507a5209ee1cdfa7c17972682359543c1cb2c2eada",
       "originStatus": "working-tree"
     },
     {
@@ -1016,7 +1017,7 @@
     {
       "path": "references/后端审查执行路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "e723af86e932d9577dcfcf68969a13a2ab9da1819efdb0f615dc980ad95d29a6"
+      "sha256Lf": "a05ed270ca152d9493749d5a8f4fa1ff982c0839266f647127810bb48dba944e"
     },
     {
       "path": "references/后端审查完成门槛.md",
@@ -1059,7 +1060,7 @@
     {
       "path": "scripts/check-capability-ledger.ps1",
       "kind": "script",
-      "sha256Lf": "bd0cda1363a56fae51772c424c70cbc1c64f20621fdda147ecb2a2bc20099ba0",
+      "sha256Lf": "0dbcfe67cb172281650215f5d9a9029a2162f4aff610fb071c4fa69cdd1d715c",
       "origin": "人工维护，不作为权威技术规则源"
     },
     {
@@ -1067,13 +1068,21 @@
       "kind": "script",
       "sha256Lf": "260f4742bb346cb1cd62a2792522a91fe468e32fddfa61220b3ab1970f23c23c",
       "origin": "人工维护，不作为权威技术规则源"
+    },
+    {
+      "path": "scripts/inspect-database-changes.ps1",
+      "kind": "script",
+      "sha256Lf": "781f64c20bc1fd788a1bef0b35bbda279a1098cf2dcc50063fc5be66a8daeb6e",
+      "originPath": "skills/aura-base-backend-development/scripts/inspect-database-changes.ps1",
+      "originSha256Lf": "781f64c20bc1fd788a1bef0b35bbda279a1098cf2dcc50063fc5be66a8daeb6e",
+      "originStatus": "working-tree"
     }
   ],
   "sourceRoot": "",
   "snapshotRoot": "",
   "sourceBinding": {
-    "status": "matched",
-    "note": "来源文件已与规范仓库提交基线绑定；来源绑定不代表行为验收或发布。"
+    "status": "pending",
+    "note": "数据库查询与结构演进新增规范已绑定提交db5df7e；规范仓库仍存在其他未提交工作树变更，因此保留pending，不代表双仓正式绑定或发布。"
   },
   "currentRevisionValidation": {
     "reportToolCasesPassed": 45,
@@ -1093,21 +1102,113 @@
       "reportErrors": 0,
       "reportIncomplete": 0
     },
-    "limits": "当前记录包含四规则隔离六文件专项、报告工具以及共用接口契约工具的静态验证；未重新验证构建技能生成新技能全过程、1.3.0单报告独立行为、全项目314规则、真实运行、安装触发或发布。接口工具的 51 项通过只表示脚本场景通过，不代表真实项目接口或运行契约已验收。",
+    "realModuleTrial": {
+      "project": "iot-mgr",
+      "module": "environment",
+      "commit": "f2b001e045478d50bcb12c6eb64324e5edbe1f5b",
+      "sourceFiles": 12,
+      "findings": 2,
+      "candidates": 4,
+      "evidence": 9,
+      "reportCheckExit": 0,
+      "evidenceCheckExit": 0,
+      "sensitiveCandidates": 2,
+      "limits": "只读模块静态审查；未启动服务、未连接数据库/缓存、未验证事务和接口运行；真实业务未修改。"
+    },
+    "limits": "当前记录包含四规则隔离六文件专项、真实 environment 模块静态审查、敏感配置候选扫描、报告工具以及共用接口契约工具的静态验证；未重新验证构建技能生成新技能全过程、全项目规则、真实运行、安装触发或发布。接口工具的 51 项通过只表示脚本场景通过，不代表真实项目接口或运行契约已验收。",
     "evidenceArchive": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端审查技能1.3.0隔离验证样本与结果-20261021.zip",
     "evidenceArchiveSha256": "76187ae258d333ff121c7ca3ce07525733f868e69b0d853a49c85a9e2cb500f9",
     "capabilityCandidateRevision": "1.5.2",
     "capabilityCandidateCasesPassed": 30,
-    "capabilityCandidateRealSample": {"project":"ocean-ship-govern","commit":"208d22300848997210e2be65bb86790b9d93dd75","extractedFiles":10,"scannedFiles":9,"productionJava":6,"signals":8,"duplicateCandidatesBefore":1,"duplicateCandidatesAfter":0,"sourceHashesUnchanged":true,"sourceStatusUnchanged":true},
+    "capabilityCandidateRealSample": {
+      "project": "ocean-ship-govern",
+      "commit": "208d22300848997210e2be65bb86790b9d93dd75",
+      "extractedFiles": 10,
+      "scannedFiles": 9,
+      "productionJava": 6,
+      "signals": 8,
+      "duplicateCandidatesBefore": 1,
+      "duplicateCandidatesAfter": 0,
+      "sourceHashesUnchanged": true,
+      "sourceStatusUnchanged": true
+    },
     "capabilityCandidateEvidenceArchive": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端复用候选1.5.1小样本验证-20261022.zip",
     "capabilityCandidateEvidenceSha256": "aa92c7b1079b3e5cf694fbd871b9a2b21f208509b849dc223f4187165e998da7",
     "capabilityCandidateLimits": "30 项隔离夹具及真实部门树10文件抽取样本静态验证；人工核对 R.ok、currentUser 及 Mapper/SQL 参数链，排除未使用 JdbcTemplate import。盲测暴露并更正受限样本把测试文件缺口扩大为业务偏差的问题。不是全项目审查；共享工具其他方法不计入链路覆盖。未执行独立 Agent、编译/数据库/运行、安装或发布验收。",
-    "blindBehaviorTrial": {"skillVersion":"1.5.1-input/1.5.2-boundary","project":"ocean-ship-govern","sampleFiles":10,"rules":12,"initial":{"pass":5,"deviation":2,"unproven":5,"findings":1},"corrected":{"pass":5,"deviation":0,"unproven":7,"findings":0,"candidates":6,"excluded":3,"pending":3},"reportCheckExit":0,"evidenceArchive":"AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端审查技能1.5.2盲测结果-20261022.zip","evidenceArchiveSha256":"c1dfe9ddb39719851a42526f0e672037e813905f6f7fe22df340b2af5d3f268b","limits":"独立 Agent 首轮报告误将受限清单的全注释测试扩大为业务偏差；主代理质询后按证据边界更正。首轮与更正报告均保留。未运行构建/测试、未读取范围外项目、未修改输入或技能。"},
-    "scopeToolRevision": "1.5.2",
-    "scopeToolCasesPassed": 17,
-    "scopeToolLimits": "本轮 test-review-scope.ps1 验证 Git 范围、配置元数据不含键值、解析异常正文抑制、Windows 分类及输出文件排除。历史同源后端工具 38 项不计入此数；未重新验证独立 Agent、通用秘密扫描或真实项目运行。1.6.0 新增摘要脚本，隔离 JSON 验证计数、筛选和字段不回显；不替代报告证据和人工结论。",
-    "tokenBudgetRevision": {"skillVersion":"1.12.0","summaryToolCasesPassed":3,"matrixConsistencyToolCasesPassed":3,"evidenceScanCasesPassed":3,"capabilityLedgerCasesPassed":3,"capabilityLedgerReportCasesPassed":2,"defaultPolicy":"变更或接口专项按命中路由审查；启用能力候选后必须回写同一结果包；详细 JSON 写结果目录后摘要筛选；能力、文件和字段候选按需打开"},
-    "capabilityLedgerValidation": {"isolatedCasesPassed":2,"realSample":{"module":"aura-iotbus-biz","capabilityCount":2,"signalCount":1178,"duplicateCandidateCount":99,"unevaluatedCount":2,"status":"passed"},"reportBackfillSample":{"mode":"Change","reportCapabilityCount":0,"missingCapabilityCount":2,"unclassifiedCapabilityCount":0,"status":"partial"},"limits":"只验证候选账本结构和证据字段，以及候选是否回写结果包；静态线索不等于能力复用、重复实现或规范偏差，最终结论仍需沿真实调用链和公开契约人工核对。"},
-    "matrixConsistencyValidation": {"resultToolCasesPassed":2,"realSample":{"mode":"Change","referencedRules":5,"matrixRules":359,"unknownRules":0,"unreferencedRules":354},"limits":"只验证规则 ID 来源和覆盖统计，不判断规则适用性、证据真实性或项目合规。"}
+    "blindBehaviorTrial": {
+      "skillVersion": "1.5.1-input/1.5.2-boundary",
+      "project": "ocean-ship-govern",
+      "sampleFiles": 10,
+      "rules": 12,
+      "initial": {
+        "pass": 5,
+        "deviation": 2,
+        "unproven": 5,
+        "findings": 1
+      },
+      "corrected": {
+        "pass": 5,
+        "deviation": 0,
+        "unproven": 7,
+        "findings": 0,
+        "candidates": 6,
+        "excluded": 3,
+        "pending": 3
+      },
+      "reportCheckExit": 0,
+      "evidenceArchive": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端审查技能1.5.2盲测结果-20261022.zip",
+      "evidenceArchiveSha256": "c1dfe9ddb39719851a42526f0e672037e813905f6f7fe22df340b2af5d3f268b",
+      "limits": "独立 Agent 首轮报告误将受限清单的全注释测试扩大为业务偏差；主代理质询后按证据边界更正。首轮与更正报告均保留。未运行构建/测试、未读取范围外项目、未修改输入或技能。"
+    },
+    "scopeToolRevision": "1.6.0",
+    "scopeToolCasesPassed": 18,
+    "scopeToolLimits": "本轮 test-review-scope.ps1 验证 Git 范围、配置元数据不含键值、解析异常正文抑制、Windows 分类、输出文件排除及标准 Spring Boot Starter 不进入 SDK 候选。历史同源后端工具 38 项不计入此数；不替代真实项目运行或人工判断。",
+    "tokenBudgetRevision": {
+      "skillVersion": "1.19.0",
+      "summaryToolCasesPassed": 3,
+      "matrixConsistencyToolCasesPassed": 3,
+      "evidenceScanCasesPassed": 3,
+      "capabilityLedgerCasesPassed": 4,
+      "capabilityLedgerReportCasesPassed": 2,
+      "apiBoundaryCasesPassed": 1,
+      "defaultPolicy": "变更或接口专项按命中路由审查；启用能力候选后必须回写同一结果包；先交付人类可读总览，再按需打开详细 JSON；能力、文件和字段候选按需打开"
+    },
+    "capabilityLedgerValidation": {
+      "isolatedCasesPassed": 2,
+      "realSample": {
+        "module": "aura-iotbus-biz",
+        "capabilityCount": 2,
+        "signalCount": 1178,
+        "duplicateCandidateCount": 99,
+        "unevaluatedCount": 2,
+        "status": "passed"
+      },
+      "reportBackfillSample": {
+        "mode": "Change",
+        "reportCapabilityCount": 0,
+        "missingCapabilityCount": 2,
+        "unclassifiedCapabilityCount": 0,
+        "status": "partial"
+      },
+      "limits": "只验证候选账本结构和证据字段，以及候选是否回写结果包；静态线索不等于能力复用、重复实现或规范偏差，最终结论仍需沿真实调用链和公开契约人工核对。"
+    },
+    "matrixConsistencyValidation": {
+      "resultToolCasesPassed": 2,
+      "realSample": {
+        "mode": "Change",
+        "referencedRules": 5,
+        "matrixRules": 359,
+        "unknownRules": 0,
+        "unreferencedRules": 354
+      },
+      "limits": "只验证规则 ID 来源和覆盖统计，不判断规则适用性、证据真实性或项目合规。"
+    },
+    "skillVersion": "1.19.1"
+  },
+  "databaseQueryEvolutionRevision": {
+    "skillVersion": "1.19.1",
+    "scope": "同版查询/迁移审查依据和与开发同源的限定文件候选工具",
+    "toolIsolatedCasesPassed": 19,
+    "limits": "仅静态、隔离工具和人工场景复核；不连接数据库，不证明真实执行计划、索引收益、迁移锁影响或数据恢复。独立复核发现的MySQL减号与PostgreSQL转义字符串问题已修正并回归。"
   }
 }

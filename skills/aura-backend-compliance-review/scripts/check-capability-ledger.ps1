@@ -10,7 +10,7 @@ $ErrorActionPreference = 'Stop'
 $document = Get-Content -LiteralPath (Resolve-Path -LiteralPath $InputPath).Path -Raw -Encoding UTF8 | ConvertFrom-Json
 $ledger = if ($null -ne $document.capabilityReuse) { $document.capabilityReuse } else { $document }
 $issues = [Collections.Generic.List[object]]::new()
-$items = @($ledger.items)
+$items = if ($null -eq $ledger.items) { @() } else { @($ledger.items) }
 
 if ($ledger.status -ne 'candidate-only') {
     $issues.Add([pscustomobject]@{ code = 'invalid_status'; message = '能力候选账本必须保留 candidate-only 状态' })

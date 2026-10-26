@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1792742565,
+  "generatedAt": 1792984293,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -27,11 +27,11 @@
         "接口",
         "审查"
       ],
-      "version": "1.12.0",
+      "version": "1.19.1",
       "visibility": "public"
     },
     {
-      "description": "按 AURA 规范开发或重构 Java/Spring 后端业务和内外 API，并按需接入数据库、鉴权、文件、实时通信、调度及网关等框架能力；不用于独立技术设计文档、项目规范审查或框架能力包建设。",
+      "description": "初始化、开发或重构 AURA Java/Spring 后端项目与业务，按需接入数据库、鉴权、文件、实时通信、调度及网关能力；不用于独立技术设计文档、项目规范审查或框架能力包建设。",
       "name": "aura-base-backend-development",
       "path": "skills/aura-base-backend-development/SKILL.md",
       "releaseState": "preview",
@@ -40,7 +40,7 @@
         "开发",
         "能力使用"
       ],
-      "version": "1.4.0",
+      "version": "1.24.0",
       "visibility": "public"
     },
     {
@@ -54,7 +54,7 @@
         "接口",
         "开发"
       ],
-      "version": "1.4.0",
+      "version": "1.4.4",
       "visibility": "public"
     },
     {
@@ -79,7 +79,7 @@
         "工程",
         "开发"
       ],
-      "version": "1.1.0",
+      "version": "1.1.1",
       "visibility": "public"
     },
     {

@@ -10,7 +10,8 @@
       "sourceSha256Lf": "7ce75e5b9ee3f9a37c0fa50dd8a592b15251062c58a4d634aa6a13621534aa28",
       "snapshotSha256Lf": "7ce75e5b9ee3f9a37c0fa50dd8a592b15251062c58a4d634aa6a13621534aa28",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "7ce75e5b9ee3f9a37c0fa50dd8a592b15251062c58a4d634aa6a13621534aa28"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/01-工程结构命名与项目文档规范/01-工程结构与代码组织.md",
@@ -23,7 +24,8 @@
       "sourceSha256Lf": "b8cb1e99327d3c495eb4fe4804f951e0aebbf2e45b37a8fb78a39c225578eb93",
       "snapshotSha256Lf": "2b945ebc0e5a7a34a0b57a6e9db8ea74b7fac67a36b0d98f18493c27b6d160d7",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "b8cb1e99327d3c495eb4fe4804f951e0aebbf2e45b37a8fb78a39c225578eb93"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/01-工程结构命名与项目文档规范/02-命名与代码表达.md",
@@ -34,7 +36,8 @@
       "sourceSha256Lf": "7ae0efcef9b096499bd2f04b98b84ca2dce06e5ddaad47954ba1bd6e96b92971",
       "snapshotSha256Lf": "7ae0efcef9b096499bd2f04b98b84ca2dce06e5ddaad47954ba1bd6e96b92971",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "7ae0efcef9b096499bd2f04b98b84ca2dce06e5ddaad47954ba1bd6e96b92971"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/01-工程结构命名与项目文档规范/03-项目文档与资料组织.md",
@@ -45,7 +48,8 @@
       "sourceSha256Lf": "4df3a156fbdb0663221298769f4d2e457a9846576456b292ba4726251e4df656",
       "snapshotSha256Lf": "4df3a156fbdb0663221298769f4d2e457a9846576456b292ba4726251e4df656",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "4df3a156fbdb0663221298769f4d2e457a9846576456b292ba4726251e4df656"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/02-架构分层与模块边界规范/01-职责分层与依赖方向.md",
@@ -56,7 +60,8 @@
       "sourceSha256Lf": "9cbd34139fe6537b0a617c54e17b0e79d82978a81301d829b30a89dda8a6bf8c",
       "snapshotSha256Lf": "9cbd34139fe6537b0a617c54e17b0e79d82978a81301d829b30a89dda8a6bf8c",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "9cbd34139fe6537b0a617c54e17b0e79d82978a81301d829b30a89dda8a6bf8c"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/02-架构分层与模块边界规范/02-模块服务边界与规模适配.md",
@@ -67,7 +72,8 @@
       "sourceSha256Lf": "7d57731e16d2bfe1a66e5a6a33c3bb69ad63e64911748408420951f603f96e4c",
       "snapshotSha256Lf": "7d57731e16d2bfe1a66e5a6a33c3bb69ad63e64911748408420951f603f96e4c",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "7d57731e16d2bfe1a66e5a6a33c3bb69ad63e64911748408420951f603f96e4c"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/01-代码组织与接口入口.md",
@@ -78,7 +84,8 @@
       "sourceSha256Lf": "66628c81f74b05b26e15e04f3e77e0a0d865206c645fe3d799a995d9e5079f93",
       "snapshotSha256Lf": "66628c81f74b05b26e15e04f3e77e0a0d865206c645fe3d799a995d9e5079f93",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "66628c81f74b05b26e15e04f3e77e0a0d865206c645fe3d799a995d9e5079f93"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/02-应用用例与业务模型.md",
@@ -89,7 +96,8 @@
       "sourceSha256Lf": "7e1a1ee35f7a95a20417520d2ac16580553bc4c46fce72011a7592f40f930014",
       "snapshotSha256Lf": "7e1a1ee35f7a95a20417520d2ac16580553bc4c46fce72011a7592f40f930014",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "7e1a1ee35f7a95a20417520d2ac16580553bc4c46fce72011a7592f40f930014"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/03-数据访问与缓存.md",
@@ -100,7 +108,8 @@
       "sourceSha256Lf": "4a1f33c4cb8b5b63b3d6cadcbf43fbb92067dd7204dac752a109940f9765af3e",
       "snapshotSha256Lf": "4a1f33c4cb8b5b63b3d6cadcbf43fbb92067dd7204dac752a109940f9765af3e",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "4a1f33c4cb8b5b63b3d6cadcbf43fbb92067dd7204dac752a109940f9765af3e"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/04-外部调用与能力接入.md",
@@ -111,7 +120,8 @@
       "sourceSha256Lf": "e34c386d183fd876191c5994caabdcefb13e1c0e91a0545eff8413ec2a855199",
       "snapshotSha256Lf": "e34c386d183fd876191c5994caabdcefb13e1c0e91a0545eff8413ec2a855199",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "e34c386d183fd876191c5994caabdcefb13e1c0e91a0545eff8413ec2a855199"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/05-异步批处理与并发.md",
@@ -122,7 +132,8 @@
       "sourceSha256Lf": "486c6fd4e976fbef76ed62223e641d70f0350aa23d3ff479734ce54bfc0104e0",
       "snapshotSha256Lf": "486c6fd4e976fbef76ed62223e641d70f0350aa23d3ff479734ce54bfc0104e0",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "486c6fd4e976fbef76ed62223e641d70f0350aa23d3ff479734ce54bfc0104e0"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/03-后端基础编码规范/06-异常上下文与实现质量.md",
@@ -133,7 +144,8 @@
       "sourceSha256Lf": "58916098f42097be694307577ac6e87b5b859fc452fe8cf7bf60d39af8ce408b",
       "snapshotSha256Lf": "58916098f42097be694307577ac6e87b5b859fc452fe8cf7bf60d39af8ce408b",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "58916098f42097be694307577ac6e87b5b859fc452fe8cf7bf60d39af8ce408b"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/01-接口规范.md",
@@ -144,7 +156,8 @@
       "sourceSha256Lf": "e055cfe225f750ca4a897be7a2be01e978457f202d5766d83fa8dee6d21eeffc",
       "snapshotSha256Lf": "e055cfe225f750ca4a897be7a2be01e978457f202d5766d83fa8dee6d21eeffc",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "e055cfe225f750ca4a897be7a2be01e978457f202d5766d83fa8dee6d21eeffc"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/02-接口文档规范.md",
@@ -155,7 +168,8 @@
       "sourceSha256Lf": "c2d5063bdc708e80f6ec329cfc704f61cb359e42eaa59816787a77465297ec09",
       "snapshotSha256Lf": "c2d5063bdc708e80f6ec329cfc704f61cb359e42eaa59816787a77465297ec09",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "c2d5063bdc708e80f6ec329cfc704f61cb359e42eaa59816787a77465297ec09"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/03-接口文档模板.md",
@@ -166,7 +180,8 @@
       "sourceSha256Lf": "dffbd0d8cc0128e0ef82934f01e1f1c7424bfbc29b6cadf4c7a7a98328b62f6d",
       "snapshotSha256Lf": "dffbd0d8cc0128e0ef82934f01e1f1c7424bfbc29b6cadf4c7a7a98328b62f6d",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "dffbd0d8cc0128e0ef82934f01e1f1c7424bfbc29b6cadf4c7a7a98328b62f6d"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/06-配置依赖环境与构建规范/01-配置管理.md",
@@ -174,10 +189,11 @@
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "2a157ef5fc56f7afb2abfdf63557847a002b9a789cfdba656236d1f283ab7432",
-      "snapshotSha256Lf": "2a157ef5fc56f7afb2abfdf63557847a002b9a789cfdba656236d1f283ab7432",
+      "sourceSha256Lf": "99b771f5d8f30aceaa83311a00c9022126b1417c019c0ee9327da91e9dfb264f",
+      "snapshotSha256Lf": "99b771f5d8f30aceaa83311a00c9022126b1417c019c0ee9327da91e9dfb264f",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "99b771f5d8f30aceaa83311a00c9022126b1417c019c0ee9327da91e9dfb264f"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/06-配置依赖环境与构建规范/02-依赖管理.md",
@@ -188,7 +204,8 @@
       "sourceSha256Lf": "adeb626f59acbf57736cbffed935f79a6fa6674f00c3a1ab0cf8a09a5007a0ff",
       "snapshotSha256Lf": "adeb626f59acbf57736cbffed935f79a6fa6674f00c3a1ab0cf8a09a5007a0ff",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "adeb626f59acbf57736cbffed935f79a6fa6674f00c3a1ab0cf8a09a5007a0ff"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/06-配置依赖环境与构建规范/03-环境与启动.md",
@@ -199,7 +216,8 @@
       "sourceSha256Lf": "155c49bf9b71568999ae1ab0bb9fe336c7b786616d189a98ba99810a6459a4d8",
       "snapshotSha256Lf": "155c49bf9b71568999ae1ab0bb9fe336c7b786616d189a98ba99810a6459a4d8",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "155c49bf9b71568999ae1ab0bb9fe336c7b786616d189a98ba99810a6459a4d8"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/06-配置依赖环境与构建规范/04-构建与交付.md",
@@ -210,7 +228,8 @@
       "sourceSha256Lf": "dc7ea79cdd0087b8c796d0f1c05c4eab10ea1f7c8d33cf55246ea3bc3c6b7c14",
       "snapshotSha256Lf": "dc7ea79cdd0087b8c796d0f1c05c4eab10ea1f7c8d33cf55246ea3bc3c6b7c14",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "dc7ea79cdd0087b8c796d0f1c05c4eab10ea1f7c8d33cf55246ea3bc3c6b7c14"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/07-安全身份权限与敏感信息规范/01-身份上下文与权限边界.md",
@@ -221,7 +240,8 @@
       "sourceSha256Lf": "007a61cc89441d24f7627a20754a6624d574ed2a294b535c4cdc1390ea1d865d",
       "snapshotSha256Lf": "007a61cc89441d24f7627a20754a6624d574ed2a294b535c4cdc1390ea1d865d",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "007a61cc89441d24f7627a20754a6624d574ed2a294b535c4cdc1390ea1d865d"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/07-安全身份权限与敏感信息规范/02-敏感信息与输入安全.md",
@@ -232,7 +252,8 @@
       "sourceSha256Lf": "a775d5ec65c47914720805c1f4a9c2b2ca5452a6754b5f0a71433bca76a0de60",
       "snapshotSha256Lf": "a775d5ec65c47914720805c1f4a9c2b2ca5452a6754b5f0a71433bca76a0de60",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "a775d5ec65c47914720805c1f4a9c2b2ca5452a6754b5f0a71433bca76a0de60"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/07-安全身份权限与敏感信息规范/03-前端会话与文件访问.md",
@@ -243,7 +264,8 @@
       "sourceSha256Lf": "35e8ee5692d6236400e2cbc33d3fd701e02d1184f1f885c0394357047ab62175",
       "snapshotSha256Lf": "35e8ee5692d6236400e2cbc33d3fd701e02d1184f1f885c0394357047ab62175",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "35e8ee5692d6236400e2cbc33d3fd701e02d1184f1f885c0394357047ab62175"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/08-数据访问事务数据表达与生命周期规范/01-数据访问事务与生命周期.md",
@@ -251,10 +273,11 @@
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "1498b653ebbda8dce37b639f3b21b90b6916c0022acb10dc110a9d50e833f167",
-      "snapshotSha256Lf": "1498b653ebbda8dce37b639f3b21b90b6916c0022acb10dc110a9d50e833f167",
+      "sourceSha256Lf": "eef32f05262b8ad980193ee3fd61a7107d967d42a114f9caf1c83e9fe5c9a696",
+      "snapshotSha256Lf": "eef32f05262b8ad980193ee3fd61a7107d967d42a114f9caf1c83e9fe5c9a696",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "eef32f05262b8ad980193ee3fd61a7107d967d42a114f9caf1c83e9fe5c9a696"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/08-数据访问事务数据表达与生命周期规范/02-时间标识与通用数据表达.md",
@@ -265,7 +288,8 @@
       "sourceSha256Lf": "57bbb168d1cc93059468a33d3f64bddde404b829d57b8aacf15d30b97e2d9880",
       "snapshotSha256Lf": "57bbb168d1cc93059468a33d3f64bddde404b829d57b8aacf15d30b97e2d9880",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "57bbb168d1cc93059468a33d3f64bddde404b829d57b8aacf15d30b97e2d9880"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/09-异常日志审计与可观测性规范/01-异常与失败恢复.md",
@@ -276,7 +300,8 @@
       "sourceSha256Lf": "bc5350229a73342a974c50288134b3607448e547a3a492035b874efbc1d1cf63",
       "snapshotSha256Lf": "bc5350229a73342a974c50288134b3607448e547a3a492035b874efbc1d1cf63",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "bc5350229a73342a974c50288134b3607448e547a3a492035b874efbc1d1cf63"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/09-异常日志审计与可观测性规范/02-日志与敏感信息.md",
@@ -287,7 +312,8 @@
       "sourceSha256Lf": "ae5cf17517ee32fb693d89690b472d4c157236b0bd8c939d4ad55b3d24577471",
       "snapshotSha256Lf": "ae5cf17517ee32fb693d89690b472d4c157236b0bd8c939d4ad55b3d24577471",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "ae5cf17517ee32fb693d89690b472d4c157236b0bd8c939d4ad55b3d24577471"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/09-异常日志审计与可观测性规范/03-链路上下文与审计.md",
@@ -298,7 +324,8 @@
       "sourceSha256Lf": "9a9ca486ad009f62ca33a0d4f87c2200926d5ee8a3b99630d7826ad3f20d28c1",
       "snapshotSha256Lf": "9a9ca486ad009f62ca33a0d4f87c2200926d5ee8a3b99630d7826ad3f20d28c1",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "9a9ca486ad009f62ca33a0d4f87c2200926d5ee8a3b99630d7826ad3f20d28c1"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/09-异常日志审计与可观测性规范/04-指标告警与综合场景.md",
@@ -309,7 +336,8 @@
       "sourceSha256Lf": "0d99ec2288e99b1de03f144fcc290386c6227655ee42fc7515a27ade3532cc6c",
       "snapshotSha256Lf": "0d99ec2288e99b1de03f144fcc290386c6227655ee42fc7515a27ade3532cc6c",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "0d99ec2288e99b1de03f144fcc290386c6227655ee42fc7515a27ade3532cc6c"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/10-异步任务消息与外部系统集成规范/01-异步任务与消息处理.md",
@@ -320,7 +348,8 @@
       "sourceSha256Lf": "12d95430bb9bbd44cfc6a08faacba35173048997b9d55b25241e82bdb61a7481",
       "snapshotSha256Lf": "12d95430bb9bbd44cfc6a08faacba35173048997b9d55b25241e82bdb61a7481",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "12d95430bb9bbd44cfc6a08faacba35173048997b9d55b25241e82bdb61a7481"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/10-异步任务消息与外部系统集成规范/02-外部系统集成与调用.md",
@@ -331,7 +360,8 @@
       "sourceSha256Lf": "cfe24e41953c3d45c43f0d9b2f6a1cd164d9d2141ae9d2ffd663884e73ecc0f1",
       "snapshotSha256Lf": "cfe24e41953c3d45c43f0d9b2f6a1cd164d9d2141ae9d2ffd663884e73ecc0f1",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "cfe24e41953c3d45c43f0d9b2f6a1cd164d9d2141ae9d2ffd663884e73ecc0f1"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/01-启动与服务生命周期.md",
@@ -342,7 +372,8 @@
       "sourceSha256Lf": "92c323a7bbb0232ef2f6bcea7285a516694524e986abbe6ff9aa6d84a08d6bfd",
       "snapshotSha256Lf": "92c323a7bbb0232ef2f6bcea7285a516694524e986abbe6ff9aa6d84a08d6bfd",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "92c323a7bbb0232ef2f6bcea7285a516694524e986abbe6ff9aa6d84a08d6bfd"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/02-运行时故障与诊断.md",
@@ -353,7 +384,8 @@
       "sourceSha256Lf": "6134ea918c6b451814e9393716be3b38722582463726379fccc69be4a49503f9",
       "snapshotSha256Lf": "6134ea918c6b451814e9393716be3b38722582463726379fccc69be4a49503f9",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "6134ea918c6b451814e9393716be3b38722582463726379fccc69be4a49503f9"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/03-并发与共享资源.md",
@@ -364,7 +396,8 @@
       "sourceSha256Lf": "946cf4debb7ac6b7967a87c327a06348b6ed98622560d72ffd23b52aa0ceba13",
       "snapshotSha256Lf": "946cf4debb7ac6b7967a87c327a06348b6ed98622560d72ffd23b52aa0ceba13",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "946cf4debb7ac6b7967a87c327a06348b6ed98622560d72ffd23b52aa0ceba13"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/04-文件批处理与性能边界.md",
@@ -375,7 +408,8 @@
       "sourceSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739",
       "snapshotSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/12-研发自测规范/01-范围与验证层级.md",
@@ -386,7 +420,8 @@
       "sourceSha256Lf": "08c22f5ff070faec778d7f4289bd39b0216c8932346d0ffcc7c093da843810bf",
       "snapshotSha256Lf": "08c22f5ff070faec778d7f4289bd39b0216c8932346d0ffcc7c093da843810bf",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "08c22f5ff070faec778d7f4289bd39b0216c8932346d0ffcc7c093da843810bf"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/12-研发自测规范/02-静态性能兼容与测试数据.md",
@@ -397,7 +432,8 @@
       "sourceSha256Lf": "d8680b1f31f2b551d2cdbf5ed5cd4b45f66ba9608e35b7bbb61b2310a345ccea",
       "snapshotSha256Lf": "d8680b1f31f2b551d2cdbf5ed5cd4b45f66ba9608e35b7bbb61b2310a345ccea",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "d8680b1f31f2b551d2cdbf5ed5cd4b45f66ba9608e35b7bbb61b2310a345ccea"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/12-研发自测规范/03-证据回归与交付结论.md",
@@ -408,7 +444,8 @@
       "sourceSha256Lf": "3a9581df5b43b9f2f85f1d37fb71991f06e6b1c4d6d44f3a7fbb4fc2e46f3afa",
       "snapshotSha256Lf": "3a9581df5b43b9f2f85f1d37fb71991f06e6b1c4d6d44f3a7fbb4fc2e46f3afa",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "3a9581df5b43b9f2f85f1d37fb71991f06e6b1c4d6d44f3a7fbb4fc2e46f3afa"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/13-版本控制变更与交付规范/01-变更追踪与范围控制.md",
@@ -419,7 +456,8 @@
       "sourceSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392",
       "snapshotSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/13-版本控制变更与交付规范/02-版本兼容与迁移.md",
@@ -430,7 +468,8 @@
       "sourceSha256Lf": "fba2aad09235f6e9b18e4fdc6a6423146aa39e3962eeb05eb339bbd4dd0e548f",
       "snapshotSha256Lf": "fba2aad09235f6e9b18e4fdc6a6423146aa39e3962eeb05eb339bbd4dd0e548f",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "fba2aad09235f6e9b18e4fdc6a6423146aa39e3962eeb05eb339bbd4dd0e548f"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/13-版本控制变更与交付规范/03-交付物一致性与恢复.md",
@@ -441,7 +480,8 @@
       "sourceSha256Lf": "abf27ef0371688ee06351bfd6e1204ea48f33aa3f8f1dc7c9d4654b8fceb85de",
       "snapshotSha256Lf": "abf27ef0371688ee06351bfd6e1204ea48f33aa3f8f1dc7c9d4654b8fceb85de",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "abf27ef0371688ee06351bfd6e1204ea48f33aa3f8f1dc7c9d4654b8fceb85de"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/13-版本控制变更与交付规范/04-交付说明与恢复验证.md",
@@ -452,7 +492,8 @@
       "sourceSha256Lf": "c715145e1f5523c1231521c21ece0ca64d8363c2a1b7f876db6941470c1ea86f",
       "snapshotSha256Lf": "c715145e1f5523c1231521c21ece0ca64d8363c2a1b7f876db6941470c1ea86f",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "c715145e1f5523c1231521c21ece0ca64d8363c2a1b7f876db6941470c1ea86f"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/总入口.md",
@@ -480,7 +521,8 @@
       "sourceSha256Lf": "a9acb16c31deb505389a7cd1e0fce054aba77e22ce1503062053943a78c930b9",
       "snapshotSha256Lf": "047eb11024630b2463dc3c4cdba729d06db7d01059985986e0f53f2d6354fd63",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "a9acb16c31deb505389a7cd1e0fce054aba77e22ce1503062053943a78c930b9"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/规范矩阵.md",
@@ -502,16 +544,17 @@
       ],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "a2b3441407b870879b968607a225f035eb316fbf14fe1c9277c1aaba94a051b2",
-      "snapshotSha256Lf": "a7885990d607418eb1dd942012e79781129865d505841bfdb773b5072647bfb8",
+      "sourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0",
+      "snapshotSha256Lf": "faec56e09ce4b287ad1ed2bed6a66d50779c45b4231273a42721ddc35d5d8bab",
       "inheritedSource": null,
-      "inheritedCommit": null
+      "inheritedCommit": null,
+      "committedSourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0"
     }
   ],
   "coverage": "覆盖本技能 references/standards 下全部规范视图；技能自有导航单独登记。",
-  "skillVersion": "1.1.0",
+  "skillVersion": "1.1.1",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "55f347a26a89fadd8a29e7b56b505ecf6846d198",
+  "sourceCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
   "skillResources": [
     {
       "path": "references/任务路由.md",
@@ -529,6 +572,13 @@
   "sourceRoot": "",
   "snapshotRoot": "",
   "sourceBinding": {
-    "status": "committed"
+    "status": "pending",
+    "note": "数据库查询与结构演进新增规范已绑定提交db5df7e；规范仓库仍存在其他未提交工作树变更，因此保留pending，不代表双仓正式绑定或发布。"
+  },
+  "databaseQueryEvolutionRevision": {
+    "skillVersion": "1.1.1",
+    "scope": "同步共同数据规范只读视图，不修改本技能的业务实现职责",
+    "toolIsolatedCasesPassed": null,
+    "limits": "仅静态、隔离工具和人工场景复核；不连接数据库，不证明真实执行计划、索引收益、迁移锁影响或数据恢复。独立复核发现的MySQL减号与PostgreSQL转义字符串问题已修正并回归。"
   }
 }

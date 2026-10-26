@@ -23,7 +23,9 @@ function Get-XmlValue($Node,[string]$Name) {
 function Add-Dependency($List,[hashtable]$Dependency) {
   if([string]::IsNullOrWhiteSpace([string]$Dependency.artifact)){ return }
   $text=('{0}:{1} {2}' -f $Dependency.group,$Dependency.artifact,$Dependency.version)
-  $Dependency.sdkLike=[bool]($text -match '(?i)sdk|starter|client|feign|openapi|oss|storage|socket|mqtt|video|iot|gateway')
+  $isFramework=([string]$Dependency.group -match '^(?i:org\.springframework|org\.springframework\.boot|org\.springframework\.cloud|com\.alibaba\.cloud|io\.micrometer)$') -or ([string]$Dependency.artifact -match '^(?i:spring-boot|spring-cloud|spring-|micrometer-)')
+  $Dependency.frameworkLike=$isFramework
+  $Dependency.sdkLike=([bool](-not $isFramework -and $text -match '(?i)sdk|starter|client|feign|openapi|oss|storage|socket|mqtt|video|iot|gateway'))
   $List.Add($Dependency)
 }
 
