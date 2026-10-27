@@ -16,6 +16,8 @@
 
 ## 阅读顺序
 
+涉及 Vue/TS/样式组织时按需读取[文件组织与职责拆分](文件组织与职责拆分.md)。本轮规则来自 F 盘规范工作树，来源待绑定状态见技能 `references/file-organization-source.json`；保留其余既有框架规范基线。
+
 首次接入、工具或 Hook 选型时，先读 [aura-web-kit 能力清单与接入规范](./aura-web-kit能力清单与接入规范.md)。
 
 1. [PIGX 前端开发总览](./PIGX前端开发总览.md)

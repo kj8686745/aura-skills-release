@@ -1,6 +1,16 @@
 {
   "skill": "aura-web-develop",
-  "skillVersion": "1.5.0",
+  "skillVersion": "1.6.2",
+  "moduleStructureCompletion": {
+    "authority": "2026-10-27 用户实测监控中心后指出整模块结构任务只抽少数职责即收尾，明确要求优化技能。",
+    "versions": "aura-web-develop 1.6.2 / aura-web-review 0.4.2",
+    "bindingStatus": "local-working-tree-change; locally-installed; scoped-behavior-validation-completed; not-published",
+    "sourceBaseCommit": "5b6ea76b9304d4f3b6996a43c872950ad5d302af",
+    "scope": "技能执行流程：完整授权模块职责识别、逐职责保留或拆分决策、实施后入口剩余职责复核、部分完成边界；落实已有职责规范，不改变F盘技术规则或新增行数硬门槛。",
+    "efficiency": "沿已有任务/检查记录简记职责及所有者，不新增报告/扫描器/矩阵；结构判断覆盖模块，测试仍按变更集中一次，复用已读资料。",
+    "validation": "安装路径独立整模块重跑后完成资产/轨迹/直播/录像/详情/告警连接及分页owner拆分与剩余组件保留复核；监控入口3036到1326行。34项真实Hook行为、定向lint、默认build通过；tsc仍142既有诊断、新增0。IAB真实列表/筛选/模式及隔离Mock轨迹/关联分页/本地样片播放、空数据/失败恢复已验；暂停晚包按钮问题已修。规则旧中文/竞态、后端日月503保留，不宣称全项目合规。证据 .planning/2026-10-27-monitor-structure-rollout/validation。",
+    "changelog": "用户要求新增CHANGELOG.md并回补2026-10-26至27及已有历史；README/USAGE改为日志入口，版本维护要求同步日志；去除标题中的工作区未提交标记。没有独立证据的历史日期明确缺口，不把维护日期写成发布。"
+  },
   "efficiencyUpgrade": {
     "authority": "2026-10-27 用户授权优化前端开发和审查技能，直接拷贝到 .agents/skills 并完成实测。",
     "versions": "aura-web-develop 1.5.0 / aura-web-review 0.3.0",

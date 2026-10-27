@@ -7,12 +7,12 @@
 - [ ] 本次调用的外部技能均已核对实际可用性；开发自检若明确使用仓库源码已记录路径/版本/模式能力与未安装状态，缺失项未假称已调用
 - [ ] 技能安装仅在用户明确授权后执行；拒绝或安装失败时已按可降级/必需边界处理
 - [ ] 页面实现完成后已明确说明使用 Codex 内置浏览器自查，未用外部 Chrome、`agent-browser` 或仅看源码代替
-- [ ] 页面、页面私有组件、Composable、API、类型和 i18n 职责分离
+- [ ] 命中的 Vue/TS/样式已按[职责决策表](../knowledge/PIGX前端开发规范/文件组织与职责拆分.md)明确所有权、真实消费者及依赖方向；默认 SFC，少量私有 TS/SCSS 同级，私有 Vue 在 components/，多组职责才分目录，未按行数或缺 Hook 机械拆分
 - [ ] i18n 已按全项目、业务域、页面专属三层复用；新增 key 前已搜索同义文案，跨页面重复文案未落入各自业务目录
 - [ ] 已解析 API/OpenAPI/类型中的枚举与 `@dictKey`，并逐项核对筛选、表格、详情和表单；字典筛选/表单使用 `AuraDictSelect` 或项目字典选项，标签展示必须使用 `AuraDictTag`，纯文本必须使用 `AuraDictText`，覆盖嵌套/历史记录；没有手写 map/find/switch/三元/getLabel/el-tag 转换、页面伪字典或对应 `*Name` 直出；非展示编码判断不误报
 - [ ] 用户可见 label、title、placeholder、按钮、列名、卡片、Dialog/Drawer、空态、校验和消息均走 `t()` / `$t()`；已复用 common，跨两个及以上业务模块的文案已上提到业务域 i18n，zh/en key 同步存在
 - [ ] 所有可编辑或筛选控件均有 i18n placeholder；例外使用 `data-placeholder-exempt` 并有相邻中文原因说明
-- [ ] 路由页只保留布局、查询主状态和子组件编排；两个及以上业务 Dialog/Drawer 已拆为页面私有组件，复杂单弹窗也未内联堆积列表、表单和请求状态
+- [ ] 路由页保留简单状态、计算与必要编排；独立业务区域和复杂弹窗按职责拆分，私有状态、行为及样式一起迁移，未将整页 state 和大量实现回调传入子组件
 - [ ] 仅供弹窗使用的详情、候选项和业务列表由弹窗持有，并在公开 `open` 流程中加载；父页面、组件挂载阶段和 `immediate` 监听未提前请求
 - [ ] 父页面只传记录 ID、已选 ID 等操作上下文；保存后只刷新仍打开且确有需要的关联弹窗
 - [ ] 文件与变量有业务语义，目录和命名符合最新版工程规范及相邻模块
@@ -50,8 +50,8 @@
 - [ ] 每次管理端新增/更新前重新执行精确查重，批量写入没有跳过单项唯一性判断
 - [ ] 新增正式页面命中时已主动询问是否同步创建/更新；管理端写入仅在用户确认同步与写入、环境、运行时 Token、租户和父菜单定位齐全时执行；写入前精确查重、写入后 API 复核，凭据未落盘
 - [ ] 已询问页面是否配置远程菜单；不配置远程菜单时已撤销本次新增的业务 expose（包括 `src/hooks/moduleFederation.ts` 对应配置），保留框架标准 expose 和其他实际依赖所需的模块联邦配置
-- [ ] 业务表单使用 `useForm` 的 `validateForm/resetForm/clearFormValidate`；校验成功后才进入提交状态，提交期间禁用，成功后关闭并刷新
-- [ ] 业务页面未直接调用表单实例的 `validate/resetFields/clearValidate`
+- [ ] 本次涉及的每个业务表单按 [useForm 契约](../recipes/hooks-standards.md#useform)实际接入，覆盖适用的整表校验、字段校验、重置和清校验；未接入、只导入或缺证不能判通过
+- [ ] 未直接调用业务表单实例的 `validate/validateField/resetFields/clearValidate`；扩展方法已核对实际安装包支持，异步校验前防重、校验成功后进入提交状态，成功后关闭并刷新
 - [ ] 父子组件自定义事件及访问组件 ref 的事件使用 `@事件="具名方法"`，未直接绑定或调用组件 ref 成员，也未用内联箭头函数访问 ref
 - [ ] 具名事件方法通过 `ref.value?.method(...)` 安全访问子组件公开方法
 
@@ -78,6 +78,7 @@
 - [ ] 自定义可点击区域具备键盘焦点，非必要动效适配 `prefers-reduced-motion`
 - [ ] 生成前核对已安装 aura-ui 导出、类型和 AuraUIResolver，未虚构组件
 - [ ] Flex 高度链路、`min-height: 0`、滚动区域和主题变量符合最新版样式规范
+- [ ] 样式分档仅作评估，外置私有样式保持 scoped、资源与加载顺序；真实共享按最小范围提取，Element Plus 授权和既有主题归属未扩大
 - [ ] 普通内容滚动区域使用 `el-scrollbar`，未使用 `overflow: auto/scroll` 或 `overflow-auto/overflow-y-auto` 等原生滚动写法
 - [ ] `el-table`、`el-tree`、`el-select` 等已有内置滚动能力的组件使用自身能力，未额外嵌套 `el-scrollbar`
 - [ ] 远程样式有正确 scope，不重置无 scope 的 `body`、`html` 或 `.el-*`

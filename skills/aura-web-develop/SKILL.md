@@ -5,7 +5,7 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.5.0`（2026-10-27）。
+当前版本：`1.6.3`（2026-10-27）。
 
 ## 执行入口
 
@@ -18,7 +18,7 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 
 - 仅面向框架 1.2.0 与精确版本 `@fxft/aura-web-kit@1.9.0`（声明、锁文件与安装一致），不保留旧实现与入口兼容。公共工具、Hook、运行时和构建修复先查公开能力；通用实现进入公共包，项目只绑定实例、环境和资源。公共 UI 使用 `@fxft/aura-ui` 的 Aura 前缀组件。
 - 只处理授权范围，保留工作区已有改动；接口、Hook、组件和权限以真实契约为准，不虚构。用户任务优先，先区分“新开发/功能修改”与“纯注释/业务说明整理”。纯整理只允许修改注释和说明文档，保持可执行代码与行为；不得修改 DOM 属性、组件、import、状态、接口、控制流、依赖或配置，包括不得借规范整改增加重试、useForm、竞态处理或替换字典组件。发现既有 FE 功能偏差仅记录原有问题、证据和建议，不自动修复，也不因此停止其余可读性整理；无需逐项反复询问授权。新开发/功能修改在用户原授权内整改。
-- 请求使用 `/@/config/aura/request`；消息使用 `/@/config/aura/index`；表单生命周期使用 `useForm`。不复制框架底层实现。
+- 请求使用 `/@/config/aura/request`；消息使用 `/@/config/aura/index`；凡涉及业务表单的开发、功能修改或重构，必须使用 `@fxft/aura-web-kit/hooks/form` 的 `useForm`，主动读取 [Hooks 契约](recipes/hooks-standards.md#useform)，不依赖用户另行提醒。按实际生命周期逐表单验收，未接入或绕过公共 Hook 不得交付为通过；纯注释保持原授权边界。不复制框架底层实现。
 - 需要已有对象完整信息或当前状态时按 ID 查询详情，入口快照不能作为详情；日期时间处理必须使用 `dayjs`；用户可见文案走 i18n。具体边界按下表读取。
 - 外部技能调用前检查当前可用列表；缺失按 [依赖流程](references/skill-dependency-workflow.md) 处理，未经用户明确授权不得安装。
 - 报告实际完成与未验证项。状态问答、首次构建失败或走查结论后继续剩余已授权工作，不把中间结果当成交付完成。
@@ -31,11 +31,13 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 | 公共工具/Hook 选型、1.2.0 迁移、自动导入或公共 TS 修改 | [aura-web-kit 清单与接入](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)，先核对已安装版本 exports；只面向 1.2.0，不保留旧实现与旧路径兼容 |
 | 首次接触项目、架构或框架边界 | [总览](knowledge/PIGX前端开发规范/PIGX前端开发总览.md)、[开发边界](knowledge/PIGX前端开发规范/开发边界说明.md) |
 | 修改业务代码、命名、组件职责或布局 | [业务实现约束](references/implementation-rules.md)；新建模块/重构另读 [工程规范](knowledge/PIGX前端开发规范/工程与代码生成规范.md) |
+| 新增或功能修改 Vue/TS/样式、拆分职责或提升复用层级 | [文件组织与职责拆分](knowledge/PIGX前端开发规范/文件组织与职责拆分.md)，按职责、所有权和实际消费者选择最小结构；纯注释不触发重构 |
+| 优化、梳理或重构指定页面/整个业务模块的结构 | [结构任务覆盖与收尾](references/development-review-workflow.md#结构任务覆盖与收尾)，先覆盖完整授权范围的实际职责，再决定保留或拆分；完成几处提取不等于模块结构任务完成 |
 | 查看、编辑、复制、分配等需要已有对象数据 | [已有业务对象加载](references/business-object-loading.md)，适用页面、Tab、面板、抽屉和弹窗 |
 | 日期时间解析、格式化、比较、运算、时间戳或时区 | [dayjs 时间处理](references/date-time-guidelines.md) |
 | 字段、筛选、表格、表单、字典或用户可见文案 | [字典、i18n 与占位契约](references/ui-data-contracts.md)；涉及三字典组件 Props、选项、空值或接入时先读 [aura-ui 组件库入口](knowledge/PIGX前端开发规范/aura-ui组件库/README.md)，再仅加载实际使用组件的 DictTag.md / DictText.md / DictSelect.md |
 | 消息、确认框、请求失败反馈 | [消息反馈](references/message-feedback-guidelines.md) |
-| 表单校验、重置、列表 Hook | [Hooks 契约](recipes/hooks-standards.md) |
+| 凡涉及业务表单的开发、功能修改或重构（页面、Dialog、Drawer、内嵌编辑及查询表单），以及列表 Hook | [Hooks 契约](recipes/hooks-standards.md)；表单必须接入公共 `useForm`，不能只导入或沿用旧实例调用 |
 | 组件选型或远程组件解析与样式 | [组件选型](references/component-selection.md)、[组件复用规范](knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md) |
 | 页面布局、主题或静态资源 | [样式与资源](knowledge/PIGX前端开发规范/样式布局与静态资源规范.md) |
 | 新视觉方案、显著布局重做，或用户要求视觉设计 | [视觉协作](references/frontend-design-workflow.md)，检查可用的 `frontend-design`；沿既有模式增字段、校验或局部 CRUD 不触发 |
@@ -54,7 +56,7 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 
 [查询表格](knowledge/PIGX前端开发规范/页面模式/查询表格页.md) · [查询卡片](knowledge/PIGX前端开发规范/页面模式/查询卡片页.md) · [左树右表](knowledge/PIGX前端开发规范/页面模式/左树右表页.md) · [弹窗表单](knowledge/PIGX前端开发规范/页面模式/弹窗表单.md) · [详情与抽屉](knowledge/PIGX前端开发规范/页面模式/详情页与抽屉.md) · [看板](knowledge/PIGX前端开发规范/页面模式/看板页.md) · [Teleport 嵌套页](knowledge/PIGX前端开发规范/页面模式/Teleport嵌套页面模式.md)。
 
-完整页面开发先明确页面、私有组件、Composable、API、类型和 i18n 职责，再按模式实现；局部修复无需重新执行整页设计。历史 `templates/` 不能覆盖正式模式。
+完整页面开发先明确页面、私有组件、Composable、API、类型和 i18n 职责，再按模式实现；默认完整 SFC，少量私有 TS/SCSS 可同级，不要求逐项建文件。局部修复只评估相关职责，无需重做整页设计。历史 `templates/` 不能覆盖正式模式。
 
 ## 验证与交付
 
@@ -62,12 +64,17 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 - 功能开发或明确要求验证的整理任务，按请求范围使用 [实现清单](checklists/implementation.md)、[验证清单](checklists/validation.md) 和 [正式检查清单](knowledge/PIGX前端开发规范/开发检查清单.md) 中命中的项目；完整页面开发覆盖全部适用项。
 - 功能开发的检查触发、范围和时机统一按[检查选择表](references/development-review-workflow.md#检查选择表)执行；各清单用于核对命中项，不另设重复验收节奏。
 - 维护技能本身运行 `scripts/validate-skill.ps1`；能力清单变更时运行 `scripts/check-web-kit-catalog.ps1 -PackagePath <已安装的 aura-web-kit 包目录>`，不启动业务项目的构建或浏览器流程。
+- 每次调整技能版本，同步在 [CHANGELOG.md](CHANGELOG.md) 记录该版本日期、用户可见变化及必要兼容影响；同一未发布版本的补充归并原条目，不重复新建日志。安装、提交与发布事实留来源记录，不能由日志版本推断已发布；普通业务调用无需加载历史日志。
 - 功能开发或明确要求自检时，开发自检只读、整改由本技能负责；调用前确认实际加载的审查技能支持模式，精确入口与旧版能力缺口处理见[开发闭环](references/development-review-workflow.md)。不能以正式六文件流程代替自检。
 - 纯整理按快速路径简报已改范围、业务说明位置和未执行自动检查，不声明自检通过；用户明确要求报告时按请求范围交付。功能开发全部适用必需项通过后，局部变更可合并检查与交付为一份简短开发记录，完整新功能或要求独立报告时按[交付要求](references/development-review-workflow.md#5-通过后供开发人员审阅)保留报告与过程记录，标记“自检通过，待人工审查”；缺证或失败如实记录并继续独立工作。
 
 本轮 MF Vite 1.23.5、web-kit 1.9.0 与 TypeScript 5.9.3 配套基线及来源见 [升级来源记录](references/framework-upgrade-source.json)；按模块联邦规范接入自动预构建和 ESLint 配套配置，不沿用旧扫描插件或强制手工清单。
 
 本次可读性与自检流程直接维护于本技能仓库，来源及未发布状态见[本地变更记录](references/readability-source.json)；不替换既有规范来源记录。
+
+本轮职责规范及局部视图来源见[职责规范来源](references/file-organization-source.json)：F 盘规范工作树待提交绑定；保留既有框架基线和历史来源记录，不宣称已提交同步或发布。
+
+表单执行入口与验收补强见[表单维护记录](references/form-hook-source.json)，沿用既有 FE-013/019 规则，不将 Hook 扩展建议当作已提供能力。
 
 业务枚举/字典展示强制使用 `@fxft/aura-ui` 的 `AuraDictTag` / `AuraDictText`，禁止手写展示转换；选项、非展示编码判断及公开契约取证边界见[字典契约](references/ui-data-contracts.md)。
 

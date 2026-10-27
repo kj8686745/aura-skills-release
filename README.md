@@ -16,11 +16,19 @@ npx skills add kj8686745/aura-skills-release --skill <技能名称> --global --y
 npx skills add kj8686745/aura-skills-release --skill '*' --global --yes --agent codex
 ```
 
-更新已安装技能：
+更新指定的全局已安装技能：
 
 ```powershell
 npx skills update <技能名称> --global --yes
 ```
+
+更新全部全局已安装技能：
+
+```powershell
+npx skills update --global --yes
+```
+
+按各技能的安装来源更新，包含其他仓库的全局技能；不会额外安装尚未安装的技能。
 
 ## 技能管理
 
@@ -75,9 +83,9 @@ npx skills remove --all
 | aura-detailed-design | 通用、设计 | 0.2.0-draft | 公开试用（待行为验收） | 依据 AURA 技术详细设计规范，为影响模块、数据、状态、接口或运行边界的业务变更新建、修订或只读复核技术详细设计；不负责实现代码、替代接口文档或全项目规范审查。 |
 | aura-module-federation-check | 前端、审查 | 1.1.6 | 正式 | 自动识别 Vue 3 + Vite 项目属于 PIGX 综合端、模块联邦生产端或消费端，并检查 PIGX 综合端的模块联邦身份、依赖、Vite 配置、shared singleton、运行时外壳、i18n、样式、静态资源和构建产物。模块联邦配置由 Web 开发技能实现，本技能提供改前基线、改后复检与对外接入说明；首版生产端或消费端仅报告类型和证据。 |
 | aura-review-skill-build | 前端、后端、治理、审查、内部构建 | 0.5.1 | 内部交付 | 为前端、后端或接口负责人开发和优化规范审查技能，构建规则路由、只读审查工作流与统一报告模板，并验证生成技能的结果包；不直接承担业务项目审查或代码整改。 |
-| aura-web-develop | 前端、开发 | 1.5.0 | 正式 | 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，补齐代码注释与业务说明；功能开发完成必要验收和自检后交付开发记录或报告，纯注释/说明整理默认直接交付。 |
+| aura-web-develop | 前端、开发 | 1.6.3 | 正式 | 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，补齐代码注释与业务说明；功能开发完成必要验收和自检后交付开发记录或报告，纯注释/说明整理默认直接交付。 |
 | aura-web-project-router | 前端、路由 | 1.0.4 | 正式 | 对框架未知的 Vue 3 + Vite 项目进行只读识别，为 Aura/PIGX 业务开发、前端规范审查、地图视频和模块联邦任务分流；不实现业务，不接管普通 Vue/Vite 或 React 项目。 |
-| aura-web-review | 前端、审查 | 0.3.0 | 公开试用（待行为验收） | 只读审查 AURA/PIGX Vue 3 + Vite + TypeScript 前端项目、模块或变更；限定变更默认单报告，全项目或正式审查保留六文件，开发闭环使用 development-self-check 轻量记录。不实施业务修复。 |
+| aura-web-review | 前端、审查 | 0.4.3 | 公开试用（待行为验收） | 只读审查 AURA/PIGX Vue 3 + Vite + TypeScript 前端项目、模块或变更；限定变更默认单报告，全项目或正式审查保留六文件，开发闭环使用 development-self-check 轻量记录。不实施业务修复。 |
 | fmap-2d |  | 1.0.6 | 正式 | 公司 2D 地图业务开发规范技能，指导 Agent 在 Vue 3 + Vite 项目中接入 @fxft/ui-plus，并使用 FxftMap 完成地图页面、点位聚合、轨迹回放、热力图、绘制和 GeoJSON 渲染。 |
 | fxft-video |  | 2.0.6 | 正式 | 在 Vue 3 + Vite 项目中使用 @fxft/ui-plus 的 FxftWebVideo 与 FxftWebMultiVideo 实现直播、回放、点播、PTZ、分屏、拖拽、多选和通道管理。 |
 

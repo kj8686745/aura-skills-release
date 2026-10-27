@@ -1,0 +1,256 @@
+{
+  "skill": "aura-web-review",
+  "skillVersion": "0.4.0",
+  "updatedAt": "2026-10-27",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
+  "snapshotRoot": "knowledge/PIGX前端开发规范",
+  "sourceCommit": null,
+  "sourceBaseCommit": "a4adb392b3df7bb24d2187904c5fdd4816d66a72",
+  "sourceBinding": {
+    "status": "pending",
+    "baseCommit": "a4adb392b3df7bb24d2187904c5fdd4816d66a72",
+    "sourceWorkingTreeSha256Lf": "01dfd08a8d9897735ec6f30016b5503257f7d116fd3f8ea93a2d54eb0b32f44b",
+    "sourceBaselineSha256Lf": "572db71491a0115ff5f1828b5569e8ceb27b346e0dac25c286530eaec2867bd8",
+    "reason": "本轮规范尚未提交；工作树摘要不是基线提交中的内容，取得正式提交后再绑定。"
+  },
+  "documents": [
+    {
+      "source": "文件组织与职责拆分.md",
+      "snapshot": "文件组织与职责拆分.md",
+      "sourceSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114",
+      "snapshotSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114",
+      "committedSourceSha256Lf": null,
+      "sourceExistsAtBase": false,
+      "transformation": {
+        "navigationTargetsRemoved": []
+      },
+      "baselineState": "absent-at-base; new-independent-body; full-copy-without-navigation-rewrite"
+    }
+  ],
+  "scopeEvidence": {
+    "hashAlgorithm": "SHA256 UTF-8 content; normalize CRLF to LF only; do not trim whitespace",
+    "aggregateAlgorithm": "sort paths ordinal; concatenate path + TAB + hash (or ABSENT) + LF; hash UTF-8 bytes",
+    "sourceFilesRoot": ". (relative to source repository)",
+    "sourceFiles": [
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/00-前端开发总览.md",
+        "workingTreeSha256Lf": "36911659504e91f8fa823d448aec2fcef1c566e732b8b74609a93e293907b1c7",
+        "baselineSha256Lf": "2f436423ce9722131bb13d23b9cb577390f0d5b446da77e05a55cf2016159b2c"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/01-工程组织与页面状态.md",
+        "workingTreeSha256Lf": "077fb99ac05d53fd945b9630285f9b361b446dc2717eb276e9f9ac75708774b5",
+        "baselineSha256Lf": "f90c69d845ba227a1082a2eea9afa8ded9e890f57353dc8531a53e8fc013d17a"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/04-工程与代码生成.md",
+        "workingTreeSha256Lf": "f343f38411e34caaa70e051a69e68a375280f23322f8f2e48b63879b63200273",
+        "baselineSha256Lf": "d78d5f805d403dfa5fbff0fcf58a4a17d2e8d6d2d640c75265befded81480c0e"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/05-开发边界与框架归属.md",
+        "workingTreeSha256Lf": "e022a05bcc0c18c0cde62718656fbe53fb45c9e22f374133fc1e8ec7db506979",
+        "baselineSha256Lf": "dd1829f586f9de238e96d942e006353ddb2346666e60fe5d77a991cc5b41b219"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/09-样式布局与静态资源.md",
+        "workingTreeSha256Lf": "94f1ee81c12583ecc87b97251152fb10e4b7b8bae3f8c4bda882249b4431fc27",
+        "baselineSha256Lf": "2390118a89e1441bdd7c474a2613acafd5e8ba6ef75a27cb790fce139fb1c7e9"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+        "workingTreeSha256Lf": "4f23e44571c3d941ad9e9de507dce2b7ab2b77cf6407d619b73254fa23a39546",
+        "baselineSha256Lf": "9cd0936ad49811aa37b18e0b071077a2bb30469e06da1a502a89c43e4422076b"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/13-参考页面样例.md",
+        "workingTreeSha256Lf": "3c39b87e5e4b4ff86cf37102c6286786cb928340f90a56114641d173e154cd43",
+        "baselineSha256Lf": "b17383cdf436baa53a9db06c050f9489e6c8c1e1333a286ac883d7c87f14bdd5"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/文件组织与职责拆分.md",
+        "workingTreeSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114",
+        "baselineSha256Lf": null
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/Teleport嵌套页面模式.md",
+        "workingTreeSha256Lf": "7e6f60e6a1877e4b91f70040bbb895232d9f2664fdece580b8cde588f98785f5",
+        "baselineSha256Lf": "ef57c5b03bda907dabd08b4c84bd0e0166f3169099970194b83abc683cc04049"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/左树右表页.md",
+        "workingTreeSha256Lf": "99dfb418d879f364399d0fc9dbfaf6d2cf4bc36434d722709e17eb6a600d45a3",
+        "baselineSha256Lf": "490f529ca76668cf3beb0ffd6aa7c13163b0e9ab66dce134edbb865cd129341b"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/弹窗表单.md",
+        "workingTreeSha256Lf": "7c8933541ee002f2cd52db0d67d2a071fac86daf975d051e05d2eb496d5b7aa2",
+        "baselineSha256Lf": "c4e353fec4e6b9b4aef5c36b28ff75ec26adad9e271c408b94ab970cd8d0105c"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询卡片页.md",
+        "workingTreeSha256Lf": "b157a9ae2cdbef5bc9b6220a66bbfd5e6daf953f1d45c9467ba61df8a96f5b37",
+        "baselineSha256Lf": "86bf2e288f244b03df25e176c59a3e7fd03b2c4e1e5b728960ec45062c81e847"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询表格页.md",
+        "workingTreeSha256Lf": "34a87f4c8cc992115302deb30aa17c2bf0df2566c0be70d32450d63a5f196d08",
+        "baselineSha256Lf": "5e1eee241fb3b8eec735fc8f14f85e77bbba6cf473ac75a36892c72db95019a7"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/看板页.md",
+        "workingTreeSha256Lf": "5e9a33e410d472c1b4109ed44d65d7661580a04d5050d2edea17031cd45c3876",
+        "baselineSha256Lf": "281ebebb231a2576e2056a4393b2e1d8da076b01e3167bf58114046030cc8870"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/详情页与抽屉.md",
+        "workingTreeSha256Lf": "e9c48034617abe2bf7e8e36ab4ed94da6e1cdda1119a00338d4e7e859086c772",
+        "baselineSha256Lf": "efb1b9bd91ffb6a4e316f431ca572d93c70dfce9c6b8209448ee511900d89214"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/规范矩阵.md",
+        "workingTreeSha256Lf": "fe4de168f5247b5e571611aa27662f73dd434dbf1d42aeb32a3ec2b00fd40ae3",
+        "baselineSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0"
+      }
+    ],
+    "skillBaseCommit": "5b6ea76b9304d4f3b6996a43c872950ad5d302af",
+    "snapshotFilesRoot": ". (relative to skill directory)",
+    "snapshotFiles": [
+      {
+        "path": "SKILL.md",
+        "workingTreeSha256Lf": "a91cf9ff871771600b0cb38b1078854502f3b3d0500d2f31081cb0d0150d7c11",
+        "baselineSha256Lf": "7e564493b1ed5e8eba0ff62e7175dd9c44bbea7540a7ebfaf38c6970b69c7807"
+      },
+      {
+        "path": "USAGE.md",
+        "workingTreeSha256Lf": "363a812b4da0161db42c91c054cb3f5d593571c234d75005d10395b16118e0af",
+        "baselineSha256Lf": "08219bcaaa3f5c85761c43aefa2aab72225fec39e7cf9225819dcb76eb7ed4a2"
+      },
+      {
+        "path": "VERSION",
+        "workingTreeSha256Lf": "40b8eb4000a913a7791090535f291d3d369874162a89ef3c9e3d4e887a1b9e79",
+        "baselineSha256Lf": "d915cc95d6ca8f47ae297713ed46d4e5c5d99ddd29fc3c61e263bdf305f2b5b0"
+      },
+      {
+        "path": "checklists/审查交付.md",
+        "workingTreeSha256Lf": "86ae9d4ef17df0be2ff51e0a5832b24757a50ce2da12bcb0b1c28cb198255bf7",
+        "baselineSha256Lf": "58098b1c62d487a8e3aeef900de02378e1b48da73caafd950fc659c2bbb68fbb"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/01-工程组织与页面状态.md",
+        "workingTreeSha256Lf": "4cfd9439c2cf7d2ce1009ca56c886ec402d1022250da89718299dfea4dd1d961",
+        "baselineSha256Lf": "9dd3813db3b1dfc460ccd65a8b2570b31779a0c52137807de99001a534d61f7d"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/PIGX前端开发总览.md",
+        "workingTreeSha256Lf": "cb3b4aae34fd65e38f4d25e61ab4a6dca2414d170101184729c065aaca74ca2e",
+        "baselineSha256Lf": "de4c682b0f89a6582d3b6d1cce4d7555d60498d607e20e4180078de224507b33"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/参考页面样例.md",
+        "workingTreeSha256Lf": "e50215377b948c1f5b23b799bcedc51a0212ee71b8aa53b3e2c403e568eac634",
+        "baselineSha256Lf": "88c4dd74d229ffd0d83a233876daa01c57fbe42d2d8f5ef83d556e975dd18ba4"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/工程与代码生成规范.md",
+        "workingTreeSha256Lf": "8cc5437f7176fc8d5bd643e05c1d7708dfd6306092e06acd3dce3161654ea431",
+        "baselineSha256Lf": "5687376a84778666269abc08b95feeb16d63a179b8430221ee9966b906311535"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/开发检查清单.md",
+        "workingTreeSha256Lf": "dc31d0651d335488ec693d5e2ac5488ca317d9654f62a68be61a0054b07a26f7",
+        "baselineSha256Lf": "50ceaeb4722a0653a37719a5e03d1c9cd8c5d5c08738af8bacd30594b65c89ae"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/开发边界说明.md",
+        "workingTreeSha256Lf": "2bd3e5dc6d335e893d48fb0ead9c085ea1ece3fbc9778cb8c34a83e94b144088",
+        "baselineSha256Lf": "949c1ecf44d47eaf7bf96d27a3cff448a8a73ed96bf97286a9f84f517af7a5f1"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/文件组织与职责拆分.md",
+        "workingTreeSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114",
+        "baselineSha256Lf": null
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/样式布局与静态资源规范.md",
+        "workingTreeSha256Lf": "19072c70f3eebc559783a9fb262bcf3cce54cea09d10bbcc29e7c2d45cf77790",
+        "baselineSha256Lf": "5ca109fa4862a78fa8c8e55be90110cf05345da87f18604e983eeefc1386fd2b"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/页面模式/Teleport嵌套页面模式.md",
+        "workingTreeSha256Lf": "4b33a0625fae403d5f526221dec69cea96fe8217c3ff782e008b83e6458e31c0",
+        "baselineSha256Lf": "38493633c8ea747612792acc5f56bb526dd8ba71ed926fc94051f495245d4fc9"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/页面模式/左树右表页.md",
+        "workingTreeSha256Lf": "beb0f4e69c364754b7c9bb6ea6ab111b3ec2595f0c0cf7bc6667e613a8e27d8e",
+        "baselineSha256Lf": "26dc1f5f14e64055d8e5a87ba9660ef79c8e583c6cafa6c66db7ed35964397cc"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/页面模式/弹窗表单.md",
+        "workingTreeSha256Lf": "eed5a1c6408f8d94cc2903fa7c24fbf14fa1f8a76fbde5feb32668a91d82805f",
+        "baselineSha256Lf": "002d7ed5c24873bc40f015ff6c91dff84af09d674c1269708b68d093144c1bb7"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/页面模式/查询卡片页.md",
+        "workingTreeSha256Lf": "af13cd40794fc48375650ceb4a50b1e90ff627a3fb3e3bc0f683bb44400d9a25",
+        "baselineSha256Lf": "5e5d67e306bc5e7e42399138bc9cea7692c93768b9c04f6185eba4dc6fae997c"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/页面模式/查询表格页.md",
+        "workingTreeSha256Lf": "88504208b7712a18378010b637af23d6d248cb827c654401a433a3b5b9fa6124",
+        "baselineSha256Lf": "15522be8b0a36e36c279ee433d2176ade33303991dc448a1f41133f79cd727e5"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/页面模式/看板页.md",
+        "workingTreeSha256Lf": "048e2abe8d3f92b5f66dacf887dc9c2d8f7f57e4273b73e0653b1235215cbd79",
+        "baselineSha256Lf": "8b272374af173947188351f30af49bfbcd9dc811da31bfce60aa13ddc1d0865d"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/页面模式/详情页与抽屉.md",
+        "workingTreeSha256Lf": "bf415536e962443ffe16ca0c703d0bda23c70cdbb38ea7d4297cc574d5228259",
+        "baselineSha256Lf": "02b5362ec5408b65981c3e154fb5fbec76c08c20efb052c26f17d90650aa51a3"
+      },
+      {
+        "path": "references/change-review.md",
+        "workingTreeSha256Lf": "06600de405d0345ae95f6a248cfac69f6a19acc0bd9709c9f525ee05e8cf108d",
+        "baselineSha256Lf": "0fac68ba19d5b626385a31749054ed3ea8683837ee09bfe37d686d0dd66c66b8"
+      },
+      {
+        "path": "references/development-self-check.md",
+        "workingTreeSha256Lf": "3525e283e3a57a526a76ca5bbd351d4fae6e7b14e7adbb94da72aa9f1419b341",
+        "baselineSha256Lf": "2f2192fb9c7740e0df015bfb180b2911c2af383b4487307948acca356a19e1ef"
+      },
+      {
+        "path": "references/审查路由.md",
+        "workingTreeSha256Lf": "35deaaf468be47c5dad0ccb4238eaeea2ffc241a90c2ac0cb3ba66ae6dfc57b2",
+        "baselineSha256Lf": "880c31300ac76f38da5e34db3c952dcb3e8463e6d79d0a5b57a3f1f0eec6e57f"
+      }
+    ],
+    "snapshotWorkingTreeSha256Lf": "8e6964018b49fb6f4a682370b20446c332a00043423f46ce50f02cec4bfc7299",
+    "snapshotBaselineSha256Lf": "8cf2027882bef4eafb489316513a0a9219cd34d2fb3f25d545952fbac345031c"
+  },
+  "localAdaptations": "其余命中知识视图、入口、引用、recipe 和清单仅局部衔接新独立正文；保留各自已有内容和框架基线，不声明整份旧知识视图与 F 盘全文等价。sourceFiles 与 snapshotFiles 是本轮差异证据，不是新增逐文件全文同步声明。新正文为完整同版副本，必读引用在技能内闭合。",
+  "preservedBaseline": "保留 MF Vite 1.23.5、web-kit 精确1.9.0、TS 5.9.3 及已有新增规范；历史 source.json、framework-upgrade-source.json、readability-source.json 不在本轮重写。",
+  "validation": {
+    "state": "maintenance-static-checks-passed; source-commit-binding-and-independent-behavior-validation-pending",
+    "checks": {
+      "quickValidate": "passed",
+      "developValidate": "not-applicable",
+      "relativeLinksChecked": 134,
+      "brokenRelativeLinks": 0,
+      "sourceAndSnapshotManifests": "81 entries across both records rechecked against working trees and exact Git baselines; passed",
+      "newBodyCopies": "both snapshots equal source after CRLF-to-LF normalization; passed",
+      "gitDiffCheck": "passed in both repositories"
+    },
+    "scope": "技能结构、命中相对链接、差异与本轮工作树摘要；代表性独立验证由主代理协调；不证明业务运行或双仓提交绑定"
+  },
+  "deliveryState": "local-working-tree; locally-installed; not-published; not-committed",
+  "localInstallation": {
+    "path": "C:/Users/83979/.agents/skills/aura-web-review",
+    "backup": "C:/Users/83979/.agents/skill-backups/frontend-structure-20261027/aura-web-review",
+    "verification": "交付集合逐文件SHA256核对一致；排除过程目录和真实认证配置；安装不代表规范提交绑定或正式发布。",
+    "behaviorValidation": "监控中心结构重构与真实/Mock功能验证进行中，证据由本轮执行记录维护。"
+  }
+}

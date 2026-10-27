@@ -12,6 +12,7 @@ $resolvedSkillPath = (Resolve-Path -LiteralPath $SkillPath).Path
 
 $required = @(
   "VERSION",
+  "CHANGELOG.md",
   "SKILL.md",
   "USAGE.md",
   "agents\openai.yaml",

@@ -30,7 +30,7 @@
 - Vue Template 使用语义化标签、双引号属性和简洁表达式；复杂表达式提取为计算属性或方法。
 - 页面放在 `src/views/<业务域>/<业务模块>/`，私有组件放在同目录 `components/`。
 - API 放在 `src/api/<业务域>/`，目录结构先遵循相邻模块。
-- 业务 Composable 放在页面目录 `composables/`；跨项目通用能力进入 `aura-web-kit`，项目实例与业务逻辑留在项目。
+- 页面私有 TS/SCSS 少量同级，多组职责才建 `composables/`、`utils/`、`styles/`；同模块共用就近，项目跨模块共用沿用 `src/hooks/`、`src/utils/`，不并建同义公共目录。归属按[职责决策表](../knowledge/PIGX前端开发规范/文件组织与职责拆分.md)，跨项目能力先查 `aura-web-kit`，项目业务仍留项目。
 - 不使用 `common`、`temp`、`new`、`test`、`Page.vue`、`useData` 等缺少业务语义的正式命名。
 
 ## API 函数

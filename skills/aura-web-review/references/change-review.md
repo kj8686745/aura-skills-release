@@ -1,5 +1,7 @@
 # 变更审查模式
 
+命中 Vue/TS/样式组织时按[统一职责决策表](../knowledge/PIGX前端开发规范/文件组织与职责拆分.md)检查本次相关职责和必要依赖；只凭规模、缺 Hook 或未外置样式不判偏差，不追加全仓扫描或拆分报告。
+
 `mode=change-review` 用于明确限定 files、diff、一次变更或局部模块的日常只读审查，默认交付一份报告。全项目、完整规范或显式正式审查按入口切换 `formal-review`；开发闭环明确使用 `development-self-check`。模式不是脚本参数，不调用 `Review-Frontend.ps1` 的 Collect/Check，不创建六文件或专用结果包。
 
 ## 范围与取证

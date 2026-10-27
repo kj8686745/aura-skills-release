@@ -1,0 +1,89 @@
+{
+  "skill": "aura-web-review",
+  "skillVersion": "0.4.1",
+  "updatedAt": "2026-10-27",
+  "change": "补强既有业务表单 useForm 规则的触发、实际调用链及验收证据",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
+  "sourceDocuments": [
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/03-表单异步与资源反馈.md",
+      "sha256Lf": "74657991454e10caf5416143237fe35df0bc5929f8eafeed36ba88e24ebd8325"
+    },
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/04-工程与代码生成.md",
+      "sha256Lf": "d78d5f805d403dfa5fbff0fcf58a4a17d2e8d6d2d640c75265befded81480c0e"
+    },
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+      "sha256Lf": "9cd0936ad49811aa37b18e0b071077a2bb30469e06da1a502a89c43e4422076b"
+    },
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/弹窗表单.md",
+      "sha256Lf": "c4e353fec4e6b9b4aef5c36b28ff75ec26adad9e271c408b94ab970cd8d0105c"
+    }
+  ],
+  "sourceScope": "仅确认本记录所列提交中既有 FE-013/019 表单规则；本轮未修改规范正文或 knowledge 交付视图，不声明其他历史来源已完成绑定。",
+  "executionChanges": [
+    "新增或功能修改表单即加载契约，覆盖页面、弹窗、抽屉、内嵌编辑及查询生命周期。",
+    "核对已安装导出和真实调用链；仅导入或仅用 resetForm 不能代替提交校验等适用生命周期接入。",
+    "在既有开发/审查记录按表单简记适用方法和证据，不新增报告体系；纯注释边界保持。"
+  ],
+  "preservedHistory": "此前 file-organization-source.json 等记录保留其原版本及历史工作树摘要；不作为本轮修改文件的当前摘要或本轮验收证据。",
+  "validation": {
+    "state": "structure-links-source-binding-and-representative-decisions-passed",
+    "scope": "两技能quick_validate、开发validate-skill、8条规范来源摘要、111条本轮Markdown相对链接/锚点、六场景执行决策及diff-check；无业务运行验收。",
+    "evidence": ".planning/2026-10-27-form-hook/validation.json（仅维护仓库证据）",
+    "prettier": "仓库无本地工具与配置，沿现有Markdown格式；未安装额外工具。"
+  },
+  "deliveryState": "local-working-tree; not-committed; not-installed; not-published",
+  "frameworkAudit": ".planning/2026-10-27-form-hook/评估报告.md（维护仓库内过程证据，不是安装后必读资料）",
+  "latestMaintenance": {
+    "skillVersion": "0.4.3",
+    "date": "2026-10-27",
+    "authority": "用户本轮要求检查与开发技能凡涉及业务表单必须使用web-kit form Hook；更新既有技能安装以使规则生效。",
+    "sourceRule": "沿用既有FE-013/019/021及本轮用户明确要求；本轮只调整技能执行入口与取证、未改knowledge正式快照。",
+    "standardWorkingTree": {
+      "root": "F:\\Documents\\公司\\研发\\框架\\aura-code-nexus",
+      "sourceCommit": null,
+      "baseCommit": "a4adb392b3df7bb24d2187904c5fdd4816d66a72",
+      "documents": [
+        {
+          "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/03-表单异步与资源反馈.md",
+          "workingTreeSha256Lf": "4ca3734ad58cf5adb247df21b0caf334c0702d8560675a331c4038fc48894bc5"
+        },
+        {
+          "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/06-aura-web-kit公共能力.md",
+          "workingTreeSha256Lf": "77dd2f87cd0c99338b422177cb5a030f97d28cb185a46ddee8c9045fbe8f9322"
+        }
+      ],
+      "status": "pending-commit-binding; not-full-snapshot-sync"
+    },
+    "publicContract": {
+      "repository": "ssh://gogs@git.fxft.net:2222/frontend/aura-web-kit.git",
+      "commit": "df7206233306299fdb4d327a22f5d34c8177faed",
+      "file": "src/hooks/form.ts",
+      "state": "源码已提交；发布与项目可用性须核对实际安装包，不能凭1.9.1版本号推定。"
+    },
+    "preserved": "保留1.6.2/0.4.2完整职责识别、逐项处理、剩余职责复核、纯注释边界及其余用户已有改动。",
+    "validation": {
+      "state": "passed",
+      "quickValidate": "both passed",
+      "developValidate": "passed",
+      "relativeLinks": 125,
+      "brokenLinks": 0,
+      "scenarioDecisions": 10,
+      "scope": "技能结构、引用、版本与日志、执行决策；非业务运行验收。",
+      "evidence": ".planning/2026-10-27-form-hook/skill-update/validation.md",
+      "formatting": "仓库无本地Prettier或配置，沿原Markdown约定；未安装工具，git diff --check通过。"
+    },
+    "installation": {
+      "state": "updated-existing-installation",
+      "target": "C:\\Users\\83979\\.agents\\skills\\aura-web-review",
+      "backup": "C:\\Users\\83979\\.agents\\skill-backups\\form-hook-20261027-1.6.3-0.4.3\\aura-web-review",
+      "scope": "仅同步before.json列明的本轮文件；版本、入口、契约、清单、日志及来源记录；其他文件保持。",
+      "verification": "安装后与源码逐文件SHA256一致；先校验目标未被并发修改。"
+    },
+    "delivery": "local-working-tree; not-published"
+  }
+}
