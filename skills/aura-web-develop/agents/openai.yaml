@@ -1,6 +1,6 @@
 interface:
   display_name: "PIGX 综合端业务开发"
-  short_description: "开发或修改 PIGX 业务，补齐注释与说明，自检整改测试通过后供人工审查"
-  default_prompt: "使用 $aura-web-develop 完成指定 PIGX 业务开发或修改，补齐注释与模块业务说明，执行开发自检、整改和必要测试，通过后交付待人工审查的开发报告。"
+  short_description: "开发 PIGX 业务并自检交付；纯注释说明整理默认直接完成"
+  default_prompt: "使用 $aura-web-develop 完成指定 PIGX 业务任务，补齐完整注释并更新必要业务说明，按检查选择表验收自检；局部功能合并为简短开发记录，完整新功能保留报告，纯注释说明整理人工核对与项目格式化后直接交付。"
 policy:
   allow_implicit_invocation: true

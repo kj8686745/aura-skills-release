@@ -1,11 +1,11 @@
 ---
 name: aura-web-develop
-description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，补齐代码注释与业务说明，完成开发自检、整改和测试后交付开发审查报告；也适用于指定旧业务的注释与逻辑梳理。
+description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，补齐代码注释与业务说明；功能开发完成必要验收和自检后交付开发记录或报告，纯注释/说明整理默认直接交付。
 ---
 
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.4.5`（2026-10-26）。
+当前版本：`1.5.0`（2026-10-27）。
 
 ## 执行入口
 
@@ -22,7 +22,7 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 - 需要已有对象完整信息或当前状态时按 ID 查询详情，入口快照不能作为详情；日期时间处理必须使用 `dayjs`；用户可见文案走 i18n。具体边界按下表读取。
 - 外部技能调用前检查当前可用列表；缺失按 [依赖流程](references/skill-dependency-workflow.md) 处理，未经用户明确授权不得安装。
 - 报告实际完成与未验证项。状态问答、首次构建失败或走查结论后继续剩余已授权工作，不把中间结果当成交付完成。
-- 所有业务修改（包括更新既有业务）均必须读取[注释规范](references/code-comment-guidelines.md)，先从实际源码提取业务对象覆盖清单，再逐项覆盖变量/状态、模板区块与业务元素、业务组件实例、方法及执行步骤；不能仅补新方法或文件头。新开发、修改业务及旧代码注释/逻辑梳理均自动执行[开发闭环](references/development-review-workflow.md)：实现业务 → 补齐注释和业务说明 → `aura-web-review` 的 `development-self-check` → 按记录整改、复查与必要测试 → 按任务类型完成必需项后交付：功能任务交开发审查报告；纯整理仅以可读性及行为保持验收，交限定范围的注释/说明整理审阅报告，并列出既有功能偏差，不宣称整体 FE 合规。每块通过后继续已授权工作，整体再验证跨块衔接。
+- 业务开发及旧代码注释/说明整理均读取[注释规范](references/code-comment-guidelines.md)并按实际源码覆盖完整授权业务块：每声明字段自己的中文、方法契约、模板语义和真实执行阶段不减。调用审查前先按[开发闭环](references/development-review-workflow.md)分流：功能开发执行自检、整改、测试与报告；纯整理人工确认含义与差异范围，按项目约定格式化后直接交付，默认不调用审查、不运行自动检查、不建立逐对象机器证据或自检报告。仅用户明确要求验证/审阅报告或真实项目强制门禁时追加对应范围。
 
 ## 按场景读取
 
@@ -38,7 +38,7 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 | 表单校验、重置、列表 Hook | [Hooks 契约](recipes/hooks-standards.md) |
 | 组件选型或远程组件解析与样式 | [组件选型](references/component-selection.md)、[组件复用规范](knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md) |
 | 页面布局、主题或静态资源 | [样式与资源](knowledge/PIGX前端开发规范/样式布局与静态资源规范.md) |
-| 新增或改造用户可见页面、CRUD、看板、地图/视频容器、跨页面视觉组件 | [视觉协作](references/frontend-design-workflow.md)，检查并调用 `frontend-design` |
+| 新视觉方案、显著布局重做，或用户要求视觉设计 | [视觉协作](references/frontend-design-workflow.md)，检查可用的 `frontend-design`；沿既有模式增字段、校验或局部 CRUD 不触发 |
 | 路由、菜单、隐藏页 | [路由规范](knowledge/PIGX前端开发规范/路由与菜单规范.md) |
 | 新增正式业务页面、菜单入口或操作按钮；管理端菜单权限同步 | [菜单权限流程](references/admin-menu-permission-workflow.md)，主动确认是否同步及是否配置远程菜单；外部写入须有授权 |
 | remote、expose、manifest、shared 或模块联邦运行时 | [模块联邦规范](knowledge/PIGX前端开发规范/模块联邦开发技术规范.md)、[组件选型](references/component-selection.md)；使用 `aura-module-federation-check` 做改前基线与改后复检 |
@@ -59,11 +59,11 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 ## 验证与交付
 
 - 修改代码后按 [格式化流程](references/prettier-formatting-workflow.md) 执行项目本地 Prettier 和 `git diff --check`。
-- 按任务范围使用 [实现清单](checklists/implementation.md)、[验证清单](checklists/validation.md) 和 [正式检查清单](knowledge/PIGX前端开发规范/开发检查清单.md) 中命中的项目；完整页面开发覆盖全部适用项。
-- 业务代码修改在构建前运行 `scripts/check-project-rules.ps1 -ProjectPath <项目路径> -StrictUiContracts`，处理错误，再执行项目可用 build/typecheck、lint；可见交互按浏览器流程验收，模块联邦任务验证独立和远程运行。
+- 功能开发或明确要求验证的整理任务，按请求范围使用 [实现清单](checklists/implementation.md)、[验证清单](checklists/validation.md) 和 [正式检查清单](knowledge/PIGX前端开发规范/开发检查清单.md) 中命中的项目；完整页面开发覆盖全部适用项。
+- 功能开发的检查触发、范围和时机统一按[检查选择表](references/development-review-workflow.md#检查选择表)执行；各清单用于核对命中项，不另设重复验收节奏。
 - 维护技能本身运行 `scripts/validate-skill.ps1`；能力清单变更时运行 `scripts/check-web-kit-catalog.ps1 -PackagePath <已安装的 aura-web-kit 包目录>`，不启动业务项目的构建或浏览器流程。
-- 开发自检只读、整改由本技能负责；调用前确认实际加载的审查技能支持模式，精确入口与旧版能力缺口处理见[开发闭环](references/development-review-workflow.md)。不能以正式六文件流程代替自检。
-- 交付门槛按用户任务限定：纯整理仅修改注释/文档，完成可读性和行为保持检查后可交注释/说明整理审阅报告；既有功能偏差单列、不自动修。用户明确要求全规范通过时，功能偏差阻断该合规目标并列需授权事项，继续独立整理。新开发/功能修改全部适用必需检查和测试通过后，才生成面向开发人员的报告；环境缺失、失败或证据不足记阻断，继续可独立工作，不提前输出该块最终报告。说明与图示按模块维护，报告引用说明并标记“自检通过，待人工审查”。
+- 功能开发或明确要求自检时，开发自检只读、整改由本技能负责；调用前确认实际加载的审查技能支持模式，精确入口与旧版能力缺口处理见[开发闭环](references/development-review-workflow.md)。不能以正式六文件流程代替自检。
+- 纯整理按快速路径简报已改范围、业务说明位置和未执行自动检查，不声明自检通过；用户明确要求报告时按请求范围交付。功能开发全部适用必需项通过后，局部变更可合并检查与交付为一份简短开发记录，完整新功能或要求独立报告时按[交付要求](references/development-review-workflow.md#5-通过后供开发人员审阅)保留报告与过程记录，标记“自检通过，待人工审查”；缺证或失败如实记录并继续独立工作。
 
 本轮 MF Vite 1.23.5、web-kit 1.9.0 与 TypeScript 5.9.3 配套基线及来源见 [升级来源记录](references/framework-upgrade-source.json)；按模块联邦规范接入自动预构建和 ESLint 配套配置，不沿用旧扫描插件或强制手工清单。
 
@@ -71,4 +71,4 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 
 业务枚举/字典展示强制使用 `@fxft/aura-ui` 的 `AuraDictTag` / `AuraDictText`，禁止手写展示转换；选项、非展示编码判断及公开契约取证边界见[字典契约](references/ui-data-contracts.md)。
 
-API/类型注释任务按[声明字段门槛](references/code-comment-guidelines.md#声明字段完整性门槛)固定完整文件清单，逐文件运行随包只读检查器并核对每字段自己的中文语义；未检查或缺项不通过。用户仅维护技能时只读业务资料，用隔离副本验证，不修业务源码。
+API/类型注释按[声明字段门槛](references/code-comment-guidelines.md#声明字段完整性门槛)覆盖完整授权文件，每字段自己的中文语义人工核对；只读检查器为可选诊断，仅按明确结构检查要求或真实项目门禁运行，例行语义自检不自动触发。用户仅维护技能时只读业务资料，不修业务源码。

@@ -10,43 +10,66 @@ param(
 $ErrorActionPreference = "Stop"
 $errors = @()
 $warnings = @()
-$resolvedProjectPath = (Resolve-Path -LiteralPath $ProjectPath).Path
+$incomplete = @()
+try {
+  $resolvedProjectPath = (Resolve-Path -LiteralPath $ProjectPath).Path
+  if (-not (Test-Path -LiteralPath $resolvedProjectPath -PathType Container)) { throw '项目路径不是目录' }
+} catch {
+  Write-Host "扫描不完整：项目目录不可用：$ProjectPath；$($_.Exception.Message)" -ForegroundColor Yellow
+  exit 2
+}
 $authOccurrences = @()
 $uiContractErrors = @()
 
-if ($Files.Count -gt 0) {
-  $sourceFiles = foreach ($file in $Files) {
+$supportedExtensions = @('.ts', '.tsx', '.vue', '.js', '.jsx')
+if ($PSBoundParameters.ContainsKey('Files')) {
+  $sourceFiles = @(foreach ($file in $Files) {
+    if ([string]::IsNullOrWhiteSpace($file)) {
+      $incomplete += '待扫描 Files 包含空路径'
+      continue
+    }
     $candidate = if ([System.IO.Path]::IsPathRooted($file)) {
       $file
     } else {
       Join-Path $resolvedProjectPath $file
     }
 
-    if (Test-Path -LiteralPath $candidate -PathType Leaf) {
-      Get-Item -LiteralPath $candidate
+    if ((Test-Path -LiteralPath $candidate -PathType Leaf) -and [IO.Path]::GetExtension($candidate) -in $supportedExtensions) {
+      $item = Get-Item -LiteralPath $candidate
+      if (-not $item.FullName.StartsWith($resolvedProjectPath.TrimEnd('\', '/') + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+        $incomplete += "待扫描文件不在项目内：$file"
+        continue
+      }
+      $item
     } else {
-      $warnings += "未找到待扫描文件：$file"
+      $incomplete += "未找到待扫描文件或扩展名不受支持：$file"
     }
-  }
+  })
 } else {
   $sourceRoot = Join-Path $resolvedProjectPath "src"
   if (-not (Test-Path -LiteralPath $sourceRoot)) {
-    throw "项目中不存在 src 目录：$resolvedProjectPath"
+    Write-Host "扫描不完整：项目中不存在 src 目录：$resolvedProjectPath" -ForegroundColor Yellow
+    exit 2
   }
 
-  $sourceFiles = Get-ChildItem -LiteralPath $sourceRoot -Recurse -File |
-    Where-Object { $_.Extension -in @(".ts", ".tsx", ".vue", ".js", ".jsx") }
+  $sourceFiles = @(Get-ChildItem -LiteralPath $sourceRoot -Recurse -File |
+    Where-Object { $_.Extension -in $supportedExtensions })
 }
 
-$allSourceRoot = Join-Path $resolvedProjectPath "src"
-$localeFiles = if (Test-Path -LiteralPath $allSourceRoot) {
-  Get-ChildItem -LiteralPath $allSourceRoot -Recurse -File |
-    Where-Object { $_.Name -in @("zh-cn.ts", "en.ts") }
-} else {
-  @()
+$sourceFiles = @($sourceFiles | Sort-Object FullName -Unique)
+if ($sourceFiles.Count -eq 0) { $incomplete += '没有有效待扫描源码；扫描未完成' }
+$sourceCache = @{}
+function Read-SourceFile {
+  param([string]$Path)
+  if (-not $sourceCache.ContainsKey($Path)) {
+    try { $sourceCache[$Path] = [IO.File]::ReadAllText($Path, [Text.Encoding]::UTF8) }
+    catch {
+      $script:incomplete += "无法读取源码：$Path；$($_.Exception.Message)"
+      $sourceCache[$Path] = $null
+    }
+  }
+  return $sourceCache[$Path]
 }
-$zhLocaleText = (($localeFiles | Where-Object { $_.Name -eq "zh-cn.ts" } | ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 }) -join "`n")
-$enLocaleText = (($localeFiles | Where-Object { $_.Name -eq "en.ts" } | ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 }) -join "`n")
 
 $messageEntry = '/@/config/aura/index'
 $requestEntry = '/@/config/aura/request'
@@ -94,50 +117,38 @@ function Remove-Comments {
   return $Source -replace '(?s)<!--.*?-->', '' -replace '(?s)/\*.*?\*/', '' -replace '(?m)//[^\r\n]*', ''
 }
 
-function Test-I18nKeyExists {
-  param(
-    [string]$LocaleText,
-    [string]$Key
-  )
-
-  $parts = $Key -split '\.'
-  if ($parts.Count -lt 2) {
-    return $true
-  }
-
-  $pattern = '(?s)'
-  for ($index = 0; $index -lt $parts.Count; $index++) {
-    $escapedPart = [regex]::Escape($parts[$index])
-    if ($index -lt ($parts.Count - 1)) {
-      $pattern += "\b$escapedPart\s*:\s*\{.*?"
-    } else {
-      $pattern += "\b$escapedPart\s*:"
-    }
-  }
-  return $LocaleText -match $pattern
-}
+# Test-I18nKeyExists is implemented by the static AST index in check-ui-contracts.cjs.
 
 function Add-UiContractError {
   param([string]$Message)
   $script:uiContractErrors += $Message
 }
 
-$dictKeyFields = @()
-if ($StrictUiContracts) {
-  foreach ($typeFile in $sourceFiles) {
-    $typeContent = Get-Content -LiteralPath $typeFile.FullName -Raw -Encoding UTF8
-    $annotations = [regex]::Matches(
-      $typeContent,
-      '(?s)/\*\*[^*]*?@dictKey\s+(?<dictKey>[A-Za-z0-9_.-]+)[^*]*?\*/\s*(?:readonly\s+)?(?<field>[A-Za-z_$][\w$]*)\??\s*:'
-    )
-    foreach ($annotation in $annotations) {
-      $dictKeyFields += [PSCustomObject]@{
-        DictKey = $annotation.Groups['dictKey'].Value
-        Field = $annotation.Groups['field'].Value
-      }
+if ($StrictUiContracts -and $sourceFiles.Count -gt 0) {
+  $manifestPath = Join-Path ([IO.Path]::GetTempPath()) ('aura-ui-scan-' + [guid]::NewGuid().ToString('N') + '.json')
+  try {
+    $contextFiles = @(Get-ChildItem -LiteralPath (Join-Path $resolvedProjectPath 'src') -Recurse -File |
+      Where-Object { $_.Name -in @('zh-cn.ts', 'en.ts') -or ($_.Extension -eq '.ts' -and $_.FullName -match '[\\/]src[\\/]api[\\/]') })
+    $manifest = @{
+      project = $resolvedProjectPath
+      selected = @($sourceFiles.FullName)
+      sources = @(foreach ($contextFile in @($sourceFiles) + @($contextFiles) | Sort-Object FullName -Unique) {
+        $text = Read-SourceFile $contextFile.FullName
+        if ($null -ne $text) { @{ path = $contextFile.FullName; content = $text } }
+      })
     }
+    [IO.File]::WriteAllText($manifestPath, ($manifest | ConvertTo-Json -Depth 5), [Text.UTF8Encoding]::new($false))
+    $helperOutput = & node (Join-Path $PSScriptRoot 'check-ui-contracts.cjs') $manifestPath
+    if ($LASTEXITCODE -ne 0) { throw "静态分析器退出码 $LASTEXITCODE" }
+    $analysis = ($helperOutput -join "`n") | ConvertFrom-Json
+    $uiContractErrors += @($analysis.errors)
+    $incomplete += @($analysis.incomplete)
+    Write-Host 'UI 静态检查范围：i18n 定义路径与已提供的 API 类型；不验证运行时语言注册、合并覆盖或远端消息。'
+  } catch {
+    $incomplete += "UI 静态分析未完成：$($_.Exception.Message)"
+  } finally {
+    if (Test-Path -LiteralPath $manifestPath) { Remove-Item -LiteralPath $manifestPath -Force }
   }
-  $dictKeyFields = $dictKeyFields | Sort-Object DictKey, Field -Unique
 }
 
 function Get-BusinessScope {
@@ -163,7 +174,8 @@ foreach ($file in $sourceFiles) {
   }
 
   $relativePath = $file.FullName.Substring($resolvedProjectPath.Length + 1).Replace("\", "/")
-  $content = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
+  $content = Read-SourceFile $file.FullName
+  if ($null -eq $content) { continue }
   $commentText = Get-CommentText -Source $content
 
   if ($StrictUiContracts) {
@@ -214,22 +226,6 @@ foreach ($file in $sourceFiles) {
       }
     }
 
-    $i18nCalls = [regex]::Matches($sourceWithoutComments, '(?<![\w$])(?:\$t|t)\(\s*[''\"](?<key>[A-Za-z_$][\w$]*(?:\.[\w$-]+)+)[''\"]')
-    foreach ($call in $i18nCalls) {
-      $key = $call.Groups['key'].Value
-      if (-not (Test-I18nKeyExists -LocaleText $zhLocaleText -Key $key) -or -not (Test-I18nKeyExists -LocaleText $enLocaleText -Key $key)) {
-        Add-UiContractError "$relativePath：i18n key $key 未在 zh-cn.ts 与 en.ts 中同步存在"
-      }
-    }
-
-    if ($file.Extension -eq '.vue' -and $relativePath -match '^src/views/') {
-      foreach ($dictField in $dictKeyFields) {
-        $displayField = "$($dictField.Field)Name"
-        if ($sourceWithoutComments -match "(?<![\w$])$([regex]::Escape($displayField))(?![\w$])") {
-          Add-UiContractError "$relativePath：@dictKey $($dictField.DictKey) 字段 $($dictField.Field) 直接使用 $displayField；筛选/表格/详情/表单必须使用 DictSelect、DictTag 或 DictText"
-        }
-      }
-    }
   }
 
   # 公共消息实现在 npm；项目源码统一使用绑定入口。
@@ -389,6 +385,14 @@ foreach ($uiContractError in ($uiContractErrors | Select-Object -Unique)) {
 
 foreach ($errorItem in $errors) {
   Write-Host "✗ $errorItem" -ForegroundColor Red
+}
+
+foreach ($pendingItem in ($incomplete | Select-Object -Unique)) {
+  Write-Host "? 待人工核对/扫描不完整：$pendingItem" -ForegroundColor Yellow
+}
+if ($incomplete.Count -gt 0) {
+  Write-Host "扫描不完整：$($incomplete.Count) 项待核对，$($errors.Count) 项确定错误；有效源码 $($sourceFiles.Count) 个" -ForegroundColor Yellow
+  exit 2
 }
 
 if ($errors.Count -gt 0) {

@@ -36,7 +36,8 @@ $required = @(
   "checklists\pre-development.md",
   "checklists\implementation.md",
   "checklists\validation.md",
-  "scripts\check-project-rules.ps1"
+  "scripts\check-project-rules.ps1",
+  "scripts\check-ui-contracts.cjs"
 )
 
 Write-Host "=== aura-web-develop 技能校验 ===" -ForegroundColor Cyan
@@ -81,7 +82,7 @@ if (Test-Path -LiteralPath $skillFile) {
   }
 
   # 入口只校验导航与底线；详细约束在对应资料中校验。
-  foreach ($keyword in @('按场景读取', 'dayjs', 'aura-module-federation-check', 'StrictUiContracts')) {
+  foreach ($keyword in @('按场景读取', 'dayjs', 'aura-module-federation-check', 'development-review-workflow.md#检查选择表')) {
     if (-not $skillContent.Contains($keyword)) {
       $errors += "SKILL.md 缺少入口约束：$keyword"
     }
@@ -211,7 +212,7 @@ if (Test-Path -LiteralPath $projectRuleScript) {
       $errors += "项目规则扫描缺少滚动区域检查：$keyword"
     }
   }
-  foreach ($keyword in @('StrictUiContracts', 'Test-I18nKeyExists', 'data-placeholder-exempt', '@dictKey', 'uiContractErrors')) {
+  foreach ($keyword in @('StrictUiContracts', 'check-ui-contracts.cjs', 'data-placeholder-exempt', 'uiContractErrors')) {
     if (-not $projectRuleContent.Contains($keyword)) {
       $errors += "项目规则扫描缺少 UI 契约检查：$keyword"
     }
@@ -226,7 +227,7 @@ if (Test-Path -LiteralPath $projectRuleScript) {
 $designGuide = Join-Path $resolvedSkillPath "references\frontend-design-workflow.md"
 if (Test-Path -LiteralPath $designGuide) {
   $designContent = Get-Content -LiteralPath $designGuide -Raw -Encoding UTF8
-  foreach ($keyword in @('$frontend-design', '视觉令牌', 'reduced-motion', '纯后端', '左侧强调条约束', '选中状态', '模板化重复')) {
+  foreach ($keyword in @('$frontend-design', '视觉令牌', 'reduced-motion', '触发范围', '左侧强调条约束', '选中状态', '模板化重复')) {
     if (-not $designContent.Contains($keyword)) { $errors += "frontend-design 协作参考缺少关键内容：$keyword" }
   }
 }
@@ -234,7 +235,7 @@ if (Test-Path -LiteralPath $designGuide) {
 $skillDependencyGuide = Join-Path $resolvedSkillPath "references\skill-dependency-workflow.md"
 if (Test-Path -LiteralPath $skillDependencyGuide) {
   $dependencyContent = Get-Content -LiteralPath $skillDependencyGuide -Raw -Encoding UTF8
-  foreach ($keyword in @('可用技能列表', '是否授权我安装', '不得静默安装', '必需技能', 'vueuse-functions')) {
+  foreach ($keyword in @('可用技能列表', '缺失处理', '不得静默安装', '必需技能', 'vueuse-functions')) {
     if (-not $dependencyContent.Contains($keyword)) { $errors += "外部技能依赖流程缺少关键内容：$keyword" }
   }
 }
@@ -250,7 +251,7 @@ if (Test-Path -LiteralPath $browserReviewGuide) {
 $prettierGuide = Join-Path $resolvedSkillPath "references\prettier-formatting-workflow.md"
 if (Test-Path -LiteralPath $prettierGuide) {
   $prettierContent = Get-Content -LiteralPath $prettierGuide -Raw -Encoding UTF8
-  foreach ($keyword in @('每次新增、修改或重构代码完成后自动执行一次', 'package.json', '.prettierignore', 'pnpm exec prettier', 'npm exec -- prettier', 'yarn prettier', 'git diff --check')) {
+  foreach ($keyword in @('development-review-workflow.md#检查选择表', '只格式化本次修改', 'package.json', '.prettierignore', 'pnpm exec prettier', 'npm exec -- prettier', 'yarn prettier', 'git diff --check')) {
     if (-not $prettierContent.Contains($keyword)) { $errors += "Prettier 格式化流程缺少关键内容：$keyword" }
   }
 }

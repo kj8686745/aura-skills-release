@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1793011267,
+  "generatedAt": 1793080676,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -212,7 +212,7 @@
       "visibility": "internal"
     },
     {
-      "description": "按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，补齐代码注释与业务说明，完成开发自检、整改和测试后交付开发审查报告；也适用于指定旧业务的注释与逻辑梳理。",
+      "description": "按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，补齐代码注释与业务说明；功能开发完成必要验收和自检后交付开发记录或报告，纯注释/说明整理默认直接交付。",
       "name": "aura-web-develop",
       "path": "skills/aura-web-develop/SKILL.md",
       "releaseState": "ready",
@@ -220,7 +220,7 @@
         "前端",
         "开发"
       ],
-      "version": "1.4.5",
+      "version": "1.5.0",
       "visibility": "public"
     },
     {
@@ -236,7 +236,7 @@
       "visibility": "public"
     },
     {
-      "description": "只读审查 AURA/PIGX Vue 3 + Vite + TypeScript 前端项目、模块或变更；默认正式审查生成六文件结果包，支持开发技能调用 development-self-check 模式返回轻量检查记录。适用于规范审查与整改复核，不实施业务修复。",
+      "description": "只读审查 AURA/PIGX Vue 3 + Vite + TypeScript 前端项目、模块或变更；限定变更默认单报告，全项目或正式审查保留六文件，开发闭环使用 development-self-check 轻量记录。不实施业务修复。",
       "name": "aura-web-review",
       "path": "skills/aura-web-review/SKILL.md",
       "releaseState": "preview",
@@ -244,7 +244,7 @@
         "前端",
         "审查"
       ],
-      "version": "0.2.5",
+      "version": "0.3.0",
       "visibility": "public"
     },
     {

@@ -16,6 +16,6 @@
 - 新文案先复用 `common`；跨两个及以上业务模块、但不属于全局 common 的文案上提到业务域公共 `i18n/`；中英文 key 同步存在。不得在页面 i18n 重复定义已有 common 或业务域文案。
 - 每个可编辑或筛选的 `el-input`、`el-select`、`el-date-picker`、`el-input-number`、`el-autocomplete` 必须具备 i18n placeholder。确无占位语义时添加 `data-placeholder-exempt`，并以相邻中文注释说明原因。
 - 行内查询表单中，查询、重置、导出、视图切换等每个独立操作各占一个无标签 `el-form-item`；禁止在同一无标签 `el-form-item` 内堆叠多个 `el-button` 或 `el-radio-group`。间距只由表单 `gap` 管理，不使用按钮相邻 margin 或负 `margin-bottom` 补偿。
-- 交付前必须运行 `scripts/check-project-rules.ps1 -ProjectPath <项目路径> -StrictUiContracts`。直接中文、缺少 placeholder、i18n key 未在 zh/en 同步、或已声明 `@dictKey` 字段的 `*Name` 直出均为错误，不得进入 build 或交付。
+- 功能开发在本批稳定后按[检查选择表](development-review-workflow.md#检查选择表)选择显式 `-Files` 或有依据的全量扫描，保留 `-StrictUiContracts`；纯注释按快速路径。直接中文、缺少 placeholder、i18n key 未在 zh/en 同步、或已声明 `@dictKey` 字段的 `*Name` 直出仍为错误，须在本次范围内整改后验收。
 
 - 组件默认行为仅是公开契约事实，不意味着业务必须自行增加兜底。fallback 或未知值展示按真实需求配置；未经要求不新增转换、硬编码或覆盖值，不用自设 fallback 掩盖字典类型、选项来源或编码匹配错误。说明当前用途时写具体业务语义，不把组件默认行为描述成业务额外实现。
