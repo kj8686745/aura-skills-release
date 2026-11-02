@@ -331,10 +331,6 @@ foreach ($file in $sourceFiles) {
 		}
 	}
 
-    $inlineDialogCount = [regex]::Matches($content, '(?i)<el-(dialog|drawer)\b').Count
-    if ($relativePath -match '/index\.vue$' -and $inlineDialogCount -ge 2) {
-      $warnings += "$relativePath：路由入口内联了 $inlineDialogCount 个 Dialog/Drawer；应在编码前拆为页面私有组件并由父页编排"
-    }
     $selects = [regex]::Matches($content, '(?is)<el-select\b(?<attributes>[^>]*)>')
     foreach ($select in $selects) {
       $attributes = $select.Groups['attributes'].Value

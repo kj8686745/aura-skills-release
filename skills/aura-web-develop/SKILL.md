@@ -5,7 +5,7 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 
 # Aura PIGX 综合端业务开发
 
-当前版本：`1.6.3`（2026-10-27）。
+当前版本：`1.6.5`（2026-10-28）。
 
 ## 执行入口
 
@@ -32,7 +32,7 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 | 首次接触项目、架构或框架边界 | [总览](knowledge/PIGX前端开发规范/PIGX前端开发总览.md)、[开发边界](knowledge/PIGX前端开发规范/开发边界说明.md) |
 | 修改业务代码、命名、组件职责或布局 | [业务实现约束](references/implementation-rules.md)；新建模块/重构另读 [工程规范](knowledge/PIGX前端开发规范/工程与代码生成规范.md) |
 | 新增或功能修改 Vue/TS/样式、拆分职责或提升复用层级 | [文件组织与职责拆分](knowledge/PIGX前端开发规范/文件组织与职责拆分.md)，按职责、所有权和实际消费者选择最小结构；纯注释不触发重构 |
-| 优化、梳理或重构指定页面/整个业务模块的结构 | [结构任务覆盖与收尾](references/development-review-workflow.md#结构任务覆盖与收尾)，先覆盖完整授权范围的实际职责，再决定保留或拆分；完成几处提取不等于模块结构任务完成 |
+| 优化、梳理或重构指定页面/整个业务模块的结构 | [结构任务覆盖与收尾](references/development-review-workflow.md#结构任务覆盖与收尾)，覆盖完整授权职责，按职责规范选择保留、内部整理或提取；合理保留也是完成，少数提取不能代表整体完成 |
 | 查看、编辑、复制、分配等需要已有对象数据 | [已有业务对象加载](references/business-object-loading.md)，适用页面、Tab、面板、抽屉和弹窗 |
 | 日期时间解析、格式化、比较、运算、时间戳或时区 | [dayjs 时间处理](references/date-time-guidelines.md) |
 | 字段、筛选、表格、表单、字典或用户可见文案 | [字典、i18n 与占位契约](references/ui-data-contracts.md)；涉及三字典组件 Props、选项、空值或接入时先读 [aura-ui 组件库入口](knowledge/PIGX前端开发规范/aura-ui组件库/README.md)，再仅加载实际使用组件的 DictTag.md / DictText.md / DictSelect.md |

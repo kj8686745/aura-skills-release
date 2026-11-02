@@ -5,7 +5,7 @@ description: 只读审查 AURA/PIGX Vue 3 + Vite + TypeScript 前端项目、模
 
 # AURA 前端代码审查
 
-当前版本：`0.4.3`（2026-10-27）。
+当前版本：`0.4.4`（2026-10-28）。
 
 只读目标前端项目的源码、配置、依赖声明与已有产物，审查页面、组件及前端运行链路。先确认 Vue 3 + Vite 和 Aura 多文件证据，识别规则见[取证与报告](references/取证与报告.md#项目识别)。已有 Aura 专有线索的 IncompleteCandidate 在明确规范审查任务中使用 `-ReviewCandidate` 盘点并按最新规范报告缺项；普通 Vue/Vite 或只有单一联邦插件的项目不接管。接口仅核对前端调用与消费公开契约，不扩展到其他领域实现。随包示例仅供判断，不授权安装、修改配置或开发。
 
@@ -33,7 +33,7 @@ description: 只读审查 AURA/PIGX Vue 3 + Vite + TypeScript 前端项目、模
 
 维护技能版本时，同步在 [CHANGELOG.md](CHANGELOG.md) 记录版本日期、用户可见变化及必要兼容影响；同一未发布版本的补充归并原条目。提交、安装和发布状态留来源记录，不由日志版本推断。业务审查无需读取历史日志。
 
-FE-001～004、019、024 命中 Vue/TS/样式组织时，按[文件组织与职责拆分](knowledge/PIGX前端开发规范/文件组织与职责拆分.md)核对职责、所有权、消费者与依赖；只凭长度、无 Hook 或 CSS 未外置不判偏差。纯注释不触发结构整改；本轮规范工作树与局部视图的[来源记录](references/file-organization-source.json)待提交绑定，保留原框架及历史来源基线。
+FE-001～004、019、024 命中 Vue/TS/样式组织时，按[文件组织与职责拆分](knowledge/PIGX前端开发规范/文件组织与职责拆分.md)核对职责、所有权、消费者、接口及实际收益；Dialog/Drawer 同一般区域，数量、类型、长度、无 Hook 或 CSS 未外置不直接判偏差。纯注释不触发结构整改；本轮规范工作树与局部视图的[来源记录](references/file-organization-source.json)待提交绑定，保留原框架及历史来源基线。
 
 请求针对整个页面/模块的结构优化验收时，还须按[完整结构范围复核](references/development-self-check.md#完整结构范围复核)覆盖原任务的职责与入口剩余部分；不能只审新增 Hook 或 diff 就宣布整个模块完成。限定局部审查仍按其明确范围，不自动扩展。
 

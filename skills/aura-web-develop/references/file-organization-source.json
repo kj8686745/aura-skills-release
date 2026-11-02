@@ -1,31 +1,29 @@
 {
   "skill": "aura-web-develop",
-  "skillVersion": "1.6.0",
-  "updatedAt": "2026-10-27",
+  "skillVersion": "1.6.5",
+  "updatedAt": "2026-11-02",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
   "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
   "snapshotRoot": "knowledge/PIGX前端开发规范",
   "sourceCommit": null,
-  "sourceBaseCommit": "a4adb392b3df7bb24d2187904c5fdd4816d66a72",
+  "sourceBaseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
   "sourceBinding": {
     "status": "pending",
-    "baseCommit": "a4adb392b3df7bb24d2187904c5fdd4816d66a72",
-    "sourceWorkingTreeSha256Lf": "01dfd08a8d9897735ec6f30016b5503257f7d116fd3f8ea93a2d54eb0b32f44b",
-    "sourceBaselineSha256Lf": "572db71491a0115ff5f1828b5569e8ceb27b346e0dac25c286530eaec2867bd8",
-    "reason": "本轮规范尚未提交；工作树摘要不是基线提交中的内容，取得正式提交后再绑定。"
+    "baseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
+    "reason": "规范工作树包含新增统一正文和局部修改，尚未提交；sourceCommit 保持 null，不宣称双仓提交绑定。"
   },
   "documents": [
     {
       "source": "文件组织与职责拆分.md",
       "snapshot": "文件组织与职责拆分.md",
-      "sourceSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114",
-      "snapshotSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114",
+      "sourceSha256Lf": "86bf7748e33089e1a0d2f102480bf3438466ad2b2ac4b816805d965926846aaa",
+      "snapshotSha256Lf": "86bf7748e33089e1a0d2f102480bf3438466ad2b2ac4b816805d965926846aaa",
       "committedSourceSha256Lf": null,
       "sourceExistsAtBase": false,
       "transformation": {
         "navigationTargetsRemoved": []
       },
-      "baselineState": "absent-at-base; new-independent-body; full-copy-without-navigation-rewrite"
+      "baselineState": "absent-at-current-base; canonical-body-added; full-copy"
     }
   ],
   "scopeEvidence": {
@@ -256,26 +254,230 @@
     "snapshotWorkingTreeSha256Lf": "210d58486ddbcbed1546bbacbb2f1824edf2f665f44be6cca63f6759279f5d11",
     "snapshotBaselineSha256Lf": "4a8ec3fafad09d833c3cd555d8d2a64693370123a683cbd9bf5a40ba8caea773"
   },
-  "localAdaptations": "其余命中知识视图、入口、引用、recipe 和清单仅局部衔接新独立正文；保留各自已有内容和框架基线，不声明整份旧知识视图与 F 盘全文等价。sourceFiles 与 snapshotFiles 是本轮差异证据，不是新增逐文件全文同步声明。新正文为完整同版副本，必读引用在技能内闭合。",
+  "localAdaptations": "统一职责正文在 aura-code-nexus 单处维护，两个随包正文为相同全文。FE-003 同步同版章节；其他知识视图只修订本次结构及加载归属条款，保留字典、表单与框架基线，不声明旧知识视图全文等价。",
   "preservedBaseline": "保留 MF Vite 1.23.5、web-kit 精确1.9.0、TS 5.9.3 及已有新增规范；历史 source.json、framework-upgrade-source.json、readability-source.json 不在本轮重写。",
   "validation": {
-    "state": "maintenance-static-checks-passed; source-commit-binding-and-independent-behavior-validation-pending",
+    "state": "local-targeted-checks-passed; exact-source-commit-binding-pending",
     "checks": {
-      "quickValidate": "passed",
-      "developValidate": "passed",
-      "relativeLinksChecked": 151,
-      "brokenRelativeLinks": 0,
-      "sourceAndSnapshotManifests": "81 entries across both records rechecked against working trees and exact Git baselines; passed",
-      "newBodyCopies": "both snapshots equal source after CRLF-to-LF normalization; passed",
+      "developValidate": "passed after final knowledge edits",
+      "quickValidate": "both skills passed (entry schema unchanged afterward)",
+      "canonicalCopies": "both full copies identical to current canonical body; FE-003 section synchronized",
+      "sourceAndSnapshotHashes": "currentMaintenance per-file SHA256 refreshed and verified; historical scopeEvidence explicitly retained as historical",
+      "newCanonicalLinks": "affected-doc references resolve; CSS anchor checked",
+      "scriptBehavior": "HEAD comparison for 2/4/6 inline dialogs: old count warning removed; unrelated select diagnostic preserved; temporary samples cleaned",
+      "independentSemanticValidation": "8 initial scenarios plus inline dialog with on-open ID detail request; no conflict in final rules; no real project execution",
+      "designReview": "loading ownership conflict resolved; final residual checklist count rule corrected and targeted scan repeated",
+      "formatting": "no local Prettier or config in these repositories; preserve existing conventions; no installation",
       "gitDiffCheck": "passed in both repositories"
     },
-    "scope": "技能结构、命中相对链接、差异与本轮工作树摘要；代表性独立验证由主代理协调；不证明业务运行或双仓提交绑定"
+    "scope": "结构、引用、同版正文、脚本样例与独立场景语义验证；不是业务运行验收、安装或规范提交绑定"
   },
-  "deliveryState": "local-working-tree; locally-installed; not-published; not-committed",
+  "deliveryState": "local-working-tree; this-update-not-installed; not-published; not-committed",
   "localInstallation": {
     "path": "C:/Users/83979/.agents/skills/aura-web-develop",
     "backup": "C:/Users/83979/.agents/skill-backups/frontend-structure-20261027/aura-web-develop",
     "verification": "交付集合逐文件SHA256核对一致；排除过程目录和真实认证配置；安装不代表规范提交绑定或正式发布。",
     "behaviorValidation": "监控中心结构重构与真实/Mock功能验证进行中，证据由本轮执行记录维护。"
+  },
+  "historicalBinding20261027": {
+    "skillVersion": "1.6.0",
+    "sourceBaseCommit": "a4adb392b3df7bb24d2187904c5fdd4816d66a72",
+    "sourceBinding": {
+      "status": "pending",
+      "baseCommit": "a4adb392b3df7bb24d2187904c5fdd4816d66a72",
+      "sourceWorkingTreeSha256Lf": "01dfd08a8d9897735ec6f30016b5503257f7d116fd3f8ea93a2d54eb0b32f44b",
+      "sourceBaselineSha256Lf": "572db71491a0115ff5f1828b5569e8ceb27b346e0dac25c286530eaec2867bd8",
+      "reason": "本轮规范尚未提交；工作树摘要不是基线提交中的内容，取得正式提交后再绑定。"
+    },
+    "validation": {
+      "state": "maintenance-static-checks-passed; source-commit-binding-and-independent-behavior-validation-pending",
+      "checks": {
+        "quickValidate": "passed",
+        "developValidate": "passed",
+        "relativeLinksChecked": 151,
+        "brokenRelativeLinks": 0,
+        "sourceAndSnapshotManifests": "81 entries across both records rechecked against working trees and exact Git baselines; passed",
+        "newBodyCopies": "both snapshots equal source after CRLF-to-LF normalization; passed",
+        "gitDiffCheck": "passed in both repositories"
+      },
+      "scope": "技能结构、命中相对链接、差异与本轮工作树摘要；代表性独立验证由主代理协调；不证明业务运行或双仓提交绑定"
+    },
+    "deliveryState": "local-working-tree; locally-installed; not-published; not-committed"
+  },
+  "scopeEvidenceStatus": "Historical 2026-10-27 evidence retained unchanged; current evidence is currentMaintenance. Historical localInstallation does not include this update.",
+  "currentMaintenance": {
+    "date": "2026-11-02",
+    "rules": [
+      "AURA-BASE-FE-001",
+      "AURA-BASE-FE-002",
+      "AURA-BASE-FE-003",
+      "AURA-BASE-FE-004",
+      "AURA-BASE-FE-019",
+      "AURA-BASE-FE-024",
+      "AURA-BASE-FE-027"
+    ],
+    "impact": "统一保留/内部整理/提取的判断、停止条件、完整范围验收和正反例；取消类型/数量/行数判拆分；区分已提取与合理内联的打开加载归属。规则 ID、必要性及开发/审查消费者映射不变。",
+    "sourceBaseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
+    "skillBaseCommit": "c7ba1cf68632f9be2afed35b0bac4539965a82f7",
+    "hashAlgorithm": "SHA256 UTF-8; CRLF to LF only; no trimming",
+    "sourceFiles": [
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/文件组织与职责拆分.md",
+        "workingTreeSha256Lf": "86bf7748e33089e1a0d2f102480bf3438466ad2b2ac4b816805d965926846aaa",
+        "baselineSha256Lf": null
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/00-前端开发总览.md",
+        "workingTreeSha256Lf": "e32fd15ca3d60cef0424bd71ad98fac71a9e358135a4871f0e2c608821b2fff6",
+        "baselineSha256Lf": "3277776837e7460c0dc296547bb7f6feb112cacc7d54cf23ad2ada3d282a34d2"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/01-工程组织与页面状态.md",
+        "workingTreeSha256Lf": "2c675fa346752786013f3c826d9a2a78957081a263f6845b6ee9f8403926a268",
+        "baselineSha256Lf": "f90c69d845ba227a1082a2eea9afa8ded9e890f57353dc8531a53e8fc013d17a"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/04-工程与代码生成.md",
+        "workingTreeSha256Lf": "39ae8ff87e1b1f6fb377599f9a2f97acb25545f1acfeaf5c960be972162cc2e8",
+        "baselineSha256Lf": "d78d5f805d403dfa5fbff0fcf58a4a17d2e8d6d2d640c75265befded81480c0e"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/09-样式布局与静态资源.md",
+        "workingTreeSha256Lf": "58ebad1c8ce6f42edef641541fe9a3e82cfdbeab16300283f141286b801d44aa",
+        "baselineSha256Lf": "2390118a89e1441bdd7c474a2613acafd5e8ba6ef75a27cb790fce139fb1c7e9"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+        "workingTreeSha256Lf": "61822d65935cbb7f8cc856b08290af219b7ddfa455e3ae2f8a2fce3ea51d5f70",
+        "baselineSha256Lf": "9cd0936ad49811aa37b18e0b071077a2bb30469e06da1a502a89c43e4422076b"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/13-参考页面样例.md",
+        "workingTreeSha256Lf": "0a3687a3dca24e7dae42ce9e409665e64f5ff74fec4c1ca54db62cd17e93587e",
+        "baselineSha256Lf": "b17383cdf436baa53a9db06c050f9489e6c8c1e1333a286ac883d7c87f14bdd5"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/Teleport嵌套页面模式.md",
+        "workingTreeSha256Lf": "315de14114151a8cabefd4f0269c50ad59f4f7a3a62eb7df3e9ea38dd6e2d993",
+        "baselineSha256Lf": "ef57c5b03bda907dabd08b4c84bd0e0166f3169099970194b83abc683cc04049"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/左树右表页.md",
+        "workingTreeSha256Lf": "7876d84364c92a29c9b58f440eb9396da5c8ecdd04506c51dfde766e8682516c",
+        "baselineSha256Lf": "490f529ca76668cf3beb0ffd6aa7c13163b0e9ab66dce134edbb865cd129341b"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/弹窗表单.md",
+        "workingTreeSha256Lf": "dfde0faf29b7ae1342c39b860433b6b3955113f138efd74b215a06a9db3485ca",
+        "baselineSha256Lf": "c4e353fec4e6b9b4aef5c36b28ff75ec26adad9e271c408b94ab970cd8d0105c"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询卡片页.md",
+        "workingTreeSha256Lf": "4c67436ded965cd3302ba5d763a0d47fda7e903d7ffd50ddbc7aef676e2c9179",
+        "baselineSha256Lf": "86bf2e288f244b03df25e176c59a3e7fd03b2c4e1e5b728960ec45062c81e847"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询表格页.md",
+        "workingTreeSha256Lf": "5b94b177750bc47eb8df4af09382eef0c79848dfe2cab3d2c1cde1b874b6aa59",
+        "baselineSha256Lf": "c481fcedfec3f16a455495dde660c321fcc0b106a358a9b20891ab9c34ca9ab0"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/看板页.md",
+        "workingTreeSha256Lf": "2e38fbd8ab9ef4dc2c4346af7d7b9ad7b515206b5ec9973584fed61ea98b25c8",
+        "baselineSha256Lf": "281ebebb231a2576e2056a4393b2e1d8da076b01e3167bf58114046030cc8870"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/详情页与抽屉.md",
+        "workingTreeSha256Lf": "49d19c92f6381d1603daa8491941359a839173b9a539b2c2b4d0b8880e193c1e",
+        "baselineSha256Lf": "efb1b9bd91ffb6a4e316f431ca572d93c70dfce9c6b8209448ee511900d89214"
+      }
+    ],
+    "snapshotFiles": [
+      {
+        "path": "SKILL.md",
+        "workingTreeSha256Lf": "445925e0397d8584a3d777ba54743f0c9cc67abc5ef4d77ca7d64303e5c50188",
+        "baselineSha256Lf": "53ec48835ebbd0a292d8231a43621c62aaca83d4a12877120d59c281a9fa9ded"
+      },
+      {
+        "path": "CHANGELOG.md",
+        "workingTreeSha256Lf": "51a9d282b5a23c31552ab971d7c33186915ff9b4b26e57d0cd0c0fdcb2214083",
+        "baselineSha256Lf": "f18031f70c397e356bf31005d3663b4d086a95ae9ae09f6f43b310a50c95e8bc"
+      },
+      {
+        "path": "checklists/implementation.md",
+        "workingTreeSha256Lf": "338f33d1e65df8fc2c8771407a980440b72f05b636b147aceefe7560e29a18c7",
+        "baselineSha256Lf": "095db50b129e60c4d67e85e84b3a9d886f765d5b45338f1b150845eb6eec1394"
+      },
+      {
+        "path": "checklists/validation.md",
+        "workingTreeSha256Lf": "da62c49f1543e16f6f9744a64a2be547f11aec1dbe209b989fc3364eb6917394",
+        "baselineSha256Lf": "5f2e2039aeb9040ce358eab83897aee5850981172080a984c8a9f07dd7ceab2f"
+      },
+      {
+        "path": "checklists/pre-development.md",
+        "workingTreeSha256Lf": "be4d07b3df9795540c8aaedc0c2e7cfb6cf0ba0fc885d5cfa797cb65903c2ddf",
+        "baselineSha256Lf": "b2f2011847129fcb2d8ac70117c7440b3c43fc43e1ee6fc5c19c1749923d77ec"
+      },
+      {
+        "path": "README.md",
+        "workingTreeSha256Lf": "536c059492883111f45caa97694f145bb6af75e01b08a2e00c97fbaf1c7044f8",
+        "baselineSha256Lf": "61b3303c4f73b766e3c0e8c5ded3bc64f8db418d7982e0255f7ca5bb3c9f8057"
+      },
+      {
+        "path": "references/component-and-style-guidelines.md",
+        "workingTreeSha256Lf": "97a9194fdd73bbc4acc39108e77da69c9adf1f943e56cef01a5a6f7e46c131b0",
+        "baselineSha256Lf": "99fa485480842920e3adaaef35feba3366d35543f3a007e9436917cbfa0eac7e"
+      },
+      {
+        "path": "references/implementation-rules.md",
+        "workingTreeSha256Lf": "7d85519082776ef5122f5871fe2c977e90ce24ebf75834f2677b62ae7ca8796b",
+        "baselineSha256Lf": "745389022fd38966284cca3702da9f6fb8b0e13813aca69bf4ea62b72d413dd7"
+      },
+      {
+        "path": "references/business-object-loading.md",
+        "workingTreeSha256Lf": "77bcb6fbcce39dc2ea560974e51dde40e36eb2d63fac0610c0755e3e68b5c1e9",
+        "baselineSha256Lf": "210eca39397e4f5a81f2728c6277ecd97dff58196572035ccdc32a75d9877e04"
+      },
+      {
+        "path": "references/development-review-workflow.md",
+        "workingTreeSha256Lf": "39f46b089633c36c27932c6f6fe125a090d5177c78c57f053a67f9c8fbd351d7",
+        "baselineSha256Lf": "94dd3741787aac4b271ed9377c243fb58f5338ae31ebffcf38de922ff93d788b"
+      },
+      {
+        "path": "scripts/check-project-rules.ps1",
+        "workingTreeSha256Lf": "689b0a05014b62b228f77101f271334eeabcad355362c9743d2921452a953f86",
+        "baselineSha256Lf": "8e2d867fd30b86c780da79bcb1dbb3c32f0e03d2874d29ae39839eb93985642d"
+      },
+      {
+        "path": "templates/dialog-form.md",
+        "workingTreeSha256Lf": "62d7d374946f80a97511060c463eb0e43afea81f610a6f98a28228e24bbc6caf",
+        "baselineSha256Lf": "7c7adcfa89e6c41c982eef8c88632487e025b307a4f76b27a3efcd1ea8b6c01d"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/文件组织与职责拆分.md",
+        "workingTreeSha256Lf": "86bf7748e33089e1a0d2f102480bf3438466ad2b2ac4b816805d965926846aaa",
+        "baselineSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/工程与代码生成规范.md",
+        "workingTreeSha256Lf": "2eb023a63762cf930f4709f8a7db565d19cf6f251634bd31ae8221db305f1479",
+        "baselineSha256Lf": "44b22773c1ecd301b6335f44c5f55c2d08ba38edeaa4615048dbb6924ae1d916"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/开发检查清单.md",
+        "workingTreeSha256Lf": "ebe458e532668fa72e625e93e6c8ce6304b0ff378ec3426874c208b7c0cc2657",
+        "baselineSha256Lf": "ab1d216f9d560f6348e04eb5bddc167155c21a3155e35e418e754f0a32d3411a"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/样式布局与静态资源规范.md",
+        "workingTreeSha256Lf": "b032bb35a882007f77f4a529ccd5a4232e0561b2bacd517ddea859f14b9ab0f6",
+        "baselineSha256Lf": "58d5130f88ae21787e83a4f3c78d0b9b61e4cc0283350884c9a70d57dfbf0400"
+      },
+      {
+        "path": "knowledge/PIGX前端开发规范/README.md",
+        "workingTreeSha256Lf": "7c0a45cebd31289d9d730c2c55f5e48e90ef7d867b67146ad1bd0a14022e44f8",
+        "baselineSha256Lf": "cbdd1c73b5ab4c93e16f86f119fd71ee417edefc6d3af4e6db99da95b11905b4"
+      }
+    ]
   }
 }

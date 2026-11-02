@@ -1,0 +1,116 @@
+{
+  "skill": "aura-web-develop",
+  "skillVersion": "1.6.5",
+  "updatedAt": "2026-10-28",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
+  "snapshotRoot": ".",
+  "sourceCommit": null,
+  "sourceBaseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
+  "sourceBinding": {
+    "status": "pending",
+    "baseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
+    "reason": "规则工作树尚未提交；基线只用于摘要追溯，不代表新规则已存在于提交内。"
+  },
+  "documents": [
+    {
+      "source": "02-请求路由权限与数据适配.md",
+      "sourceSha256Lf": "27f66accc5985cacd48606a12514ad63cec852e423090f71611652c7baac924e",
+      "committedSourceSha256Lf": "446eb89855c0b31a5e2705cc3c2d2fb5a27d8dd838ee17badfda6c9d7fce47f2",
+      "snapshot": "references/dictionary-table-contract.md",
+      "snapshotSha256Lf": "2c40e0989e892355beb2c30ad6174d06d86211a0bf153ed3fbc8b5c8bce7cc7a",
+      "transformation": {
+        "sectionStart": "### AURA-BASE-FE-012：页面展示模型与领域模型分离",
+        "sectionEndExclusive": "## 场景与完整示例",
+        "finalNewline": "single"
+      }
+    },
+    {
+      "source": "04-工程与代码生成.md",
+      "sourceSha256Lf": "afdfbe6b5b5586b4e488450bdff305da54368ba5b79cc934be0c9e18eed0a30b",
+      "committedSourceSha256Lf": "d78d5f805d403dfa5fbff0fcf58a4a17d2e8d6d2d640c75265befded81480c0e"
+    },
+    {
+      "source": "12-研发自检与交付.md",
+      "sourceSha256Lf": "876aec13050a47ef903c7ce6157ca082bd7fa3c906642a9ed58edb62f86441eb",
+      "committedSourceSha256Lf": "9cd0936ad49811aa37b18e0b071077a2bb30469e06da1a502a89c43e4422076b"
+    }
+  ],
+  "impact": [
+    {
+      "rule": "FE-012",
+      "type": "semantic-component-selection-and-render-tracing",
+      "source": "02-请求路由权限与数据适配.md",
+      "targets": [
+        "references/dictionary-table-contract.md",
+        "references/ui-data-contracts.md"
+      ],
+      "verification": "section extraction + LF SHA256; actual rendering traced by skill consumer",
+      "status": "source-and-consumer-updated; pending-commit-binding"
+    },
+    {
+      "rule": "FE-019",
+      "type": "existing-rule-reference",
+      "source": "04-工程与代码生成.md",
+      "targets": [
+        "knowledge/PIGX前端开发规范/工程与代码生成规范.md"
+      ],
+      "status": "affected-paragraph-updated"
+    },
+    {
+      "rule": "FE-027 / FE-012",
+      "type": "self-check",
+      "source": "12-研发自检与交付.md",
+      "targets": [
+        "knowledge/PIGX前端开发规范/开发检查清单.md"
+      ],
+      "status": "affected-item-updated"
+    },
+    {
+      "rule": "FE-025",
+      "type": "public-component-consumption",
+      "targets": [
+        "references/dictionary-table-contract.md"
+      ],
+      "status": "existing-component-scope-preserved; no-API-change"
+    }
+  ],
+  "scope": "仅本轮字典规则：按业务语义选Tag/Text，不强制表格统一Tag；历史 source.json/readability-source.json 等保留原记录，不用本记录宣称整包规范已同步。规范矩阵规则ID/必要性及开发-审查职责不变。",
+  "scriptAssessment": "现有check-ui-contracts.cjs提供类型绑定@dictKey与*Name候选，无法完整判定动态列、真实名称和开关语义；本轮不扩展扫描器，改为字段到最终渲染取证。",
+  "validation": {
+    "state": "scoped-structure-links-and-source-evidence-passed; full-package-provenance-unresolved",
+    "quickValidate": "passed",
+    "developValidate": "passed (develop only)",
+    "sourceEvidence": "本轮3份源文件工作树与基线摘要、FE-012章节抽取及受影响视图摘要已核对；两消费者一致。",
+    "sharedPackageCheck": {
+      "exitCode": 1,
+      "errors": 21,
+      "incomplete": 2,
+      "scope": "整包旧source.json记录；开发缺manifest，审查版本/摘要滞后及未绑定来源。未改写历史整包证据，不宣称整包通过。",
+      "baselineEvidence": "HEAD旧review source.json版本0.1.0，20份已提交快照本就与历史摘要不一致；本轮仅3份对应视图受影响，不将旧整包失败修饰为通过。"
+    },
+    "formatting": "两维护仓无本地Prettier与配置，沿既有Markdown/JSON约定；未安装工具。",
+    "behavior": "人工复核状态标签、表格复合规则摘要、动态列、真实名称、开关及筛选边界；未做独立Agent行为验证或业务运行验收。",
+    "counts": {
+      "sourceHashes": 6,
+      "baselineHashes": 6,
+      "sectionViews": 2,
+      "affectedViews": 5,
+      "skillRelativeLinksAndAnchors": 136
+    },
+    "latestRefinement": "移除通用规范对白色12px的固定要求，开关Text沿用所在控件字号、颜色和行内排版；源章节、双视图与hash核对通过。开发SKILL末尾强制Tag/Text总规则支持按语义选型，无冲突，未修改。"
+  },
+  "deliveryState": "local-working-tree; not-committed; not-pushed; not-published; not-installed",
+  "affectedViews": [
+    {
+      "path": "knowledge/PIGX前端开发规范/工程与代码生成规范.md",
+      "sha256Lf": "89e44e331dec39aa7336e7f11ef5a004bbf29802b25aa8e6b8715dae55907f96",
+      "transformation": "仅替换FE-012章节、FE-019字典引用段或相应自检项；其他正文与历史导航保持。按影响清单人工核对，非全文件字节一致声明。"
+    },
+    {
+      "path": "knowledge/PIGX前端开发规范/开发检查清单.md",
+      "sha256Lf": "93de3575e8ee633bc035a849ef7df030c18262f1fc371e19bd3a6b84dac4fe8d",
+      "transformation": "仅替换FE-012章节、FE-019字典引用段或相应自检项；其他正文与历史导航保持。按影响清单人工核对，非全文件字节一致声明。"
+    }
+  ]
+}
