@@ -1,6 +1,6 @@
 {
   "skill": "aura-web-review",
-  "skillVersion": "0.4.4",
+  "skillVersion": "0.4.5",
   "updatedAt": "2026-11-02",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
   "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
@@ -16,8 +16,8 @@
     {
       "source": "文件组织与职责拆分.md",
       "snapshot": "文件组织与职责拆分.md",
-      "sourceSha256Lf": "86bf7748e33089e1a0d2f102480bf3438466ad2b2ac4b816805d965926846aaa",
-      "snapshotSha256Lf": "86bf7748e33089e1a0d2f102480bf3438466ad2b2ac4b816805d965926846aaa",
+      "sourceSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
+      "snapshotSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
       "committedSourceSha256Lf": null,
       "sourceExistsAtBase": false,
       "transformation": {
@@ -234,18 +234,16 @@
   "validation": {
     "state": "local-targeted-checks-passed; exact-source-commit-binding-pending",
     "checks": {
-      "developValidate": "passed after final knowledge edits",
-      "quickValidate": "both skills passed (entry schema unchanged afterward)",
-      "canonicalCopies": "both full copies identical to current canonical body; FE-003 section synchronized",
-      "sourceAndSnapshotHashes": "currentMaintenance per-file SHA256 refreshed and verified; historical scopeEvidence explicitly retained as historical",
-      "newCanonicalLinks": "affected-doc references resolve; CSS anchor checked",
-      "scriptBehavior": "HEAD comparison for 2/4/6 inline dialogs: old count warning removed; unrelated select diagnostic preserved; temporary samples cleaned",
-      "independentSemanticValidation": "8 initial scenarios plus inline dialog with on-open ID detail request; no conflict in final rules; no real project execution",
-      "designReview": "loading ownership conflict resolved; final residual checklist count rule corrected and targeted scan repeated",
-      "formatting": "no local Prettier or config in these repositories; preserve existing conventions; no installation",
-      "gitDiffCheck": "passed in both repositories"
+      "developValidate": "passed",
+      "quickValidate": "both skills passed",
+      "localLinks": "128 links in modified Markdown checked, no missing local targets",
+      "canonicalCopies": "two full responsibilities copies LF-identical; review FE-003 section LF-identical",
+      "sourceAndSnapshotHashes": "currentMaintenance working-tree hashes and documents refreshed; historical scopeEvidence unchanged",
+      "independentTaskValidation": "five scoped scenarios checked by independent test_worker; real device source evaluated read-only; neighboring annotation, small SFC, explicit self-check/formal modes preserved",
+      "formatting": "neither repository root provides local Prettier/config; retained existing Markdown/JSON conventions; no tools installed",
+      "gitDiffCheck": "passed in both repositories after all skill/source edits"
     },
-    "scope": "结构、引用、同版正文、脚本样例与独立场景语义验证；不是业务运行验收、安装或规范提交绑定"
+    "scope": "local skill structure, references, source content and bounded task/routing validation; no business runtime acceptance, installation or exact source commit binding"
   },
   "deliveryState": "local-working-tree; this-update-not-installed; not-published; not-committed",
   "localInstallation": {
@@ -291,14 +289,14 @@
       "AURA-BASE-FE-024",
       "AURA-BASE-FE-027"
     ],
-    "impact": "统一保留/内部整理/提取的判断、停止条件、完整范围验收和正反例；取消类型/数量/行数判拆分；区分已提取与合理内联的打开加载归属。规则 ID、必要性及开发/审查消费者映射不变。",
+    "impact": "统一保留/内部整理/提取的判断、停止条件、完整范围验收和正反例；取消类型/数量/行数判拆分；区分已提取与合理内联的打开加载归属。规则 ID、必要性及开发/审查消费者映射不变。 本轮补充只读结构咨询、入口未提取职责覆盖、纯展示组件维护/验证收益及测试证据边界；技能补丁升级，未新增规则编号或强制拆分阈值。",
     "sourceBaseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
     "skillBaseCommit": "c7ba1cf68632f9be2afed35b0bac4539965a82f7",
     "hashAlgorithm": "SHA256 UTF-8; CRLF to LF only; no trimming",
     "sourceFiles": [
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/文件组织与职责拆分.md",
-        "workingTreeSha256Lf": "86bf7748e33089e1a0d2f102480bf3438466ad2b2ac4b816805d965926846aaa",
+        "workingTreeSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
         "baselineSha256Lf": null
       },
       {
@@ -308,7 +306,7 @@
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/01-工程组织与页面状态.md",
-        "workingTreeSha256Lf": "2c675fa346752786013f3c826d9a2a78957081a263f6845b6ee9f8403926a268",
+        "workingTreeSha256Lf": "9f2b7509e58e81ef85ca24d5e24999017a11a229f9af98fde659af5107101b48",
         "baselineSha256Lf": "f90c69d845ba227a1082a2eea9afa8ded9e890f57353dc8531a53e8fc013d17a"
       },
       {
@@ -370,12 +368,12 @@
     "snapshotFiles": [
       {
         "path": "SKILL.md",
-        "workingTreeSha256Lf": "ce8551d54eadb198ddd7f57c0fec113dcd684b0485d116976a9f5705a511e4b5",
+        "workingTreeSha256Lf": "5bf0d71a95ec991b9b65b65baf3b3dba042acf90aa24494a11f5ac8407f762d0",
         "baselineSha256Lf": "cdd79f12016a9d0d9c4c7594389d1427c8f53f6f54607384b6f470a86763cfc5"
       },
       {
         "path": "CHANGELOG.md",
-        "workingTreeSha256Lf": "8e84875e16e6b30116dfa40218743206d065dcdea4d58bd569ffbdb5b29b4ee5",
+        "workingTreeSha256Lf": "da56de6e3bb573f6ba7fed63d69b2415ef868f4702a64d76910c6aa6b1ea84d2",
         "baselineSha256Lf": "b6ef6b952aa2f226423fe2b31dbf218d798873de3fa69a2de027e4d7deff75c3"
       },
       {
@@ -385,12 +383,12 @@
       },
       {
         "path": "references/development-self-check.md",
-        "workingTreeSha256Lf": "ea227b9277a45c992886123dff2676db72517d4772db5bf7ab863888049f67b1",
+        "workingTreeSha256Lf": "39fdfac91389a899ec5ca31a1d2153b2574ed148d1ed6b5883766aecff430bd8",
         "baselineSha256Lf": "da621815f9d20f11d711ebd220f05d6186b492b98508df5efa8a247fc30502c8"
       },
       {
         "path": "references/change-review.md",
-        "workingTreeSha256Lf": "3cf501089a25993e52894ad365368ce242559d2c83b943ed9f3e45c057d5ee1f",
+        "workingTreeSha256Lf": "6cf6804ea488d277b924c785878400afbaf597012b3d814d43f10b6d8c7e34dd",
         "baselineSha256Lf": "06600de405d0345ae95f6a248cfac69f6a19acc0bd9709c9f525ee05e8cf108d"
       },
       {
@@ -400,12 +398,12 @@
       },
       {
         "path": "knowledge/PIGX前端开发规范/文件组织与职责拆分.md",
-        "workingTreeSha256Lf": "86bf7748e33089e1a0d2f102480bf3438466ad2b2ac4b816805d965926846aaa",
+        "workingTreeSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
         "baselineSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114"
       },
       {
         "path": "knowledge/PIGX前端开发规范/01-工程组织与页面状态.md",
-        "workingTreeSha256Lf": "1717d93298adbf416003fb6cd3846720a48ab546ee3a7c6448559705d3e803f3",
+        "workingTreeSha256Lf": "574f45121f3954ae0de32472173b3b47d3385f4e7dd3cbf6a9a50c53b45a326d",
         "baselineSha256Lf": "4cfd9439c2cf7d2ce1009ca56c886ec402d1022250da89718299dfea4dd1d961"
       },
       {
@@ -422,7 +420,51 @@
         "path": "knowledge/PIGX前端开发规范/样式布局与静态资源规范.md",
         "workingTreeSha256Lf": "61e9a856da27a4d5322c24f516b86065de355d5487d3215784f160664e1cee94",
         "baselineSha256Lf": "19072c70f3eebc559783a9fb262bcf3cce54cea09d10bbcc29e7c2d45cf77790"
+      },
+      {
+        "path": "VERSION",
+        "workingTreeSha256Lf": "345a551b61a5dc33388b9bf40df339c9a0d9446ced7eeaeb576e3dbf4321918e",
+        "baselineSha256Lf": "175307e07ac7f0bdc0f3dba371ba3a202aaf3c0117368a93d2331e1bea4af4f3"
+      },
+      {
+        "path": "USAGE.md",
+        "workingTreeSha256Lf": "52f5f91545fef8bc8418af59bc15f5fc37b3b85f6e1a5030e9960502ef9f763c",
+        "baselineSha256Lf": "7040c0cf1cb8f6e3885736d642a402562633339cfcfdf1bcf7d90908f8977f31"
       }
-    ]
+    ],
+    "readOnlyAssessmentFollowup": {
+      "date": "2026-11-02",
+      "skillVersion": "0.4.5",
+      "skillBaseCommit": "00405ae04e19cb7b80862feb042c9a6366bb29e8",
+      "affectedRules": [
+        "AURA-BASE-FE-003"
+      ],
+      "consumerMapping": "existing develop/review consumers and rule ID/necessity unchanged; no new matrix row",
+      "scope": "canonical responsibilities body and FE-003 judgment; skill entry/routing/usage; shared Props/Emits display boundaries; tests evidence limitations",
+      "sourceBinding": "pending; canonical working-tree additions preserved; no commit/install/publish",
+      "independentTrials": {
+        "deviceManagement": "read-only real-source evaluation identified table/card extraction benefits, detail map/log candidates and missing repeatable test evidence; no business test executed",
+        "singleFieldComment": "retains annotation-only fast path",
+        "explicitSelfCheck": "retains development-self-check",
+        "smallDisplaySfc": "keeps cohesive one-column display SFC; no automatic table extraction",
+        "explicitFormalReview": "retains formal-review with six-file deliverable; routing judgment only"
+      }
+    }
+  },
+  "historicalValidationBeforeReadOnlyAssessment": {
+    "state": "local-targeted-checks-passed; exact-source-commit-binding-pending",
+    "checks": {
+      "developValidate": "passed after final knowledge edits",
+      "quickValidate": "both skills passed (entry schema unchanged afterward)",
+      "canonicalCopies": "both full copies identical to current canonical body; FE-003 section synchronized",
+      "sourceAndSnapshotHashes": "currentMaintenance per-file SHA256 refreshed and verified; historical scopeEvidence explicitly retained as historical",
+      "newCanonicalLinks": "affected-doc references resolve; CSS anchor checked",
+      "scriptBehavior": "HEAD comparison for 2/4/6 inline dialogs: old count warning removed; unrelated select diagnostic preserved; temporary samples cleaned",
+      "independentSemanticValidation": "8 initial scenarios plus inline dialog with on-open ID detail request; no conflict in final rules; no real project execution",
+      "designReview": "loading ownership conflict resolved; final residual checklist count rule corrected and targeted scan repeated",
+      "formatting": "no local Prettier or config in these repositories; preserve existing conventions; no installation",
+      "gitDiffCheck": "passed in both repositories"
+    },
+    "scope": "结构、引用、同版正文、脚本样例与独立场景语义验证；不是业务运行验收、安装或规范提交绑定"
   }
 }
