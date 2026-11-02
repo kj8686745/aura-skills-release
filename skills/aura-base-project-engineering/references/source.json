@@ -404,9 +404,9 @@
       "snapshot": "references/standards/01-基础编码规范/11-运行时并发与资源管理规范/04-文件批处理与性能边界.md",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
-      "authorityStatus": "matched",
-      "sourceSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739",
-      "snapshotSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739",
+      "authorityStatus": "pending",
+      "sourceSha256Lf": "e834b3d16a9cdc54e66af89b670c0d1d9d491b75f98f9a5e4c2ba9d7e2216b51",
+      "snapshotSha256Lf": "e834b3d16a9cdc54e66af89b670c0d1d9d491b75f98f9a5e4c2ba9d7e2216b51",
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739"
@@ -452,9 +452,9 @@
       "snapshot": "references/standards/01-基础编码规范/13-版本控制变更与交付规范/01-变更追踪与范围控制.md",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
-      "authorityStatus": "matched",
-      "sourceSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392",
-      "snapshotSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392",
+      "authorityStatus": "pending",
+      "sourceSha256Lf": "dc3c66aef17ba1e496d72f6593800971d5e5c5ced862a33ffc2e1fa5889d4508",
+      "snapshotSha256Lf": "dc3c66aef17ba1e496d72f6593800971d5e5c5ced862a33ffc2e1fa5889d4508",
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392"
@@ -540,26 +540,29 @@
         "./04-前端基础编码规范/10-组件复用与公共UI.md",
         "./04-前端基础编码规范/11-字体图标库.md",
         "./04-前端基础编码规范/12-研发自检与交付.md",
-        "./05-接口规范体系/10-对外能力交付规范.md"
+        "./05-接口规范体系/10-对外能力交付规范.md",
+        "./04-前端基础编码规范/文件组织与职责拆分.md",
+        "./04-前端基础编码规范/06-aura-web-kit公共能力.md#数据副本与克隆",
+        "./04-前端基础编码规范/06-aura-web-kit公共能力.md#表单公共契约与版本"
       ],
       "sourceKind": "authority",
-      "authorityStatus": "matched",
-      "sourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0",
-      "snapshotSha256Lf": "faec56e09ce4b287ad1ed2bed6a66d50779c45b4231273a42721ddc35d5d8bab",
+      "authorityStatus": "pending",
+      "sourceSha256Lf": "a61f2b68f295e7122a97667ca8e6d5add21e95dcd94eb39cc4640c5c7cfcc6bb",
+      "snapshotSha256Lf": "575e6a3d013a2f8daf4a85a823beb7dbd58ba280025c99a01f0670be116024b0",
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0"
     }
   ],
   "coverage": "覆盖本技能 references/standards 下全部规范视图；技能自有导航单独登记。",
-  "skillVersion": "1.1.1",
+  "skillVersion": "1.2.0",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
   "sourceCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
   "skillResources": [
     {
       "path": "references/任务路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "cb79f9c4c755b51a5a712605e1db6ba86673bc45b9c671b03f601fb9698d30c4"
+      "sha256Lf": "0fe31c3db38fc8a24d7b4052838c40a608df4604505c56949256633e32d16ced"
     },
     {
       "path": "scripts/check-project-engineering.ps1",
@@ -573,12 +576,52 @@
   "snapshotRoot": "",
   "sourceBinding": {
     "status": "pending",
-    "note": "数据库查询与结构演进新增规范已绑定提交db5df7e；规范仓库仍存在其他未提交工作树变更，因此保留pending，不代表双仓正式绑定或发布。"
+    "note": "Git提交规范VC-015～021及矩阵已按两轮确认同步到工作树；保留原精确提交和提交内摘要，规范提交后重新绑定。此状态不代表已发布或安装。"
   },
   "databaseQueryEvolutionRevision": {
     "skillVersion": "1.1.1",
     "scope": "同步共同数据规范只读视图，不修改本技能的业务实现职责",
     "toolIsolatedCasesPassed": null,
     "limits": "仅静态、隔离工具和人工场景复核；不连接数据库，不证明真实执行计划、索引收益、迁移锁影响或数据恢复。独立复核发现的MySQL减号与PostgreSQL转义字符串问题已修正并回归。"
+  },
+  "gitCommitMessageRevision": {
+    "date": "2026-11-02",
+    "policyStatus": "two-round-content-confirmed",
+    "normVersion": "0.2.0-draft",
+    "rules": [
+      "AURA-BASE-VC-015",
+      "AURA-BASE-VC-016",
+      "AURA-BASE-VC-017",
+      "AURA-BASE-VC-018",
+      "AURA-BASE-VC-019",
+      "AURA-BASE-VC-020",
+      "AURA-BASE-VC-021"
+    ],
+    "oldSkillVersion": "1.1.1",
+    "newSkillVersion": "1.2.0",
+    "loadPolicy": "only commit preparation or explicitly scoped commit review; no full history by default",
+    "sourceBinding": "pending; authority worktree and original commit hashes both recorded",
+    "frontendImplementationChanged": false,
+    "hookInstalled": false,
+    "gitConfigChanged": false,
+    "publishedOrInstalled": false,
+    "companionViewRepair": {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/04-文件批处理与性能边界.md",
+      "reason": "pre-existing stale authority snapshot discovered by full package verification",
+      "oldSourceSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739",
+      "newSourceSha256Lf": "e834b3d16a9cdc54e66af89b670c0d1d9d491b75f98f9a5e4c2ba9d7e2216b51",
+      "ruleSemanticsChanged": false
+    }
+  },
+  "upstreamMergeRevision": {
+    "date": "2026-11-02",
+    "scope": "refresh merged matrix view only; frontend source remains upstream-owned",
+    "matrixSourceSha256Lf": "a61f2b68f295e7122a97667ca8e6d5add21e95dcd94eb39cc4640c5c7cfcc6bb",
+    "newNavigationTargetsRemoved": [
+      "./04-前端基础编码规范/文件组织与职责拆分.md",
+      "./04-前端基础编码规范/06-aura-web-kit公共能力.md#数据副本与克隆",
+      "./04-前端基础编码规范/06-aura-web-kit公共能力.md#表单公共契约与版本"
+    ],
+    "publishedOrInstalled": false
   }
 }
