@@ -1,6 +1,14 @@
 {
   "skill": "aura-base-backend-development",
-  "skillVersion": "1.26.0",
+  "skillVersion": "1.28.0",
+  "releaseStatus": "preview-authorized-not-uploaded",
+  "releaseDecision": {
+    "date": "2026-11-03",
+    "state": "preview",
+    "basis": "Maintainer requested publishing the blocked backend updates; public preview authorized, validation and source-binding gaps remain recorded.",
+    "uploaded": false
+  },
+  "pendingSourceSync": "aura-core-common/aura-common-download local dev implementation; aura-core-upms local dev contract; aura-code-nexus local governance records",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
   "sourceCommit": "e2dd5da3f68fdb8b346e559bcd8359483050dbd6",
   "transformation": "仅移除逐文档登记的包外导航，保留完整正文与章节；摘要仅归一化 CRLF 为 LF。",
@@ -93,8 +101,8 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/规范矩阵.md",
       "snapshot": "references/standards/01-基础编码规范/规范矩阵.md",
-      "sourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0",
-      "snapshotSha256Lf": "faec56e09ce4b287ad1ed2bed6a66d50779c45b4231273a42721ddc35d5d8bab",
+      "sourceSha256Lf": "a61f2b68f295e7122a97667ca8e6d5add21e95dcd94eb39cc4640c5c7cfcc6bb",
+      "snapshotSha256Lf": "575e6a3d013a2f8daf4a85a823beb7dbd58ba280025c99a01f0670be116024b0",
       "navigationTargetsRemoved": [
         "./04-前端基础编码规范/01-工程组织与页面状态.md",
         "./04-前端基础编码规范/02-请求路由权限与数据适配.md",
@@ -108,12 +116,15 @@
         "./04-前端基础编码规范/10-组件复用与公共UI.md",
         "./04-前端基础编码规范/11-字体图标库.md",
         "./04-前端基础编码规范/12-研发自检与交付.md",
-        "./05-接口规范体系/10-对外能力交付规范.md"
+        "./05-接口规范体系/10-对外能力交付规范.md",
+        "./04-前端基础编码规范/文件组织与职责拆分.md",
+        "./04-前端基础编码规范/06-aura-web-kit公共能力.md#数据副本与克隆",
+        "./04-前端基础编码规范/06-aura-web-kit公共能力.md#表单公共契约与版本"
       ],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched",
+      "authorityStatus": "pending",
       "committedSourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0"
     },
     {
@@ -203,8 +214,8 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/03-基础通用支撑能力包/03-基础能力详细说明.md",
       "snapshot": "references/standards/05-能力包/01-通用工具类/03-基础通用支撑能力包/03-基础能力详细说明.md",
-      "sourceSha256Lf": "3ec901be00887b22f3b66d4b2632e56c21473122087125b308cdfdf54f432ec5",
-      "snapshotSha256Lf": "3ec901be00887b22f3b66d4b2632e56c21473122087125b308cdfdf54f432ec5",
+      "sourceSha256Lf": "a34c05df2f7d45c8252b3259586d03a6a7f8616d74775e3ed4f95ddbf7f54c20",
+      "snapshotSha256Lf": "a34c05df2f7d45c8252b3259586d03a6a7f8616d74775e3ed4f95ddbf7f54c20",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
@@ -299,13 +310,13 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/04-文件任务与实时交互能力包/能力详细说明.md",
       "snapshot": "references/standards/05-能力包/01-通用工具类/04-文件任务与实时交互能力包/能力详细说明.md",
-      "sourceSha256Lf": "ed760fe2fb50c3e029d9c77adc6f65b6310fb4a3988cd9535a3d099553bc6df9",
-      "snapshotSha256Lf": "ed760fe2fb50c3e029d9c77adc6f65b6310fb4a3988cd9535a3d099553bc6df9",
+      "sourceSha256Lf": "ce1b03a9312e3ea9982da4a7ea6a2442fd83cff81e6d461b8eb0e6b3e3faae51",
+      "snapshotSha256Lf": "ce1b03a9312e3ea9982da4a7ea6a2442fd83cff81e6d461b8eb0e6b3e3faae51",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched",
+      "authorityStatus": "pending",
       "committedSourceSha256Lf": "ed760fe2fb50c3e029d9c77adc6f65b6310fb4a3988cd9535a3d099553bc6df9"
     },
     {
@@ -841,13 +852,13 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/04-文件批处理与性能边界.md",
       "snapshot": "references/standards/01-基础编码规范/11-运行时并发与资源管理规范/04-文件批处理与性能边界.md",
-      "sourceSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739",
-      "snapshotSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739",
+      "sourceSha256Lf": "e834b3d16a9cdc54e66af89b670c0d1d9d491b75f98f9a5e4c2ba9d7e2216b51",
+      "snapshotSha256Lf": "e834b3d16a9cdc54e66af89b670c0d1d9d491b75f98f9a5e4c2ba9d7e2216b51",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched",
+      "authorityStatus": "pending",
       "committedSourceSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739"
     },
     {
@@ -889,13 +900,13 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/13-版本控制变更与交付规范/01-变更追踪与范围控制.md",
       "snapshot": "references/standards/01-基础编码规范/13-版本控制变更与交付规范/01-变更追踪与范围控制.md",
-      "sourceSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392",
-      "snapshotSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392",
+      "sourceSha256Lf": "dc3c66aef17ba1e496d72f6593800971d5e5c5ced862a33ffc2e1fa5889d4508",
+      "snapshotSha256Lf": "dc3c66aef17ba1e496d72f6593800971d5e5c5ced862a33ffc2e1fa5889d4508",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "authorityStatus": "matched",
+      "authorityStatus": "pending",
       "committedSourceSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392"
     },
     {
@@ -1015,7 +1026,7 @@
     {
       "path": "references/任务路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "60e51f1bc586cb6e72cb27457729e785b7a67fb0cb04bad3e58321e30e7bf011"
+      "sha256Lf": "02407c3e47819872a01be321466e1a287fc00eb794652f8a02afc65dba542fbe"
     },
     {
       "path": "references/能力使用索引.md",
@@ -1110,7 +1121,7 @@
     {
       "path": "references/API边界与网关路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "872cb9dda61229bfcc523b8fb931cdbb7938d8dabeeb0d35ce961fe320b62eab"
+      "sha256Lf": "fa88c6918b115bfe2fe96f0fb4f5b0cc30836ee5304e5f46cd2490c201eeefff"
     },
     {
       "path": "references/数据库操作与事务路由.md",
@@ -1174,25 +1185,20 @@
     {
       "path": "references/文件与批处理开发.md",
       "kind": "skill-navigation",
-      "sha256Lf": "7ef2b6897441c4f59b1845cfa47fca6584c6a6569f7b8fb8494a69ff23ff144c"
+      "sha256Lf": "3fcf5e7d93581b0418d91fcebe9dd0bcf79ff1470bf4687a25c0fbe3ed225b30"
     },
     {
       "path": "scripts/inspect-file-batch.ps1",
       "kind": "script",
-      "sha256Lf": "9b452064be5c13ad984da277a9364f2d9561803ace897ab49ba482d29067817e",
+      "sha256Lf": "fe1aafb4a362b81402e5e8618b2428c832dd7d0859b91cf1ecb75b1869d12459",
       "origin": "与审查技能同源，人工维护，不作为权威技术规则源"
-    },
-    {
-      "path": "references/文件与批处理开发.md",
-      "kind": "skill-navigation",
-      "sha256Lf": "7ef2b6897441c4f59b1845cfa47fca6584c6a6569f7b8fb8494a69ff23ff144c"
     }
   ],
   "sourceRoot": "",
   "snapshotRoot": "",
   "sourceBinding": {
-    "status": "committed",
-    "note": "文件能力说明已绑定规范提交e2dd5da；随包能力视图与来源摘要一致。来源绑定不代表行为验收、安装或发布。"
+    "status": "pending",
+    "note": "Git提交规范VC-015～021及矩阵已按两轮确认同步到工作树；保留原精确提交和提交内摘要，规范提交后重新绑定。此状态不代表已发布或安装。"
   },
   "currentRevisionValidation": {
     "skillVersion": "1.24.0",
@@ -1268,5 +1274,470 @@
     "scope": "查询与结构演进模板、限定文件候选工具和现有规则的细化示例",
     "toolIsolatedCasesPassed": 19,
     "limits": "仅静态、隔离工具和人工场景复核；不连接数据库，不证明真实执行计划、索引收益、迁移锁影响或数据恢复。独立复核发现的MySQL减号与PostgreSQL转义字符串问题已修正并回归。"
+  },
+  "exportCandidateRevision": {
+    "skillVersion": "1.27.0-candidate",
+    "status": "local-candidate-pending-source-commit",
+    "ruleBasis": [
+      "AURA-BASE-RUNTIME-017",
+      "AURA-BASE-RUNTIME-019",
+      "AURA-BASE-RUNTIME-020"
+    ],
+    "toolCasesPassed": 19,
+    "candidateScope": "固定行模型/动态列分页Excel及多Excel ZIP；目标依赖须具备相同签名，旧发布包不自动适用。",
+    "agentTrial": {
+      "scope": "日常任务创建、内存分页、构造ExportJob、ZIP分片名称",
+      "maven": "blocked-dependency-resolution",
+      "directJava": "observed-pass",
+      "limits": "首轮只验证作业构造和ZIP条目；主Agent发现record行模型未写任务名称，改为独立JavaBean导出DTO后读取每份XLSX，核对3份各2/2/1条、表头、ID、名称、状态连续一致。未验证独立Maven、HTTP/下载中心或审查报告行为。"
+    },
+    "releaseLimitations": [
+      "公共模块未发布正式版本",
+      "规范来源未提交绑定",
+      "全局字节/磁盘/耗时配额及真实环境验证未完成",
+      "独立工程Maven、Spring初始化及审查报告闭环仍缺验证"
+    ],
+    "contentRecheck": {
+      "scope": "isolated-daily-task-export",
+      "initialExpectedTitles": 5,
+      "initialActualTitles": 0,
+      "correctedActualTitles": 5,
+      "partitionDataRows": [
+        2,
+        2,
+        1
+      ],
+      "method": "JDK21 javac/java and Apache POI per-file content assertions",
+      "report": "双仓外隔离验证结果，未打包到技能"
+    },
+    "standardsRevision": {
+      "normVersion": "0.1.1-draft",
+      "capabilityVersion": "0.1.1-draft",
+      "changedDocuments": [
+        "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/规范矩阵.md",
+        "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/04-文件任务与实时交互能力包/能力详细说明.md",
+        "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/11-运行时并发与资源管理规范/04-文件批处理与性能边界.md"
+      ],
+      "scope": "容量计算、分页终止、资源归属与异常收尾、空结果/满片/超限和文件内容验证；不新增规则编号或公共API"
+    },
+    "publicImplementationRevision": {
+      "status": "local-dev-uncommitted",
+      "baselineCommit": "03d745542a42a65fb3e493285624e32413e03aec",
+      "changes": [
+        "共享分页及容量校验",
+        "FastExcel实际表头行数扣减",
+        "JavaBean读取约束",
+        "动态表头快照",
+        "ZIP资源关闭和异常保留"
+      ],
+      "xlsxContentTestsPassed": 18,
+      "commonModuleRegressionPassed": 96,
+      "evidence": "aura-core-common/aura-common/aura-common-download/target/excel-content-full-tests.log",
+      "limits": "隔离H2/本地文件/替身等既有场景，不代表百万行压测或远程平台运行；UPMS本轮未改未重跑"
+    },
+    "isolatedMavenRecheck": {
+      "date": "2026-10-28",
+      "status": "local-source-reactor-only",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "package": "passed; separate package step skipped tests",
+      "corrections": [
+        "removed three shadow public source copies and stale classes",
+        "aligned parent BOM with current source reactor",
+        "asserted actual CodeSource and each XLSX field"
+      ],
+      "report": "验证产物/后端技能导出闭环验证-20261027/docs/审查结果/01-变更审查报告.md",
+      "limits": "No HTTP, Spring aspect, task persistence, remote storage, real capacity or published-artifact acceptance; source binding pending."
+    },
+    "httpDeliveryRecheck": {
+      "date": "2026-10-28",
+      "status": "isolated-mockmvc-h2-local-storage-passed",
+      "newTests": 5,
+      "totalTestsExecuted": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "scenarios": [
+        "direct xlsx HTTP 200 without offline object",
+        "size-triggered HTTP 202 with one task and upload",
+        "timeout HTTP 202 before writer gate released, same task succeeds",
+        "accepted generation failure leaves FAILED and no object",
+        "missing injected identity rejected before prepare/task creation"
+      ],
+      "actualComponents": [
+        "MockMvc DispatcherServlet",
+        "AspectJ proxy",
+        "Spring transaction proxy",
+        "public DownloadTaskMapper with H2",
+        "LocalFileTemplate"
+      ],
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/maven-http-delivery-validation.log",
+      "artifacts": "验证产物/后端技能导出闭环验证-20261027/target/review/delivery-20261028",
+      "limits": "Test identity injected; no real authentication filter, tenant datasource routing, protected download API, remote storage, capacity test or published artifact validation. Prior 4 tests included in total 9; no reinstall/release."
+    },
+    "downloadAccessRecheck": {
+      "date": "2026-10-28",
+      "status": "isolated-upms-access-passed",
+      "repositoryCommit": "2b6d4cbd816f2062bb7579b67062d83523b1b209",
+      "workingTree": "uncommitted",
+      "publicDependencyVersion": "0.0.73-RELEASE",
+      "testsExecuted": 24,
+      "newHttpTests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "scope": [
+        "current owner and tenant only",
+        "spoofed query does not widen scope",
+        "foreign/legacy/hidden/expired/non-success downloads denied before storage",
+        "owned local file streamed with stored metadata",
+        "foreign deletion denied",
+        "missing injected identity denied"
+      ],
+      "observedFailureEnvelope": {
+        "http": 200,
+        "code": 500,
+        "data": 500
+      },
+      "report": "验证产物/后端技能导出闭环验证-20261027/docs/审查结果/02-下载中心访问边界审查.md",
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/download-access-20261028",
+      "limits": "Injected identity and actual exception advice with MockMvc/H2/local files; no production auth filter, dynamic tenant datasource, remote storage or same-version generation-to-download acceptance. Existing 17 tests included in 24."
+    },
+    "exceptionContractRecheck": {
+      "date": "2026-10-28",
+      "status": "local-core-and-sentinel-source-only",
+      "before": {
+        "tests": 12,
+        "failures": 6,
+        "errors": 0
+      },
+      "after": {
+        "tests": 12,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "fix": [
+        "explicit failedWithCode factory preserving numeric failed(data,msg) semantics",
+        "forward CustomException code/message/public data",
+        "default FAIL initialization for all constructors",
+        "correct response schema descriptions"
+      ],
+      "evidence": "aura-core-common/aura-common/aura-common-sentinel/target/exception-contract-after.log",
+      "limits": "Existing HTTP statuses retained; no release/install; UPMS old dependency remains unchanged; candidate core and sentinel must be upgraded together."
+    },
+    "sameVersionFlowRecheck": {
+      "date": "2026-10-28",
+      "status": "selected-source-integration-passed",
+      "publicBomVersion": "0.0.75-RELEASE",
+      "artifactsInstalled": false,
+      "fullUpmsBuild": false,
+      "upmsSourceFilesCompiled": 8,
+      "integrationTestsPassed": 10,
+      "inheritedDeliveryCases": 5,
+      "addedFlowCases": 5,
+      "exceptionContractReplayPassed": 12,
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/same-version-20261028",
+      "verified": [
+        "same task generated then queried and downloaded via actual UPMS controller",
+        "shared H2 and actual common/UPMS mappers",
+        "local ZIP content read through download endpoint",
+        "cross-user/cross-tenant/generating/expired access rejected before storage",
+        "new default failure data is null; custom code/detail preserved",
+        "CodeSource checks for current common and selected UPMS types"
+      ],
+      "limits": "MockMvc with injected identity, Jackson2 adapter, H2 and local storage. No production filters, dynamic datasource routing, SysLog aspect, remote storage, full UPMS build, publication or capacity acceptance. Old UPMS dependency untouched."
+    },
+    "upgradePreparation": {
+      "date": "2026-10-28",
+      "status": "local-draft",
+      "scope": [
+        "paired common modules and UPMS api/biz",
+        "shared physical task table and recorded storage bucket",
+        "DDL before new model activation; no legacy ownership migration",
+        "published BOM required; local reactor is not publication",
+        "maintenance scanning defaults off and activated after checks"
+      ],
+      "authorityVersion": "0.1.2-draft",
+      "release": "pending source and public artifacts"
+    },
+    "autoConfigurationRecheck": {
+      "date": "2026-10-28",
+      "status": "local-component-context-passed",
+      "before": {
+        "newCases": 3,
+        "failures": 3,
+        "reason": "Imported multi-constructor aspect cannot be instantiated"
+      },
+      "fix": "Remove direct aspect import; keep DownloadDataSourceConfig bean factory",
+      "after": {
+        "newCasesPassed": 3,
+        "scopedRegressionTestsPassed": 31,
+        "regressionIncludesNewCases": true
+      },
+      "checks": [
+        "actual DownloadCenterAutoConfig starts",
+        "one aspect bean",
+        "endpoint prepared/generated once",
+        "default cleanup off and explicit maintenance scheduling enabled"
+      ],
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/auto-configuration-20261028",
+      "limits": "Real configuration with fixed H2 factory, not complete host/DS routing or production remote storage validation. No install/release."
+    },
+    "dynamicDatasourceRecheck": {
+      "date": "2026-10-28",
+      "status": "dual-h2-service-proxy-passed",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "productionCodeChanged": false,
+      "runtime": [
+        "Boot AopAutoConfiguration",
+        "dynamic-datasource 4.5.0 actual auto configuration/DS advisor",
+        "Spring transaction manager",
+        "actual DownloadCenterAutoConfig/services"
+      ],
+      "verified": [
+        "create/status use download only",
+        "REQUIRES_NEW task survives master outer rollback",
+        "recovery status and cleanup registration roll back together",
+        "recovery/cleanup use download only",
+        "prepare/heartbeat/release and DS context restoration"
+      ],
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/dynamic-datasource-20261028",
+      "limits": "Test source provider with two H2 databases; no company JDBC/Druid/encrypted connection provider, scheduler-thread routing, full host or production PostgreSQL acceptance. No install/release."
+    },
+    "stageClosure": {
+      "date": "2026-10-29",
+      "status": "local-scoped-validation-consolidated",
+      "isolatedTrial": "supported for recorded scope/environment",
+      "realBusinessTrial": "conditions-not-yet-met",
+      "formalDelivery": "pending-source-and-artifact-version",
+      "nextLocalWork": "full UPMS parent/BOM/module dependency compatibility inventory",
+      "remaining": [
+        "full host aligned build",
+        "company datasource provider and PostgreSQL",
+        "production authentication/tenant/storage",
+        "maintenance scheduler thread routing",
+        "business scale/resource bounds",
+        "precise source and public artifact binding"
+      ],
+      "laterScope": [
+        "import and failed-scope retry",
+        "automatic resume excluded from first version",
+        "additional workbook/format modes"
+      ],
+      "report": "验证产物/后端技能导出闭环验证-20261027/docs/审查结果/00-审查结果总览.md",
+      "testAction": "no new tests or reruns in stage consolidation; counts not added"
+    },
+    "upmsCompatibilityInventory": {
+      "date": "2026-10-29",
+      "status": "read-only-model-inventory-complete",
+      "effectiveProjects": 6,
+      "currentParent": "0.0.73-RELEASE",
+      "targetSourceParent": "0.0.75-RELEASE",
+      "bothServerBaseline": "Java21/Boot4.0.6/Spring7.0.7 as locally resolved",
+      "internalVersionMismatchedEdges": 4,
+      "sdkBoundary": "sdk and sdk-base independent Java17; biz uses published sdk0.0.4 while current source release profile is0.0.9",
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/upms-compatibility-20261029",
+      "next": "isolated api/auth-cache/biz compile with explicit local-version alignment; existing SDK consumer baseline preserved",
+      "limits": "No compile/test/POM changes; model risk does not prove compile or runtime failure; no remote RELEASE immutability assertion."
+    },
+    "isolatedUpmsServerBuild": {
+      "date": "2026-10-29",
+      "status": "isolated-server-chain-test-compile-and-targeted-regression-passed",
+      "reactorNodes": 23,
+      "productionSourceCounts": {
+        "api": 139,
+        "auth-cache": 25,
+        "biz": 261
+      },
+      "tests": {
+        "downloadRegression": 24,
+        "sourceAndExceptionChecks": 2,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "originalInputsUnchanged": 474,
+      "isolatedChanges": [
+        "parent0.0.75 with source relativePath",
+        "API/cache SNAPSHOT alignment",
+        "skip git metadata and flatten"
+      ],
+      "sdk": "published0.0.4 consumed; standalone sdk/base source and Java17 consumer baseline unchanged",
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/upms-compatibility-20261029/isolated-result.json",
+      "limits": "No complete app startup/packaging/remaining biz tests, production config/provider/auth/storage, scheduler-thread routing or capacity acceptance; original POMs untouched; no install/release."
+    },
+    "hostStartupInventory": {
+      "date": "2026-11-01",
+      "status": "static-plan-prepared-not-started",
+      "sourceFiles": 21,
+      "configFiles": 7,
+      "startupItems": 10,
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/startup-environment-20261101",
+      "criticalPrerequisites": [
+        "dedicated business database and Redis",
+        "isolated config source without original Nacos/profile imports",
+        "published Rabbit/MsgCache/SDK startup contracts",
+        "no property guard for client cache initialization"
+      ],
+      "nextLocalWork": "maintenance scheduler thread routing to actual service proxy/download database",
+      "limits": "No startup/network/test or production source changes. Dependency internal code not audited; reduced context not full-host acceptance. Raw config values not copied."
+    },
+    "schedulerRoutingRecheck": {
+      "date": "2026-11-01",
+      "status": "formal-scheduler-dual-h2-passed",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "schedulerBeans": [
+        "downloadExecutionScheduler",
+        "downloadCleanupScheduler"
+      ],
+      "verified": [
+        "scheduled heartbeat renews download only",
+        "scheduled recovery transaction and cleanup use download; same-ID master records unchanged",
+        "cleanup registration SQL failure rolls back recovery state",
+        "same scheduler thread routing restored after callbacks"
+      ],
+      "sqlProbeEvents": 17,
+      "productionCodeChanged": false,
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/scheduler-routing-20261101",
+      "limits": "Test provider/two H2/local object; no full UPMS/company JDBC provider/PostgreSQL/production auth/remote storage acceptance. No release/install."
+    },
+    "isolatedContainerPreparation": {
+      "date": "2026-11-01",
+      "environment": "user-selected local independent containers",
+      "status": "prepared-engine-not-ready",
+      "ports": [
+        15432,
+        16379
+      ],
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/startup-environment-20261101/container-preparation.json",
+      "limits": "Bounded Docker API probe failed; no container health or app acceptance; no credential values included.",
+      "latestEnvironmentDiagnosis": {
+        "date": "2026-11-02",
+        "status": "docker-desktop-runtime-endpoint-error",
+        "containerOrHostAcceptance": false,
+        "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/startup-environment-20261101/docker-endpoint-diagnosis-20261102.json",
+        "scope": "Environment diagnostic only; code and earlier test results unchanged."
+      },
+      "afterUserReboot": {
+        "date": "2026-11-02",
+        "status": "dedicated-services-verified",
+        "engineVersion": "29.2.0",
+        "services": {
+          "postgres": "127.0.0.1:15432 healthy; password/read-write-rollback/invalid-password check passed",
+          "redis": "127.0.0.1:16379 healthy; password/PING/key-read-write-delete/anonymous-denied passed"
+        },
+        "networkCorrection": "project bridge with loopback publications; original internal network failure retained; volumes preserved",
+        "imageDigestsCaptured": true,
+        "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/startup-environment-20261101/container-ready-20261102.json",
+        "limits": "Independent infrastructure only; full business schema/seed, published dependency startup contracts and full UPMS startup not complete; native services unchanged."
+      }
+    },
+    "isolatedSchemaPreparation": {
+      "date": "2026-11-02",
+      "status": "source-structure-applied-to-isolated-container-before-user-direction",
+      "baseTables": 46,
+      "actualTablesIncludingPartitionsAndCleanup": 51,
+      "criticalEntityFieldsChecked": 69,
+      "originalInsertStatementsSkipped": 283,
+      "syntheticTenants": 1,
+      "clientsAndUsersImported": 0,
+      "idempotentReapply": "already-initialized",
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/schema-initialization-20261102",
+      "limits": "No full-host acceptance; gen_datasource_conf absent and String[]/varchar mapping unresolved; local full startup canceled by user."
+    },
+    "developmentEnvironmentSwitch": {
+      "date": "2026-11-02",
+      "direction": "existing-development-services",
+      "localHostStartup": "canceled-by-user",
+      "localContainers": "stopped, volumes preserved",
+      "probe": "read-only current repo dev config DB/Redis unverified; no writes",
+      "httpEntry": "awaiting verified UPMS/gateway URL",
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/development-services-20261102",
+      "existingServiceDiscovery": {
+        "date": "2026-11-02",
+        "status": "entry-reachable-authentication-required",
+        "server": "172.18.7.72",
+        "entry": "http://172.18.7.72:18080",
+        "anonymousHttp": 424,
+        "scope": "Existing SSH company agent; read-only container/listener/reverse-proxy inventory and unauthenticated GET. Handler existence/deployed candidate version/gateway registration not established.",
+        "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/development-services-20261102/existing-development-service.json",
+        "next": "existing test login method needed for authenticated read-only verification",
+        "remoteMutation": false
+      }
+    },
+    "forwardIntegration": {
+      "date": "2026-11-02",
+      "baseline": "UPMS a85f3838 + common1.0.5 source8961c15d; Java21",
+      "status": "isolated compile/test passed; not published or deployed",
+      "reactorNodes": 26,
+      "tests": 145,
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/forward-integration-20261102/validation-result.json",
+      "sourceTrees": "two detached isolated worktrees; original candidates unchanged; source binding remains pending",
+      "artifactCoordinates": "formal unique candidate coordinates pending; no install/deploy"
+    },
+    "deliveryPreparation": {
+      "date": "2026-11-02",
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/target/review/forward-integration-20261102/交付准备/00-候选交付说明.md",
+      "checks": "7 parentless candidate POMs; 8 Maven validate nodes; SQL/config static checks",
+      "binaryStatus": "7 thin JARs and UPMS Boot JAR built; jar consumer20 executions passed; tools mode extraction passed; no full application or image acceptance",
+      "environmentStatus": "unique local Maven candidate cache only; no RELEASE overwrite, remote publication, SQL/configuration/deployment or skill installation",
+      "binaryEvidence": "验证产物/后端技能导出闭环验证-20261027/target/review/forward-integration-20261102/binary-consumer-result.json",
+      "bootEvidence": "验证产物/后端技能导出闭环验证-20261027/target/review/forward-integration-20261102/executable-package-result.json",
+      "targetPlatform": "linux/arm64 verified; base image digest and image build pending"
+    },
+    "pairedCandidateSource": {
+      "date": "2026-11-02",
+      "branch": "candidate/download-java21-20261102",
+      "commonCommit": "3cf632a568c4b7f3a18e8b18430f237347f6e0ef",
+      "upmsCommit": "177c3f5e5b9d1fbdec9d3bd7b39a0dace0c012a4",
+      "sourcePushed": true,
+      "devMerged": false,
+      "testsThisBatch": 145,
+      "artifactRebuildRequired": true,
+      "standardsBinding": "unchanged pending; these hashes bind public implementation candidate only",
+      "evidence": "验证产物/后端技能导出闭环验证-20261027/docs/审查结果/合并复核-20261102/证据/paired-candidate-commits.json"
+    }
+  },
+  "gitCommitMessageRevision": {
+    "date": "2026-11-02",
+    "policyStatus": "two-round-content-confirmed",
+    "normVersion": "0.2.0-draft",
+    "rules": [
+      "AURA-BASE-VC-015",
+      "AURA-BASE-VC-016",
+      "AURA-BASE-VC-017",
+      "AURA-BASE-VC-018",
+      "AURA-BASE-VC-019",
+      "AURA-BASE-VC-020",
+      "AURA-BASE-VC-021"
+    ],
+    "oldSkillVersion": "1.27.0-candidate",
+    "newSkillVersion": "1.28.0",
+    "loadPolicy": "only commit preparation or explicitly scoped commit review; no full history by default",
+    "sourceBinding": "pending; authority worktree and original commit hashes both recorded",
+    "frontendImplementationChanged": false,
+    "hookInstalled": false,
+    "gitConfigChanged": false,
+    "publishedOrInstalled": false
+  },
+  "upstreamMergeRevision": {
+    "date": "2026-11-02",
+    "scope": "refresh merged matrix view only; frontend source remains upstream-owned",
+    "matrixSourceSha256Lf": "a61f2b68f295e7122a97667ca8e6d5add21e95dcd94eb39cc4640c5c7cfcc6bb",
+    "newNavigationTargetsRemoved": [
+      "./04-前端基础编码规范/文件组织与职责拆分.md",
+      "./04-前端基础编码规范/06-aura-web-kit公共能力.md#数据副本与克隆",
+      "./04-前端基础编码规范/06-aura-web-kit公共能力.md#表单公共契约与版本"
+    ],
+    "publishedOrInstalled": false
   }
 }

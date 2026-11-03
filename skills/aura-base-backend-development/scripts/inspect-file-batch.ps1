@@ -49,7 +49,7 @@ try {
         $text=[IO.File]::ReadAllText($full)
         $mask=Get-BackendMask $text
         $files.Add(@{path=$rel;sha256=[Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([IO.File]::ReadAllBytes($full))).ToLowerInvariant()})
-        foreach($m in [regex]::Matches($mask,'\b(?:FileTemplate|RemoteFileService|MultipartFile|StreamingResponseBody|ByteArrayMultipartFile)\b|@(?:[\w.]+\.)?(?:RequestExcel|ResponseExcel)\b')){
+        foreach($m in [regex]::Matches($mask,'\b(?:FileTemplate|RemoteFileService|MultipartFile|StreamingResponseBody|ByteArrayMultipartFile|StreamingExcelExport|DynamicStreamingExcelExport|PartitionedStreamingExcelExport)\b|@(?:[\w.]+\.)?(?:RequestExcel|ResponseExcel|ExportMonitor)\b')){
             $signals.Add(@{path=$rel;line=(Get-BackendLine $text $m.Index);kind=$m.Value.TrimStart('@');status='signal-only'})
         }
         $patterns=@(
@@ -57,6 +57,8 @@ try {
             @{pattern='\bdoReadSync\s*\(';rule='AURA-BASE-RUNTIME-017';reason='解析结果集中读取线索，核对展开行数和批次内存'},
             @{pattern='@(?:[\w.]+\.)?RequestExcel\b';rule='AURA-BASE-BE-053';reason='表格导入入口，核对有效行与解析错误、提交策略和结果计数'},
             @{pattern='@(?:[\w.]+\.)?ResponseExcel\b';rule='AURA-BASE-RUNTIME-019';reason='表格导出入口，核对有界List、字段权限和响应提交后的错误处理'}
+            @{pattern='\b(?:StreamingExcelExport|DynamicStreamingExcelExport)\s*\.\s*job\s*\(';rule='AURA-BASE-RUNTIME-019';reason='分页单Excel导出入口，核对稳定排序、批次、总行数、文件元数据和任务交付'}
+            @{pattern='\bPartitionedStreamingExcelExport\s*\.\s*(?:job|dynamicJob)\s*\(';rule='AURA-BASE-RUNTIME-019';reason='分片ZIP导出入口，核对单文件行数、总行数、分片数、ZIP完成和单任务交付'}
         )
         if($mask -match '\bMultipartFile\b'){
             $patterns+=@{pattern='\.\s*getBytes\s*\(';rule='AURA-BASE-RUNTIME-016';reason='含MultipartFile的源码出现getBytes，须沿接收者确认是否全量加载文件'}
