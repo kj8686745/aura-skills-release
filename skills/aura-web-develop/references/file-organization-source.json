@@ -6,11 +6,11 @@
   "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
   "snapshotRoot": "knowledge/PIGX前端开发规范",
   "sourceCommit": null,
-  "sourceBaseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
+  "sourceBaseCommit": "69dbfef7cf7a11620408245178e543184323c470",
   "sourceBinding": {
     "status": "pending",
-    "baseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
-    "reason": "规范工作树包含新增统一正文和局部修改，尚未提交；sourceCommit 保持 null，不宣称双仓提交绑定。"
+    "baseCommit": "69dbfef7cf7a11620408245178e543184323c470",
+    "reason": "规范改动已按三方差异合并至 F 盘唯一维护仓库，保留 F 盘已有提交；工作树尚未提交，sourceCommit 保持 null。"
   },
   "documents": [
     {
@@ -18,12 +18,12 @@
       "snapshot": "文件组织与职责拆分.md",
       "sourceSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
       "snapshotSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
-      "committedSourceSha256Lf": null,
-      "sourceExistsAtBase": false,
+      "committedSourceSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114",
+      "sourceExistsAtBase": true,
       "transformation": {
         "navigationTargetsRemoved": []
       },
-      "baselineState": "absent-at-current-base; canonical-body-added; full-copy"
+      "baselineState": "modified-from-F-source-base;full-copy"
     }
   ],
   "scopeEvidence": {
@@ -262,11 +262,11 @@
       "developValidate": "passed",
       "quickValidate": "both skills passed",
       "localLinks": "128 links in modified Markdown checked, no missing local targets",
-      "canonicalCopies": "two full responsibilities copies LF-identical; review FE-003 section LF-identical",
-      "sourceAndSnapshotHashes": "currentMaintenance working-tree hashes and documents refreshed; historical scopeEvidence unchanged",
+      "canonicalCopies": "two responsibility full copies and review FE-003 section match canonical source",
+      "sourceAndSnapshotHashes": "currentMaintenance verified against canonical working tree; historical scopeEvidence retained",
       "independentTaskValidation": "five scoped scenarios checked by independent test_worker; real device source evaluated read-only; neighboring annotation, small SFC, explicit self-check/formal modes preserved",
       "formatting": "neither repository root provides local Prettier/config; retained existing Markdown/JSON conventions; no tools installed",
-      "gitDiffCheck": "passed in both repositories after all skill/source edits"
+      "gitDiffCheck": "passed in canonical and skills repositories after migration; shared instructions use portable repository discovery"
     },
     "scope": "local skill structure, references, source content and bounded task/routing validation; no business runtime acceptance, installation or exact source commit binding"
   },
@@ -315,79 +315,79 @@
       "AURA-BASE-FE-027"
     ],
     "impact": "统一保留/内部整理/提取的判断、停止条件、完整范围验收和正反例；取消类型/数量/行数判拆分；区分已提取与合理内联的打开加载归属。规则 ID、必要性及开发/审查消费者映射不变。 本轮补充只读结构咨询、入口未提取职责覆盖、纯展示组件维护/验证收益及测试证据边界；技能补丁升级，未新增规则编号或强制拆分阈值。",
-    "sourceBaseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
+    "sourceBaseCommit": "69dbfef7cf7a11620408245178e543184323c470",
     "skillBaseCommit": "c7ba1cf68632f9be2afed35b0bac4539965a82f7",
     "hashAlgorithm": "SHA256 UTF-8; CRLF to LF only; no trimming",
     "sourceFiles": [
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/文件组织与职责拆分.md",
         "workingTreeSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
-        "baselineSha256Lf": null
+        "baselineSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/00-前端开发总览.md",
-        "workingTreeSha256Lf": "e32fd15ca3d60cef0424bd71ad98fac71a9e358135a4871f0e2c608821b2fff6",
-        "baselineSha256Lf": "3277776837e7460c0dc296547bb7f6feb112cacc7d54cf23ad2ada3d282a34d2"
+        "workingTreeSha256Lf": "64e4d604282205576f573c06ef5c267423660607de2b192ac4032468ef367209",
+        "baselineSha256Lf": "64e4d604282205576f573c06ef5c267423660607de2b192ac4032468ef367209"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/01-工程组织与页面状态.md",
-        "workingTreeSha256Lf": "9f2b7509e58e81ef85ca24d5e24999017a11a229f9af98fde659af5107101b48",
-        "baselineSha256Lf": "f90c69d845ba227a1082a2eea9afa8ded9e890f57353dc8531a53e8fc013d17a"
+        "workingTreeSha256Lf": "666684dac35b3a5ba68dbf8938560f6886339b5efc35ed6bbd86b89cfa323d0e",
+        "baselineSha256Lf": "077fb99ac05d53fd945b9630285f9b361b446dc2717eb276e9f9ac75708774b5"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/04-工程与代码生成.md",
-        "workingTreeSha256Lf": "39ae8ff87e1b1f6fb377599f9a2f97acb25545f1acfeaf5c960be972162cc2e8",
-        "baselineSha256Lf": "d78d5f805d403dfa5fbff0fcf58a4a17d2e8d6d2d640c75265befded81480c0e"
+        "workingTreeSha256Lf": "73094eba9e9073e2e3b9d278ff304bf333e4c0b0c64bd0d4a831119e74e695a2",
+        "baselineSha256Lf": "37a4a9c0927cc394eac12a28ea7817eb2cb676aac1ffeb7df4ed315a4544ee6c"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/09-样式布局与静态资源.md",
-        "workingTreeSha256Lf": "58ebad1c8ce6f42edef641541fe9a3e82cfdbeab16300283f141286b801d44aa",
-        "baselineSha256Lf": "2390118a89e1441bdd7c474a2613acafd5e8ba6ef75a27cb790fce139fb1c7e9"
+        "workingTreeSha256Lf": "f1c6882519732a35dacda51a0066b29db89a292011eb5db828f7233473e4b02d",
+        "baselineSha256Lf": "94f1ee81c12583ecc87b97251152fb10e4b7b8bae3f8c4bda882249b4431fc27"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
-        "workingTreeSha256Lf": "61822d65935cbb7f8cc856b08290af219b7ddfa455e3ae2f8a2fce3ea51d5f70",
-        "baselineSha256Lf": "9cd0936ad49811aa37b18e0b071077a2bb30469e06da1a502a89c43e4422076b"
+        "workingTreeSha256Lf": "0c99c21b1d6d283882774ef7f4b09b1b9a28a85d24488276d1d1a6a71a7e4af7",
+        "baselineSha256Lf": "f036304790db81d8d1dbfcdd829973dbefb5c22dd8c7cb648507607c19e82c91"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/13-参考页面样例.md",
-        "workingTreeSha256Lf": "0a3687a3dca24e7dae42ce9e409665e64f5ff74fec4c1ca54db62cd17e93587e",
-        "baselineSha256Lf": "b17383cdf436baa53a9db06c050f9489e6c8c1e1333a286ac883d7c87f14bdd5"
+        "workingTreeSha256Lf": "2d04be4c2f7f3565e2dd7795213f4261ddd4b7d429df961c3c2e445cf069a070",
+        "baselineSha256Lf": "3c39b87e5e4b4ff86cf37102c6286786cb928340f90a56114641d173e154cd43"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/Teleport嵌套页面模式.md",
-        "workingTreeSha256Lf": "315de14114151a8cabefd4f0269c50ad59f4f7a3a62eb7df3e9ea38dd6e2d993",
-        "baselineSha256Lf": "ef57c5b03bda907dabd08b4c84bd0e0166f3169099970194b83abc683cc04049"
+        "workingTreeSha256Lf": "763966fb310ae57644fb1fd4ab6d1957544232dc6e5d97e9d7630df9aaad8e75",
+        "baselineSha256Lf": "7e6f60e6a1877e4b91f70040bbb895232d9f2664fdece580b8cde588f98785f5"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/左树右表页.md",
-        "workingTreeSha256Lf": "7876d84364c92a29c9b58f440eb9396da5c8ecdd04506c51dfde766e8682516c",
-        "baselineSha256Lf": "490f529ca76668cf3beb0ffd6aa7c13163b0e9ab66dce134edbb865cd129341b"
+        "workingTreeSha256Lf": "70be97c97b5810cb1b46a1dd8525980b701751218f7cd28ed0a60224d5a5ee86",
+        "baselineSha256Lf": "99dfb418d879f364399d0fc9dbfaf6d2cf4bc36434d722709e17eb6a600d45a3"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/弹窗表单.md",
-        "workingTreeSha256Lf": "dfde0faf29b7ae1342c39b860433b6b3955113f138efd74b215a06a9db3485ca",
-        "baselineSha256Lf": "c4e353fec4e6b9b4aef5c36b28ff75ec26adad9e271c408b94ab970cd8d0105c"
+        "workingTreeSha256Lf": "aea93895da8ee4d6f438d37017cb3db18f346b8f0648937e2b169b4277917e8a",
+        "baselineSha256Lf": "7650358f31b7db7bebc400d8d6b8250e2b1de10bd2a1cef29f76d21078f5b3b2"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询卡片页.md",
-        "workingTreeSha256Lf": "4c67436ded965cd3302ba5d763a0d47fda7e903d7ffd50ddbc7aef676e2c9179",
-        "baselineSha256Lf": "86bf2e288f244b03df25e176c59a3e7fd03b2c4e1e5b728960ec45062c81e847"
+        "workingTreeSha256Lf": "6a1395a4f83266b65f796f2093ae8ccbbc194e8377f4f878a0b2e365a2039638",
+        "baselineSha256Lf": "b157a9ae2cdbef5bc9b6220a66bbfd5e6daf953f1d45c9467ba61df8a96f5b37"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询表格页.md",
-        "workingTreeSha256Lf": "5b94b177750bc47eb8df4af09382eef0c79848dfe2cab3d2c1cde1b874b6aa59",
-        "baselineSha256Lf": "c481fcedfec3f16a455495dde660c321fcc0b106a358a9b20891ab9c34ca9ab0"
+        "workingTreeSha256Lf": "108d3fb884d39630c109ba5367d3617e1e6df7bcb7781be551db9163e4caa9fe",
+        "baselineSha256Lf": "34a87f4c8cc992115302deb30aa17c2bf0df2566c0be70d32450d63a5f196d08"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/看板页.md",
-        "workingTreeSha256Lf": "2e38fbd8ab9ef4dc2c4346af7d7b9ad7b515206b5ec9973584fed61ea98b25c8",
-        "baselineSha256Lf": "281ebebb231a2576e2056a4393b2e1d8da076b01e3167bf58114046030cc8870"
+        "workingTreeSha256Lf": "eba1fb3f8d5da6bc80c5a5ce9fcefdfed83c4dc4a8e10b53629bc147822b4567",
+        "baselineSha256Lf": "5e9a33e410d472c1b4109ed44d65d7661580a04d5050d2edea17031cd45c3876"
       },
       {
         "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/详情页与抽屉.md",
-        "workingTreeSha256Lf": "49d19c92f6381d1603daa8491941359a839173b9a539b2c2b4d0b8880e193c1e",
-        "baselineSha256Lf": "efb1b9bd91ffb6a4e316f431ca572d93c70dfce9c6b8209448ee511900d89214"
+        "workingTreeSha256Lf": "a7c277906b884af37097701be6852670db9483803b6a0b6bb86cd684ba32e7db",
+        "baselineSha256Lf": "e9c48034617abe2bf7e8e36ab4ed94da6e1cdda1119a00338d4e7e859086c772"
       }
     ],
     "snapshotFiles": [
@@ -521,5 +521,33 @@
       "gitDiffCheck": "passed in both repositories"
     },
     "scope": "结构、引用、同版正文、脚本样例与独立场景语义验证；不是业务运行验收、安装或规范提交绑定"
+  },
+  "repositoryMigration20261102": {
+    "previousSourceBaseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
+    "previousSourceBinding": {
+      "status": "pending",
+      "baseCommit": "7509e64fd8612c0ea248ef9b8f14fc16ea660298",
+      "reason": "规范工作树包含新增统一正文和局部修改，尚未提交；sourceCommit 保持 null，不宣称双仓提交绑定。"
+    },
+    "previousDocuments": [
+      {
+        "source": "文件组织与职责拆分.md",
+        "snapshot": "文件组织与职责拆分.md",
+        "sourceSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
+        "snapshotSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
+        "committedSourceSha256Lf": null,
+        "sourceExistsAtBase": false,
+        "transformation": {
+          "navigationTargetsRemoved": []
+        },
+        "baselineState": "absent-at-current-base; canonical-body-added; full-copy"
+      }
+    ],
+    "status": "canonical-working-tree-merged-and-verified;retired-clone-deletion-not-completed",
+    "sourceHeadPreserved": "69dbfef7cf7a11620408245178e543184323c470",
+    "sourceCommitBinding": "pending-uncommitted-working-tree",
+    "scope": "15 unique file changes merged into the canonical working tree; existing additions and six extra commits retained; navigation already present; repository discovery no longer depends on local drive paths",
+    "formatting": "no repository-local Prettier/config at either root; preserve existing Markdown/JSON conventions",
+    "validation": "94 changed-Markdown local links, skill schema validations, canonical copies/hashes, retained repository history and both git diff checks passed"
   }
 }

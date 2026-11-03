@@ -29,7 +29,7 @@
 - 普通内容区域需要滚动时必须使用 Element Plus `el-scrollbar`，不得用 `overflow: auto/scroll`、`overflow-y-auto`、`overflow-auto` 等原生 CSS/Tailwind 滚动实现；查询区、工具栏和分页置于滚动区域外。`el-table`、`el-tree`、`el-select` 等已有内置滚动能力的 Element Plus 组件优先使用其公开高度、最大高度或组件自身滚动能力，不额外套 `el-scrollbar`。
 - v-loading 覆盖的区域如果自身或实际滚动容器可能滚动，loading 期间必须锁定该滚动容器（overflow: hidden 或等效状态类），loading 结束后恢复；局部表格、树、弹窗和地图只锁定其实际覆盖区域，不得误锁整页。
 - 新建或修改普通 `el-select` 默认添加 `filterable`；仅用户明确关闭、组件不兼容或需求明确禁止搜索时例外，并说明原因。
-- 权限按钮遵循项目 `v-auth` 约定；只承载受限操作的上层容器必须按全部子操作权限的并集控制可见性，例如表格操作列使用 `v-if="permissions.any([...])"`，同时保留各按钮自己的 `v-auth`。卡片操作区、仅含受限按钮的工具栏分组、下拉触发器和批量选择列同理，禁止在所有子操作均无权限时留下空列、空菜单、空白 footer、分隔线或占位间距；包含查看、刷新等无权限操作的混合容器不得整体隐藏，只隐藏其中受限分组。表单提交前校验，提交期间禁用，成功后再关闭和刷新。
+- `v-auth` 权限按钮、入口、脚本兜底及 Tab/Drawer 可挂载边界按[权限实现边界](admin-menu-permission-workflow.md#权限实现边界)执行；只含受限操作的容器不留空壳，保留业务条件和不受限展示。表单提交前校验，提交期间禁用，成功后再关闭和刷新。
 - 所有业务表单必须从 `@fxft/aura-web-kit/hooks/form` 使用 `useForm`；通过 `validateForm` 校验，通过 `resetForm` 重置字段，通过 `clearFormValidate` 清理复用弹窗的历史校验状态。业务页面禁止直接调用表单实例的 `validate/resetFields/clearValidate`，也不得重复编写对应逻辑。
 - import 图片、SVG、视频等先经 `getStaticResourceUrl`；Worker、decoder 等 public 资源经 `getPublicResourceUrl`。
 - 业务开发需要颜色时，按 `--el-*` → `--next-*` → `--fxft-*` 的顺序从现有主题变量中选用；变量含义和场景以 `knowledge/PIGX前端开发规范/样式布局与静态资源规范.md` 为准。

@@ -1,0 +1,92 @@
+{
+  "skill": "aura-web-review",
+  "skillVersion": "0.4.7",
+  "updatedAt": "2026-11-02",
+  "change": "FE-007/FE-019 权限指令、脚本兜底及初始化边界维护",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceBaseCommit": "19633297291a53900cb0f135b8a94e47c0e494ce",
+  "sourceCommit": null,
+  "bindingStatus": "pending-source-commit; local-working-tree-sha256",
+  "sourceDocuments": [
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/02-请求路由权限与数据适配.md",
+      "sha256Lf": "3b13f4cc6709ba7e2118c6dc764f74752b1c685f77d7a11e5e43199c44612853"
+    },
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/04-工程与代码生成.md",
+      "sha256Lf": "1f55aa19ace568ed9d2893548ee8f4c4f9963bc03edf6931fe5d2086c8383982"
+    },
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+      "sha256Lf": "1c34d34f29d561b7a95662ccfdc3df1a42d0b250b13597324ff9d996d716d89d"
+    },
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询表格页.md",
+      "sha256Lf": "684bfc3f6fe1f1abbceb53c64ebd4968b4b0ffc1b6e4c9f67b39e949e9035416"
+    },
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询卡片页.md",
+      "sha256Lf": "b6b73e4c2390f4b5f7ebf646aa6e37f64fdd1831ce5675c392699b29ab0538fb"
+    },
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/左树右表页.md",
+      "sha256Lf": "e3179f97a87b08206e2ba54bcf528ec9e5561ecec60cdd8aa0459095fabf06fe"
+    }
+  ],
+  "sourceScope": "只绑定本轮权限规则与示例；来源尚未提交，不能以基线提交代替新规则提交，不宣称历史全部快照同步。",
+  "transformation": "沿用各技能既有 knowledge 目录、相对链接与前端结论边界；开发引用工程规范和菜单权限实现边界，审查 FE-007 排除后端实际授权结论。未覆盖无关历史差异。",
+  "bundledDocuments": [
+    {
+      "path": "knowledge/PIGX前端开发规范/02-请求路由权限与数据适配.md",
+      "sha256Lf": "31ad5a7abdf188382f4c27b97232789a51562279ce30c2fbc28c9dad7468fd0c"
+    },
+    {
+      "path": "knowledge/PIGX前端开发规范/工程与代码生成规范.md",
+      "sha256Lf": "58bdc8185db5eb4fe46d06ed433752c2a3674aca2323c358e3c50a5bc7990a13"
+    },
+    {
+      "path": "knowledge/PIGX前端开发规范/开发检查清单.md",
+      "sha256Lf": "d27f9067d957ee9b374fe462602c198a8a9b5cddb236d72dae8da4739f941e63"
+    },
+    {
+      "path": "knowledge/PIGX前端开发规范/页面模式/查询表格页.md",
+      "sha256Lf": "959b9fd3f346f98361770b335363c9f9d50872e0559b9915f1b3918c720d5f8a"
+    },
+    {
+      "path": "knowledge/PIGX前端开发规范/页面模式/查询卡片页.md",
+      "sha256Lf": "8cfd8c3e500c82a60b8c9bd28da0928f3d284b82a0b9501b38f5b3db9e2f6147"
+    },
+    {
+      "path": "knowledge/PIGX前端开发规范/页面模式/左树右表页.md",
+      "sha256Lf": "30fb332855b73aac8d19a265fd611aad2b3e10f39397cf09fa3b1dee03f8228a"
+    }
+  ],
+  "runtimeContractEvidence": {
+    "package": "@fxft/aura-web-kit@1.9.3",
+    "files": [
+      "dist/directive/authDirective.js",
+      "dist/hooks/permissions.js",
+      "dist/hooks/permissions.d.ts"
+    ],
+    "verified": "v-auth 单码、v-auths 并集、v-auth-all 交集；当前实现控制display且不能阻止setup；公开Hook has/any/all 在权限未就绪时false。仅作为本轮真实API证据，不改变技能框架版本策略。"
+  },
+  "validation": {
+    "state": "passed-with-scoped-isolated-behavior",
+    "evidence": ".planning/2026-11-02-permission-rules/validation.md",
+    "quickValidate": "source skills both passed",
+    "developValidate": "passed after retaining explicit v-auth keyword in implementation reference; initial missing-keyword failure recorded",
+    "localLinksChecked": 274,
+    "brokenLinks": 0,
+    "sourceAndBundleDigests": 23,
+    "isolatedBehaviorCases": 6,
+    "behaviorScope": "Vue custom-renderer + installed web-kit actual permission context/directive: directive does not block setup/onMounted; filtered mount list and guarded method cover not-ready, absent, grant, revoke and direct-call cases. Not actual business UI acceptance or independent agent testing.",
+    "formatting": "规范与技能仓库均无根级本地 Prettier/配置，沿既有格式；未安装工具。",
+    "scope": "技能结构、引用、来源与隔离示例；未运行业务构建或真实业务UI验收。"
+  },
+  "deliveryState": "local-working-tree; not-committed; locally-installed; not-published",
+  "installation": {
+    "method": "backup installed directories then overlay exact source files; preserve installed-only files",
+    "backupDirectory": ".agents/skill-backups/permission-20261102-210803",
+    "includes": "current source directory including previously authorized i18n changes; excludes transient and credential files"
+  }
+}

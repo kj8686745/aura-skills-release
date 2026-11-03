@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1793676069,
+  "generatedAt": 1793686008,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -212,7 +212,7 @@
       "visibility": "internal"
     },
     {
-      "description": "按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，支持结构只读咨询与评估，补齐代码注释与业务说明；功能开发完成必要验收和自检后交付开发记录或报告，纯注释/说明整理默认直接交付。",
+      "description": "按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，支持结构只读咨询与评估，补齐代码注释与业务说明；功能开发完成必要验收和自检后交付开发记录或报告，纯注释/说明整理默认直接交付。",
       "name": "aura-web-develop",
       "path": "skills/aura-web-develop/SKILL.md",
       "releaseState": "ready",
@@ -220,7 +220,7 @@
         "前端",
         "开发"
       ],
-      "version": "1.6.6",
+      "version": "1.6.8",
       "visibility": "public"
     },
     {
@@ -244,7 +244,7 @@
         "前端",
         "审查"
       ],
-      "version": "0.4.5",
+      "version": "0.4.7",
       "visibility": "public"
     },
     {

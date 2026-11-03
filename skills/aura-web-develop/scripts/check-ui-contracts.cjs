@@ -95,17 +95,39 @@ try {
         }
         return result;
       }
-      if (ts.isStringLiteralLike(expression) || ts.isNumericLiteral(expression) || [ts.SyntaxKind.TrueKeyword, ts.SyntaxKind.FalseKeyword, ts.SyntaxKind.NullKeyword].includes(expression.kind)) return { ...object(), leaf: true };
+      if (ts.isStringLiteralLike(expression) || ts.isNumericLiteral(expression) || [ts.SyntaxKind.TrueKeyword, ts.SyntaxKind.FalseKeyword, ts.SyntaxKind.NullKeyword].includes(expression.kind)) return {
+        ...object(), leaf: true,
+        value: ts.isStringLiteralLike(expression) ? expression.text : undefined,
+        location: `${relative(ast.fileName)}:${ast.getLineAndCharacterOfPosition(expression.getStart(ast)).line + 1}`,
+      };
       return unknown();
     }
     const exported = ast.statements.find((statement) => ts.isExportAssignment(statement) && !statement.isExportEquals);
     return exported && !ast.parseDiagnostics.length ? evaluate(exported.expression) : unknown();
   }
   const locales = { 'zh-cn': [], en: [] };
+  const localeDefinitions = new Set();
+  const relevantKeys = new Set();
+  function collectLocaleKeys(index, prefix = '', visit) {
+    if (prefix && (index.leaf || index.uncertain)) visit(prefix, index);
+    for (const [key, child] of index.properties) collectLocaleKeys(child, prefix ? prefix + '.' + key : key, visit);
+  }
   for (const [file, text] of sources) {
     if (!file.endsWith('.vue')) asts.set(file, parse(file, text));
     const language = path.basename(file, '.ts');
-    if (Object.hasOwn(locales, language)) locales[language].push(localeIndex(asts.get(file)));
+    if (Object.hasOwn(locales, language)) {
+      const index = localeIndex(asts.get(file));
+      locales[language].push(index);
+      collectLocaleKeys(index, '', (key) => {
+        localeDefinitions.add(key);
+        if (selected.has(file)) relevantKeys.add(key);
+      });
+      if (selected.has(file)) {
+        const uncertain = [];
+        collectLocaleKeys(index, '', (key, value) => { if (value.uncertain) uncertain.push(key); });
+        if (index.uncertain || uncertain.length) report.incomplete.push(`${relative(file)}：i18n 重复候选分析存在无法静态确认的定义${uncertain.length ? '（' + uncertain.join('、') + '）' : ''}，待人工核对`);
+      }
+    }
   }
   function TestI18nKeyExists(index, key) {
     if (index.properties.has(key)) {
@@ -127,6 +149,7 @@ try {
       return;
     }
     const key = argument.text;
+    relevantKeys.add(key);
     if (!keyCache.has(key)) {
       const states = Object.entries(locales).map(([language, indexes]) => {
         const candidates = indexes.map((index) => TestI18nKeyExists(index, key));
@@ -259,6 +282,43 @@ try {
       for (const child of node.children || []) templateWalk(child, localBindings);
     }
     templateWalk(templates.get(file));
+  }
+
+  // Never choose a winner between same-key definitions: runtime merge order is outside this scan.
+  function staticTranslation(language, key) {
+    const values = [];
+    let uncertain = false;
+    let nonString = false;
+    for (const index of locales[language]) {
+      const state = TestI18nKeyExists(index, key);
+      if (state === 'unknown') { uncertain = true; continue; }
+      if (state === 'missing') continue;
+      let value = index.properties.get(key);
+      if (!value) {
+        value = index;
+        for (const segment of key.split('.')) value = value.properties.get(segment);
+      }
+      if (typeof value.value === 'string') values.push(value);
+      else if (value.leaf) nonString = true;
+      else uncertain = true;
+    }
+    const distinct = new Set(values.map((value) => value.value));
+    if (distinct.size > 1 && relevantKeys.has(key)) report.incomplete.push(`i18n key ${key} 在 ${language}.ts 中有不同静态定义（${values.map((value) => value.location).join('、')}），合并覆盖顺序待人工核对`);
+    if (uncertain && relevantKeys.has(key)) report.incomplete.push(`i18n key ${key} 的 ${language}.ts 重复候选分析无法静态确认，待人工核对`);
+    return !uncertain && !nonString && distinct.size === 1 ? { value: values[0].value, locations: values.map((value) => value.location) } : undefined;
+  }
+  const duplicateGroups = new Map();
+  for (const key of localeDefinitions) {
+    const zh = staticTranslation('zh-cn', key);
+    const en = staticTranslation('en', key);
+    if (!zh || !en) continue;
+    const signature = JSON.stringify([zh.value, en.value]);
+    if (!duplicateGroups.has(signature)) duplicateGroups.set(signature, []);
+    duplicateGroups.get(signature).push({ key, locations: [...zh.locations, ...en.locations] });
+  }
+  for (const group of duplicateGroups.values()) {
+    if (group.length < 2 || !group.some(({ key }) => relevantKeys.has(key))) continue;
+    report.incomplete.push(`i18n 双语重复候选：${group.map(({ key, locations }) => `${key}（${locations.join('、')}）`).join('；')}；仅提示人工语义判定，不自动合并`);
   }
 } catch (error) {
   report.incomplete.push(`静态 UI 分析不可用：${error.message}`);

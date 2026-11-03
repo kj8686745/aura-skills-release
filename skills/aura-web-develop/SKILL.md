@@ -1,15 +1,15 @@
 ---
 name: aura-web-develop
-description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，支持结构只读咨询与评估，补齐代码注释与业务说明；功能开发完成必要验收和自检后交付开发记录或报告，纯注释/说明整理默认直接交付。
+description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，支持结构只读咨询与评估，补齐代码注释与业务说明；功能开发完成必要验收和自检后交付开发记录或报告，纯注释/说明整理默认直接交付。
 ---
 
-# Aura PIGX 综合端业务开发
+# AURA 综合端业务开发
 
-当前版本：`1.6.6`（2026-11-02）。
+当前版本：`1.6.8`（2026-11-02）。
 
 ## 执行入口
 
-1. 首次命中时简要说明本技能负责本次 PIGX 业务开发或结构评估；已有明确需求时直接推进。用户询问用法、帮助或示例时才读取 [USAGE.md](USAGE.md)。
+1. 首次命中时简要说明本技能负责本次 AURA 业务开发或结构评估；已有明确需求时直接推进。用户询问用法、帮助或示例时才读取 [USAGE.md](USAGE.md)。
 2. 先核对任务相关的项目源码、接口类型、依赖及相邻实现，再按下表读取命中的资料。多场景任务合并去重；未命中的资料不读，同一会话已读且未变化的资料不重复读。
 3. 规范优先级：用户明确要求 → 当前项目真实接口、类型与依赖 → [最新版正式规范](knowledge/PIGX前端开发规范/README.md) → 本技能补充规则 → 历史写法。首次接触项目或涉及架构时读取正式规范总览；局部修改直接读取相关专项规范，不固定加载整套文档。
 4. 本文只维护入口、底线和索引；细则在下列对应文档单处维护。命中场景即必须遵循该文档，不因按需加载而降低约束。正式规范目录的阅读顺序是导航，不要求每个任务全读。
@@ -35,6 +35,7 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 | 查看结构、判断拆分是否合理、先给建议不改代码，或优化/梳理/重构指定页面/模块的结构 | [结构任务覆盖与收尾](references/development-review-workflow.md#结构任务覆盖与收尾)，同时评估授权范围内入口尚未拆出的职责与已有子组件，按职责规范给出保留、内部整理或提取的依据；只读咨询直接交付建议，实施任务再进入开发闭环 |
 | 查看、编辑、复制、分配等需要已有对象数据 | [已有业务对象加载](references/business-object-loading.md)，适用页面、Tab、面板、抽屉和弹窗 |
 | 日期时间解析、格式化、比较、运算、时间戳或时区 | [dayjs 时间处理](references/date-time-guidelines.md) |
+| 新增/改值文案或新增/替换 i18n 引用 | 编码前执行[公共文案检索与验收](references/ui-data-contracts.md#新增文案的执行与验收)，将检索范围、公共 key 与复用/提取/保留依据带入自检；双语键存在或扫描零候选不能代替复用检查 |
 | 字段、筛选、表格、表单、字典或用户可见文案 | [字典、i18n 与占位契约](references/ui-data-contracts.md)；涉及三字典组件 Props、选项、空值或接入时先读 [aura-ui 组件库入口](knowledge/PIGX前端开发规范/aura-ui组件库/README.md)，再仅加载实际使用组件的 DictTag.md / DictText.md / DictSelect.md |
 | 消息、确认框、请求失败反馈 | [消息反馈](references/message-feedback-guidelines.md) |
 | 凡涉及业务表单的开发、功能修改或重构（页面、Dialog、Drawer、内嵌编辑及查询表单），以及列表 Hook | [Hooks 契约](recipes/hooks-standards.md)；表单必须接入公共 `useForm`，不能只导入或沿用旧实例调用 |
@@ -42,7 +43,7 @@ description: 按 PIGX 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 | 页面布局、主题或静态资源 | [样式与资源](knowledge/PIGX前端开发规范/样式布局与静态资源规范.md) |
 | 新视觉方案、显著布局重做，或用户要求视觉设计 | [视觉协作](references/frontend-design-workflow.md)，检查可用的 `frontend-design`；沿既有模式增字段、校验或局部 CRUD 不触发 |
 | 路由、菜单、隐藏页 | [路由规范](knowledge/PIGX前端开发规范/路由与菜单规范.md) |
-| 新增正式业务页面、菜单入口或操作按钮；管理端菜单权限同步 | [菜单权限流程](references/admin-menu-permission-workflow.md)，主动确认是否同步及是否配置远程菜单；外部写入须有授权 |
+| 受限按钮/入口/操作、Tab/Drawer 权限初始化；新增正式页面或管理端菜单权限同步 | [菜单权限与实现边界](references/admin-menu-permission-workflow.md)，新增正式页面/菜单/按钮时主动确认是否同步及是否配置远程菜单；外部写入须有授权 |
 | remote、expose、manifest、shared 或模块联邦运行时 | [模块联邦规范](knowledge/PIGX前端开发规范/模块联邦开发技术规范.md)、[组件选型](references/component-selection.md)；使用 `aura-module-federation-check` 做改前基线与改后复检 |
 | 2D 地图 / 视频 | 分别读取 [地图规范](knowledge/PIGX前端开发规范/2D地图开发规范.md) / [视频规范](knowledge/PIGX前端开发规范/视频开发规范.md)，检查并调用 `fmap-2d` / `fxft-video` |
 | 公司组件库依赖安装 | [下载与权限](knowledge/PIGX前端开发规范/公司组件库下载说明/README.md) |

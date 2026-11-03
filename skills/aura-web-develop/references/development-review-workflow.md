@@ -50,7 +50,7 @@
 
 ```powershell
 $projectPath = '<项目绝对路径>'
-$changedFiles = @('src/views/<实际页面>.vue', 'src/api/<实际接口>.ts')
+$changedFiles = @('src/views/<实际页面>.vue', 'src/api/<实际接口>.ts', 'src/views/<实际模块>/i18n/zh-cn.ts', 'src/views/<实际模块>/i18n/en.ts')
 if ($changedFiles.Count -eq 0) { throw '没有适用源码，请先确认扫描范围' }
 foreach ($file in $changedFiles) {
   if (-not (Test-Path -LiteralPath (Join-Path $projectPath $file) -PathType Leaf)) {
@@ -60,7 +60,7 @@ foreach ($file in $changedFiles) {
 & '<本技能绝对路径>/scripts/check-project-rules.ps1' -ProjectPath $projectPath -Files $changedFiles -StrictUiContracts
 ```
 
-`-Files` 约束检查对象；严格 UI 扫描另读 `src` 中 `zh-cn.ts` / `en.ts` 及 `src/api` 类型作为必要上下文，不把它们当作额外待整改对象。随包 `scripts/check-ui-contracts.cjs` 使用项目已安装 TypeScript 与 Vue compiler 静态建索引、复用路径查询，不执行业务语言模块、不自动安装依赖、不跟随整个依赖图。i18n 只核对定义路径，不证明运行注册、合并覆盖或远端语言加载；动态或无法解析的部分保留待核对。字典同名字段只有绑定真实声明且明确用于展示时才判确定错误，其余候选人工追踪用途，不能仅凭字段同名要求整改。
+`-Files` 约束检查对象，包含本次新增/改动的语言文件与业务源码；上例按实际存在且改动的文件裁剪。严格 UI 扫描另读 `src` 中 `zh-cn.ts` / `en.ts` 及 `src/api` 类型作为必要上下文，不把它们当作额外待整改对象。随包 `scripts/check-ui-contracts.cjs` 使用项目已安装 TypeScript 与 Vue compiler 静态建索引、复用路径查询，不执行业务语言模块、不自动安装依赖、不跟随整个依赖图。i18n 检查定义路径，并对涉及选中定义/字面量调用的不同 key 输出静态双语相同的重复候选；不证明语义相同、运行注册、合并覆盖或远端语言加载。动态、无法解析或同 key 多文件冲突的值不能当作无重复证据。公共检索与人工判定按[文案验收](ui-data-contracts.md#新增文案的执行与验收)，不以零候选替代。字典同名字段只有绑定真实声明且明确用于展示时才判确定错误，其余候选人工追踪用途，不能仅凭字段同名要求整改。
 
 退出 `0` 仅表示本次可扫描项无确定错误和未决候选，不代表语义/项目合规通过；`1` 有确定错误；`2` 输入、依赖、读取或静态能力不完整/有待人工核对候选（可能同时存在确定错误）。逐项核实待核对项并在开发记录保留依据，不反复重跑相同静态扫描期待清零，也不为满足扫描器改业务。确需修复时修改后仅复查受影响项。直接中文、placeholder、i18n 与字典消费仍遵守原规范；选择表不覆盖项目强制门禁、用户明确检查范围、MF 冷启动或公共包消费等真实触发验证。
 
@@ -132,6 +132,8 @@ flowchart TD
 执行自检时，字典接入记录、已知缺陷、失败测试和整改历史写入轻量开发检查记录，不单独生成 business/dictionary-integration 等业务说明；业务正文仅保留影响当前使用的必要说明，与业务有关的字典取值约束就近并入场景规则并引用依据。
 
 ## 3. 确认并调用开发自检
+
+功能开发新增/改值文案或新增/替换 i18n 引用时，自检输入须带入[文案检索与验收记录](ui-data-contracts.md#新增文案的执行与验收)，覆盖本批各模块共享文案；扫描候选及逐项判定沿用同一记录，不只写“zh/en 齐全”。
 
 功能开发涉及表单时，自检输入和已有开发记录须包含 [useForm 验收](../recipes/hooks-standards.md#编码与验收)的表单范围及实际调用位置；按适用生命周期核对 FE-013/019，不能只凭 `useForm` 导入判通过。只检查本次授权业务块和必要调用方，纯注释快速路径保持不变。
 

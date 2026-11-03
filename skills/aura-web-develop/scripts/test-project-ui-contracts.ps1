@@ -21,7 +21,7 @@ function Write-Fixture {
 }
 
 function Invoke-Case {
-  param([string]$Name, [string[]]$Paths, [int]$Exit, [string]$Expected = '', [switch]$EmptyFiles, [switch]$AllSources)
+  param([string]$Name, [string[]]$Paths, [int]$Exit, [string]$Expected = '', [switch]$EmptyFiles, [switch]$AllSources, [string]$Forbidden = '')
   # -Command is needed to preserve an array argument and an explicit empty -Files collection.
   $invocation = "& '$($checker.Replace("'", "''"))' -ProjectPath '$($testRoot.Replace("'", "''"))' -StrictUiContracts"
   if (-not $AllSources) {
@@ -31,7 +31,7 @@ function Invoke-Case {
   }
   $invocation += '; exit $LASTEXITCODE'
   $output = (& $powerShellExe -NoProfile -Command $invocation 2>&1) -join "`n"
-  if ($LASTEXITCODE -ne $Exit -or ($Expected -and $output -notmatch $Expected)) { throw "$Name failed: exit=$LASTEXITCODE expected=$Exit`n$output" }
+  if ($LASTEXITCODE -ne $Exit -or ($Expected -and $output -notmatch $Expected) -or ($Forbidden -and $output -match $Forbidden)) { throw "$Name failed: exit=$LASTEXITCODE expected=$Exit`n$output" }
   $script:count++
 }
 
@@ -78,6 +78,39 @@ t('device.title');
   Write-Fixture 'src/i18n/en.ts' "export default { device: { title: 'Device' } };"
   Write-Fixture 'src/example.ts' 't(dynamicKey);'
   Invoke-Case 'dynamic call uncertainty' @('src/example.ts') 2 '动态 i18n key'
+
+  Write-Fixture 'src/i18n/zh-cn.ts' "export default { common: { retry: '重试私密文案' }, history: { first: '历史', second: '历史' } };"
+  Write-Fixture 'src/i18n/en.ts' "export default { common: { retry: 'Private retry text' }, history: { first: 'Historical', second: 'Historical' } };"
+  Write-Fixture 'src/modules/i18n/zh-cn.ts' "const retry = '重试私密文案'; const actions = { retry }; export default { asset: { ...actions }, iot: actions };"
+  Write-Fixture 'src/modules/i18n/en.ts' "const retry = 'Private retry text'; const actions = { retry }; export default { asset: { ...actions }, iot: actions };"
+  Write-Fixture 'src/example.ts' "t('iot.retry');"
+  Invoke-Case 'public and business bilingual duplicate with static spread and references' @('src/example.ts') 2 '双语重复候选.*common.retry.*i18n/zh-cn.ts:1.*asset.retry.*iot.retry' -Forbidden '重试私密文案|Private retry text|history.first|history.second'
+  Write-Fixture 'src/example.ts' 'export const count = 1;'
+  Invoke-Case 'unselected historical duplicates are context only' @('src/example.ts') 0 -Forbidden '双语重复候选：'
+  Invoke-Case 'selected locale definitions need no call sites' @('src/modules/i18n/en.ts') 2 '双语重复候选.*common.retry.*asset.retry.*iot.retry' -Forbidden 'history.first|history.second'
+  Invoke-Case 'all-source scan includes historical duplicates' @() 2 '双语重复候选.*history.first.*history.second' -AllSources
+  Write-Fixture 'src/views/i18n-check.vue' '<template><div>{{ $t("asset.retry") }}</div></template>'
+  Invoke-Case 'Vue dollar-t literal participates in scoped duplicates' @('src/views/i18n-check.vue') 2 '双语重复候选.*asset.retry' -Forbidden 'history.first|history.second'
+  Remove-Item -LiteralPath (Join-Path $testRoot 'src/views/i18n-check.vue') -Force
+  Write-Fixture 'src/modules/i18n/en.ts' "export default { asset: { retry: 'Retry asset' }, iot: { retry: 'Retry iot' } };"
+  Write-Fixture 'src/example.ts' "t('iot.retry');"
+  Invoke-Case 'Chinese-only match with different English is not duplicate' @('src/example.ts') 0 -Forbidden '双语重复候选：'
+  Write-Fixture 'src/modules/i18n/en.ts' "export default { asset: { retry: 'Private retry text' }, iot: { retry: loadText() } };"
+  Invoke-Case 'dynamic translation is unconfirmed rather than duplicate' @('src/example.ts') 2 '无法静态确认' -Forbidden '双语重复候选：'
+  Invoke-Case 'selected dynamic locale remains unconfirmed without calls' @('src/modules/i18n/en.ts') 2 '无法静态确认'
+  Write-Fixture 'src/modules/i18n/en.ts' "import messages from './external'; export default messages;"
+  Invoke-Case 'selected imported locale remains unconfirmed without calls' @('src/modules/i18n/en.ts') 2 '无法静态确认' -Forbidden '双语重复候选：'
+  Write-Fixture 'src/modules/i18n/en.ts' "export default { asset: { retry: 'Private retry text' }, iot: { retry: 'Private retry text' } };"
+  Write-Fixture 'src/override/en.ts' "export default { iot: { retry: 'Different override' } };"
+  Invoke-Case 'conflicting same-key files never select an arbitrary winner' @('src/example.ts') 2 'iot.retry.*不同静态定义' -Forbidden '双语重复候选：'
+  Write-Fixture 'src/override/en.ts' "export default { iot: { retry: 'Private retry text' } };"
+  Invoke-Case 'identical same-key files keep all definition locations' @('src/example.ts') 2 '双语重复候选.*iot.retry.*src/override/en.ts:1'
+  Write-Fixture 'src/modules/i18n/en.ts' 'export default { asset: {} };'
+  Write-Fixture 'src/override/en.ts' 'export default {};'
+  Invoke-Case 'missing one language cannot form a duplicate pair' @('src/example.ts') 1 'iot.retry.*未在 en.ts' -Forbidden '双语重复候选：'
+  Remove-Item -LiteralPath (Join-Path $testRoot 'src/modules/i18n/en.ts'), (Join-Path $testRoot 'src/modules/i18n/zh-cn.ts'), (Join-Path $testRoot 'src/override/en.ts') -Force
+  Write-Fixture 'src/i18n/zh-cn.ts' "export default { device: { title: 'Device' } };"
+  Write-Fixture 'src/i18n/en.ts' "export default { device: { title: 'Device' } };"
   Write-Fixture 'src/api/model.ts' @'
 export interface DictRow {
   /** @dictKey test_status */

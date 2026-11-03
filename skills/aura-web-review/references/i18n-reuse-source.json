@@ -1,0 +1,48 @@
+{
+  "skill": "aura-web-review",
+  "skillVersion": "0.4.6",
+  "updatedAt": "2026-11-02",
+  "change": "既有 FE-019 公共国际化复用要求的执行、重复候选与人工验收补强",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceCommit": "19633297291a53900cb0f135b8a94e47c0e494ce",
+  "sourceDocuments": [
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/04-工程与代码生成.md",
+      "sha256Lf": "73094eba9e9073e2e3b9d278ff304bf333e4c0b0c64bd0d4a831119e74e695a2",
+      "rule": "AURA-BASE-FE-019",
+      "requirementSha256Lf": "27b326f5267f4501232d04c4aead09b19a5915345b86f63a14d044ba5bb6c1fc"
+    }
+  ],
+  "sourceScope": "仅绑定既有 FE-019 文案分层复用要求，已核对提交内原文及本技能随包同段。本轮未改规范正文或 knowledge，不宣称历史快照与来源记录已全部同步。",
+  "executionChanges": [
+    "新增/改值文案和新增/替换引用前先检索全局、业务域、模块，记录公共命中与最终层级。",
+    "对选中定义或字面量调用关联的不同 key 静态双语同值输出重复候选及位置；不输出文案值，不判语义，不自动合并。",
+    "审查三种模式共用公共复用取证，未检索、未判候选或动态/注册缺证不能当作通过；沿用原记录和授权范围。"
+  ],
+  "impact": [
+    {
+      "rule": "FE-019",
+      "consumer": "aura-web-develop",
+      "status": "entry-contract-workflow-checklists-and-scanner-updated"
+    },
+    {
+      "rule": "FE-019",
+      "consumer": "aura-web-review",
+      "status": "entry-shared-evidence-and-mode-routes-updated"
+    }
+  ],
+  "validation": {
+    "state": "passed-with-static-and-manual-scope",
+    "evidence": ".planning/2026-11-02-i18n-reuse/validation.md（维护仓库记录，非安装后必读资料）",
+    "formatting": "仓库根无本地 Prettier 或配置，沿现有格式；未安装额外工具。",
+    "uiContractRegressionCases": 35,
+    "quickValidate": "both passed",
+    "developValidate": "passed after synchronizing README version; initial failure retained in evidence",
+    "markdownLinks": 144,
+    "brokenLinks": 0,
+    "sourceVerification": "committed source LF SHA256, requirement-line SHA256 and both bundled requirement paragraphs matched",
+    "rulePathReview": "7 scenarios manually checked by primary agent; not independent agent behavior testing",
+    "scope": "技能结构、来源、引用、隔离脚本回归及人工规则路径；未执行真实业务运行、安装或发布验收。"
+  },
+  "deliveryState": "local-working-tree; not-committed; not-installed; not-published"
+}

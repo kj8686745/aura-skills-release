@@ -143,7 +143,7 @@ if ($StrictUiContracts -and $sourceFiles.Count -gt 0) {
     $analysis = ($helperOutput -join "`n") | ConvertFrom-Json
     $uiContractErrors += @($analysis.errors)
     $incomplete += @($analysis.incomplete)
-    Write-Host 'UI 静态检查范围：i18n 定义路径与已提供的 API 类型；不验证运行时语言注册、合并覆盖或远端消息。'
+    Write-Host 'UI 静态检查范围：i18n 定义路径、双语重复候选与已提供的 API 类型；不验证运行时语言注册、合并覆盖或远端消息。'
   } catch {
     $incomplete += "UI 静态分析未完成：$($_.Exception.Message)"
   } finally {
