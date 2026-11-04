@@ -22,11 +22,12 @@
 ## 枚举、字典、国际化与占位硬约束
 
 - 编码前解析 API/OpenAPI、TypeScript 类型和相邻业务契约中的枚举与 `dictKey`，逐字段列出“筛选、表格、详情、表单”的渲染方式。接口类型中带字典的字段必须保留 `/** @dictKey <key> */` 注释，作为可扫描契约。
+- 字段说明与类型设计先区分[动态字典字段与固定枚举](dictionary-field-contract.md)：动态字典注明中文含义及准确 key，不复制全量取值，不按当前选项生成封闭联合类型或 TS `enum`；固定契约及业务判断所依赖值保留有依据的约束与含义。真实值类型与纯注释边界不变，来源见[字段契约维护记录](dictionary-field-source.json)。
 - 表格、详情及交互文案的组件选择统一按 [FE-012 字典展示规则](dictionary-table-contract.md)执行（[待绑定来源](dictionary-source.json)）：字典展示以原始 code + options 按语义选择组件；状态/结果/严重级别等独立分类标识优先 `AuraDictTag`，连续描述、规则摘要、句内枚举与行内交互提示可 `AuraDictText`，即使在表格内。触发规则摘要“离开区域 · 持续 · 时长”保留 Text 与行内排版，不强制逐片段改为 Tag。嵌套/弹窗表格、私有组件和动态列均检查同一语义边界，筛选继续按 Select 契约。真实实体/物模型事件名称先确认无字典关联，不凭 `*Name` 后缀机械整改。
 - 沿“接口原始 code + `@dictKey`/真实字典关联 → 表格列/私有组件/可配置或动态列 → 最终组件渲染”取证，逐项核对传入的原始值、options 来源以及 formatter/slot/render 分支，不能只看组件名出现或零扫描命中。静态扫描不能证明动态列与交互语义均符合，未能追踪的链路保留缺证。核对实际依赖/锁定版本、已安装 exports/types、显式 import 或自动导入/Resolver 注册及真实使用；只检查公开契约，不开展 SDK 底层审计。组件或依赖缺失按证据记偏差或缺证，不自动升级，也不转为手写映射。源码仓库名 `aura-web-sdk` 的 UI 包公开名为 `@fxft/aura-ui`；不得虚构 `@fxft/aura-web-sdk` 包名或把 `DictTag` / `DictText` 当作已核实的公开导出。
 - 业务 `.vue/.ts` 中用户可见文案一律使用 `t()` / `$t()`，覆盖 label、title、placeholder、按钮、列名、卡片标题与说明、Dialog/Drawer、空态、校验与消息。注释、接口/字典返回值、后端异常、mock 数据和 i18n 文件除外。
 - 新文案先复用 `common`；跨两个及以上业务模块、但不属于全局 common 的文案上提到业务域公共 `i18n/`；中英文 key 同步存在。不得在页面 i18n 重复定义已有 common 或业务域文案。
-- 每个可编辑或筛选的 `el-input`、`el-select`、`el-date-picker`、`el-input-number`、`el-autocomplete` 必须具备 i18n placeholder。确无占位语义时添加 `data-placeholder-exempt`，并以相邻中文注释说明原因。
+- 每个可编辑或筛选的 `el-input`、`el-select`、`el-select-v2`、`el-date-picker`、`el-input-number`、`el-autocomplete` 必须具备 i18n placeholder。确无占位语义时添加 `data-placeholder-exempt`，并以相邻中文注释说明原因。选择器类型按[候选规模契约](query-select-contract.md#选择器按候选规模选型)确定，placeholder/filterable 不代替虚拟化判断。
 - 行内查询表单中，查询、重置、导出、视图切换等每个独立操作各占一个无标签 `el-form-item`；禁止在同一无标签 `el-form-item` 内堆叠多个 `el-button` 或 `el-radio-group`。间距只由表单 `gap` 管理，不使用按钮相邻 margin 或负 `margin-bottom` 补偿。
 - 功能开发在本批稳定后按[检查选择表](development-review-workflow.md#检查选择表)选择显式 `-Files` 或有依据的全量扫描，保留 `-StrictUiContracts`；纯注释按快速路径。直接中文、缺少 placeholder、i18n key 未在 zh/en 同步、或已声明 `@dictKey` 字段的 `*Name` 直出仍为错误，须在本次范围内整改后验收。
 

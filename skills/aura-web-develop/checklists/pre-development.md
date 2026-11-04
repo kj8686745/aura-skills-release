@@ -54,7 +54,7 @@
 ## 表格与下拉
 
 - [ ] 明确要求表格撑满剩余高度时，已规划纵向 Flex 高度链路、`min-height: 0`、`el-table--fit` 和 `flex: 1`，未计划使用 `100vh` 或固定像素表格高度
-- [ ] 新增或修改的普通 `el-select` 已添加 `filterable`；不适用时已记录用户要求或组件不兼容原因
+- [ ] 已按[候选规模契约](../references/query-select-contract.md#选择器按候选规模选型)判断虚拟化；候选明确且小规模才选普通 `el-select` 并默认添加 `filterable`，未把远程搜索/滚动条当作虚拟化
 
 ## 注释
 

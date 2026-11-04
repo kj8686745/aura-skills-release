@@ -10,6 +10,8 @@
 
 直接以最新版页面模式的完整骨架为基线，并根据当前业务域相邻页面、真实 `useTable(state)` 类型和接口契约替换占位内容。
 
+查询 API 与导出 filter 先按[查询与选择器契约](../references/query-select-contract.md)统一提交条件；骨架中有 `queryForm` 或 `useTable` 不代表已自动省略空键。选择器按候选规模决定虚拟化，不从页面模式推定可使用普通全量选项。
+
 不得恢复旧式 `const { state } = useTable(...)` 或 `const { message, messageBox } = useMessage()`。
 
 当需求明确要求表格占满页面剩余高度时，在正式骨架中增加纵向 Flex 高度链路：表格区和滚动父级使用 `min-height: 0`，`el-table` 写为 `class="el-table--fit"` 并以 `flex: 1` 填充表格区。不得使用 `100vh` 或固定像素表格高度。

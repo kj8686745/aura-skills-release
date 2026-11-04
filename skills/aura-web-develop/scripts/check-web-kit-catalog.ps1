@@ -1,20 +1,27 @@
-# 对照目标项目已安装的发布包校验能力清单，不读取私服凭据或安装依赖。
+﻿# 对照目标项目已安装的发布包校验能力清单，不读取私服凭据或安装依赖。
 [CmdletBinding()]
 param(
   [Parameter(Mandatory = $true)][string]$PackagePath,
-  [string]$CatalogPath = (Join-Path $PSScriptRoot '../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md')
+  [string]$CatalogPath = ''
 )
 
 $ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($CatalogPath)) {
+  $CatalogPath = Join-Path $PSScriptRoot '../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md'
+}
 $packageRoot = (Resolve-Path -LiteralPath $PackagePath).Path
 $package = Get-Content -LiteralPath (Join-Path $packageRoot 'package.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $catalog = Get-Content -LiteralPath $CatalogPath -Raw -Encoding UTF8
 $errors = [System.Collections.Generic.List[string]]::new()
 if ($package.name -ne '@fxft/aura-web-kit') { throw 'PackagePath 必须指向已安装的 @fxft/aura-web-kit 包目录。' }
-if (-not $catalog.Contains('@fxft/aura-web-kit@' + $package.version)) {
-  [void]$errors.Add("清单基线与实际安装版本不一致：$($package.version)")
+$catalogVersionMatch = [regex]::Match($catalog, '@fxft/aura-web-kit@(?<version>[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?)')
+$catalogVersion = $catalogVersionMatch.Groups['version'].Value
+if (-not $catalogVersionMatch.Success) {
+  [void]$errors.Add("清单缺少版本基线：目录版本=<未标记>，安装版本=$($package.version)")
+} elseif ($catalogVersion -ne $package.version) {
+  [void]$errors.Add("清单基线与实际安装版本不一致：目录版本=$catalogVersion，安装版本=$($package.version)")
 }
-$documented = @([regex]::Matches($catalog, '(?m)^\| `(?<entry>/[^`]+)` \|') | ForEach-Object { '.' + $_.Groups['entry'].Value })
+$documented = @([regex]::Matches($catalog, '(?m)^[ \t]*\|[ \t]*`(?<entry>/[^`\r\n]+)`[ \t]*\|') | ForEach-Object { '.' + $_.Groups['entry'].Value })
 $exports = @($package.exports.PSObject.Properties.Name)
 foreach ($entry in $exports) {
   if ($documented -notcontains $entry) { [void]$errors.Add("清单漏项：$entry") }

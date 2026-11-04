@@ -4,7 +4,11 @@
 
 ## useTable
 
+查询提交前按[查询与选择器契约](../references/query-select-contract.md#查询条件在提交边界格式化)在 API 适配边界格式化空条件；`useTable` 不因本规则自动处理字段。列表与导出复用条件口径，公共函数先核对实际安装版本，不能把查询格式化套用到新增/编辑数据。
+
 `useTable(state)` 接收并补全一个响应式 `BasicTableProps` 对象，返回操作方法和 `tableStyle`，不返回 `state`。
+
+下例 `fetchList` 必须是已在查询 API 边界格式化提交参数的函数；Hook 只合并分页/排序，不代替该边界。消费者尚无 queryFormat 请求配置声明与实现时，不能凭本例假定可用。
 
 ```ts
 import { BasicTableProps, useTable } from '/@/config/aura/index';
@@ -20,14 +24,8 @@ const state = reactive<BasicTableProps>({
   },
 });
 
-const {
-  getDataList,
-  currentChangeHandle,
-  sizeChangeHandle,
-  sortChangeHandle,
-  downBlobFile,
-  tableStyle,
-} = useTable(state);
+const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, downBlobFile, tableStyle } =
+  useTable(state);
 ```
 
 ```vue
@@ -36,16 +34,11 @@ const {
   v-loading="state.loading"
   :cell-style="tableStyle.cellStyle"
   :header-cell-style="tableStyle.headerCellStyle"
-  @sort-change="sortChangeHandle"
->
+  @sort-change="sortChangeHandle">
   <el-table-column prop="name" label="名称" show-overflow-tooltip />
 </el-table>
 
-<AuraPagination
-  v-bind="state.pagination"
-  @size-change="sizeChangeHandle"
-  @current-change="currentChangeHandle"
-/>
+<AuraPagination v-bind="state.pagination" @size-change="sizeChangeHandle" @current-change="currentChangeHandle" />
 ```
 
 - 查询和重置通常调用 `getDataList()`，回到第一页。
@@ -55,6 +48,10 @@ const {
 - web-kit `1.6.18` 起，分页请求仅使用 `current/size`，响应读取 `records/total`，`pages` 为可选返回字段。接口协议不同的，只在项目已有 API 适配边界按真实契约明确转换请求与响应；公共 Hook 和页面仍使用统一分页结构，不把 `total/records/pages` 作为请求参数。
 - 接口启用排序时使用 `orders: OrderItem[]`（`column`、`asc`）；未配置或清空后省略，不发送 `descs/ascs`。GET 对象数组使用 `orders[0].column`、`orders[0].asc`，POST JSON 使用对象数组，复用公共请求序列化。
 - `pageSizes/layout` 只用于分页组件。旧 `props.item/props.totalCount` 映射已移除；响应契约不一致时先确认接口，在已有 API 适配边界转换为标准结构；不恢复 Hook 内映射、不维护多套分页状态或添加多字段兜底。
+
+### 覆盖层可见时的单次静默刷新
+
+交互判断按[消息与资源反馈](../references/message-feedback-guidelines.md#覆盖层可见时的静默刷新)，真实签名、示例和首次/空表回落集中见[1.9.6 静默契约](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md#已加载列表的静默刷新196-已发布)。第二参只作用于本次调用；核对声明、锁文件与实际安装实现后使用，不把 `silent` 放到首参或 `useTable` 全局配置。
 
 ## useForm
 

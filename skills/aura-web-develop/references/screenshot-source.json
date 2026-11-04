@@ -1,0 +1,67 @@
+{
+  "skill": "aura-web-develop",
+  "skillVersion": "1.6.9",
+  "updatedAt": "2026-11-03",
+  "change": "FE-027 关键业务截图交付与重复图片输入控制",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
+  "snapshotRoot": ".",
+  "sourceBaseCommit": "19633297291a53900cb0f135b8a94e47c0e494ce",
+  "sourceCommit": null,
+  "sourceBinding": {
+    "status": "pending",
+    "reason": "来源工作树已有未提交维护，本次增补截图条款；无提交、安装或发布授权，不以基线代替新规则提交。"
+  },
+  "sourceDocuments": [
+    {
+      "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+      "rule": "AURA-BASE-FE-027",
+      "sha256Lf": "672e50cb9fdac55930d946ead797116609b1a732981410d53983791130113f3e",
+      "baseSha256Lf": "0c99c21b1d6d283882774ef7f4b09b1b9a28a85d24488276d1d1a6a71a7e4af7",
+      "sectionStart": "## 关键状态截图与交付",
+      "sectionEndExclusive": "## 验证与人工确认",
+      "requirementSha256Lf": "509674f30a32fbfb769473b7da5adae37444a7ef10fe2474a9735b2e298143b3"
+    }
+  ],
+  "transformation": "浏览器走查文档承载截图条款的执行适配与工具边界，其余文件仅引用。未替换 knowledge 全文，不宣称历史快照与来源文件全文相同。",
+  "bundledDocuments": [
+    {
+      "path": "references/codex-browser-review-workflow.md",
+      "sha256Lf": "bf55213c5352df80679f6a359c250bdfb7675a56bf7efa7472c8e8b29da6eaab"
+    },
+    {
+      "path": "references/development-review-workflow.md",
+      "sha256Lf": "30a4a6065c742c8325e8e1625b46cdaf13591a157e78a428815083866fa7a3c1"
+    },
+    {
+      "path": "checklists/validation.md",
+      "sha256Lf": "58e6235c9b193987337842d85dc514882e3f32153639c335da5c3c0b4eb335f8"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256Lf": "5212167caf0a3238f5fa4ae799b26be834481177dc96bebfcc12c91254ace3f9"
+    }
+  ],
+  "impact": [
+    {
+      "consumer": "aura-web-develop",
+      "status": "updated",
+      "scope": "浏览器走查、清单、开发交付入口与补丁版本；保留按实际影响范围验证的节奏。"
+    },
+    {
+      "consumer": "aura-web-review",
+      "status": "unchanged",
+      "reason": "现有 development-self-check 按开发侧本批必需检查计划核对证据，保留未执行与不适用原因；本次不新增 FE 规则、全量截图门槛或正式审查交付物。"
+    },
+    {
+      "consumer": "fmap-2d / fxft-video / aura-web-project-router",
+      "status": "unchanged",
+      "reason": "截图是开发主流程的交付要求，不改变专项 API 或识别职责，避免重复约束。"
+    }
+  ],
+  "deliveryStatus": {
+    "committed": false,
+    "installed": false,
+    "published": false
+  }
+}

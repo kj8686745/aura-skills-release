@@ -26,7 +26,7 @@
 
 **错误写法**：从根包、src/dist 或未公开文件导入；在页面重复创建上下文；浏览器引入构建依赖。
 
-**判断要点 / 验证方式**：按目标项目 package.json、锁文件、exports 和 .d.ts 核对入口及绑定；清单基线为 1.9.0，不能据此推断业务项目已升级。
+**判断要点 / 验证方式**：按目标项目 package.json、锁文件、exports 和 .d.ts 核对入口及绑定；本目录基线为已安装发布包 1.9.6，其他项目的升级与能力仍须独立核对。
 
 **例外与人工确认**：仅在本文件适用任务触发时执行；依赖与 API 以目标项目已安装声明和真实契约核对，本文不授权自动升级业务依赖。
 
@@ -39,7 +39,7 @@
 
 ### 一、版本与选用原则
 
-当前框架能力清单基线：`@fxft/aura-web-kit@1.9.0`、`@fxft/aura-ui@1.1.2`、Element Plus `2.14.6`、VueUse `15.0.0`、Node.js `>=22.12.0`、TypeScript `5.9.3`、ESLint `8.57.1`、typescript-eslint parser/plugin `8.46.1`。核对日期：2026-10-21。下表依据已安装发布包的 `package.json.exports` 与 `.d.ts` 整理，覆盖 **113 个公开子入口**；本规范以 web-kit 精确版本 `1.9.0` 为准，核对依赖声明、锁文件与实际安装版本一致；不将更高版本自动视为符合本基线，也不把源码仓库较新版本当作项目已可用能力。
+本目录的公共包验证基线：`@fxft/aura-web-kit@1.9.6`。核对日期：2026-11-03；依据 IoT 验证项目实际安装发布包的 `package.json.exports` 与对应 `dist/*.d.ts`，覆盖 **115 个公开子入口**，逐项核对声明与运行入口文件存在。目标项目仍须核对依赖声明、锁文件与实际安装一致；不把源码仓库的新能力或任意更高版本自动视为可用。本轮仅更新 web-kit 目录基线；原框架 **1.2.0** 的其他配套记录（2026-10-21）继续保留：`@fxft/aura-ui@1.1.2`、Element Plus `2.14.6`、VueUse `15.0.0`、Node.js `>=22.12.0`、TypeScript `5.9.3`、ESLint `8.57.1`、typescript-eslint parser/plugin `8.46.1`，不据此宣称本轮重新验证这些依赖。
 
 新增或修改公共 TS 时，先按场景查表，再读相应入口的声明和实现。包没有根入口；使用 `@fxft/aura-web-kit/<子路径>`，不引用 `src/`、`dist/` 或未导出的内部模块。表中列出主要导出用于检索，具体参数和完整导出以该版本声明为准。
 
@@ -50,19 +50,19 @@
 
 ### 二、业务导入与项目绑定
 
-| 场景 | 页面/API 使用入口 | 绑定职责 |
-| --- | --- | --- |
-| 请求 | `/@/config/aura/request` 默认导出 | 项目请求、认证、地图/参数 API 绑定；业务不直接创建 Axios |
-| 表格、消息、字典、参数 | `/@/config/aura/index` | `useTable`、`useMessage`、`useMessageBox`、`useDict`、`useParam`；共享本项目 auraContext |
-| 表单 | `@fxft/aura-web-kit/hooks/form` | `useForm` 与 `FormRef`，无需项目请求 |
-| 权限 | `@fxft/aura-web-kit/hooks/permissions` | 读取宿主提供的权限上下文，不能自建空权限默认值 |
-| 登录与用户状态 | `/@/config/aura/account` | 登录 API、OAuth、用户 Store |
-| 存储、认证、令牌 | `/@/config/aura/storage`、`auth`、`tokenCheck` | systemId、退出策略与令牌监测 |
-| 图表、下载、混合工具 | `/@/config/aura/echarts`、`download`、`utilities` | 图表空态图片、请求下载及项目资源 |
-| 联邦加载、语言、样式 | `/@/config/aura/federation` | enhanced runtime、远程 entries、Provider、scope |
-| 资源地址 | `/@/hooks/moduleFederation` | 绑定提供方自身 `import.meta.url` 与 remoteEntryName |
-| 浏览器属性、事件、构建信息 | `/@/config/aura/browser` | 项目环境、Router、构建信息与总线 |
-| 路由 | `/@/router/index` | 项目 Router 和菜单/Store 实例 |
+| 场景                       | 页面/API 使用入口                                 | 绑定职责                                                                                 |
+| -------------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| 请求                       | `/@/config/aura/request` 默认导出                 | 项目请求、认证、地图/参数 API 绑定；业务不直接创建 Axios                                 |
+| 表格、消息、字典、参数     | `/@/config/aura/index`                            | `useTable`、`useMessage`、`useMessageBox`、`useDict`、`useParam`；共享本项目 auraContext |
+| 表单                       | `@fxft/aura-web-kit/hooks/form`                   | `useForm` 与 `FormRef`，无需项目请求                                                     |
+| 权限                       | `@fxft/aura-web-kit/hooks/permissions`            | 读取宿主提供的权限上下文，不能自建空权限默认值                                           |
+| 登录与用户状态             | `/@/config/aura/account`                          | 登录 API、OAuth、用户 Store                                                              |
+| 存储、认证、令牌           | `/@/config/aura/storage`、`auth`、`tokenCheck`    | systemId、退出策略与令牌监测                                                             |
+| 图表、下载、混合工具       | `/@/config/aura/echarts`、`download`、`utilities` | 图表空态图片、请求下载及项目资源                                                         |
+| 联邦加载、语言、样式       | `/@/config/aura/federation`                       | enhanced runtime、远程 entries、Provider、scope                                          |
+| 资源地址                   | `/@/hooks/moduleFederation`                       | 绑定提供方自身 `import.meta.url` 与 remoteEntryName                                      |
+| 浏览器属性、事件、构建信息 | `/@/config/aura/browser`                          | 项目环境、Router、构建信息与总线                                                         |
+| 路由                       | `/@/router/index`                                 | 项目 Router 和菜单/Store 实例                                                            |
 
 ```ts
 import request from '/@/config/aura/request';
@@ -83,163 +83,165 @@ Vite 与 TypeScript 仅保留 `/@` 源码映射；旧 `/@/utils/request`、`/@/h
 
 #### 常用 Hook 与服务
 
-| 公开入口 | 主要导出或类型 | 用途 | 运行环境 / 绑定要求 |
-| --- | --- | --- | --- |
-| `/api/params` | `configureParamRequest` | 参数请求适配 | 浏览器 |
-| `/hooks/common` | `createCommonHook` | 项目常用工具绑定 | 浏览器 |
-| `/hooks/map-config` | `DEFAULT_MAP_CENTER`、`configureMapRequest`、`loadMapConfig`、`loadMapCenter` | 地图配置与请求绑定 | 浏览器 |
-| `/hooks/form` | `useForm` | 表单校验、重置、清理校验 | 浏览器 |
-| `/hooks/permissions` | `PERMISSION_CONTEXT_KEY`、`createPermissionContext`、`usePermissions` | 权限上下文与权限判断 | 浏览器 |
-| `/runtime` | `AURA_CONTEXT_KEY`、`createAuraContext`、`captureAuraContext`、`provideAuraContext` | 应用上下文与服务契约 | 浏览器 |
-| `/framework` | `createAuraFrameworkContext` | 框架请求、Pinia、语言服务预设 | 浏览器；使用项目绑定 |
-| `/api/common` | `createCommonApi` | 字典与参数 API 工厂 | 浏览器 |
-| `/hooks/table` | `useTable`、`createTableHook`、`PageQuery`、`PageResult<T>`、`OrderItem` | 标准 current/size 分页、排序、查询 | 浏览器；使用项目绑定 |
-| `/hooks/message` | `createElementPlusMessageServices`、`useMessage`、`useMessageBox`、`createMessageHooks` | 消息、确认框与重复合并 | 浏览器；使用项目绑定 |
-| `/hooks/dict` | `createDictHook`、`useDict` | 字典查询与缓存 | 浏览器；使用项目绑定 |
-| `/hooks/param` | `createParamHook`、`useParam` | 系统参数查询与缓存 | 浏览器；使用项目绑定 |
-| `/hooks/echarts` | `isChartDataEmpty`、`useECharts`、`createEChartsHook` | 图表生命周期、空态与 resize | 浏览器；使用项目绑定 |
-| `/api/login` | `LoginTypeEnum`、`LoginErrorEnum`、`SocialLoginEnum`、`createLoginApi` | 登录 API 工厂与枚举 | 浏览器 |
+| 公开入口                  | 主要导出或类型                                                                                                                                                   | 用途                                                                                               | 运行环境 / 绑定要求  |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------- |
+| `/api/params`             | `configureParamRequest`                                                                                                                                          | 参数请求适配                                                                                       | 浏览器               |
+| `/hooks/common`           | `createCommonHook`                                                                                                                                               | 项目常用工具绑定                                                                                   | 浏览器               |
+| `/hooks/map-config`       | `DEFAULT_MAP_CENTER`、`configureMapRequest`、`loadMapConfig`、`loadMapCenter`                                                                                    | 地图配置与请求绑定                                                                                 | 浏览器               |
+| `/hooks/form`             | `useForm`、`FormFieldPaths`、`FormAdapter`、`FormRef`、`FormSubmitOptions<T>`、`FormSubmitResult<T>`                                                             | 表单校验、重置、清理校验；返回 `pending/runSubmit` 提交防重能力                                    | 浏览器               |
+| `/hooks/permissions`      | `PERMISSION_CONTEXT_KEY`、`createPermissionContext`、`usePermissions`                                                                                            | 权限上下文与权限判断                                                                               | 浏览器               |
+| `/runtime`                | `AURA_CONTEXT_KEY`、`createAuraContext`、`captureAuraContext`、`provideAuraContext`                                                                              | 应用上下文与服务契约                                                                               | 浏览器               |
+| `/framework`              | `createAuraFrameworkContext`                                                                                                                                     | 框架请求、Pinia、语言服务预设                                                                      | 浏览器；使用项目绑定 |
+| `/api/common`             | `createCommonApi`                                                                                                                                                | 字典与参数 API 工厂                                                                                | 浏览器               |
+| `/hooks/table`            | `useTable`、`createTableHook`、`BasicTableProps<Row>`、`Pagination`、`TableStyle`、`PageQuery`、`PageResult<Row>`、`OrderItem`、`TableQueryOptions`              | 标准 current/size 分页、排序、查询与单次静默刷新                                                   | 浏览器；使用项目绑定 |
+| `/hooks/compatible-table` | `useCompatibleTable`、`createCompatibleTableHook`、`TableProtocol`、`CompatibleTableOptions`、`BasePageQuery`、`BasePageResult<Row>`、`AuraTablePageResult<Row>` | 显式 `base/aura` 分页协议适配，复用 useTable；base 使用 pageNo/pageSize、rows/totalCount/totalPage | 浏览器；使用项目绑定 |
+| `/hooks/message`          | `createElementPlusMessageServices`、`useMessage`、`useMessageBox`、`createMessageHooks`                                                                          | 消息、确认框与重复合并                                                                             | 浏览器；使用项目绑定 |
+| `/hooks/dict`             | `createDictHook`、`useDict`                                                                                                                                      | 字典查询与缓存                                                                                     | 浏览器；使用项目绑定 |
+| `/hooks/param`            | `createParamHook`、`useParam`                                                                                                                                    | 系统参数查询与缓存                                                                                 | 浏览器；使用项目绑定 |
+| `/hooks/echarts`          | `isChartDataEmpty`、`useECharts`、`createEChartsHook`                                                                                                            | 图表生命周期、空态与 resize                                                                        | 浏览器；使用项目绑定 |
+| `/api/login`              | `LoginTypeEnum`、`LoginErrorEnum`、`SocialLoginEnum`、`createLoginApi`                                                                                           | 登录 API 工厂与枚举                                                                                | 浏览器               |
 
 #### 请求、认证与存储
 
-| 公开入口 | 主要导出或类型 | 用途 | 运行环境 / 绑定要求 |
-| --- | --- | --- | --- |
-| `/http/preset` | `createFrameworkHttpOptions` | 框架请求预设 | 浏览器；使用项目绑定 |
-| `/auth/framework` | `createFrameworkAuth` | 框架认证策略 | 浏览器；使用项目绑定 |
-| `/http/service` | `createRequestClient` | Axios 实例工厂 | 浏览器；使用项目绑定 |
-| `/storage` | `STORAGE_KEYS`、`createAuraStorage` | 按系统隔离的 Local、Session、Cookie | 浏览器；使用项目绑定 |
-| `/http` | `createAuraRequest`、`createLazyRequest`、`CommonHeaderEnum`、`adaptRequestUrl` | 请求门面、懒加载与公共头 | 浏览器；使用项目绑定 |
-| `/http/crypto` | `encryptRequestText`、`decryptRequestText`、`createApiCrypto` | 请求加解密 | 浏览器；使用项目绑定 |
-| `/auth` | `REQUEST_AUTH_ERROR_EVENT`、`createAuthController`、`dispatchRequestAuthError` | 认证错误事件与退出控制 | 浏览器；使用项目绑定 |
-| `/auth/token-check` | `createTokenMonitor`、`useTokenCheck` | 令牌监测生命周期 | 浏览器；使用项目绑定 |
+| 公开入口            | 主要导出或类型                                                                                                                                                                               | 用途                                       | 运行环境 / 绑定要求  |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | -------------------- |
+| `/http/preset`      | `createFrameworkHttpOptions`                                                                                                                                                                 | 框架请求预设                               | 浏览器；使用项目绑定 |
+| `/auth/framework`   | `createFrameworkAuth`                                                                                                                                                                        | 框架认证策略                               | 浏览器；使用项目绑定 |
+| `/http/service`     | `createRequestClient`、`AuraQueryFormatOptions`、`AuraQueryFormatTargetOptions`                                                                                                              | Axios 实例工厂与显式 queryFormat 类型      | 浏览器；使用项目绑定 |
+| `/storage`          | `STORAGE_KEYS`、`createAuraStorage`                                                                                                                                                          | 按系统隔离的 Local、Session、Cookie        | 浏览器；使用项目绑定 |
+| `/http`             | `createAuraRequest`、`createLazyRequest`、`CommonHeaderEnum`、`adaptRequestUrl`、`AuraRequest`、`AuraHttpOptions`、`RequestCrypto`、`AuraQueryFormatOptions`、`AuraQueryFormatTargetOptions` | 请求门面、懒加载、公共头与显式 queryFormat | 浏览器；使用项目绑定 |
+| `/http/crypto`      | `encryptRequestText`、`decryptRequestText`、`createApiCrypto`                                                                                                                                | 请求加解密                                 | 浏览器；使用项目绑定 |
+| `/auth`             | `REQUEST_AUTH_ERROR_EVENT`、`createAuthController`、`dispatchRequestAuthError`                                                                                                               | 认证错误事件与退出控制                     | 浏览器；使用项目绑定 |
+| `/auth/token-check` | `createTokenMonitor`、`useTokenCheck`                                                                                                                                                        | 令牌监测生命周期                           | 浏览器；使用项目绑定 |
 
 #### 联邦、路由、国际化与启动
 
-| 公开入口 | 主要导出或类型 | 用途 | 运行环境 / 绑定要求 |
-| --- | --- | --- | --- |
-| `/i18n/runtime` | `mergeLocaleMessages`、`flatLocaleMessages`、`createAuraI18nRuntime` | 项目语言合并、初始化与销毁 | 浏览器 |
-| `/router` | `createAuraRouterRuntime`、`createRouterApi`、`formatMenuTree` | 路由初始化与菜单运行时 | 浏览器；使用项目绑定 |
-| `/router/utils` | `formatFlatteningRoutes`、`formatTwoStageRoutes`、`getFirstAccessibleMenuPath`、`dynamicImport` | 路由树、权限过滤与动态导入 | 浏览器；使用项目绑定 |
-| `/config/site` | `createSiteConfig` | 站点配置工厂 | 浏览器 |
-| `/federation/config` | `AURA_FRONTEND_SERVICE_NAME_KEY`、`defaultI18nScanDirs`、`federationExposeDefaults`、`getRemoteScopeClass` | 联邦默认配置、scope 与身份上下文 | 浏览器；配置或 runtime 适配 |
-| `/federation` | `createFederationRemotes`、`createFederationI18n`、`createFederationStyles`、`createFederationRegistry` | 远程注册、样式、语言和页面加载工厂 | 浏览器；配置或 runtime 适配 |
-| `/federation/retry` | `getRemoteAutoRetryDelays`、`getRemoteLoadErrorMessage`、`isTransientRemoteLoadError`、`waitForRemoteRetry` | 远程失败识别与重试间隔 | 浏览器 |
-| `/i18n` | `auraMessages`、`normalizeAuraLocale`、`createAuraTranslator` | 库内语言与翻译 | 浏览器 |
-| `/bootstrap` | `createAuraBootstrap` | 启动缓存恢复与系统配置刷新 | 浏览器；使用项目绑定 |
+| 公开入口             | 主要导出或类型                                                                                              | 用途                               | 运行环境 / 绑定要求         |
+| -------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------- | --------------------------- |
+| `/i18n/runtime`      | `mergeLocaleMessages`、`flatLocaleMessages`、`createAuraI18nRuntime`                                        | 项目语言合并、初始化与销毁         | 浏览器                      |
+| `/router`            | `createAuraRouterRuntime`、`createRouterApi`、`formatMenuTree`                                              | 路由初始化与菜单运行时             | 浏览器；使用项目绑定        |
+| `/router/utils`      | `formatFlatteningRoutes`、`formatTwoStageRoutes`、`getFirstAccessibleMenuPath`、`dynamicImport`             | 路由树、权限过滤与动态导入         | 浏览器；使用项目绑定        |
+| `/config/site`       | `createSiteConfig`                                                                                          | 站点配置工厂                       | 浏览器                      |
+| `/federation/config` | `AURA_FRONTEND_SERVICE_NAME_KEY`、`defaultI18nScanDirs`、`federationExposeDefaults`、`getRemoteScopeClass`  | 联邦默认配置、scope 与身份上下文   | 浏览器；配置或 runtime 适配 |
+| `/federation`        | `createFederationRemotes`、`createFederationI18n`、`createFederationStyles`、`createFederationRegistry`     | 远程注册、样式、语言和页面加载工厂 | 浏览器；配置或 runtime 适配 |
+| `/federation/retry`  | `getRemoteAutoRetryDelays`、`getRemoteLoadErrorMessage`、`isTransientRemoteLoadError`、`waitForRemoteRetry` | 远程失败识别与重试间隔             | 浏览器                      |
+| `/i18n`              | `auraMessages`、`normalizeAuraLocale`、`createAuraTranslator`                                               | 库内语言与翻译                     | 浏览器                      |
+| `/bootstrap`         | `createAuraBootstrap`                                                                                       | 启动缓存恢复与系统配置刷新         | 浏览器；使用项目绑定        |
 
 #### 浏览器工具
 
-| 公开入口 | 主要导出或类型 | 用途 | 运行环境 / 绑定要求 |
-| --- | --- | --- | --- |
-| `/browser/config-manager` | `createConfigManager` | 浏览器配置管理 | 浏览器 |
-| `/browser/build-info` | `createBuildInfoReporter` | 构建信息报告 | 浏览器 |
-| `/browser/iconfont-list` | `createIconfontList` | 字体图标列表 | 浏览器 |
-| `/browser/title` | `createTitleHooks` | 页面标题绑定 | 浏览器 |
-| `/browser/window` | `openWindow`、`getQueryString` | 窗口与地址查询 | 浏览器 |
-| `/browser/loading` | `NextLoading` | 页面加载状态 | 浏览器 |
-| `/browser/anti-debug` | `createAntiDebug` | 反调试驱动 | 浏览器 |
-| `/browser/app-properties` | `createAppProperties` | 应用属性绑定 | 浏览器 |
-| `/browser/url` | `getBrowserOrigin`、`getBrowserFullUrl`、`getBrowserApiUrl` | 浏览器地址解析 | 浏览器 |
-| `/browser/watermark` | `default` | 页面水印 | 浏览器 |
-| `/browser/markdown` | `fetchRemoteMdFile` | 远程 Markdown 读取 | 浏览器 |
-| `/browser/iconfont` | `getIconfontSources`、`parseIconfontSources`、`inspectIconfontCss`、`createIconfontService` | 字体源、CSS 解析与加载 | 浏览器 |
-| `/browser/assets` | `createFederationAssets` | 提供方资源根路径与样式 URL | 浏览器；传入提供方 URL |
-| `/browser/events` | `createEventBus` | 实例事件总线 | 浏览器 |
-| `/browser/download` | `saveBlobFile`、`createDownloadService`、`handleBlobFile`、`downBlobFile` | 文件下载与响应处理 | 浏览器 |
-| `/browser/xlsx` | `createXlsxBlob` | 工作簿 Blob 与列宽 | 浏览器 |
+| 公开入口                  | 主要导出或类型                                                                              | 用途                       | 运行环境 / 绑定要求    |
+| ------------------------- | ------------------------------------------------------------------------------------------- | -------------------------- | ---------------------- |
+| `/browser/config-manager` | `createConfigManager`                                                                       | 浏览器配置管理             | 浏览器                 |
+| `/browser/build-info`     | `createBuildInfoReporter`                                                                   | 构建信息报告               | 浏览器                 |
+| `/browser/iconfont-list`  | `createIconfontList`                                                                        | 字体图标列表               | 浏览器                 |
+| `/browser/title`          | `createTitleHooks`                                                                          | 页面标题绑定               | 浏览器                 |
+| `/browser/window`         | `openWindow`、`getQueryString`                                                              | 窗口与地址查询             | 浏览器                 |
+| `/browser/loading`        | `NextLoading`                                                                               | 页面加载状态               | 浏览器                 |
+| `/browser/anti-debug`     | `createAntiDebug`                                                                           | 反调试驱动                 | 浏览器                 |
+| `/browser/app-properties` | `createAppProperties`                                                                       | 应用属性绑定               | 浏览器                 |
+| `/browser/url`            | `getBrowserOrigin`、`getBrowserFullUrl`、`getBrowserApiUrl`                                 | 浏览器地址解析             | 浏览器                 |
+| `/browser/watermark`      | `default`                                                                                   | 页面水印                   | 浏览器                 |
+| `/browser/markdown`       | `fetchRemoteMdFile`                                                                         | 远程 Markdown 读取         | 浏览器                 |
+| `/browser/iconfont`       | `getIconfontSources`、`parseIconfontSources`、`inspectIconfontCss`、`createIconfontService` | 字体源、CSS 解析与加载     | 浏览器                 |
+| `/browser/assets`         | `createFederationAssets`                                                                    | 提供方资源根路径与样式 URL | 浏览器；传入提供方 URL |
+| `/browser/events`         | `createEventBus`                                                                            | 实例事件总线               | 浏览器                 |
+| `/browser/download`       | `saveBlobFile`、`createDownloadService`、`handleBlobFile`、`downBlobFile`                   | 文件下载与响应处理         | 浏览器                 |
+| `/browser/xlsx`           | `createXlsxBlob`                                                                            | 工作簿 Blob 与列宽         | 浏览器                 |
 
 #### 纯工具与格式处理
 
-| 公开入口 | 主要导出或类型 | 用途 | 运行环境 / 绑定要求 |
-| --- | --- | --- | --- |
-| `/utils/image` | `applyImageFallback` | 图片失败降级 | 浏览器 |
-| `/utils/requestData` | `normalizeJsonRequestData` | JSON 请求数据归一化 | 浏览器 |
-| `/utils/framework` | `createFrameworkUtilities` | 混合工具实例绑定 | 浏览器 |
-| `/utils/empty-text` | `formatEmptyText` | 空文本格式化 | 浏览器 |
-| `/utils/phoneMask` | `isValidContactPhone`、`maskContactPhone` | 手机号校验与脱敏 | 浏览器 |
-| `/utils/importValidation` | `getImportValidationRowValue` | 导入错误行读取 | 浏览器 |
-| `/utils/authFunction` | `auth`、`auths`、`authAll` | 权限函数 | 浏览器 |
-| `/utils/errorCode` | `default` | 错误码映射 | 浏览器 |
-| `/utils/coordinate` | `transformCoordinate`、`toAmapCoordinate`、`fromAmapCoordinate` | 坐标转换 | 浏览器 |
-| `/utils/string` | `toUnderline` | 字符串命名转换 | 浏览器 |
-| `/utils/array` | `judgmentSameArr`、`removeDuplicate`、`isObjectValueEqual` | 数组去重与对象比较 | 浏览器 |
-| `/utils/tree` | `handleTree` | 树形结构转换 | 浏览器 |
-| `/utils/uuid` | `generateUUID` | UUID 生成 | 浏览器 |
-| `/utils/params` | `serializeRequestParams` | 请求参数序列化 | 浏览器 |
-| `/utils/date` | `dateTimeStr`、`dateStr`、`timeStr`、`formatDateStandard` | Day.js 日期格式与兼容接口 | 浏览器 |
-| `/utils/validate` | `validateNull`、`rule`、`getRegExp` | 表单校验规则 | 浏览器 |
-| `/utils/tools-validate` | `verifyNumberPercentage`、`verifyNumberPercentageFloat`、`verifyNumberIntegerAndFloat`、`verifiyNumberInteger` | 输入校验与处理 | 浏览器 |
+| 公开入口                  | 主要导出或类型                                                                                                 | 用途                                                                       | 运行环境 / 绑定要求             |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------- |
+| `/utils/image`            | `applyImageFallback`                                                                                           | 图片失败降级                                                               | 浏览器                          |
+| `/utils/requestData`      | `normalizeJsonRequestData`                                                                                     | JSON 请求数据归一化                                                        | 浏览器                          |
+| `/utils/query`            | `formatQueryParams`、`FormatQueryParamsOptions`                                                                | 纯函数构造查询条件，移除未设置字段并按精确路径保留契约空值；不用于写入 DTO | 浏览器运行时纯工具；无 DOM 依赖 |
+| `/utils/framework`        | `createFrameworkUtilities`                                                                                     | 混合工具实例绑定                                                           | 浏览器                          |
+| `/utils/empty-text`       | `formatEmptyText`                                                                                              | 空文本格式化                                                               | 浏览器                          |
+| `/utils/phoneMask`        | `isValidContactPhone`、`maskContactPhone`                                                                      | 手机号校验与脱敏                                                           | 浏览器                          |
+| `/utils/importValidation` | `getImportValidationRowValue`                                                                                  | 导入错误行读取                                                             | 浏览器                          |
+| `/utils/authFunction`     | `auth`、`auths`、`authAll`                                                                                     | 权限函数                                                                   | 浏览器                          |
+| `/utils/errorCode`        | `default`                                                                                                      | 错误码映射                                                                 | 浏览器                          |
+| `/utils/coordinate`       | `transformCoordinate`、`toAmapCoordinate`、`fromAmapCoordinate`                                                | 坐标转换                                                                   | 浏览器                          |
+| `/utils/string`           | `toUnderline`                                                                                                  | 字符串命名转换                                                             | 浏览器                          |
+| `/utils/array`            | `judgmentSameArr`、`removeDuplicate`、`isObjectValueEqual`                                                     | 数组去重与对象比较                                                         | 浏览器                          |
+| `/utils/tree`             | `handleTree`                                                                                                   | 树形结构转换                                                               | 浏览器                          |
+| `/utils/uuid`             | `generateUUID`                                                                                                 | UUID 生成                                                                  | 浏览器                          |
+| `/utils/params`           | `serializeRequestParams`                                                                                       | 请求参数序列化                                                             | 浏览器                          |
+| `/utils/date`             | `dateTimeStr`、`dateStr`、`timeStr`、`formatDateStandard`                                                      | Day.js 日期格式与兼容接口                                                  | 浏览器                          |
+| `/utils/validate`         | `validateNull`、`rule`、`getRegExp`                                                                            | 表单校验规则                                                               | 浏览器                          |
+| `/utils/tools-validate`   | `verifyNumberPercentage`、`verifyNumberPercentageFloat`、`verifyNumberIntegerAndFloat`、`verifiyNumberInteger` | 输入校验与处理                                                             | 浏览器                          |
 
 #### 指令与 Store
 
-| 公开入口 | 主要导出或类型 | 用途 | 运行环境 / 绑定要求 |
-| --- | --- | --- | --- |
-| `/directive` | `directive` | 公共指令安装 | 浏览器 |
-| `/directive/authDirective` | `authDirective` | 权限指令 | 浏览器 |
-| `/directive/customDirective` | `wavesDirective` | 波纹指令 | 浏览器 |
-| `/directive/focus` | `focusDirective` | 聚焦指令 | 浏览器 |
-| `/directive/loadingScrollLock` | `loadingScrollLockDirective` | 加载态滚动锁 | 浏览器 |
-| `/stores/dict` | `dict` | 字典缓存 Store | 浏览器 |
-| `/stores/param` | `param` | 参数缓存 Store | 浏览器 |
-| `/stores/userInfo` | `createUserInfoStore` | 用户信息 Store 工厂 | 浏览器 |
-| `/stores/tagsViewRoutes` | `createTagsViewRoutesStore` | 标签路由 Store 工厂 | 浏览器 |
-| `/stores/routesList` | `useRoutesList` | 路由列表 Store | 浏览器 |
-| `/stores/requestOldRoutes` | `useRequestOldRoutes` | 历史请求路由 Store | 浏览器 |
-| `/stores/keepAliveNames` | `useKeepALiveNames` | 缓存组件名 Store | 浏览器 |
-| `/stores/msg` | `useMsg` | 消息 Store | 浏览器 |
+| 公开入口                       | 主要导出或类型               | 用途                | 运行环境 / 绑定要求 |
+| ------------------------------ | ---------------------------- | ------------------- | ------------------- |
+| `/directive`                   | `directive`                  | 公共指令安装        | 浏览器              |
+| `/directive/authDirective`     | `authDirective`              | 权限指令            | 浏览器              |
+| `/directive/customDirective`   | `wavesDirective`             | 波纹指令            | 浏览器              |
+| `/directive/focus`             | `focusDirective`             | 聚焦指令            | 浏览器              |
+| `/directive/loadingScrollLock` | `loadingScrollLockDirective` | 加载态滚动锁        | 浏览器              |
+| `/stores/dict`                 | `dict`                       | 字典缓存 Store      | 浏览器              |
+| `/stores/param`                | `param`                      | 参数缓存 Store      | 浏览器              |
+| `/stores/userInfo`             | `createUserInfoStore`        | 用户信息 Store 工厂 | 浏览器              |
+| `/stores/tagsViewRoutes`       | `createTagsViewRoutesStore`  | 标签路由 Store 工厂 | 浏览器              |
+| `/stores/routesList`           | `useRoutesList`              | 路由列表 Store      | 浏览器              |
+| `/stores/requestOldRoutes`     | `useRequestOldRoutes`        | 历史请求路由 Store  | 浏览器              |
+| `/stores/keepAliveNames`       | `useKeepALiveNames`          | 缓存组件名 Store    | 浏览器              |
+| `/stores/msg`                  | `useMsg`                     | 消息 Store          | 浏览器              |
 
 #### 主题内部公共 TS
 
 供核心主题维护和明确需要该公开能力的场景使用；布局 Vue、样式、资源和远程契约仍由 aura-core 提供，业务不据此复制主布局。
 
-| 公开入口 | 主要导出或类型 | 用途 | 运行环境 / 绑定要求 |
-| --- | --- | --- | --- |
-| `/theme-core/types/layout` | `AsideState`、`ColumnsAsideState`、`BreadcrumbState`、`SearchState` | 布局状态类型 | 类型 / 声明；核心按需绑定 |
-| `/theme-core/utils/device` | `isMobileDevice` | 移动设备判断 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useHorizontalWheelScroll` | `useHorizontalWheelScroll` | 横向滚轮 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/usePageZoom` | `PAGE_ZOOM_MIN`、`PAGE_ZOOM_MAX`、`PAGE_ZOOM_STEP`、`PAGE_ZOOM_DEFAULT` | 页面缩放与坐标换算 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useUIState` | `useUIState` | 布局 UI 状态 | 浏览器；核心按需绑定 |
-| `/theme-core/stores/layout` | `useLayoutStore` | 布局 Store | 浏览器；核心按需绑定 |
-| `/theme-core/layout/navMenu/menuIconVisibility` | `shouldShowMenuIcon` | 菜单图标显隐 | 浏览器；核心按需绑定 |
-| `/theme-core/constants/themeDefaults` | `createThemeDefaults` | 主题默认值工厂 | 浏览器；核心按需绑定 |
-| `/theme-core/utils/lockScreenState` | `createLockScreenState` | 锁屏状态工厂 | 浏览器；核心按需绑定 |
-| `/theme-core/utils/theme-manager` | `createThemeManager` | 主题管理工厂 | 浏览器；核心按需绑定 |
-| `/theme-core/utils/theme` | `createThemeColors` | 主题颜色工厂 | 浏览器；核心按需绑定 |
-| `/theme-core/utils/themeCssVariables` | `createThemeCssVariables` | 主题 CSS 变量工厂 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useThemeConfigStorage` | `createThemeConfigStorage` | 主题配置存储绑定 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useFontSize` | `createFontSize` | 字体大小绑定 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useThemeColorPicker` | `createThemeColorPicker` | 主题选色绑定 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useThemeFilters` | `createThemeFilters` | 主题滤镜绑定 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useFaviconManager` | `createFaviconManager` | 站点图标绑定 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useTemplateSelection` | `createTemplateSelection` | 布局模板选择 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useTemplateManagement` | `createTemplateManagement` | 布局模板管理 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useLoginTemplateSelection` | `createLoginTemplateSelection` | 登录模板选择 | 浏览器；核心按需绑定 |
-| `/theme-core/hooks/useThemeRuntime` | `createThemeRuntime` | 主题运行时工厂 | 浏览器；核心按需绑定 |
-| `/theme-core/stores/themeConfig` | `createThemeConfigStore` | 主题 Store 工厂 | 浏览器；核心按需绑定 |
-| `/theme-core/stores/login` | `createLoginStore` | 登录界面 Store 工厂 | 浏览器；核心按需绑定 |
-| `/theme-core/theme/font` | `createThemeFont` | 主题字体工厂 | 浏览器；核心按需绑定 |
-| `/theme-core/contracts` | `LayoutTemplateKey` | 主题绑定契约 | 类型 / 声明；核心按需绑定 |
-| `/theme-core/config-manager` | `createConfigManager` | 主题缓存恢复与应用 | 浏览器；核心按需绑定 |
+| 公开入口                                        | 主要导出或类型                                                          | 用途                | 运行环境 / 绑定要求       |
+| ----------------------------------------------- | ----------------------------------------------------------------------- | ------------------- | ------------------------- |
+| `/theme-core/types/layout`                      | `AsideState`、`ColumnsAsideState`、`BreadcrumbState`、`SearchState`     | 布局状态类型        | 类型 / 声明；核心按需绑定 |
+| `/theme-core/utils/device`                      | `isMobileDevice`                                                        | 移动设备判断        | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useHorizontalWheelScroll`    | `useHorizontalWheelScroll`                                              | 横向滚轮            | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/usePageZoom`                 | `PAGE_ZOOM_MIN`、`PAGE_ZOOM_MAX`、`PAGE_ZOOM_STEP`、`PAGE_ZOOM_DEFAULT` | 页面缩放与坐标换算  | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useUIState`                  | `useUIState`                                                            | 布局 UI 状态        | 浏览器；核心按需绑定      |
+| `/theme-core/stores/layout`                     | `useLayoutStore`                                                        | 布局 Store          | 浏览器；核心按需绑定      |
+| `/theme-core/layout/navMenu/menuIconVisibility` | `shouldShowMenuIcon`                                                    | 菜单图标显隐        | 浏览器；核心按需绑定      |
+| `/theme-core/constants/themeDefaults`           | `createThemeDefaults`                                                   | 主题默认值工厂      | 浏览器；核心按需绑定      |
+| `/theme-core/utils/lockScreenState`             | `createLockScreenState`                                                 | 锁屏状态工厂        | 浏览器；核心按需绑定      |
+| `/theme-core/utils/theme-manager`               | `createThemeManager`                                                    | 主题管理工厂        | 浏览器；核心按需绑定      |
+| `/theme-core/utils/theme`                       | `createThemeColors`                                                     | 主题颜色工厂        | 浏览器；核心按需绑定      |
+| `/theme-core/utils/themeCssVariables`           | `createThemeCssVariables`                                               | 主题 CSS 变量工厂   | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useThemeConfigStorage`       | `createThemeConfigStorage`                                              | 主题配置存储绑定    | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useFontSize`                 | `createFontSize`                                                        | 字体大小绑定        | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useThemeColorPicker`         | `createThemeColorPicker`                                                | 主题选色绑定        | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useThemeFilters`             | `createThemeFilters`                                                    | 主题滤镜绑定        | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useFaviconManager`           | `createFaviconManager`                                                  | 站点图标绑定        | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useTemplateSelection`        | `createTemplateSelection`                                               | 布局模板选择        | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useTemplateManagement`       | `createTemplateManagement`                                              | 布局模板管理        | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useLoginTemplateSelection`   | `createLoginTemplateSelection`                                          | 登录模板选择        | 浏览器；核心按需绑定      |
+| `/theme-core/hooks/useThemeRuntime`             | `createThemeRuntime`                                                    | 主题运行时工厂      | 浏览器；核心按需绑定      |
+| `/theme-core/stores/themeConfig`                | `createThemeConfigStore`                                                | 主题 Store 工厂     | 浏览器；核心按需绑定      |
+| `/theme-core/stores/login`                      | `createLoginStore`                                                      | 登录界面 Store 工厂 | 浏览器；核心按需绑定      |
+| `/theme-core/theme/font`                        | `createThemeFont`                                                       | 主题字体工厂        | 浏览器；核心按需绑定      |
+| `/theme-core/contracts`                         | `LayoutTemplateKey`                                                     | 主题绑定契约        | 类型 / 声明；核心按需绑定 |
+| `/theme-core/config-manager`                    | `createConfigManager`                                                   | 主题缓存恢复与应用  | 浏览器；核心按需绑定      |
 
 #### 类型与声明
 
-| 公开入口 | 主要导出或类型 | 用途 | 运行环境 / 绑定要求 |
-| --- | --- | --- | --- |
-| `/types/state` | `UserInfosState`、`KeepAliveNamesState`、`RequestOldRoutesState`、`TagsViewRoutesState` | 公共状态类型 | 类型 / 声明 |
-| `/types/axios` | `声明扩展` | Axios 声明扩展 | 类型 / 声明 |
-| `/types/assets` | `default` | 静态资源声明 | 类型 / 声明 |
-| `/types/remote-core` | `default` | 精确核心远程声明 | 类型 / 声明 |
-| `/types` | `RouteItem`、`RouteToFrom`、`RouteItems`、`RefType` | 公共接口与类型 | 类型 / 声明 |
-| `/types/ambient` | `声明扩展` | 环境全局声明 | 类型 / 声明 |
-| `/types/vue` | `声明扩展` | Vue 类型扩展 | 类型 / 声明 |
+| 公开入口             | 主要导出或类型                                                                          | 用途             | 运行环境 / 绑定要求 |
+| -------------------- | --------------------------------------------------------------------------------------- | ---------------- | ------------------- |
+| `/types/state`       | `UserInfosState`、`KeepAliveNamesState`、`RequestOldRoutesState`、`TagsViewRoutesState` | 公共状态类型     | 类型 / 声明         |
+| `/types/axios`       | `声明扩展`                                                                              | Axios 声明扩展   | 类型 / 声明         |
+| `/types/assets`      | `default`                                                                               | 静态资源声明     | 类型 / 声明         |
+| `/types/remote-core` | `default`                                                                               | 精确核心远程声明 | 类型 / 声明         |
+| `/types`             | `RouteItem`、`RouteToFrom`、`RouteItems`、`RefType`                                     | 公共接口与类型   | 类型 / 声明         |
+| `/types/ambient`     | `声明扩展`                                                                              | 环境全局声明     | 类型 / 声明         |
+| `/types/vue`         | `声明扩展`                                                                              | Vue 类型扩展     | 类型 / 声明         |
 
 #### 构建端
 
-| 公开入口 | 主要导出或类型 | 用途 | 运行环境 / 绑定要求 |
-| --- | --- | --- | --- |
-| `/vite/component-overrides` | `createComponentOverrideResolver` | 本地组件编译期覆盖 | Node 构建 |
-| `/vite` | `generateI18nImports`、`createGitBuildInfo`、`auraAutoOptimizeDeps`、`createAuraAutoImportPreset`、`pruneFederationSsrImports`、`stabilizeFederationDevOptimizer` | 语言生成、自动导入、预构建和联邦构建插件 | Node 构建 |
-| `/postcss` | `createAuraPostcssPlugins` | Tailwind scope 与样式兼容插件 | Node 构建 |
+| 公开入口                    | 主要导出或类型                                                                                                                                                    | 用途                                     | 运行环境 / 绑定要求 |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------------------- |
+| `/vite/component-overrides` | `createComponentOverrideResolver`                                                                                                                                 | 本地组件编译期覆盖                       | Node 构建           |
+| `/vite`                     | `generateI18nImports`、`createGitBuildInfo`、`auraAutoOptimizeDeps`、`createAuraAutoImportPreset`、`pruneFederationSsrImports`、`stabilizeFederationDevOptimizer` | 语言生成、自动导入、预构建和联邦构建插件 | Node 构建           |
+| `/postcss`                  | `createAuraPostcssPlugins`                                                                                                                                        | Tailwind scope 与样式兼容插件            | Node 构建           |
 
 ### 四、构建与 UI 配套
 
@@ -263,6 +265,54 @@ Vite 使用 `/vite` 的 `auraAutoOptimizeDeps`，复用实际组件 resolver 工
 
 ## 验证与人工确认
 
-按目标项目 package.json、锁文件、exports 和 .d.ts 核对入口及绑定；清单基线为 1.9.0，不能据此推断业务项目已升级。
+按目标项目 package.json、锁文件、exports 和 .d.ts 核对入口及绑定；本目录基线为已安装发布包 1.9.6，其他项目的升级与能力仍须独立核对。
 
 实际业务字段、权限标识、部署路径及允许的例外由项目契约确认；只记录实际执行的验证结果。
+
+## 已加载列表的静默刷新（1.9.6 已发布）
+
+覆盖层仍可见且操作成功需同步背后已加载区域时，使用本次查询的显式选项。web-kit `1.9.6` 的真实签名为 `getDataList(refresh?: unknown, options?: TableQueryOptions): Promise<void>`，`TableQueryOptions` 从 `@fxft/aura-web-kit/hooks/table` 导出，仅含可选 `silent?: boolean`，不是 `useTable` 全局配置。
+
+```ts
+// 已确认操作成功，覆盖层仍可见；本调用沿既有业务约定保留当前页。
+await getDataList(false, { silent: true });
+// 若原业务要求回第一页，首参保留原语义；其余首参（含事件）也会回第一页。
+await getDataList(true, { silent: true });
+```
+
+`silent: true` 仅在调用时 `dataList` 为非空数组时抑制该区域 Loading，保留已有行与总数直到新响应成功；首次读取或空表回落为正常 Loading，不能宣称覆盖全部初始化状态。失败保留旧数据，并沿 `queryError` / `onQueryError` 反馈；请求序号继续阻止旧响应污染。选项只作用于本次调用，普通查询、分页和排序仍显示正常 Loading，不改变既有选择恢复规则。
+
+使用前核对项目声明、锁文件与实际安装包的类型和实现；本能力已随 `1.9.6` 发布，本目录已按实际安装 `1.9.6` 核对；旧包不因历史清单而获得第二参，也不要求已获授权升级的项目回退。缺能力时如实记录并按任务授权处理依赖，不虚构 API 或复制公共 Hook。
+
+## 查询提交参数格式化（1.9.5 已发布）
+
+算法由纯函数 `formatQueryParams` 承担，独立入口 `@fxft/aura-web-kit/utils/query` 保留给非请求条件构造等场景。业务 API 优先复用项目统一请求实例的显式 `queryFormat`，不逐模块重复导入算法；请求层在 JSON 归一化和加密之前调用公共实现。默认不开启，不按 HTTP 方法判断是否为查询，不改变既有写入或 `useTable` 默认行为。字段省略及写入排除规则见 [FE-006 查询条件提交边界](02-请求路由权限与数据适配.md#查询条件的空值提交边界)。
+
+```ts
+// 前提：消费者已安装并核实 queryFormat 配置声明与实现；以下为请求配置片段。
+request({ url, method: 'get', params: query, queryFormat: { params: true } });
+request({ url, method: 'post', data: query, queryFormat: { data: true } });
+request({
+  url,
+  method: 'post',
+  data: { ids, fields, format, filter: query },
+  queryFormat: { data: { paths: [['filter']] } },
+});
+```
+
+`params` 和 `data` 目标均支持 `true` 或 `{ paths?: readonly (readonly string[])[]; preserveEmptyPaths?: readonly (readonly string[])[] }`。省略 `paths` 时格式化整个目标；提供时只处理精确路径，不接受含点字符串或通配符。导出指定 `data.filter` 清理后为空则删除 `filter` 键，未选中的外层字段保持；`preserveEmptyPaths` 相对 `params/data` 根，例如 `[['filter', 'deletedAt']]`。不能把数组或 FormData 根冒充普通查询对象。格式化配置本身不进入请求头或请求体。
+
+普通对象字段递归格式化；未输入、`null`、空串/纯空白、空数组和空普通对象字段不传，保留 `0/false`、非空原字符串和特殊对象。非空数组仅复制容器，元素引用和索引保持，不是深快照。精确空路径例外不豁免非空父对象的所有子字段；保留 `undefined` 不改变原序列化协议，契约要求 `null` 时应明确提供 `null`。
+
+独立构造条件、不经请求层时仍可直接使用纯函数：
+
+```ts
+import { formatQueryParams } from '@fxft/aura-web-kit/utils/query';
+
+// 生成新条件对象，不修改查询表单；不用于新增、编辑写入的清空语义。
+const condition = formatQueryParams({ keyword: '', status: 0, enabled: false });
+// condition 为 { status: 0, enabled: false }
+```
+
+2026-11-03 核对状态：queryFormat 与 formatQueryParams 已随 1.9.5 发布，当前验证项目已安装 1.9.6；其 `/http`、`/http/service` 的公开查询格式化类型、Axios 配置扩展和 `/utils/query` 的纯函数声明均已核对。其他项目仍按实际安装包取证，目录完整不代表全部业务查询已迁移。
+公共包发布证据：2026-11-03，1.9.5，源码提交 37ecefd74d4225f55a63069894dfe00162eec558 已推送，私服读回版本与 tarball integrity 一致。规范自身仍为待提交工作树，不能以公共包提交代替规范 sourceCommit。

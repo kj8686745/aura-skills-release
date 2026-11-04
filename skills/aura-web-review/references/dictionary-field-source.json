@@ -1,0 +1,57 @@
+{
+  "skill": "aura-web-review",
+  "skillVersion": "0.4.7",
+  "updatedAt": "2026-11-03",
+  "change": "FE-010 动态字典字段说明与 TS 类型边界",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
+  "snapshotRoot": ".",
+  "sourceCommit": null,
+  "sourceBaseCommit": "19633297291a53900cb0f135b8a94e47c0e494ce",
+  "sourceBinding": {
+    "status": "pending",
+    "baseCommit": "19633297291a53900cb0f135b8a94e47c0e494ce",
+    "reason": "规范工作树已有未提交维护，本次新增 FE-010 字段子节；记录基线与工作树摘要，不将新规则宣称为提交内已存在。"
+  },
+  "documents": [
+    {
+      "source": "02-请求路由权限与数据适配.md",
+      "sourceSha256Lf": "75bc7ce2db5dde606e7a54862e676f52ccc37d1647fab3ee43938c4797bee9f4",
+      "committedSourceSha256Lf": "86d4df79a053b0ea3bd6fae64d14897f35f6720b3ead21e7ab2cdd5c8285dc71",
+      "snapshot": "references/dictionary-field-contract.md",
+      "snapshotSha256Lf": "c9979e837a69a701b0264b126fdff93911eca3b0b930b17453f4c9775777368b",
+      "transformation": {
+        "sectionStart": "#### 动态字典字段与固定枚举",
+        "sectionEndExclusive": "### AURA-BASE-FE-011：Mock 有明确边界",
+        "finalNewline": "single"
+      }
+    }
+  ],
+  "impact": {
+    "rule": "AURA-BASE-FE-010",
+    "consumers": [
+      "aura-web-develop",
+      "aura-web-review"
+    ],
+    "scope": "字段中文注释、动态字典 key 与类型边界；不改规则编号、必要性、组件 API 或既有展示选型。",
+    "consumerFiles": [
+      "SKILL.md",
+      "references/development-self-check.md",
+      "references/审查路由.md"
+    ]
+  },
+  "versionPolicy": "同一未发布维护版本的补充归并原日志，不重复升版；既有安装不包含本次新增规则。",
+  "historicalRecords": "保留 dictionary-source.json、readability-source.json 等原范围与历史证据，本记录不证明旧整包快照已同步。",
+  "validation": {
+    "state": "scoped-structure-links-and-source-evidence-passed; source-commit-binding-pending",
+    "quickValidate": "passed for both skills; exit 0",
+    "developValidate": "passed; exit 0",
+    "relativeLinksAndAnchors": "137 checked; no errors",
+    "sourceEvidence": "工作树与 git show 基线 LF SHA256、章节提取、双技能视图与版本核对通过；精确来源提交仍待绑定。",
+    "diffCheck": "both repositories passed; exit 0",
+    "formatting": "两仓无项目本地 Prettier 二进制或配置，沿用现有 Markdown/JSON 风格，未安装或运行 Prettier。",
+    "behavior": "主代理人工复核动态字典新增值、数字多选可空、固定接口枚举、业务判断、纯注释及缺少 key 六类场景；未做独立 Agent 行为实测或业务运行验收。",
+    "evidence": ".planning/2026-11-03-dictionary-fields/validation.md (skill repository; maintenance evidence only)"
+  },
+  "deliveryState": "local-working-tree; not-committed; not-pushed; not-published; not-installed"
+}

@@ -10,7 +10,7 @@
 
 已按[职责规范](../knowledge/PIGX前端开发规范/文件组织与职责拆分.md)决定提取的弹窗组件，以最新版 `form.vue` 骨架为准，通过 `defineExpose({ openDialog })` 打开；合理内联的弹窗由所属页面在具名打开处理中加载专属数据并持有交互状态，不为套用组件骨架强制提取。两者均仅在实际打开时加载、保持状态来源单一，通过 `useForm` 的 `validateForm/resetForm/clearFormValidate` 统一处理表单生命周期，校验成功后才进入提交状态，成功后关闭并触发 `refresh`。
 
-新建或修改普通 `el-select` 时默认添加 `filterable`；仅用户明确关闭或组件不兼容时例外。
+先按[候选规模契约](../references/query-select-contract.md#选择器按候选规模选型)选型：较大、无明确上限或可能增长的候选必须虚拟化，不能用普通 `el-select` 渲染全部选项。候选明确且小规模时可用普通组件，新增或修改普通 `el-select` 默认添加 `filterable`；仅用户明确关闭或组件不兼容时例外。filterable 本身不等于虚拟化。
 
 消息提示只能使用：
 

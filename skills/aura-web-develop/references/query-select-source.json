@@ -1,0 +1,111 @@
+{
+  "bindingStatus": "pending-source-commit",
+  "consumerBoundary": "queryFormat与formatQueryParams已随web-kit1.9.5发布，私服读回version/integrity一致；当前IoT项目已安装1.9.5并完成52查询入口、7类导出和1项分页排序的最终URL/body参数验证。其他消费者仍须核对实际安装；规范sourceCommit未提交仍pending。",
+  "sourceBaseCommit": "19633297291a53900cb0f135b8a94e47c0e494ce",
+  "sourceCommit": null,
+  "skillVersion": "1.6.11",
+  "skill": "aura-web-develop",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "documents": [
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/02-请求路由权限与数据适配.md",
+      "transformation": "局部同步新增或已确认修改的示例，调整本地相对链接并保留其余历史差异。",
+      "sourceSha256Lf": "5090bd4afe2ceec7d1e3ba97796c8d930971113d36443fde5c7dfc889d6aefa7",
+      "snapshotSha256Lf": "e87aa608aea09ac5e87230c8fcc2650ad1b11ad961033a0898abcb647ccd5f3a",
+      "snapshot": "knowledge/PIGX前端开发规范/工程与代码生成规范.md"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/04-工程与代码生成.md",
+      "transformation": "局部同步新增或已确认修改的示例，调整本地相对链接并保留其余历史差异。",
+      "sourceSha256Lf": "e28584b92b80a329cf5e8ca082d3445717bbeecd105b9040d61020019c69bf22",
+      "snapshotSha256Lf": "e87aa608aea09ac5e87230c8fcc2650ad1b11ad961033a0898abcb647ccd5f3a",
+      "snapshot": "knowledge/PIGX前端开发规范/工程与代码生成规范.md"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/05-开发边界与框架归属.md",
+      "transformation": "局部同步新增或已确认修改的示例，调整本地相对链接并保留其余历史差异。",
+      "sourceSha256Lf": "385c0f5ca421303b71bfc6eeb0153091d21d09127febec0b9c949a6e7a490e59",
+      "snapshotSha256Lf": "f4b15724e3efddc18e991a1939afca7f98eb7b62912b61968b27515dc85140eb",
+      "snapshot": "knowledge/PIGX前端开发规范/开发边界说明.md"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/06-aura-web-kit公共能力.md",
+      "transformation": "局部同步新增或已确认修改的示例，调整本地相对链接并保留其余历史差异。",
+      "sourceSha256Lf": "ff625b31534d84c1f22c990fcdda9bc7e7fb30158031a12265ecb9d91d177a56",
+      "snapshotSha256Lf": "57bd374144735e983c7c5158205d683c7c06fe7204cc1a407620cc78bfb26aab",
+      "snapshot": "knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/10-组件复用与公共UI.md",
+      "transformation": "局部同步新增或已确认修改的示例，调整本地相对链接并保留其余历史差异。",
+      "sourceSha256Lf": "0aceb6cb55de440c9e53cfdfa15f8ef6d1a5c04a0a6f1cc680580686e06b4d2e",
+      "snapshotSha256Lf": "fcecdee9d53ba94404b5b644690a3775fa506a60d79d96c4db3243e5b281b365",
+      "snapshot": "knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+      "transformation": "局部同步新增或已确认修改的示例，调整本地相对链接并保留其余历史差异。",
+      "sourceSha256Lf": "2796e32b13954ccc248c534c6af61349d6e3bc6b672b969be645286b5d87fba8",
+      "snapshotSha256Lf": "8e01d00b27aea88dfe4d558f12bef2068d4f707165c93c3fc8a9f32c826efb73",
+      "snapshot": "knowledge/PIGX前端开发规范/开发检查清单.md"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/13-参考页面样例.md",
+      "transformation": "局部同步新增或已确认修改的示例，调整本地相对链接并保留其余历史差异。",
+      "sourceSha256Lf": "963735665816f33085e64391447d7099f0d0594c371528feed612b32b36f07b6",
+      "snapshotSha256Lf": "0cdc1ea04190d368836c6b4495c226e94cf829e02eb138d79668dd4c26ed4da0",
+      "snapshot": "knowledge/PIGX前端开发规范/参考页面样例.md"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询表格页.md",
+      "transformation": "局部同步新增或已确认修改的示例，调整本地相对链接并保留其余历史差异。",
+      "sourceSha256Lf": "29e0e895f16f99f334419561455a1883cf18edc8ef37c3343bced191617230f9",
+      "snapshotSha256Lf": "cdf485f0541c044a84908240af99891e91e1a9879e93967c6cc2324ccbeaed82",
+      "snapshot": "knowledge/PIGX前端开发规范/页面模式/查询表格页.md"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询卡片页.md",
+      "transformation": "局部同步新增或已确认修改的示例，调整本地相对链接并保留其余历史差异。",
+      "sourceSha256Lf": "a0fa4826c7cf401e48e1ec89ac3ab2dfdff51673d97898ce08eb0d4ea460932d",
+      "snapshotSha256Lf": "a0685b30c4fdfc03ce3b46785adcae9b3414d17663049fdcfdd10aa20016acd1",
+      "snapshot": "knowledge/PIGX前端开发规范/页面模式/查询卡片页.md"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/弹窗表单.md",
+      "transformation": "局部同步新增或已确认修改的示例，调整本地相对链接并保留其余历史差异。",
+      "sourceSha256Lf": "cda1abffff5ac00bffb62a6ff84faceb0b6cffb705a4f2100cb6ada4b3e757f0",
+      "snapshotSha256Lf": "ef856e36cdeef4e02883a13036258c830743c9c629ae97474b642524bc6f0726",
+      "snapshot": "knowledge/PIGX前端开发规范/页面模式/弹窗表单.md"
+    }
+  ],
+  "updatedAt": "2026-11-03",
+  "sourceScope": "局部同步显式queryFormat请求配置、查询空值边界、虚拟化规则和相关原示例；保留无关历史差异。",
+  "publicPackageRelease": {
+    "version": "1.9.5",
+    "commit": "37ecefd74d4225f55a63069894dfe00162eec558",
+    "registry": "https://repository.fxft.online/repository/npm-store/",
+    "status": "published-registry-readback-verified"
+  },
+  "consumerValidation": {
+    "date": "2026-11-03",
+    "scope": "final-http-parameters-only",
+    "queries": 52,
+    "exports": 7,
+    "paginationSort": 1,
+    "passed": 60,
+    "evidenceProject": "aura-iotbus-web/.planning/2026-11-03-query-real-check",
+    "excludes": "backend result correctness, all filter combinations and page workflow certification",
+    "exportPaginationIsolation": "real shared export UI: injected current=2,size=1; final request excludes both; source retained before restoration",
+    "exportPaginationIsolationScope": "仅为不接收列表分页的特定导出示例验证，不代表所有导出接口；其他接口的分页及业务字段按各自真实契约处理。"
+  },
+  "exportContractCorrection": {
+    "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+    "sourceCommit": "209e1d17c62bcbea202cf4326cf86684f53bfc80",
+    "sourcePaths": [
+      "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/02-请求路由权限与数据适配.md",
+      "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+      "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询表格页.md"
+    ],
+    "scope": "仅导出参数按契约处理的章节与示例；完整来源文档和其他维护仍待绑定"
+  }
+}
