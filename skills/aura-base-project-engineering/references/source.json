@@ -237,8 +237,8 @@
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "007a61cc89441d24f7627a20754a6624d574ed2a294b535c4cdc1390ea1d865d",
-      "snapshotSha256Lf": "007a61cc89441d24f7627a20754a6624d574ed2a294b535c4cdc1390ea1d865d",
+      "sourceSha256Lf": "ed5f5b8b26cfa5309371fe9b9913aaaccaaa9f0072dfb179a85f0ac61a429598",
+      "snapshotSha256Lf": "ed5f5b8b26cfa5309371fe9b9913aaaccaaa9f0072dfb179a85f0ac61a429598",
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "007a61cc89441d24f7627a20754a6624d574ed2a294b535c4cdc1390ea1d865d"
@@ -409,7 +409,7 @@
       "snapshotSha256Lf": "e834b3d16a9cdc54e66af89b670c0d1d9d491b75f98f9a5e4c2ba9d7e2216b51",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "committedSourceSha256Lf": "538ca5ce84b8a9ee60e189967c30afc147dc27763da7ee1f8a3e6bf5807c8739"
+      "committedSourceSha256Lf": "e834b3d16a9cdc54e66af89b670c0d1d9d491b75f98f9a5e4c2ba9d7e2216b51"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/12-研发自测规范/01-范围与验证层级.md",
@@ -457,7 +457,7 @@
       "snapshotSha256Lf": "dc3c66aef17ba1e496d72f6593800971d5e5c5ced862a33ffc2e1fa5889d4508",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "committedSourceSha256Lf": "1a58ca4ff5f387c4c7cc1a8f29cd33d81a4639d53ce5560a679ebe993be39392"
+      "committedSourceSha256Lf": "dc3c66aef17ba1e496d72f6593800971d5e5c5ced862a33ffc2e1fa5889d4508"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/13-版本控制变更与交付规范/02-版本兼容与迁移.md",
@@ -518,8 +518,8 @@
       ],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "a9acb16c31deb505389a7cd1e0fce054aba77e22ce1503062053943a78c930b9",
-      "snapshotSha256Lf": "047eb11024630b2463dc3c4cdba729d06db7d01059985986e0f53f2d6354fd63",
+      "sourceSha256Lf": "b983c757e6ab69eda96453ad3bdd4c29ca865b5289e01421558b27dbf28eed67",
+      "snapshotSha256Lf": "303632e571f2a1d377e7df1dabb90f656c32c57ec07544869b79da6709921229",
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "a9acb16c31deb505389a7cd1e0fce054aba77e22ce1503062053943a78c930b9"
@@ -547,17 +547,29 @@
       ],
       "sourceKind": "authority",
       "authorityStatus": "pending",
-      "sourceSha256Lf": "a61f2b68f295e7122a97667ca8e6d5add21e95dcd94eb39cc4640c5c7cfcc6bb",
-      "snapshotSha256Lf": "575e6a3d013a2f8daf4a85a823beb7dbd58ba280025c99a01f0670be116024b0",
+      "sourceSha256Lf": "1568b95dde8af5ac0b8df3b5a98b96c0a28b305854eb3f2ed8093eaae92dc182",
+      "snapshotSha256Lf": "645ade931ca6a2435d5dc17356b18b721b3bf39dc18921cc844983670e20cf00",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "committedSourceSha256Lf": "4b26786d004666ecad11dd6bec5a3225e6d63e5c0cab5dbe6f96f6c11ee9e3b0"
+      "committedSourceSha256Lf": "a61f2b68f295e7122a97667ca8e6d5add21e95dcd94eb39cc4640c5c7cfcc6bb"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/10-异步任务消息与外部系统集成规范/03-定时任务与调度.md",
+      "snapshot": "references/standards/01-基础编码规范/10-异步任务消息与外部系统集成规范/03-定时任务与调度.md",
+      "navigationTargetsRemoved": [
+        "../../05-能力包/01-通用工具类/08-任务与调度能力包/能力详细说明.md"
+      ],
+      "sourceKind": "authority",
+      "authorityStatus": "working-tree-new-source",
+      "sourceSha256Lf": "e16fb1c36bc859d647203c833a1aa50a46f45aee4d0bbe858816d53239fcb3da",
+      "snapshotSha256Lf": "e3ace34f4c05deb38d6027ffba457aca5ebb22903402ba88c149a4b060e180e4",
+      "committedSourceSha256Lf": null
     }
   ],
   "coverage": "覆盖本技能 references/standards 下全部规范视图；技能自有导航单独登记。",
-  "skillVersion": "1.2.0",
+  "skillVersion": "1.2.1",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
+  "sourceCommit": "6d7951e413ec9ca587b35d53d585d7fa8f62ef6c",
   "skillResources": [
     {
       "path": "references/任务路由.md",
@@ -576,7 +588,9 @@
   "snapshotRoot": "",
   "sourceBinding": {
     "status": "pending",
-    "note": "Git提交规范VC-015～021及矩阵已按两轮确认同步到工作树；保留原精确提交和提交内摘要，规范提交后重新绑定。此状态不代表已发布或安装。"
+    "commit": "6d7951e413ec9ca587b35d53d585d7fa8f62ef6c",
+    "date": "2026-11-04",
+    "note": "Scheduled task rules ASYNC-027..034, task design section and selected shared views synchronized from authority worktree. New normative source is not committed; original commit digests retained, exact binding pending. No publication or installation."
   },
   "databaseQueryEvolutionRevision": {
     "skillVersion": "1.1.1",
@@ -622,6 +636,37 @@
       "./04-前端基础编码规范/06-aura-web-kit公共能力.md#数据副本与克隆",
       "./04-前端基础编码规范/06-aura-web-kit公共能力.md#表单公共契约与版本"
     ],
+    "publishedOrInstalled": false
+  },
+  "moduleDataPermissionPolicyRevision": {
+    "date": "2026-11-04",
+    "ruleId": "AURA-BASE-SEC-006",
+    "previousSkillVersion": "1.2.0",
+    "skillVersion": "1.2.1",
+    "decision": "Standard tenant/creator/organization dimensions are selected by module; custom authorization follows the business design. Reuse existing decisions and ask only when a missing decision affects authorization.",
+    "scope": "Entry trigger for backend development, policy-based read-only review, and shared authority view for interface/engineering consumers.",
+    "newRuleId": false,
+    "publishedOrInstalled": false,
+    "validation": "Four skill structures passed; package verification has zero errors and four pending-source records across the synchronized consumers. Authority changes are not committed; no independent behavior trial, publication or installation performed."
+  },
+  "scheduledTaskRevision": {
+    "date": "2026-11-04",
+    "previousSkillVersion": "1.2.1",
+    "skillVersion": "1.2.1",
+    "rules": [
+      "AURA-BASE-ASYNC-027",
+      "AURA-BASE-ASYNC-028",
+      "AURA-BASE-ASYNC-029",
+      "AURA-BASE-ASYNC-030",
+      "AURA-BASE-ASYNC-031",
+      "AURA-BASE-ASYNC-032",
+      "AURA-BASE-ASYNC-033",
+      "AURA-BASE-ASYNC-034"
+    ],
+    "scope": "Timed-task design, development and policy-based review. Reuse framework executor only when selected; no mandatory shared lock, ledger or scheduler installation.",
+    "schedulerSelectionPolicy": "Maintainer confirmed: prefer existing XXL-JOB for governed business jobs requiring central enable/disable, manual replay, retry or multi-instance management; allow Scheduled for per-process maintenance safe on every instance. Reuse decided module designs; no indiscriminate legacy migration.",
+    "capabilityBaseline": "aura-core-common dev@53bcd77 POM/BOM declare XXL-JOB3.4.2; assembly source inspected, no executor registration/runtime verification.",
+    "validation": "Five skill structures passed; 8 rule examples/IDs and 153 local normative links checked; existing design example mechanical check passed. Package:0 errors,5 pending-source bindings plus4 new-source-missing-in-old-commit records. No scheduled-task behavior trial, executor registration or real trigger verification.",
     "publishedOrInstalled": false
   }
 }

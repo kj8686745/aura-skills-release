@@ -7,8 +7,8 @@
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "67038551792da307beb153c54d424fa6d6a1df33fa2563868d5e73f3a0c2f783",
-      "snapshotSha256Lf": "67038551792da307beb153c54d424fa6d6a1df33fa2563868d5e73f3a0c2f783",
+      "sourceSha256Lf": "00ee825047983ab6fb16b1e869b7be3ad8c241b3bfd81c04cf9864e048ed5ef6",
+      "snapshotSha256Lf": "00ee825047983ab6fb16b1e869b7be3ad8c241b3bfd81c04cf9864e048ed5ef6",
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "67038551792da307beb153c54d424fa6d6a1df33fa2563868d5e73f3a0c2f783"
@@ -19,8 +19,8 @@
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "b1c3b5550b0bd050bae77d042cc059d05b9d199739a26ae516d4a2f7f34ebc06",
-      "snapshotSha256Lf": "b1c3b5550b0bd050bae77d042cc059d05b9d199739a26ae516d4a2f7f34ebc06",
+      "sourceSha256Lf": "723a020272cd2e15e7086365ff80bb024622e233c77cd9ac21c0fe28930d4381",
+      "snapshotSha256Lf": "723a020272cd2e15e7086365ff80bb024622e233c77cd9ac21c0fe28930d4381",
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "b1c3b5550b0bd050bae77d042cc059d05b9d199739a26ae516d4a2f7f34ebc06"
@@ -31,28 +31,30 @@
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "c1890c226d8dc3c0969844066dbe9f986ced6a9ee105f2013ac6a4a0725ea208",
-      "snapshotSha256Lf": "c1890c226d8dc3c0969844066dbe9f986ced6a9ee105f2013ac6a4a0725ea208",
+      "sourceSha256Lf": "434b21185f9089884c4e530443007f64349f3586957df7097003cfa374ddf88b",
+      "snapshotSha256Lf": "434b21185f9089884c4e530443007f64349f3586957df7097003cfa374ddf88b",
       "inheritedSource": null,
       "inheritedCommit": null,
-      "committedSourceSha256Lf": "f2e9f5b92bec4bf74737c6701f3ce65679581a4eec39a8dd4898e479863b00e1"
+      "committedSourceSha256Lf": "c1890c226d8dc3c0969844066dbe9f986ced6a9ee105f2013ac6a4a0725ea208"
     }
   ],
   "coverage": "覆盖本技能全部三份同版规范、模板和示例；任务导航与只读检查脚本单独登记。",
-  "skillVersion": "0.2.0-draft",
+  "skillVersion": "0.3.0-draft",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "55f347a26a89fadd8a29e7b56b505ecf6846d198",
+  "sourceCommit": "6d7951e413ec9ca587b35d53d585d7fa8f62ef6c",
   "sourceRoot": "",
   "snapshotRoot": "",
   "sourceBinding": {
     "status": "pending",
-    "reason": "设备审核通知示例0.1.1-draft修订尚未提交；保留三份提交基线与工作树摘要。"
+    "commit": "6d7951e413ec9ca587b35d53d585d7fa8f62ef6c",
+    "date": "2026-11-04",
+    "note": "Scheduled task rules ASYNC-027..034, task design section and selected shared views synchronized from authority worktree. New normative source is not committed; original commit digests retained, exact binding pending. No publication or installation."
   },
   "skillResources": [
     {
       "path": "references/任务路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "48c09b1bd5a76bc0a32a95ce797edd52744b984a8d164e1d359b3f3f04c96de0"
+      "sha256Lf": "00c52955efb78cb0e617d269292b228cc320b6e71318b3ba1e90d4181dfd7e26"
     },
     {
       "path": "scripts/check-detailed-design.py",
@@ -61,5 +63,62 @@
     }
   ],
   "transformation": "仅移除登记的跨范围导航目标，保留链接文字；正文与示例不改写。",
-  "behaviorValidation": "26个文档工具隔离用例通过。独立只读复核发现原示例三处语义缺口；修正为示例0.1.1-draft后由新的独立Agent复核，确认未知结果/处理权恢复及分步准入已表达，又发现时序图、M-03迁移及路线图遗漏。主Agent逐项补齐并核对最终3模块/3契约，机械检查通过；未再独立复核最终图表。新建/局部修订行为及真实项目未验收，未发布。"
+  "behaviorValidation": "26个文档工具隔离用例通过。独立只读复核发现原示例三处语义缺口；修正为示例0.1.1-draft后由新的独立Agent复核，确认未知结果/处理权恢复及分步准入已表达，又发现时序图、M-03迁移及路线图遗漏。主Agent逐项补齐并核对最终3模块/3契约，机械检查通过；未再独立复核最终图表。新建/局部修订行为及真实项目未验收，未发布。",
+  "technicalDesignPolicyHandoffRevision": {
+    "date": "2026-11-04",
+    "skillVersion": "0.2.1-draft",
+    "normRules": [
+      "AURA-DES-009",
+      "AURA-BASE-SEC-006"
+    ],
+    "scope": "Module-specific permission scheme in the main technical design; backend reads effective design/module/policy and implements entry, service, query/write and verification conditions; review checks the same policy.",
+    "versionPolicy": "Extend the same unpublished patch revision for backend/review; detailed-design moves from 0.2.0-draft to 0.2.1-draft.",
+    "validation": "Five structures and shared-source views checked; 5 authority-commit bindings remain pending. Independent design/development plus root semantic correction produced a 2-module/2-contract isolated sample. Real H2 tests:32, failures:0, errors:0, skips:0. Root verified raw XML, SQL/assertions, 12 frozen files and database-state evidence. Independent bounded review:22 rules,21 pass,1 real-identity unverified,0 confirmed deviations; report/evidence/capability checks passed; source unchanged. No actual AURA authentication, HTTP, container assembly, PostgreSQL or production acceptance.",
+    "publishedOrInstalled": false,
+    "isolatedTrial": {
+      "date": "2026-11-04",
+      "designId": "PERM-SAMPLE-DES-001",
+      "designVersion": "1.0.0",
+      "runtimeCases": 32,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "reviewStatus": "bounded-review-completed",
+      "rootSemanticCorrection": "Successful EDIT returns only id/version when READ is not granted. Corrected design before coding.",
+      "evidenceLocator": "workspace: 验证产物/权限策略设计开发闭环-20261104/00-验证结果.md",
+      "evidencePackagedWithSkill": false,
+      "sourceState": "uncommitted-worktree",
+      "businessProjectModified": false,
+      "review": {
+        "sourceFiles": 12,
+        "uniqueRules": 22,
+        "passed": 21,
+        "unverified": 1,
+        "confirmedDeviations": 0,
+        "sourceChangedDuringReview": false,
+        "repeatedSameTests": false
+      },
+      "endToEndStatus": "passed-with-root-design-semantic-correction; isolated-sample-only"
+    }
+  },
+  "scheduledTaskRevision": {
+    "date": "2026-11-04",
+    "previousSkillVersion": "0.2.1-draft",
+    "skillVersion": "0.3.0-draft",
+    "rules": [
+      "AURA-BASE-ASYNC-027",
+      "AURA-BASE-ASYNC-028",
+      "AURA-BASE-ASYNC-029",
+      "AURA-BASE-ASYNC-030",
+      "AURA-BASE-ASYNC-031",
+      "AURA-BASE-ASYNC-032",
+      "AURA-BASE-ASYNC-033",
+      "AURA-BASE-ASYNC-034"
+    ],
+    "scope": "Timed-task design, development and policy-based review. Reuse framework executor only when selected; no mandatory shared lock, ledger or scheduler installation.",
+    "schedulerSelectionPolicy": "Maintainer confirmed: prefer existing XXL-JOB for governed business jobs requiring central enable/disable, manual replay, retry or multi-instance management; allow Scheduled for per-process maintenance safe on every instance. Reuse decided module designs; no indiscriminate legacy migration.",
+    "capabilityBaseline": "aura-core-common dev@53bcd77 POM/BOM declare XXL-JOB3.4.2; assembly source inspected, no executor registration/runtime verification.",
+    "validation": "Five skill structures passed; 8 rule examples/IDs and 153 local normative links checked; existing design example mechanical check passed. Package:0 errors,5 pending-source bindings plus4 new-source-missing-in-old-commit records. No scheduled-task behavior trial, executor registration or real trigger verification.",
+    "publishedOrInstalled": false
+  }
 }
