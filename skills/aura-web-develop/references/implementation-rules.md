@@ -6,7 +6,8 @@
 
 - 项目、目录、Vue/CSS/SCSS/HTML 和静态资源文件使用小写 `kebab-case`；JavaScript/TypeScript 模块文件使用 `camelCase`，例如 `mapConfig.ts`、`coordinateTransform.ts`。
 - 组合式 Hook 文件使用 `useXxx.ts`，导出函数使用 `useXxx`；Vue 组件名使用 PascalCase，组件文件仍使用 `kebab-case`。
-- 函数、方法、变量、参数和对象成员使用 lowerCamelCase；常量使用 UPPER_SNAKE_CASE；类型、接口、枚举和类使用 PascalCase。
+- 函数、方法、变量、参数和对象成员使用 lowerCamelCase；固定业务常量使用 UPPER_SNAKE_CASE；类型、接口、枚举和类使用 PascalCase。
+- 业务常量与可变默认值按[常量归属与定义](../knowledge/PIGX前端开发规范/工程与代码生成规范.md#前端常量归属与定义)核对实际消费者、单位、固定/动态边界和工厂；固定编码映射成员随常量使用 UPPER_SNAKE_CASE，普通对象成员仍为 lowerCamelCase；普通 const/ref/computed/函数不因此大写。
 - CSS/SCSS 类名使用小写 `kebab-case`，组件样式优先采用 BEM（`block__element--modifier`）；避免标签、ID 和全局通配符选择器。
 - 函数名必须包含动作和业务对象语义，禁止使用 `save`、`query`、`data1`、`useData` 等无法表达职责的过泛名称。
 - 新增命名必须使用正确英文单词，禁止拼音、中文、无意义缩写和大小写混用；已有文件不因本规则批量重命名。

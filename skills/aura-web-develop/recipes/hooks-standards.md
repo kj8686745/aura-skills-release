@@ -77,7 +77,7 @@ const { clearFormValidate, resetForm, validateForm } = useForm();
 
 ### 当前扩展契约
 
-以下能力已在 web-kit 源码提交 `df7206233306299fdb4d327a22f5d34c8177faed` 实现。旧版已发布 `1.9.0/1.9.1` 不因版本号相同就具有本轮实现；只有项目已安装的公开声明和实际包内容可证明支持，技能不自动升级项目依赖，也不改变既有框架版本基线。来源与发布状态见[表单维护记录](../references/form-hook-source.json)。
+当前已安装 1.9.6 的字段校验与初值克隆契约见[公共表单契约与版本](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md#表单公共契约与版本)。其他消费者仍须核对实际声明、包内容与运行环境，不推定旧包具有新语义；历史实现依据保留在[表单维护记录](../references/form-hook-source.json)。
 
 - 字段联动或分步校验必须使用支持版本的 `validateFormFields(formRef, props)`，复用实例的 `validateField`；业务不得直接调用实例 `validateField` 或在页面重新包装对应公共能力。需要该能力而安装包缺失时记明确缺口，按任务授权升级；不能假称已接入或返回成功。字段级校验不替代业务要求的最终整表校验。
 - `props` 支持 `'name'`、`['startAt', 'plannedRestoreAt']`、点路径 `'rows.0.name'` 和单字段分段路径 `[['rows', '0', 'name']]`。空路径、未挂载、缺能力、false 或异常均不放行；必须核对实际 FormItem prop、规则及挂载，不能将未注册字段的组件返回值当作已经校验的证据。

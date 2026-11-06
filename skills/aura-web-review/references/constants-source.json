@@ -1,0 +1,162 @@
+{
+  "skill": "aura-web-review",
+  "updatedAt": "2026-11-06",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
+  "snapshotRoot": "knowledge/PIGX前端开发规范",
+  "sourceCommit": null,
+  "sourceBaseCommit": "d20bfdcca60ff22f5d5e93dfea1db6a63e4ee843",
+  "sourceBinding": {
+    "status": "pending",
+    "baseCommit": "d20bfdcca60ff22f5d5e93dfea1db6a63e4ee843",
+    "reason": "本轮前端常量规则、模板和核验项已归入既有前端文档；规范工作树尚未提交，基线只供追溯，不冒充新内容提交。"
+  },
+  "documents": [
+    {
+      "source": "00-前端开发总览.md",
+      "snapshot": "PIGX前端开发总览.md",
+      "sourceSha256Lf": "28d19abcba78781fb5cc9342a824bd9026940b3e8f09f554576287641d91149a",
+      "snapshotSha256Lf": "7bf79b41a797fbf7748549361d41ae6e0933005989e5d1775ed898abf50bd7b8",
+      "committedSourceSha256Lf": "64e4d604282205576f573c06ef5c267423660607de2b192ac4032468ef367209",
+      "sourceExistsAtBase": true,
+      "transformation": "仅本轮前端常量章节、样例、阅读导航或检查项同步；标题层级与链接沿用各文档格式，其余历史视图差异保留，不宣称全文等价。可复现局部比对见scopeEvidence.sections。"
+    },
+    {
+      "source": "04-工程与代码生成.md",
+      "snapshot": "工程与代码生成规范.md",
+      "sourceSha256Lf": "e96eb4b1c04825adc469694a2ee0dfa6cd1ea88a3346dff17ac0be7d72827c82",
+      "snapshotSha256Lf": "b8e595058c230a6db5c3c359530ea5f973f541a45e2b640d956cfe2cfc18112f",
+      "committedSourceSha256Lf": "18e9d52e3f4e202d54a9708ad588ec3eeb5793433576fa065621ee95b70bfb8f",
+      "sourceExistsAtBase": true,
+      "transformation": "仅本轮前端常量章节、样例、阅读导航或检查项同步；标题层级与链接沿用各文档格式，其余历史视图差异保留，不宣称全文等价。可复现局部比对见scopeEvidence.sections。"
+    },
+    {
+      "source": "12-研发自检与交付.md",
+      "snapshot": "开发检查清单.md",
+      "sourceSha256Lf": "af1ecce854f951313bc17a48a9d2955b7443a903d99ac651537df944bb18a8bb",
+      "snapshotSha256Lf": "2dc383c5683b76488bca1f1611f9a32595a335f7c7e2aa9bc9b7a79f466daa83",
+      "committedSourceSha256Lf": "3aef28757b8d4268e3538a43968c257cad82799b391582c51428e81e3d83cb00",
+      "sourceExistsAtBase": true,
+      "transformation": "仅本轮前端常量章节、样例、阅读导航或检查项同步；标题层级与链接沿用各文档格式，其余历史视图差异保留，不宣称全文等价。可复现局部比对见scopeEvidence.sections。"
+    },
+    {
+      "source": "13-参考页面样例.md",
+      "snapshot": "参考页面样例.md",
+      "sourceSha256Lf": "d988a69d8deb770592895b35f81143e6aeedde538fa9cc4dbd4ccc1f31ec14c5",
+      "snapshotSha256Lf": "e9f41c45127045badc638aa7a2cf41137bfcd13ea8c042af4bab94250c693c7b",
+      "committedSourceSha256Lf": "963735665816f33085e64391447d7099f0d0594c371528feed612b32b36f07b6",
+      "sourceExistsAtBase": true,
+      "transformation": "仅本轮前端常量章节、样例、阅读导航或检查项同步；标题层级与链接沿用各文档格式，其余历史视图差异保留，不宣称全文等价。可复现局部比对见scopeEvidence.sections。"
+    },
+    {
+      "source": "文件组织与职责拆分.md",
+      "snapshot": "文件组织与职责拆分.md",
+      "sourceSha256Lf": "24ed0c22441130b42b20afaa715a24c262b198fff3dc9486af55411c96b1de7c",
+      "snapshotSha256Lf": "2092bd07dfda34b2370acd544daf14c1dcb890a1548acd380394cd1fde3d1abb",
+      "committedSourceSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
+      "sourceExistsAtBase": true,
+      "transformation": "仅本轮前端常量章节、样例、阅读导航或检查项同步；标题层级与链接沿用各文档格式，其余历史视图差异保留，不宣称全文等价。可复现局部比对见scopeEvidence.sections。"
+    }
+  ],
+  "scopeEvidence": {
+    "hashAlgorithm": "SHA256 UTF-8 content; normalize CRLF to LF only; do not trim whitespace",
+    "sourceFiles": [
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/00-前端开发总览.md",
+        "workingTreeSha256Lf": "28d19abcba78781fb5cc9342a824bd9026940b3e8f09f554576287641d91149a",
+        "baselineSha256Lf": "64e4d604282205576f573c06ef5c267423660607de2b192ac4032468ef367209"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/04-工程与代码生成.md",
+        "workingTreeSha256Lf": "e96eb4b1c04825adc469694a2ee0dfa6cd1ea88a3346dff17ac0be7d72827c82",
+        "baselineSha256Lf": "18e9d52e3f4e202d54a9708ad588ec3eeb5793433576fa065621ee95b70bfb8f"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+        "workingTreeSha256Lf": "af1ecce854f951313bc17a48a9d2955b7443a903d99ac651537df944bb18a8bb",
+        "baselineSha256Lf": "3aef28757b8d4268e3538a43968c257cad82799b391582c51428e81e3d83cb00"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/13-参考页面样例.md",
+        "workingTreeSha256Lf": "d988a69d8deb770592895b35f81143e6aeedde538fa9cc4dbd4ccc1f31ec14c5",
+        "baselineSha256Lf": "963735665816f33085e64391447d7099f0d0594c371528feed612b32b36f07b6"
+      },
+      {
+        "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/文件组织与职责拆分.md",
+        "workingTreeSha256Lf": "24ed0c22441130b42b20afaa715a24c262b198fff3dc9486af55411c96b1de7c",
+        "baselineSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30"
+      }
+    ],
+    "sections": [
+      {
+        "source": "04-工程与代码生成.md",
+        "sourceStart": "#### 前端常量归属与定义",
+        "sourceEndExclusive": "### 三、API 封装",
+        "snapshot": "工程与代码生成规范.md",
+        "snapshotStart": "#### 前端常量归属与定义",
+        "snapshotEndExclusive": "### 三、API 封装",
+        "normalization": "compare heading text without leading # and rewrite only engineering/sample local filenames"
+      },
+      {
+        "source": "13-参考页面样例.md",
+        "sourceStart": "## 样例 9：前端常量定义与复用",
+        "sourceEndExclusive": "## 参考样例回流规范",
+        "snapshot": "参考页面样例.md",
+        "snapshotStart": "## 样例 9：前端常量定义与复用",
+        "snapshotEndExclusive": "## 参考样例回流规范",
+        "normalization": "rewrite only engineering local filename; other text and all TS statements unchanged"
+      }
+    ],
+    "placement": "总览按任务阅读；工程目录和命名；公共检查/代码生成检查；样例9位于参考样例回流规范之前；矩阵保留原FE-019规则名，无独立常量补充段落"
+  },
+  "impact": {
+    "rules": [
+      "AURA-BASE-FE-019",
+      "AURA-BASE-FE-001",
+      "AURA-BASE-FE-002",
+      "AURA-BASE-FE-003",
+      "AURA-BASE-FE-004"
+    ],
+    "development": "按需读取常量定义和消费模板，沿最小共同归属实现",
+    "review": "正式/变更/开发自检追踪定义、消费者、真实契约与导入方向；目录缺失不单独判偏差",
+    "catalog": "既有技能职责和公开资格不变，无新增技能或规则 ID，不修改分类清单",
+    "version": "归并当前未发布版本条目，版本入口保持一致"
+  },
+  "preservedHistory": [
+    "source.json",
+    "file-organization-source.json",
+    "i18n-reuse-source.json",
+    "permission-source.json"
+  ],
+  "validation": {
+    "state": "scoped-layout-and-reference-checks-passed; source-commit-binding-pending",
+    "scope": "本轮常量规则、示例、清单和导航的归位；不代表历史整包或业务运行验收",
+    "structure": "两个quick_validate.py与开发validate-skill.ps1通过",
+    "linksAndSections": "迁移章节按已声明标题层级和文件名适配比对一致；本轮新增/重定向本地链接及锚点有效",
+    "examples": "7段TS语句逐块比对未改变，沿用先前严格类型、阈值边界和工厂实例隔离证据；本轮未重复运行镜像测试",
+    "formatting": "无项目本地Prettier/config，沿既有文档标题、表格、清单及代码块格式整理，未安装工具",
+    "diffCheck": "两仓git diff --check通过；最终摘要写入后再次核对",
+    "evidence": ".planning/2026-11-06-frontend-constants-20261106/layout-validation.txt"
+  },
+  "deliveryState": "local-working-tree; not-committed; not-installed; not-published",
+  "layoutRevision": {
+    "date": "2026-11-06",
+    "scope": "逐份核对本轮常量改动，不改技能编写规范和历史无关规则",
+    "result": "取消文末常量配套资料和独立常量文档，归入既有章节；实现清单移至工程职责，命名与实现指引移至命名条目，审查归入FE-019路由行",
+    "removedDraft": "本任务新建且未提交的常量归属与定义.md在三处均已整合删除；规则与模板分别保留于工程规范和参考样例"
+  },
+  "historicalValidationBeforeLayoutIntegration": {
+    "state": "scoped-checks-passed; exact-source-commit-binding-pending; full-package-baseline-not-passed",
+    "scope": "本轮常量正文、两个同版视图、导航章节、开发与审查路由；不代表历史整包或业务运行通过",
+    "formatting": "两仓根未提供本地 Prettier 或配置，桌面依赖未提供 Prettier；沿现有 Markdown/JSON 格式，不安装工具",
+    "structure": "两个 quick_validate.py、开发 validate-skill.ps1 均 exit 0",
+    "sourceAndLinks": "documents/scopeEvidence 工作树及非空基线 LF SHA256 一致；两个正文同版；四个追加导航章节与源一致；本轮新增链接及锚点有效",
+    "examples": "7 段 TS 示例 strict/noEmit 通过；上传数量/大小、告警阈值边界、工厂对象与数组实例隔离断言通过；状态联合类型接受合法编码并拒绝未知编码",
+    "semanticReview": "主代理完成10类静态场景推演；未做真实业务项目运行验收",
+    "packageBaseline": "check-skill-package.ps1 exit 1：22 error、2 incomplete，涉及历史 source.json/旧快照；本轮 constants-source.json 与常量正文无报错，保留旧记录不扩修",
+    "diffCheck": "两仓 git diff --check exit 0；最终记录写入后再次核对",
+    "evidence": ".planning/2026-11-06-frontend-constants-20261106/validation/ (skill repository; scoped maintenance evidence only)",
+    "temporaryArtifacts": "TS 样本与临时校验脚本已清理，仅保留结果证据"
+  },
+  "relatedMaintenance": "同轮历史迭代修订见iteration-source.json；本记录只对常量部分及其当前快照摘要负责，不将历史整包验证升级为通过。"
+}

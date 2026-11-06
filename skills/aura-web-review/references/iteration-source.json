@@ -1,0 +1,93 @@
+{
+  "skill": "aura-web-review",
+  "updatedAt": "2026-11-06",
+  "change": "前端历史迭代六项审查发现修订与取证路由归位",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
+  "snapshotRoot": "knowledge/PIGX前端开发规范",
+  "sourceCommit": null,
+  "sourceBaseCommit": "d20bfdcca60ff22f5d5e93dfea1db6a63e4ee843",
+  "sourceBinding": {
+    "status": "pending",
+    "baseCommit": "d20bfdcca60ff22f5d5e93dfea1db6a63e4ee843",
+    "reason": "前端规范工作树含本轮未提交修订；本记录区分提交基线与当前内容，不以基线冒充新内容提交。"
+  },
+  "documents": [
+    {
+      "source": "06-aura-web-kit公共能力.md",
+      "snapshot": "aura-web-kit能力清单与接入规范.md",
+      "sourceSha256Lf": "350ee2aeaa9775c79478fbb3a105549fc051b2d4a043de8eb51f2d744dde6f41",
+      "snapshotSha256Lf": "ac5887b4798d508a5fa7cd00638d42bf90ee12495385cf11462263b9c33353b8",
+      "committedSourceSha256Lf": "243e9a545c33625d98677c0c30d94b17ad237e3a752501c67e3ecac85e5eec2c",
+      "sourceExistsAtBase": true,
+      "transformation": "本轮只同步相关规则、生命周期示例或整理既有视图；保留原目录、标题层级、前端审查边界和其他历史差异，不宣称整份快照逐字等价。局部行为与引用按validation及记录的核对范围验证。"
+    },
+    {
+      "source": "08-模块联邦开发与构建.md",
+      "snapshot": "模块联邦开发技术规范.md",
+      "sourceSha256Lf": "1a543361880cb083658022a40b8b9303855081a642975ae3f98edef983aee00d",
+      "snapshotSha256Lf": "ffc25370e0cb4929fd204c66472d16421c1515f6724f8d12a6754bbe0496d96c",
+      "committedSourceSha256Lf": "151b4c0522df4a3e6fc2434ef588575aec5fdb63b3aef50ecd7b3088928ba21d",
+      "sourceExistsAtBase": true,
+      "transformation": "本轮只同步相关规则、生命周期示例或整理既有视图；保留原目录、标题层级、前端审查边界和其他历史差异，不宣称整份快照逐字等价。局部行为与引用按validation及记录的核对范围验证。"
+    },
+    {
+      "source": "页面模式/弹窗表单.md",
+      "snapshot": "页面模式/弹窗表单.md",
+      "sourceSha256Lf": "b9dc539045426c40ea46ebac616faf6d76e1f537fdfee36281f267aee042e1f0",
+      "snapshotSha256Lf": "21e16f8d9b7c7fc4c42e58dfe874354557c4dcb47902d6f5b55a4ad11281f737",
+      "committedSourceSha256Lf": "4755666993eea171d42a6ce3263b8b67530f7e29cc065b5edd600bb01eded8e9",
+      "sourceExistsAtBase": true,
+      "transformation": "本轮只同步相关规则、生命周期示例或整理既有视图；保留原目录、标题层级、前端审查边界和其他历史差异，不宣称整份快照逐字等价。局部行为与引用按validation及记录的核对范围验证。"
+    },
+    {
+      "source": "00-前端开发总览.md",
+      "snapshot": "PIGX前端开发总览.md",
+      "sourceSha256Lf": "28d19abcba78781fb5cc9342a824bd9026940b3e8f09f554576287641d91149a",
+      "snapshotSha256Lf": "7bf79b41a797fbf7748549361d41ae6e0933005989e5d1775ed898abf50bd7b8",
+      "committedSourceSha256Lf": "64e4d604282205576f573c06ef5c267423660607de2b192ac4032468ef367209",
+      "sourceExistsAtBase": true,
+      "transformation": "本轮只同步相关规则、生命周期示例或整理既有视图；保留原目录、标题层级、前端审查边界和其他历史差异，不宣称整份快照逐字等价。局部行为与引用按validation及记录的核对范围验证。"
+    },
+    {
+      "source": "10-组件复用与公共UI.md",
+      "snapshot": "组件复用与公司基础组件库规范.md",
+      "sourceSha256Lf": "d098a8206d8850c4207d32249cebff05d8f17efbe7c55abaf73f0723ac841b40",
+      "snapshotSha256Lf": "80298d0a863e8625a65573a55efc32fb8b0b1b23c61206663d5e4df4dbf9b1b1",
+      "committedSourceSha256Lf": "0aceb6cb55de440c9e53cfdfa15f8ef6d1a5c04a0a6f1cc680580686e06b4d2e",
+      "sourceExistsAtBase": true,
+      "transformation": "本轮只同步相关规则、生命周期示例或整理既有视图；保留原目录、标题层级、前端审查边界和其他历史差异，不宣称整份快照逐字等价。局部行为与引用按validation及记录的核对范围验证。"
+    },
+    {
+      "source": "02-请求路由权限与数据适配.md",
+      "snapshot": "工程与代码生成规范.md",
+      "sourceSha256Lf": "5090bd4afe2ceec7d1e3ba97796c8d930971113d36443fde5c7dfc889d6aefa7",
+      "snapshotSha256Lf": "b8e595058c230a6db5c3c359530ea5f973f541a45e2b640d956cfe2cfc18112f",
+      "committedSourceSha256Lf": "5090bd4afe2ceec7d1e3ba97796c8d930971113d36443fde5c7dfc889d6aefa7",
+      "sourceExistsAtBase": true,
+      "transformation": "本轮只同步相关规则、生命周期示例或整理既有视图；保留原目录、标题层级、前端审查边界和其他历史差异，不宣称整份快照逐字等价。局部行为与引用按validation及记录的核对范围验证。"
+    }
+  ],
+  "scope": {
+    "fixedFindings": [
+      "F-01 当前精确依赖版本口径冲突",
+      "F-02 异步校验前防重及旧目标/异常释放",
+      "F-03 补丁符号残留",
+      "F-04 查询小节重复标题",
+      "F-05 能力与组件介绍文末追加",
+      "F-06 构建正文在最终检查后及编号倒退"
+    ],
+    "organization": "S-01专项取证集中排列后再规范选读与判定",
+    "viewOnlyAdaptations": "字典组件API介绍仍为既有技能本地补充，仅移入Aura公共UI；源10只统一当前web-kit口径。开发查询小节来自源02，保留正文，仅修标题。",
+    "excluded": "不修改技能编写/目录治理规范、发布工具、真实业务项目；不安装或发布技能。"
+  },
+  "validation": {
+    "state": "behavior-and-scoped-structure-passed; source-commit-binding-pending",
+    "template": "三方完整生命周期script一致；使用明确边界类型完成strict TypeScript，7个隔离时序场景通过；不是浏览器或真实接口验收。",
+    "documents": "本轮移位的8份能力/构建/组件文档原有fenced代码块均保留；本地链接、标题与六项关闭条件按最终document-validation.json核对。",
+    "formatting": "两仓无本地Prettier/config，沿用既有Markdown格式，不安装工具；最终git diff --check复核。",
+    "evidence": ".planning/2026-11-06-frontend-constants-20261106/historical-layout-review/revision/ (skill repository; maintenance evidence only)"
+  },
+  "historyPolicy": "来源记录不重复维护当前技能版本；旧来源与旧审查证据保留，本次归并当前未发布CHANGELOG条目。",
+  "deliveryState": "local-working-tree; not-committed; not-pushed; not-installed; not-published"
+}

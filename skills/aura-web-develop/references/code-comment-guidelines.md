@@ -381,7 +381,7 @@ await clearFormValidate(formRef);
 
 API 函数说明用途和特殊契约：
 
-以下查询示例仅在目标安装包已实际支持 request 的 queryFormat 配置后使用；当前 1.9.0/1.9.3 基线安装不因技能示例而自动获得新入口。缺能力时先记录公共依赖缺口，不直接拷贝 import 或另写业务副本。查询提交边界见[专项契约](query-select-contract.md)。
+以下查询示例仅在目标安装包已实际支持 request 的 queryFormat 配置后使用；旧版 1.9.0/1.9.3 安装不因技能示例而自动获得新入口，当前能力按公共能力清单及项目实际安装核对。缺能力时先记录公共依赖缺口，不直接拷贝 import 或另写业务副本。查询提交边界见[专项契约](query-select-contract.md)。
 
 ```ts
 

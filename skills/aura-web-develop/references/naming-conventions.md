@@ -18,7 +18,8 @@
 ## 代码标识符
 
 - 函数、方法、变量、参数和对象成员使用 lowerCamelCase，名称必须表达业务动作或业务含义。
-- 常量使用 UPPER_SNAKE_CASE，单词之间使用下划线，避免无语义缩写。
+- 固定业务常量使用 UPPER_SNAKE_CASE，单词之间使用下划线，避免无语义缩写。
+- 业务常量与可变默认值按[常量归属与定义](../knowledge/PIGX前端开发规范/工程与代码生成规范.md#前端常量归属与定义)核对实际消费者、单位、固定/动态边界和工厂；固定编码映射成员随常量使用 UPPER_SNAKE_CASE，普通对象成员仍为 lowerCamelCase；普通 const/ref/computed/函数不因此大写。
 - 类型、接口、枚举和类使用 PascalCase；布尔值使用 `is`、`has`、`can`、`should` 等语义前缀。
 - API 方法使用“动作 + 业务对象”，例如 `getDeviceList`、`updateDeviceStatus`；禁止使用 `query`、`save`、`data1` 等过泛名称。
 

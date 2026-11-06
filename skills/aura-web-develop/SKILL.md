@@ -5,7 +5,7 @@ description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 
 # AURA 综合端业务开发
 
-当前版本：`1.6.11`（2026-11-03）。
+当前版本：`1.6.12`（2026-11-06）。
 
 ## 执行入口
 
@@ -32,6 +32,7 @@ description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 | 首次接触项目、架构或框架边界                                                                    | [总览](knowledge/PIGX前端开发规范/PIGX前端开发总览.md)、[开发边界](knowledge/PIGX前端开发规范/开发边界说明.md)                                                                                                                                   |
 | 修改业务代码、命名、组件职责或布局                                                              | [业务实现约束](references/implementation-rules.md)；新建模块/重构另读 [工程规范](knowledge/PIGX前端开发规范/工程与代码生成规范.md)                                                                                                               |
 | 新增或功能修改 Vue/TS/样式、拆分职责、提升复用层级，或只读评估这些职责                          | [文件组织与职责拆分](knowledge/PIGX前端开发规范/文件组织与职责拆分.md)，按职责、所有权和实际消费者选择最小结构；纯注释不触发重构                                                                                                                 |
+| 新增/调整常量、常量归属或默认值共享                                                             | [常量归属与定义](knowledge/PIGX前端开发规范/工程与代码生成规范.md#前端常量归属与定义)，按实际消费者选择最小层级及模板；同版来源见[维护记录](references/constants-source.json)                                                                                           |
 | 查看结构、判断拆分是否合理、先给建议不改代码，或优化/梳理/重构指定页面/模块的结构               | [结构任务覆盖与收尾](references/development-review-workflow.md#结构任务覆盖与收尾)，同时评估授权范围内入口尚未拆出的职责与已有子组件，按职责规范给出保留、内部整理或提取的依据；只读咨询直接交付建议，实施任务再进入开发闭环                     |
 | 查看、编辑、复制、分配等需要已有对象数据                                                        | [已有业务对象加载](references/business-object-loading.md)，适用页面、Tab、面板、抽屉和弹窗                                                                                                                                                       |
 | 日期时间解析、格式化、比较、运算、时间戳或时区                                                  | [dayjs 时间处理](references/date-time-guidelines.md)                                                                                                                                                                                             |
