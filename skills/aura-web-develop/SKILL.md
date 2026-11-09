@@ -5,7 +5,7 @@ description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 
 # AURA 综合端业务开发
 
-当前版本：`1.6.12`（2026-11-06）。
+当前版本：`1.6.13`（2026-11-06）。
 
 ## 执行入口
 
@@ -29,6 +29,7 @@ description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 | 命中场景                                                                                        | 必须读取的资料                                                                                                                                                                                                                                   |
 | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 公共工具/Hook 选型、1.2.0 迁移、自动导入或公共 TS 修改                                          | [aura-web-kit 清单与接入](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)，先核对已安装版本 exports；只面向 1.2.0，不保留旧实现与旧路径兼容                                                                                        |
+| aura-ui 公共组件选型、Resolver、样式或服务绑定 | [aura-ui 能力清单与接入](knowledge/PIGX前端开发规范/aura-ui能力清单与接入规范.md)，再按 [组件契约索引](knowledge/PIGX前端开发规范/aura-ui组件库/README.md) 仅读取实际组件的示例、Props、事件、插槽、公开方法和类型，并核对项目实际安装包的公开契约 |
 | 首次接触项目、架构或框架边界                                                                    | [总览](knowledge/PIGX前端开发规范/PIGX前端开发总览.md)、[开发边界](knowledge/PIGX前端开发规范/开发边界说明.md)                                                                                                                                   |
 | 修改业务代码、命名、组件职责或布局                                                              | [业务实现约束](references/implementation-rules.md)；新建模块/重构另读 [工程规范](knowledge/PIGX前端开发规范/工程与代码生成规范.md)                                                                                                               |
 | 新增或功能修改 Vue/TS/样式、拆分职责、提升复用层级，或只读评估这些职责                          | [文件组织与职责拆分](knowledge/PIGX前端开发规范/文件组织与职责拆分.md)，按职责、所有权和实际消费者选择最小结构；纯注释不触发重构                                                                                                                 |
@@ -37,7 +38,7 @@ description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 | 查看、编辑、复制、分配等需要已有对象数据                                                        | [已有业务对象加载](references/business-object-loading.md)，适用页面、Tab、面板、抽屉和弹窗                                                                                                                                                       |
 | 日期时间解析、格式化、比较、运算、时间戳或时区                                                  | [dayjs 时间处理](references/date-time-guidelines.md)                                                                                                                                                                                             |
 | 新增/改值文案或新增/替换 i18n 引用                                                              | 编码前执行[公共文案检索与验收](references/ui-data-contracts.md#新增文案的执行与验收)，将检索范围、公共 key 与复用/提取/保留依据带入自检；双语键存在或扫描零候选不能代替复用检查                                                                  |
-| 字段、筛选、表格、表单、字典或用户可见文案                                                      | [字典、i18n 与占位契约](references/ui-data-contracts.md)；涉及三字典组件 Props、选项、空值或接入时先读 [aura-ui 组件库入口](knowledge/PIGX前端开发规范/aura-ui组件库/README.md)，再仅加载实际使用组件的 DictTag.md / DictText.md / DictSelect.md |
+| 字段、筛选、表格、表单、字典或用户可见文案                                                      | [字典、i18n 与占位契约](references/ui-data-contracts.md)；涉及三字典组件 Props、选项、空值或接入时先读 [aura-ui 组件库入口](knowledge/PIGX前端开发规范/aura-ui组件库/README.md)，再仅加载实际使用组件的 dict-tag.md / dict-text.md / dict-select.md |
 | 查询提交、列表/导出条件或选择器候选规模                                                         | [查询与选择器契约](references/query-select-contract.md)：查询边界格式化空条件并保留有效假值；大规模、无上限或增长型候选必须虚拟化，核对公共能力实际安装状态                                                                                      |
 | 消息、确认框、请求失败反馈，或覆盖层仍可见时操作成功同步背后区域                                | [消息与资源反馈](references/message-feedback-guidelines.md)，命中公共列表时再读单次静默契约；保留原分页/选择规则                                                                                                                                 |
 | 凡涉及业务表单的开发、功能修改或重构（页面、Dialog、Drawer、内嵌编辑及查询表单），以及列表 Hook | [Hooks 契约](recipes/hooks-standards.md)；表单必须接入公共 `useForm`，不能只导入或沿用旧实例调用                                                                                                                                                 |
@@ -48,7 +49,7 @@ description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 | 受限按钮/入口/操作、Tab/Drawer 权限初始化；新增正式页面或管理端菜单权限同步                     | [菜单权限与实现边界](references/admin-menu-permission-workflow.md)，新增正式页面/菜单/按钮时主动确认是否同步及是否配置远程菜单；外部写入须有授权                                                                                                 |
 | remote、expose、manifest、shared 或模块联邦运行时                                               | [模块联邦规范](knowledge/PIGX前端开发规范/模块联邦开发技术规范.md)、[组件选型](references/component-selection.md)；使用 `aura-module-federation-check` 做改前基线与改后复检                                                                      |
 | 2D 地图 / 视频                                                                                  | 分别读取 [地图规范](knowledge/PIGX前端开发规范/2D地图开发规范.md) / [视频规范](knowledge/PIGX前端开发规范/视频开发规范.md)，检查并调用 `fmap-2d` / `fxft-video`                                                                                  |
-| 公司组件库依赖安装                                                                              | [下载与权限](knowledge/PIGX前端开发规范/公司组件库下载说明/README.md)                                                                                                                                                                            |
+| 选用公司组件后发现依赖缺失、不满足需求或需要安装 | [下载与权限](knowledge/PIGX前端开发规范/公司组件库下载说明/README.md)，先复用满足需求的依赖；按授权补齐后继续组件导入、样式和服务绑定 |
 | API/Apifox / Figma                                                                              | 分别读取 [Apifox 流程](recipes/apifox-workflow.md) 与 [MCP 指南](references/apifox-mcp-guide.md) / [Figma 流程](references/figma-design-workflow.md)                                                                                             |
 | 新开发、修改业务、补旧代码注释或业务逻辑说明                                                    | [注释规范与三类可复制模板](references/code-comment-guidelines.md)、[开发闭环与文档交付](references/development-review-workflow.md)                                                                                                               |
 | 可见页面/交互改造验收，或用户提供可访问原型                                                     | [Codex 内置浏览器走查](references/codex-browser-review-workflow.md)；按当前工具能力连接，不以旧技能名缺失判定不可用；原型在编码前建立对照，完成后复核；交付按变更范围选择关键状态截图，复用有效证据，不默认逐操作截图                            |
@@ -68,7 +69,7 @@ description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 - 修改代码后按 [格式化流程](references/prettier-formatting-workflow.md) 执行项目本地 Prettier 和 `git diff --check`。
 - 功能开发或明确要求验证的整理任务，按请求范围使用 [实现清单](checklists/implementation.md)、[验证清单](checklists/validation.md) 和 [正式检查清单](knowledge/PIGX前端开发规范/开发检查清单.md) 中命中的项目；完整页面开发覆盖全部适用项。
 - 功能开发的检查触发、范围和时机统一按[检查选择表](references/development-review-workflow.md#检查选择表)执行；各清单用于核对命中项，不另设重复验收节奏。
-- 维护技能本身运行 `scripts/validate-skill.ps1`；能力清单变更时运行 `scripts/check-web-kit-catalog.ps1 -PackagePath <已安装的 aura-web-kit 包目录>`，不启动业务项目的构建或浏览器流程。
+- 维护技能本身运行 `scripts/validate-skill.ps1`；web-kit 能力清单变更时运行 `scripts/check-web-kit-catalog.ps1 -PackagePath <已安装的 aura-web-kit 包目录>`；aura-ui 资料维护按 [组件资料维护](references/aura-ui-docs-maintenance.md) 核对目标包 exports、组件契约、Resolver、JS/CSS 和副本一致性，不误用 web-kit 专用检查器，不启动业务项目的构建或浏览器流程。
 - 每次调整技能版本，同步在 [CHANGELOG.md](CHANGELOG.md) 记录该版本日期、用户可见变化及必要兼容影响；同一未发布版本的补充归并原条目，不重复新建日志。安装、提交与发布事实留来源记录，不能由日志版本推断已发布；普通业务调用无需加载历史日志。
 - 功能开发或明确要求自检时，开发自检只读、整改由本技能负责；调用前确认实际加载的审查技能支持模式，精确入口与旧版能力缺口处理见[开发闭环](references/development-review-workflow.md)。不能以正式六文件流程代替自检。
 - 纯整理按快速路径简报已改范围、业务说明位置和未执行自动检查，不声明自检通过；用户明确要求报告时按请求范围交付。功能开发全部适用必需项通过后，局部变更可合并检查与交付为一份简短开发记录，完整新功能或要求独立报告时按[交付要求](references/development-review-workflow.md#5-通过后供开发人员审阅)保留报告与过程记录，标记“自检通过，待人工审查”；缺证或失败如实记录并继续独立工作。

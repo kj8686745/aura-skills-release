@@ -8,7 +8,7 @@
 
 - 公共 TS 能力直接引用 `@fxft/aura-web-kit` 公开子路径；请求、Store、路由、消息等项目实例绑定集中在 `src/config/aura`。
 - 新增 [aura-web-kit 能力清单与接入规范](./aura-web-kit能力清单与接入规范.md)，按场景、入口、主要导出和项目绑定边界检索；历史 1.2.0 组合曾核对 `1.9.0`；当前 web-kit 基线及公开入口以该能力清单为准。
-- 公共 UI 使用 `@fxft/aura-ui@1.1.2` 的 Aura 前缀组件与 `AuraUIResolver`；本地覆盖 Resolver 按实际覆盖项配置。
+- 公共 UI 使用 `@fxft/aura-ui` 的 Aura 前缀组件与 `AuraUIResolver`；本地覆盖 Resolver 按实际覆盖项配置。
 - Node.js ≥22、Element Plus 2.14.6、VueUse 15.0.0；联邦运行时、构建插件与 PostCSS 公共实现收敛到 web-kit。
 - 支持多级 `remoteEntryName` 部署路径；启动缓存按 `remoteName` 隔离，认证存储按 `systemId` 隔离。
 
@@ -19,6 +19,10 @@
 涉及 Vue/TS/样式组织时按需读取[文件组织与职责拆分](文件组织与职责拆分.md)。本轮规则来自 aura-code-nexus 规范工作树，来源待绑定状态见技能 `references/file-organization-source.json`；保留其余既有框架规范基线。
 
 首次接入、工具或 Hook 选型时，先读 [aura-web-kit 能力清单与接入规范](./aura-web-kit能力清单与接入规范.md)。
+
+公共 UI 选型、Resolver、样式和服务绑定先读 [aura-ui 能力清单与接入规范](./aura-ui能力清单与接入规范.md)，结合项目实际安装包核对契约。
+
+使用示例、属性、事件、插槽、公开方法及类型统一见 [组件契约索引](./aura-ui组件库/README.md)，仅加载本次实际使用的组件。
 
 1. [PIGX 前端开发总览](./PIGX前端开发总览.md)
 2. [开发边界说明](./开发边界说明.md)

@@ -51,9 +51,9 @@
     "references/ui-data-contracts.md",
     "recipes/hooks-standards.md",
     "knowledge/PIGX前端开发规范/aura-ui组件库/README.md",
-    "knowledge/PIGX前端开发规范/aura-ui组件库/DictTag.md",
-    "knowledge/PIGX前端开发规范/aura-ui组件库/DictText.md",
-    "knowledge/PIGX前端开发规范/aura-ui组件库/DictSelect.md"
+    "knowledge/PIGX前端开发规范/aura-ui组件库/dict-tag.md",
+    "knowledge/PIGX前端开发规范/aura-ui组件库/dict-text.md",
+    "knowledge/PIGX前端开发规范/aura-ui组件库/dict-select.md"
   ],
   "inspiration": [
     {
@@ -93,148 +93,24 @@
     "publicContract": {
       "reference": "knowledge/PIGX前端开发规范/aura-ui组件库/README.md",
       "maintainedBy": "aura-web-develop",
-      "copyPolicy": "aura-web-review 随包只读副本，四份文件分别与 develop 对应文件字节一致；先读入口，再按实际组件加载，不依赖跨技能安装",
-      "packageVersion": "1.1.2",
-      "upstreamCommit": "3e9d3701bc14d500b5ebcd0df002546dd3b1ee78",
-      "upstreamVersion": "1.1.5",
-      "upstreamWorktree": "所读 docs 与 packages/ui 无 tracked 差异；存在未跟踪构建/打包资料，未修改",
-      "evidence": [
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "package.json",
-          "sha256": "665c43b1b251231ebf993e8add7a38e58ebcee62497ee0d0b40d2a3823892ef5"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "index.d.ts",
-          "sha256": "b91186894b01498295edddc22febffcf0a9392b1b0a881669fc365d54ac75d27"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/index.js",
-          "sha256": "e7fd756851fda2b5d5194382d207340b8810d2e0e14309423bac998d3880aaa5"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "components/dict-tag/index.d.ts",
-          "sha256": "67f284d79385f5b7506843ee299f7e893e8659a794fbfb10b989d7afa4656e26"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "components/dict-text/index.d.ts",
-          "sha256": "49af0715358c81e618d291dbd68ef1880ba26f17a2dc6ea11674b2260a8bb8cd"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/components/dict-tag/index.d.ts",
-          "sha256": "67f284d79385f5b7506843ee299f7e893e8659a794fbfb10b989d7afa4656e26"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/components/dict-text/index.d.ts",
-          "sha256": "49af0715358c81e618d291dbd68ef1880ba26f17a2dc6ea11674b2260a8bb8cd"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/components/dict-tag/index.js",
-          "sha256": "68e9480f035eba214c037a4e5ea9d3146c3aa29c92ef71e544463986d4f24b09"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/components/dict-text/index.js",
-          "sha256": "c3806c06181af82e5a5bbe288d981401dc22a37a3d2ff58828843ac9d3d2f127"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/components/dict-tag/dict-tag.vue.js",
-          "sha256": "a0e5257117aa9bc4d3901f2c7f571f5e683cf34afd88b5b3de552e6d66b48676"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/components/dict-text/dict-text.vue.js",
-          "sha256": "8552a846ab1a867ec9e9295ddd4dbd3e95193d004803c89c69231130e0574b2a"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "types/dict.d.ts",
-          "sha256": "988cedb0ffd7def8231448ecc9b05fac0cfdbc0e9c49fa36674d42e20ea9701c"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/types/dict.d.ts",
-          "sha256": "988cedb0ffd7def8231448ecc9b05fac0cfdbc0e9c49fa36674d42e20ea9701c"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "resolver.mjs",
-          "sha256": "673f38b3298d0101373b3ae48a9378d359e4e1585b5d996f70ef3d07c1ff5751"
-        },
-        {
-          "root": "aura-web-sdk@3e9d3701bc14d500b5ebcd0df002546dd3b1ee78",
-          "path": "docs/component/dict-tag.md",
-          "sha256": "5d36e17a56866b80429943a0e7f0d3e1c4bb90448a8d48425608adc192d9af64"
-        },
-        {
-          "root": "aura-web-sdk@3e9d3701bc14d500b5ebcd0df002546dd3b1ee78",
-          "path": "docs/component/dict-text.md",
-          "sha256": "1e8061cef298c97b1fbac053534fd697e6590c9df5a5b4449a014a535855d4cf"
-        },
-        {
-          "root": "aura-web-sdk@3e9d3701bc14d500b5ebcd0df002546dd3b1ee78",
-          "path": "packages/ui/package.json",
-          "sha256": "c4925ab16a33dac0cb07c49989f794f964712bc6e6fe52f56c84d815149bc988"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "components/dict-select/index.d.ts",
-          "sha256": "80e305a28d0390d66c7d8a0d7f3ff3cdba5d89ebf3ce7d10143a3d42ddafd372"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/components/dict-select/index.d.ts",
-          "sha256": "80e305a28d0390d66c7d8a0d7f3ff3cdba5d89ebf3ce7d10143a3d42ddafd372"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/components/dict-select/index.js",
-          "sha256": "82fc3d30e5164ec66c9319c99b6060e130554a5d278e25b678d68b1ba8b92378"
-        },
-        {
-          "root": "@fxft/aura-ui@1.1.2",
-          "path": "dist/es/components/dict-select/dict-select.vue.js",
-          "sha256": "0c3a682c3794a1a110b326b9d236ea023c6e1671d9b6504ab16020a3d69afbc4"
-        },
-        {
-          "root": "aura-web-sdk@3e9d3701bc14d500b5ebcd0df002546dd3b1ee78",
-          "path": "docs/component/dict-select.md",
-          "sha256": "2eaca6316f7ca114c8604d1f6026f2fe57f9823b87c7f87cd657003ec1e99a1c"
-        }
-      ],
-      "behaviorValidation": "文档契约据声明和产物核对；运行行为独立测试由主代理协调",
-      "validation": {
-        "quickValidate": "passed",
-        "developValidateSkill": "passed",
-        "resolverEntryFiles": "passed; two component resolutions and exported types/import/require plus resolver JS/CSS paths exist",
-        "sameByteCopies": "passed; README.md / DictTag.md / DictText.md pairwise raw byte hashes equal",
-        "relativeLinks": "passed; 278 checked",
-        "behaviorBoundary": "实际独立行为测试由主代理协调，不将文档/结构与入口文件检查作为运行通过"
-      },
+      "copyPolicy": "技能统一维护一套当前组件资料，组件页直接位于根目录，按实际用途读取。历史自检记录保留原检查范围，当前契约依据本地 SDK 的公开声明和实现核对。",
+      "source": "aura-web-sdk/docs/component 与 packages/ui 的公开组件声明、配置、Resolver 和运行实现",
       "files": [
         {
           "path": "knowledge/PIGX前端开发规范/aura-ui组件库/README.md",
-          "sha256": "9057b052be6da52aa31a59c5552514a84c7de16dabf4257346d3b65e55319b62"
+          "sha256": "c05f3c9ad215993199394fbf078aacf53d546900e36de62f2a4665507b05f771"
         },
         {
-          "path": "knowledge/PIGX前端开发规范/aura-ui组件库/DictTag.md",
-          "sha256": "e47e2a162345a520926656b2186535d53eae44038ab2eda529a1ad272756cc96"
+          "path": "knowledge/PIGX前端开发规范/aura-ui组件库/dict-tag.md",
+          "sha256": "60210d37364e3e37471a0f659aefdf694bafc31b737e92e2e137b0f6ce6c7a0a"
         },
         {
-          "path": "knowledge/PIGX前端开发规范/aura-ui组件库/DictText.md",
-          "sha256": "46a98e970ad95f0f49232ac7e299b09038501fda3b5490855f7a3c15ab989eac"
+          "path": "knowledge/PIGX前端开发规范/aura-ui组件库/dict-text.md",
+          "sha256": "718eeedd08278e26dec4d181a94141030b5a2eba7b4842cacabdb29fb5f3923e"
         },
         {
-          "path": "knowledge/PIGX前端开发规范/aura-ui组件库/DictSelect.md",
-          "sha256": "12172ec8c837f9829289d53282e5e8ff8c9fe8911a7fc56625ecaea1d49cbc43"
+          "path": "knowledge/PIGX前端开发规范/aura-ui组件库/dict-select.md",
+          "sha256": "fa87a3da6a95b6a8f2c5271f7922e7d181e5add7cceb864b5c9b4a11a97a9708"
         }
       ]
     },
