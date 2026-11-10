@@ -2,7 +2,7 @@
 
 ## 一、能力与选用原则
 
-本文汇总 `@fxft/aura-ui` 当前公开能力，包含 **39 个组件和 49 条 package exports 规则**。组件说明依据本地 SDK 的公开声明、实现和组件 API 文档整理。接入时核对项目实际安装包的公开导出和契约。
+本文汇总 `@fxft/aura-ui` 公开能力，包含 **39 个组件和 49 条 package exports 规则**。组件说明依据 SDK 的公开声明、实现和组件 API 文档整理；2026-11-09 按物联中枢云实际安装的 `1.1.10` 核对公开入口、Resolver 和样式，组件详细行为仍须按目标安装包核对。接入规则及待提交来源见技能 `references/aura-ui-source.json`。
 
 - 公共 UI 优先查询本清单，再读取实际组件的 Props、Events、Slots 和公开实例方法；需要公共 TS、Hook、请求和模块联邦运行时能力时查询 aura-web-kit 清单。
 - 使用 `Aura` 前缀组件名；源码仓库名 `aura-web-sdk` 不是 npm 包名，不虚构 `@fxft/aura-web-sdk`，也不虚构 `AuraButton`、`AuraTag`、`AuraDatePicker`。
@@ -15,9 +15,9 @@
 | 依赖 | 包声明或接入要求 | 项目处理 |
 | --- | --- | --- |
 | Vue | peer：`^3.5.13` | 复用项目 Vue 实例；模块联邦沿用框架 singleton 配置 |
-| `@fxft/aura-web-kit` | peer：`^1.0.0` | 固定为项目已验证版本，另核对实际使用的公开子入口；PIGX 按 web-kit 能力清单核对已验证基线 |
+| `@fxft/aura-web-kit` | aura-ui `1.1.10` 的 peer：`^1.10.4`；其他版本读取实际包声明 | 固定为项目已验证且满足 peer 的版本，另核对实际使用的公开子入口；不能用旧清单要求已获授权升级的项目回退 |
 | Element Plus | 包内依赖：`^2.13.1` | 与项目版本统一；PIGX 沿用 `2.14.6` 基线 |
-| `unplugin-vue-components` | Resolver 方案需要的开发依赖 | 已有插件合并配置；全量或手动引入无需为 Aura 另装插件 |
+| `unplugin-vue-components` | Resolver 方案需要的开发依赖 | 合并现有插件配置；少量脚本组件显式按需导入时无需另装插件 |
 | vue-i18n | 多语言应用按需提供 | 复用现有实例，SDK 不创建 i18n 实例 |
 
 选定组件后先核对项目依赖声明、锁文件和实际安装包，满足需求时直接复用。缺失或不满足需求时按 [下载与安装说明](公司组件库下载说明/README.md) 检查目标包并按授权安装，随后继续下文的组件导入、样式及服务绑定。
@@ -28,13 +28,13 @@
 
 | 入口 | 主要导出或用途 | 运行环境与边界 |
 | --- | --- | --- |
-| `@fxft/aura-ui` | 默认导出安装函数；命名导出 39 个 Aura 组件、配置 API、`LinkTypeEnum` 及部分公共类型 | 浏览器 ESM；全量注册会引入全部组件，普通页面优先公开子入口或 Resolver |
+| `@fxft/aura-ui` | 默认导出安装函数；命名导出 39 个 Aura 组件、配置 API、`LinkTypeEnum` 及部分公共类型 | 根安装函数会全量注册；业务组件使用 Resolver 或公开子入口，公共类型可用根入口 `import type` |
 | `@fxft/aura-ui/<组件子入口>` | 对应组件 default 导出；部分入口另导出该组件类型或枚举 | 浏览器 ESM；39 个子入口见下表 |
 | `@fxft/aura-ui/config` | `AURA_UI_CONFIG_KEY`、`mergeAuraUiConfig`、`useAuraUiConfig`、`provideAuraUiConfig`、`installAuraUiConfig`；类型 `AuraUiConfig` | Vue 应用上下文；组件按需引入时无需安装整套组件即可配置 |
 | `@fxft/aura-ui/resolver` | `AuraUIResolver` 命名及 default 导出；Resolver 选项与结果类型 | Node 构建；支持 ESM/CJS，不能作为浏览器服务调用 |
 | `@fxft/aura-ui/locale/zh-cn`、`@fxft/aura-ui/locale/en` | 默认导出语言消息对象 | 并入应用已有 i18n 实例，不创建第二套实例 |
-| `@fxft/aura-ui/style.css` | 统一样式 | 按应用样式方案加载一次；与按需样式方案二选一 |
-| `@fxft/aura-ui/dist/index.css`、`@fxft/aura-ui/dist/theme-chalk/index.css` | 已有导出样式入口 | 现有项目可保留其中一种，不再叠加统一样式 |
+| `@fxft/aura-ui/style.css` | 统一全量样式 | 仅作已有配置识别，不作为业务按需接入示例 |
+| `@fxft/aura-ui/dist/index.css`、`@fxft/aura-ui/dist/theme-chalk/index.css` | 已有全量样式入口 | 不在按需方案中新增；既有全量方案的迁移按授权范围处理 |
 | `@fxft/aura-ui/dist/theme-chalk/*` | `var.css`、`base.css`、各组件 CSS 等公开样式路径 | 按需样式；不要推断未检查的文件一定存在 |
 | `@fxft/aura-ui/dist/es/components/*` | package exports 中保留的组件产物通配路径 | 新接入优先语义化组件子入口，不据此依赖内部子组件或私有文件 |
 
@@ -42,45 +42,13 @@
 
 ### 引入方式选择
 
-| 方式 | 注册范围 | 适用场景 |
-| --- | --- | --- |
-| 全量引入 | 应用全局注册全部 39 个组件 | 希望统一注册整套组件的独立应用 |
-| Resolver 自动按需 | 编译模板时导入实际使用的组件 | 普通业务页面及模块联邦提供方 |
-| 手动按需 | 显式导入组件，在当前组件或应用中使用 | 少量组件、脚本组件对象或需要控制导入的位置 |
+业务统一按需引入组件 JS 与 CSS：模板优先 Resolver，脚本组件对象、动态组件映射等使用公开组件子入口。服务配置走 `@fxft/aura-ui/config`，不为绑定 request 全量安装组件；不新增根入口全量注册或 Aura UI 全量样式。用户明确要求保留的既有方案按其授权范围处理，不因维护局部功能自动迁移全项目。
 
-### 全量引入
-
-在应用入口导入默认安装函数、加载统一样式，并在挂载前注册：
-
-```ts
-import { createApp } from 'vue';
-import AuraUI from '@fxft/aura-ui';
-import App from './App.vue';
-
-import 'element-plus/dist/index.css';
-import '@fxft/aura-ui/style.css';
-
-const app = createApp(App);
-
-app.use(AuraUI);
-app.mount('#app');
-```
-
-已有应用将注册和样式导入合并到现有入口，不重复创建应用。注册后，后代模板可直接使用全部 Aura 前缀组件，无需再为这些组件配置 AuraUIResolver；其他组件的 Resolver 沿用项目配置。全量引入会带入整套组件依赖，样式也需按上例加载。
-
-需要请求等应用能力时，将上面的 `app.use(AuraUI)` 替换为以下注册方式。示例 request 使用 PIGX 项目已有绑定，其余配置按第五节中实际使用的组件补充：
-
-```ts
-import request from '/@/config/aura/request';
-
-app.use(AuraUI, { request });
-```
-
-第二个参数由安装函数传给 `installAuraUiConfig`，在同一次注册中完成配置注入，无需再单独调用该函数。语言包按第六节并入现有 i18n。全量注册作用于当前 Vue 应用；模块联邦 expose 页面仍须按第五节在实际组件树边界绑定服务，不能依赖提供方入口已执行。
+只读取本次使用的组件文档；文档按需加载与构建时按需引入分别核对，39 个组件的目录覆盖不意味着业务需要导入整库。
 
 ### 按需解析
 
-向项目现有 `Components` 配置追加 Resolver，不覆盖其他 Resolver：
+本技能面向的项目均已接入 Core，由 Core 统一提供 Element Plus 基础样式和主题变量。向项目现有 `Components` 配置合并以下 Resolver，不覆盖其他 Resolver：
 
 ```ts
 import Components from 'unplugin-vue-components/vite';
@@ -89,16 +57,18 @@ import AuraUIResolver from '@fxft/aura-ui/resolver';
 Components({
   dirs: [],
   dts: './components.d.ts',
-  resolvers: [AuraUIResolver()],
+  resolvers: [AuraUIResolver({ injectGlobal: false })],
 });
 ```
 
-Resolver 将组件解析为 `@fxft/aura-ui/<子入口>` 的 default 导入，默认同时添加 `var.css`、`base.css` 和对应组件 CSS。
+Resolver 将实际使用的组件解析为 `@fxft/aura-ui/<子入口>` 的 default 导入，并添加对应组件 CSS。`injectGlobal: false` 仅关闭 Resolver 对 `var.css`、`base.css` 的额外注入，保留默认 `importStyle: 'css'`，不能将其误写为关闭全部样式。本技能统一使用上述配置，不使用 Resolver 默认的全局样式注入。
+
+预扫描 `auraAutoOptimizeDeps` 与 `Components` 共用同一 resolver 工厂、顺序和选项，每次创建独立实例；核对实际生成的组件子入口及最终预构建结果，不全量预构建整库。
 
 | Resolver 选项 | 契约 |
 | --- | --- |
 | `importStyle` | `'css'`（默认）或 `false`；false 仅关闭组件 CSS |
-| `injectGlobal` | 默认 true；false 关闭全局 CSS 注入 |
+| `injectGlobal` | 库默认 true；本技能统一设置 false，关闭额外的全局 CSS 注入 |
 | `globalStyle` | 自定义全局样式数组，默认 `var.css`、`base.css` |
 | `functionMap` | 显式函数导入映射；不会自动产生组件库没有的服务 API |
 
@@ -111,18 +81,17 @@ import AuraDictTag from '@fxft/aura-ui/dict-tag';
 import type { AuraDictOption } from '@fxft/aura-ui';
 import { LinkTypeEnum } from '@fxft/aura-ui/link-picker';
 
-import '@fxft/aura-ui/dist/theme-chalk/var.css';
-import '@fxft/aura-ui/dist/theme-chalk/base.css';
 import '@fxft/aura-ui/dist/theme-chalk/dict-tag.css';
 ```
 
-上述样式应放在项目统一样式边界，不在每个页面重复维护。组件 JS 不自动加载 CSS。三种方案按项目现状选用：
+基础样式和主题统一复用 Core，不额外导入 Aura UI 的 `var.css`、`base.css` 或全量样式。组件 JS 不自动加载 CSS，组件 CSS 按实际使用引入：
 
 | 方案 | 配置 |
 | --- | --- |
-| Resolver 按需样式 | `AuraUIResolver()`；自动注入实际使用组件及其基础样式 |
-| 统一样式 | 应用统一加载 `element-plus/dist/index.css` 和 `@fxft/aura-ui/style.css`；Resolver 使用 `{ importStyle: false, injectGlobal: false }` |
-| 手动按需样式 | 加载 `var.css`、`base.css` 及所用组件 CSS；补齐应用额外使用的 Element Plus 组件样式 |
+| 模板 Resolver 按需引入 | `AuraUIResolver({ injectGlobal: false })`；自动注入实际使用的组件 CSS，复用现有主题 |
+| 手动按需样式 | 公开组件子入口 + 对应组件 CSS，基础样式与主题继续复用 Core |
+
+`injectGlobal: false` 不会删除组件 CSS 内部的全局规则。安装版 `1.1.10` 的 `dict-tag.css` 等组件样式仍含 `:root` 默认变量，不能仅凭该选项宣称主题无覆盖；须按包版本检查样式内容并验证首次与远程加载结果。此为包产物限制，不在业务页面复制公共库修复。
 
 主题和业务覆盖样式放在基础样式之后。库内浏览器编辑器、播放器等依赖不能默认用于 SSR；SSR 场景在客户端动态导入相应组件，单纯添加 `ClientOnly` 不会阻止顶层 import 在服务端执行。
 
@@ -250,7 +219,7 @@ provideAuraUiConfig({
 
 配置通过 `Symbol.for('@fxft/aura-ui/config')` 标识的 Vue 上下文传递，仅影响后代组件。绑定所在组件自身若要消费配置，使用返回值；不要假定同一组件再次 inject 能读到自己刚 provide 的值。
 
-独立应用可在挂载前调用 `installAuraUiConfig(app, config)`；全量注册可用 `app.use(AuraUI, config)`。远程页面不能依赖提供方 `main.ts` 必然执行，也不能把模块级可变配置作为跨应用默认值。宿主与远程页面需处于可传递 Vue 注入上下文的组件树；独立 Vue 应用需分别绑定。
+独立应用可从 `@fxft/aura-ui/config` 导入 `installAuraUiConfig`，在现有应用挂载前调用 `installAuraUiConfig(app, config)`，无需全量注册组件。远程页面不能依赖提供方 `main.ts` 必然执行，也不能把模块级可变配置作为跨应用默认值。宿主与远程页面需处于可传递 Vue 注入上下文的组件树；独立 Vue 应用需分别绑定。
 
 `mergeAuraUiConfig` 保留未覆盖字段；仅 upload、linkPicker、iconSelector、orgSelector、orgTreeView、mdRenderer、svgIcon、dictTag、tagList、shortcutCard、formTable 分组进行一层字段合并，函数、组件和数组保留引用，不是任意深度合并。
 
@@ -323,10 +292,10 @@ i18n.global.mergeLocaleMessage('en', appEn);
 
 ## 七、接入核对
 
-1. 从目标项目依赖声明、锁文件、实际安装包确认版本；禁止只看源码仓库版本或本地 tgz 名称判断已安装、已发布。
-2. 交叉核对 package exports、根运行导出、根声明、39 个组件子入口和 Resolver 名单；不存在的名字不写入清单，内部组件不单独计数。
-3. 核对实际使用组件的声明、运行实现、CSS、依赖服务和响应结构。模型名、事件载荷与实例返回值分别核对，尤其不能把声明中的兼容字段当成已实现功能。
-4. 升级后重新验证 Resolver 结果、JS/CSS 文件存在、字典匹配/空值、上传认证/响应、组织租户切换和远程入口上下文；不把文件存在或静态检查通过描述为浏览器行为验收。
+1. 首次接入或依赖升级时确认目标项目的实际依赖版本；禁止只看源码仓库版本或本地 tgz 名称判断已安装、已发布。
+2. 日常开发只读实际使用组件的示例和 API，按现有 Resolver 与服务配置接入；不要求逐项审计整库。
+3. 依赖升级、契约差异或接入异常时，定向核对受影响组件的声明、CSS、依赖服务和响应结构，再验证实际功能。
+4. 39 个组件覆盖、exports、Resolver 名单和产物完整性属于技能资料维护，按技能 `references/aura-ui-docs-maintenance.md` 执行；静态包校验不能代替业务行为验收。
 
 ### 资料依据
 

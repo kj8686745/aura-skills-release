@@ -71,14 +71,16 @@
 
 ## 组件与样式
 
-- [ ] 普通业务 UI 的组件选择顺序为 aura-web-kit Hook / aura-ui 组件 → Element Plus → 页面私有组件，未将 `@fxft/ui-plus` 作为通用优先复用层级
-- [ ] 进入 Element Plus 选型阶段时，已使用 Codex 内置浏览器检查官方组件总览和候选组件文档，并核对当前项目版本支持的公开 API
-- [ ] 能由 Element Plus 官方组件或官方组合方案满足的业务 UI 未自行重写；确需自行实现时，职责清单和交付中已记录候选组件及不适用原因
+- [ ] 通用基础能力优先复用 aura-web-kit Hook / aura-ui 组件及 Element Plus，页面业务组件按职责组合；`@fxft/ui-plus` 仅按地图/视频专项需求使用
+- [ ] 进入 Element Plus 选型阶段时，已按需查阅官方候选组件文档并核对当前安装版本的公开 API；不将指定浏览器作为文档读取前提
+- [ ] 未重复实现公共基础控件；业务组件可按职责组合公共组件，确需自定义基础控件时在既有开发记录中简记候选能力和不适用原因
 - [ ] 未将左侧强调条批量用于标题、卡片或内容分区；保留的强调条均表达明确的选中、状态、分类或项目既有设计语义
 - [ ] 普通视觉层级优先由字体、留白、布局、分隔或背景建立，同页及同业务模块不存在无语义的强调条重复
 - [ ] 顶部或摘要工具栏已有主操作时，空态未重复放置相同按钮；重试和状态独有恢复操作除外
 - [ ] 自定义可点击区域具备键盘焦点，非必要动效适配 `prefers-reduced-motion`
-- [ ] 生成前核对已安装 aura-ui 导出、类型和 AuraUIResolver，未虚构组件
+- [ ] 从 Aura UI 39 个组件索引选型，按实际使用组件的示例/API 接入，未虚构组件；契约不符或依赖升级时再核对安装包
+- [ ] Aura 组件 JS/CSS 按需引入：模板用 Resolver，脚本组件用公开子入口；服务走 config，不新增整库注册或全量样式
+- [ ] 复用 Core 基础样式与主题，统一使用 AuraUIResolver({ injectGlobal: false }) 并保留组件 CSS
 - [ ] Flex 高度链路、`min-height: 0`、滚动区域和主题变量符合最新版样式规范
 - [ ] 样式分档仅作评估，外置私有样式保持 scoped、资源与加载顺序；真实共享按最小范围提取，Element Plus 授权和既有主题归属未扩大
 - [ ] 普通内容滚动区域使用 `el-scrollbar`，未使用 `overflow: auto/scroll` 或 `overflow-auto/overflow-y-auto` 等原生滚动写法
@@ -93,6 +95,8 @@
 - [ ] Element Plus 的本地依赖与 shared singleton 按[模块联邦规范](../knowledge/PIGX前端开发规范/模块联邦开发技术规范.md)核对，不沿用旧的禁止共享要求
 - [ ] expose、i18n、Tailwind、页面 CSS 和静态资源按最新版规范适配
 - [ ] 地图使用 `FxftMap`，未重复接入底层地图 SDK
+- [ ] 地图按 [FxftMap 接入](../references/fxft-map-integration.md)复用 Resolver/JS-CSS 与有效高度，四项初始化 Props 来自公共配置，配置就绪后挂载、组件 `load` 后操作实例；中心与缺坐标兜底分离，选点沿用单 marker 公开 API
+- [ ] 地图必接项未接、假接或硬编码覆盖未判通过，缺证保留未证实；适用的 fallbackCenter 已实际消费，高德 Web 服务 Key 排除必接及通过门禁，无地图与纯注释保持原范围
 - [ ] 单路/多路视频使用 `FxftWebVideo` / `FxftWebMultiVideo`
 - [ ] 实例、监听器、定时器、Worker、地图和播放器在卸载时正确清理
 

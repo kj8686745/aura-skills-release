@@ -1,0 +1,51 @@
+{
+  "skill": "aura-web-develop",
+  "skillVersion": "1.6.14",
+  "updatedAt": "2026-11-09",
+  "authority": "用户要求开发技能按需引入 Aura UI；开发侧只需了解组件数量、用途和用法；明确使用本技能的项目均已接入 Core。",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceBaseCommit": "7ecc52a440ce61c6fbbc1324728da4accc4c83ce",
+  "sourceCommit": null,
+  "bindingStatus": "pending-source-commit; source-and-skill-working-trees-updated; not-installed; not-published",
+  "sourceDocument": {
+    "path": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/10-组件复用与公共UI.md",
+    "sha256Lf": "845745311bf76ec6eb9ab637bea877f1d3b48b62e7ad65bafe0f1d8d3c19bcc7"
+  },
+  "snapshots": [
+    {
+      "path": "knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md",
+      "sha256Lf": "bf5106d386ec204ace34de7624fac0f88f037e02d06372dea752331a76cac93c"
+    },
+    {
+      "path": "knowledge/PIGX前端开发规范/aura-ui能力清单与接入规范.md",
+      "sha256Lf": "911062db2cb03919d611441a6095b7ac93d888fa8d35319832504c4337812d7c"
+    },
+    {
+      "path": "knowledge/PIGX前端开发规范/aura-ui组件库/README.md",
+      "sha256Lf": "be0a081f32a6c917de144bf4fb920754c386550cdcfa846877af4f6dc20f0535"
+    }
+  ],
+  "transformation": "仅同步公共 UI 按需接入、基础样式归属与日常开发边界；保留技能39组件资料与导航。不是整份规范逐字快照，不修改既有来源记录。",
+  "consumerEvidence": {
+    "project": "aura-iotbus-web",
+    "branch": "dev/1.0.6",
+    "auraUi": "1.1.10",
+    "webKit": "1.10.4",
+    "auraUiPeerWebKit": "^1.10.4",
+    "exports": 49,
+    "components": 39,
+    "evidence": ".planning/2026-11-09-auraui-review-20261109/package-verification.json",
+    "scope": "实际安装包公开入口/文件和Resolver执行结果；未作浏览器组件行为或冷启动验收。"
+  },
+  "decisions": [
+    "业务组件JS/CSS按需引入，模板Resolver、脚本公开子入口，服务从config绑定。",
+    "本技能面向的项目均已接入Core，统一injectGlobal:false，保留组件CSS并复用Core基础样式和主题。",
+    "文档按需读取，普通开发不执行整库exports/Resolver/产物审计。",
+    "允许按职责组合业务组件，不固定官方文档读取工具。"
+  ],
+  "knownLimits": [
+    "安装版dict-tag.css等组件CSS自身含:root默认变量，injectGlobal:false仅关闭额外全局文件注入，不能据此判定主题无覆盖。",
+    "审查技能仍有意限定三个字典组件，本次未改变审查技能范围。",
+    "规范来源尚未提交绑定；本次未提交、推送、安装或发布。"
+  ]
+}

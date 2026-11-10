@@ -2,13 +2,14 @@
 
 PIGX 模块联邦（综合端）业务开发规范技能。
 
-当前版本：`1.6.13`
+当前版本：`1.6.14`
 
 版本更新记录见[CHANGELOG.md](CHANGELOG.md)。
 
 ## 权威入口
 
 - 技能执行入口：`SKILL.md`
+- FxftMap 组件接入与初始化配置：`references/fxft-map-integration.md`；地图专项能力仍按需调用 `fmap-2d`
 - 版本标识：`VERSION`
 - 最新版正式规范：`knowledge/PIGX前端开发规范/README.md`
 - 消息反馈硬约束：`references/message-feedback-guidelines.md`

@@ -1,0 +1,117 @@
+{
+  "skill": "aura-web-develop",
+  "skillVersion": "1.6.14",
+  "date": "2026-11-10",
+  "scope": "FxftMap 组件接入与平台配置消费；已更新天玑前端规范工作树及本技能相关三份 knowledge 派生视图，保留其他既有差异，源提交待绑定；未修改业务或地图专项技能。",
+  "authority": "用户提供核心地图配置界面并要求参考 aura-iot-bus 真实接入；随后要求审查未接入不得通过、高德地图 Key 不需要，并明确示例应含平台地图配置及适用兜底。",
+  "sources": [
+    {
+      "repository": "ssh://gogs@git.fxft.net:2222/frontend/aura-iotbus-web.git",
+      "packageName": "aura-iot-bus",
+      "branch": "dev/1.0.6",
+      "commit": "19b3ee0e53fc2c0cb59c47458b09df0d0ec66545",
+      "state": "committed-baseline",
+      "paths": [
+        "src/config/aura/request.ts",
+        "src/views/iot/monitor-center/components/map-panel.vue",
+        "src/views/iot/device/components/device-location-map.vue",
+        "src/components/MapLocationSearch/index.vue"
+      ],
+      "evidence": "请求初始化绑定；配置后挂载 FxftMap 并传入中心、缩放、默认底图和底图集合；设备无坐标兜底独立；地址检索读取坐标系和 Key。未将未提交选点改动作为已提交基线。"
+    },
+    {
+      "repository": "ssh://gogs@git.fxft.net:2222/frontend/aura-core-web.git",
+      "branch": "develop/1.3.0",
+      "commit": "be6c9e603f719d0f4024c6d39f776249203a6283",
+      "paths": [
+        "src/api/admin/system.ts"
+      ],
+      "state": "committed-field-types",
+      "supplementaryPath": "src/views/admin/config/mapConfigPanel.vue",
+      "supplementaryState": "working-tree-supplementary; panel has uncommitted changes; not bound to commit as current panel content",
+      "evidence": "核心地图配置字段；编辑面板的本地默认值和缩放校验范围不作为消费端契约。"
+    },
+    {
+      "state": "installed-package-contract-inspected",
+      "consumer": "aura-iotbus-web",
+      "versions": {
+        "@fxft/aura-web-kit": "1.10.4",
+        "@fxft/ui-plus": "1.1.3"
+      },
+      "versionEvidence": "本轮早先读取时 package.json、pnpm-lock.yaml 与实际安装一致；仅为检查时快照，不声明当前工作树仍一致",
+      "inspectionSnapshot": "2026-11-10 本轮早先的 web-kit 1.10.4/ui-plus 1.1.3 安装契约快照；后续发现其他任务已将 IoT 工作树声明改为本地 1.11.0-coordinate 候选，不跟随或回退该改动，不推定候选能力已发布。",
+      "paths": [
+        "@fxft/aura-web-kit/dist/hooks/map-config.d.ts",
+        "@fxft/aura-web-kit/dist/hooks/map-config.js",
+        "@fxft/aura-web-kit/dist/utils/coordinate.d.ts"
+      ],
+      "evidence": "MapConfig 公开结果与请求绑定、默认回退、并发合并和 Promise 缓存；坐标转换仅使用已安装公开方法，不照搬 Core 新版候选 API。"
+    }
+  ],
+  "validation": {
+    "state": "standards-static-validation-passed",
+    "date": "2026-11-10",
+    "scope": "两技能 quick_validate、develop validate-skill、两仓 git diff --check 通过；25份变更Markdown的312本地链接/51锚点可达，3源与6派生LF摘要匹配；指定完整Vue示例编译及TS语法检查通过，FE规则27条ID唯一；主代理复核地图门禁与平台配置消费并修复选点片段重复引用及load守卫。",
+    "boundary": "未作完整类型检查或实际地图/地址服务运行验收；源提交待绑定，未提交、安装或发布。",
+    "formatting": "两仓无本地Prettier配置或根package.json，沿现有格式，未安装工具。"
+  },
+  "deliveryState": "local-working-tree; not-committed; not-installed; not-published",
+  "standards": {
+    "repository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+    "branch": "1.0.0",
+    "sourceBaseCommit": "7ecc52a440ce61c6fbbc1324728da4accc4c83ce",
+    "sourceCommit": null,
+    "state": "pending-source-commit; worktree-updated",
+    "hashConvention": "UTF-8 content with LF line endings, excluding BOM; whole current document hashes include preserved prior edits, not only this task delta",
+    "documents": [
+      {
+        "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/06-其他平台能力/01-二维地图/01-前端接入规范.md",
+        "sourceSha256Lf": "5c1b49cee5afbc3df4d2911318038a76096c545e5e49d6bfeceffb5a999be49b",
+        "derived": [
+          {
+            "path": "skills/aura-web-develop/knowledge/PIGX前端开发规范/2D地图开发规范.md",
+            "sha256Lf": "c09cb27084cf8f3cc59e60ba857fcffe025532e95c4c04168d2aade1a055c5e6"
+          },
+          {
+            "path": "skills/aura-web-review/knowledge/PIGX前端开发规范/2D地图开发规范.md",
+            "sha256Lf": "4e8296ba01b2cbb483b2a1fae57effe0fd9dd0b191c1bab5dc50c09ac7c3538d"
+          }
+        ]
+      },
+      {
+        "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/10-组件复用与公共UI.md",
+        "sourceSha256Lf": "08a8f087043399930613c5a9686e10bb3097a139b373aab6ef879921eac234f8",
+        "derived": [
+          {
+            "path": "skills/aura-web-develop/knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md",
+            "sha256Lf": "9ea808611f54c593e39fd3071a905d0d34114634a782aa9b45777febf997addb"
+          },
+          {
+            "path": "skills/aura-web-review/knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md",
+            "sha256Lf": "4910a12bf46a33bdaa8562432c702edb8f883b6ae662f7fd56a5b46895eabf83"
+          }
+        ]
+      },
+      {
+        "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+        "sourceSha256Lf": "1f5e749408876a00180980df16b8ed698943683eb5b0b1ee9a138e416035cd7f",
+        "derived": [
+          {
+            "path": "skills/aura-web-develop/knowledge/PIGX前端开发规范/开发检查清单.md",
+            "sha256Lf": "89c8f3112ce43f42ad33df9210b55da6c75bf5ce9729495e71f8cdcf38b2d6b4"
+          },
+          {
+            "path": "skills/aura-web-review/knowledge/PIGX前端开发规范/开发检查清单.md",
+            "sha256Lf": "baabe02c3f85e856bd93ecbe9e3b3dd239fdee4bc5697abc56510b2631bd6472"
+          }
+        ]
+      }
+    ]
+  },
+  "previousValidation": {
+    "state": "static-validation-passed",
+    "date": "2026-11-10",
+    "scope": "最终 develop/review quick_validate、develop validate-skill、git diff --check 通过；两技能本轮17文件216条本地链接可达，来源 JSON 可解析；已核对5个commit:path及只读场景走查。",
+    "boundary": "静态结构、链接、来源及只读场景走查不代表组件行为验收；本轮未运行业务构建或浏览器。"
+  }
+}
