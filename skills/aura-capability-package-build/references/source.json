@@ -1,10 +1,14 @@
 {
   "skill": "aura-capability-package-build",
-  "skillVersion": "0.7.0",
+  "skillVersion": "0.7.1",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "55f347a26a89fadd8a29e7b56b505ecf6846d198",
+  "sourceCommit": "07c97c41c2a34e5b04b130dfe37af833dc71a23d",
   "sourceBinding": {
-    "status": "committed"
+    "status": "pending",
+    "note": "随包依据已逐份核对本规范提交；来源绑定不代表行为验收或远端技能发布。",
+    "baseCommit": "07c97c41c2a34e5b04b130dfe37af833dc71a23d",
+    "date": "2026-11-06",
+    "reason": "SEC-020 authority and related AI/design updates are uncommitted; stored worktree hashes do not claim exact commit binding."
   },
   "documents": [
     {
@@ -19,7 +23,8 @@
         "./建设模板/能力包对外内容模板.md",
         "./建设模板/能力包统一定义模板.md",
         "./研发人员能力包建设与归档指南.md"
-      ]
+      ],
+      "committedSourceSha256Lf": "8597f11baee38f3a1edaccf1bdd249a62cc9ff14583ea42bfbc98eac145f5a2b"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/建设模板/能力包统一定义模板.md",
@@ -28,7 +33,8 @@
       "snapshotSha256Lf": "a4e511c394e0c0b2e17fad915c2c3ed64d81c65829bdec54c72ed9359a537803",
       "navigationTargetsRemoved": [
         "../能力包通用构建规范.md"
-      ]
+      ],
+      "committedSourceSha256Lf": "833cb76b0ed080980b23f146caa45032450a22047f83453a242e4cfef9020273"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/建设模板/能力包对外内容模板.md",
@@ -38,35 +44,55 @@
       "navigationTargetsRemoved": [
         "../../01-规范治理/规范模板/对外API-SDK交付手册模板.md",
         "../../01-规范治理/规范模板/平台能力使用说明模板.md"
-      ]
+      ],
+      "committedSourceSha256Lf": "ddaf270b89bb309219292de19328af430883e6832e2fa5e2dfac399ca3910371"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/01-规范治理/规范模板/平台能力使用说明模板.md",
       "snapshot": "governance/平台能力使用说明模板.md",
       "sourceSha256Lf": "6c1696a332029243afc312106bb0d1387f494f72a60fbe726183e0da60d205fc",
       "snapshotSha256Lf": "6c1696a332029243afc312106bb0d1387f494f72a60fbe726183e0da60d205fc",
-      "navigationTargetsRemoved": []
+      "navigationTargetsRemoved": [],
+      "committedSourceSha256Lf": "6c1696a332029243afc312106bb0d1387f494f72a60fbe726183e0da60d205fc"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/01-规范治理/规范模板/对外API-SDK交付手册模板.md",
       "snapshot": "governance/对外API-SDK交付手册模板.md",
       "sourceSha256Lf": "4e9f1731f38c70daeb5dcef2574b06d136076e8336cb56066100bc94ebe48ad6",
       "snapshotSha256Lf": "4e9f1731f38c70daeb5dcef2574b06d136076e8336cb56066100bc94ebe48ad6",
-      "navigationTargetsRemoved": []
+      "navigationTargetsRemoved": [],
+      "committedSourceSha256Lf": "4e9f1731f38c70daeb5dcef2574b06d136076e8336cb56066100bc94ebe48ad6"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/05-接口规范体系/10-对外能力交付规范.md",
       "snapshot": "governance/10-对外能力交付规范.md",
       "sourceSha256Lf": "c75fb531482af462da48fd324862f79af19632d2ef8693ac5af2747395d31379",
       "snapshotSha256Lf": "c75fb531482af462da48fd324862f79af19632d2ef8693ac5af2747395d31379",
-      "navigationTargetsRemoved": []
+      "navigationTargetsRemoved": [],
+      "committedSourceSha256Lf": "c75fb531482af462da48fd324862f79af19632d2ef8693ac5af2747395d31379"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/03-能力包治理/研发人员能力包建设与归档指南.md",
       "snapshot": "governance/研发人员能力包建设与归档指南.md",
       "sourceSha256Lf": "f0b1b72d5911368d30d8f83fe40d66c37d42b9a833100abbc5e43059eea9453c",
       "snapshotSha256Lf": "f0b1b72d5911368d30d8f83fe40d66c37d42b9a833100abbc5e43059eea9453c",
-      "navigationTargetsRemoved": []
+      "navigationTargetsRemoved": [],
+      "committedSourceSha256Lf": "f0b1b72d5911368d30d8f83fe40d66c37d42b9a833100abbc5e43059eea9453c"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/07-安全身份权限与敏感信息规范/02-敏感信息与输入安全.md",
+      "snapshot": "外部数据获取边界.md",
+      "sourceSha256Lf": "f72a2a4e7fb832dd3aaeb8596ff53c00642ad33ff90774c7fc2d3601b369500b",
+      "snapshotSha256Lf": "5ffac54f244132c7d83f2911d7a63cc4705be14bd383bbf8f9e55bab1f934966",
+      "transformation": {
+        "sectionStart": "### AURA-BASE-SEC-020：禁止爬取第三方网站数据，外部数据必须通过授权渠道获取",
+        "sectionEndExclusive": "## 三、典型使用示例：受控导出与文件访问",
+        "navigationTargetsRemoved": [],
+        "finalNewline": "single"
+      },
+      "sourceKind": "authority",
+      "authorityStatus": "working-tree-pending-commit",
+      "committedSourceSha256Lf": "a775d5ec65c47914720805c1f4a9c2b2ca5452a6754b5f0a71433bca76a0de60"
     }
   ],
   "sourceRoot": "",
@@ -80,5 +106,14 @@
   ],
   "coverage": "登记本技能全部随包规范与模板；任务导航和确定性工具单独登记。",
   "transformation": "仅移除逐文档登记的导航目标，保留链接文字和正文；摘要仅归一化CRLF为LF。",
-  "behaviorValidation": "共用隔离回归32场景通过（AI12、能力交付20）。独立Agent按源码分发0.1.0建设3份公开候选和1份内部记录，覆盖单一真实函数、3条规则相邻正反例及完整任务；未改源码或创建实际使用技能。主Agent读取全部产物，重跑交付检查0错误/0不完整，并执行3个规则片段及完整场景，输入3文件摘要未变。仅验证隔离源码样本，不证明真实公司能力、制品兼容或发布。"
+  "behaviorValidation": "共用隔离回归32场景通过（AI12、能力交付20）。独立Agent按源码分发0.1.0建设3份公开候选和1份内部记录，覆盖单一真实函数、3条规则相邻正反例及完整任务；未改源码或创建实际使用技能。主Agent读取全部产物，重跑交付检查0错误/0不完整，并执行3个规则片段及完整场景，输入3文件摘要未变。仅验证隔离源码样本，不证明真实公司能力、制品兼容或发布。",
+  "updatedAt": "2026-11-06",
+  "externalDataPolicyRevision": {
+    "date": "2026-11-06",
+    "rule": "AURA-BASE-SEC-020",
+    "previousSkillVersion": "0.7.0",
+    "scope": "No third-party website crawling; official/paid authorized acquisition only. Conditional routing, positive/negative examples, no external probing or SDK-internal review.",
+    "publishedOrInstalled": false,
+    "validation": "10 target skill structures and version checks passed; all SEC-020 full views/excerpts match authority. Seven-skill package check has zero errors,13 incomplete source-binding items; frontend legacy source formats retained. Static validation only; no independent behavior run, scraping, publication or installation."
+  }
 }

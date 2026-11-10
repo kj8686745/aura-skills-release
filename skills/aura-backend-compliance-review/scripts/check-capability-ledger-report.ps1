@@ -72,7 +72,10 @@ foreach ($item in $items) {
 
 $resultResolved = (Resolve-Path -LiteralPath $ResultPath).Path
 $texts = [ordered]@{}; $inputIssues = [Collections.Generic.List[object]]::new()
-if ($Mode -eq 'Change') {
+if ((Test-Path -LiteralPath $resultResolved -PathType Container) -and (Test-Path -LiteralPath (Join-Path $resultResolved '01-规范审查结果.md') -PathType Leaf)) {
+    $path = Join-Path $resultResolved '01-规范审查结果.md'
+    $texts[$path] = Remove-Examples ([IO.File]::ReadAllText($path))
+} elseif ($Mode -eq 'Change') {
     if (-not (Test-Path -LiteralPath $resultResolved -PathType Leaf) -or [IO.Path]::GetExtension($resultResolved) -ne '.md') { throw 'Change 模式要求一个 Markdown 报告文件' }
     $texts[$resultResolved] = Remove-Examples ([IO.File]::ReadAllText($resultResolved))
 } else {
@@ -169,7 +172,7 @@ $result = [ordered]@{
     unclassifiedCapabilityCount = $unclassified.Count
     missingCapabilities = @($missing.ToArray())
     unclassifiedCapabilities = @($unclassified.ToArray())
-    limitations = @('只检查报告中能力账本的逐行人工分类、依据及 E/F/C 定义与回指；passed 不证明能力复用结论真实、项目合规或运行验收。', '未证实是有效人工分类；原始 candidate-only/not-evaluated 候选账本保持只读。', 'Change 仅读取指定报告；Project 仅读取标准六文件；代码围栏、注释、链接目标和额外文件不作为结论或编号定义。')
+    limitations = @('只检查报告中能力账本的逐行人工分类、依据及 E/F/C 定义与回指；passed 不证明能力复用结论真实、项目合规或运行验收。', '未证实是有效人工分类；原始 candidate-only/not-evaluated 候选账本保持只读。', '新四维结果仅读规范报告的基础复用账本，不将报告03的提炼建议当作复用判定；历史单报告/六文件仍可读取。')
     inputIssues = @($inputIssues.ToArray())
 }
 $result | ConvertTo-Json -Depth 8

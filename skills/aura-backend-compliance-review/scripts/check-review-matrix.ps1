@@ -23,6 +23,9 @@ function Get-Rules([string]$Text) {
 
 function Get-ResultFiles([string]$Path, [string]$SelectedMode) {
     $resolved = (Resolve-Path -LiteralPath $Path).Path
+    if ((Test-Path -LiteralPath $resolved -PathType Container) -and (Test-Path -LiteralPath (Join-Path $resolved '01-规范审查结果.md') -PathType Leaf)) {
+        return @([pscustomobject]@{path=(Join-Path $resolved '01-规范审查结果.md');name='01-规范审查结果.md'})
+    }
     if ($SelectedMode -eq 'Change') {
         if (-not (Test-Path -LiteralPath $resolved -PathType Leaf) -or [IO.Path]::GetExtension($resolved) -ne '.md') {
             throw 'Change 模式要求一个 Markdown 报告文件'

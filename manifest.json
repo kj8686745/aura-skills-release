@@ -1,6 +1,6 @@
 {
   "branch": "main",
-  "generatedAt": 1794209857,
+  "generatedAt": 1794273070,
   "repository": "kj8686745/aura-skills-release",
   "schemaVersion": 1,
   "skills": [
@@ -13,11 +13,11 @@
         "通用",
         "AI"
       ],
-      "version": "0.2.0-draft",
+      "version": "0.2.1-draft",
       "visibility": "public"
     },
     {
-      "description": "只读审查 AURA Java/Spring 后端变更、存量接口或全项目的规范偏差，核对基础能力复用并交付带证据的报告；变更用单报告，全项目用六文件包，不执行代码整改。",
+      "description": "只读审查 AURA Java/Spring 后端变更、接口或项目的规范执行与代码质量，核对基础能力复用，交付规范、代码缺陷、公共能力提炼、优秀实践四份报告；不实施代码整改。",
       "name": "aura-backend-compliance-review",
       "path": "skills/aura-backend-compliance-review/SKILL.md",
       "releaseState": "preview",
@@ -27,7 +27,7 @@
         "接口",
         "审查"
       ],
-      "version": "1.24.0",
+      "version": "1.29.1",
       "visibility": "public"
     },
     {
@@ -40,7 +40,7 @@
         "开发",
         "能力使用"
       ],
-      "version": "1.29.0",
+      "version": "1.33.0",
       "visibility": "public"
     },
     {
@@ -54,7 +54,7 @@
         "接口",
         "开发"
       ],
-      "version": "1.5.1",
+      "version": "1.5.2",
       "visibility": "public"
     },
     {
@@ -79,7 +79,7 @@
         "工程",
         "开发"
       ],
-      "version": "1.2.1",
+      "version": "1.2.2",
       "visibility": "public"
     },
     {
@@ -169,7 +169,7 @@
         "能力包",
         "构建"
       ],
-      "version": "0.7.0",
+      "version": "0.7.1",
       "visibility": "internal"
     },
     {
@@ -181,7 +181,7 @@
         "通用",
         "设计"
       ],
-      "version": "0.3.0-draft",
+      "version": "0.3.2-draft",
       "visibility": "public"
     },
     {
@@ -197,7 +197,7 @@
       "visibility": "public"
     },
     {
-      "description": "为前端、后端或接口负责人开发和优化规范审查技能，构建规则路由、只读审查工作流与统一报告模板，并验证生成技能的结果包；不直接承担业务项目审查或代码整改。",
+      "description": "为前端、后端或接口负责人建设审查技能，构建只读工作流、规则取证与规范/缺陷/公共能力/优秀实践四维报告，并验证产物；不直接承担业务项目审查或整改。",
       "name": "aura-review-skill-build",
       "path": "skills/aura-review-skill-build/SKILL.md",
       "releaseState": "ready",
@@ -208,7 +208,7 @@
         "审查",
         "内部构建"
       ],
-      "version": "0.5.1",
+      "version": "0.6.1",
       "visibility": "internal"
     },
     {

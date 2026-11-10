@@ -9,7 +9,7 @@
 以 aura-code-nexus 中当前由前端负责人维护的前端规范为准，先记录规范提交；
 结合现有前端技能核对适用框架和取证办法。
 技能源码放到 aura-skills/skills/aura-frontend-compliance-review。
-要求一次调用连续完成可执行审查；变更审查交单报告，全项目审查交六文件结果包。
+要求一次调用连续完成可执行审查；变更审查交四份报告，全项目审查交四维结果包。
 通过指定的隔离样本验证正确、违规、合理例外和证据不足的判断。
 没有提供样本时先完成技能建设并列出验证缺口，不把行为验证写成通过。
 ```
@@ -20,7 +20,7 @@
 
 ```text
 使用 $aura-review-skill-build 复核现有 aura-backend-compliance-review，
-按统一双模式模板检查规则覆盖、证据判定、连续流程和报告格式。
+按统一四维模板检查规则覆盖、证据判定、连续流程和报告格式。
 保留已有有效规则与后端事实，把需迁移部分及验证结果归并记录。
 ```
 
@@ -33,7 +33,7 @@
 在本技能目录运行，要求 PowerShell 7：
 
 ```powershell
-./scripts/check-review-result.ps1 -Mode Change -ResultPath <单报告.md> -Json
+./scripts/check-review-result.ps1 -Mode Change -ResultPath <四份报告目录> -Json
 ./scripts/check-review-result.ps1 -Mode Project -ResultPath <结果包目录> -Json
 ```
 

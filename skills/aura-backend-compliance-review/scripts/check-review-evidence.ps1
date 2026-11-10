@@ -12,6 +12,14 @@ $ErrorActionPreference = 'Stop'
 
 function Get-ResultFiles([string]$Path, [string]$SelectedMode) {
     $resolved = (Resolve-Path -LiteralPath $Path).Path
+    if ((Test-Path -LiteralPath $resolved -PathType Container) -and (Test-Path -LiteralPath (Join-Path $resolved '01-规范审查结果.md') -PathType Leaf)) {
+        $names = @('01-规范审查结果.md','02-代码缺陷审查报告.md','03-公共能力提炼建议.md','04-优秀实践评估.md')
+        return @($names | ForEach-Object {
+            $file=Join-Path $resolved $_
+            if (-not (Test-Path -LiteralPath $file -PathType Leaf)) {throw "缺少报告：$_"}
+            [pscustomobject]@{path=$file;name=$_}
+        })
+    }
     if ($SelectedMode -eq 'Change') {
         if (-not (Test-Path -LiteralPath $resolved -PathType Leaf) -or [IO.Path]::GetExtension($resolved) -ne '.md') {
             throw 'Change 模式要求一个 Markdown 报告文件'

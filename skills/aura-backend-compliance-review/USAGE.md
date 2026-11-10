@@ -6,15 +6,15 @@
 
 ## 常见请求
 
-> 使用 $aura-backend-compliance-review 审查当前项目相对指定基线的设备模块修改，包含工作树差异。只检查变更与受影响链路，交一份报告，不改代码。
+> 使用 $aura-backend-compliance-review 审查当前项目相对指定基线的设备模块修改，包含工作树差异。只检查变更与受影响链路，交四份报告，不改代码。
 
-> 使用 $aura-backend-compliance-review 对指定版本做完整后端规范审查，交六文件结果包，基础能力复用必须纳入，专项能力按触发场景检查。
+> 使用 $aura-backend-compliance-review 对指定版本做完整后端规范审查，交四维结果包，基础能力复用必须纳入，专项能力按触发场景检查。
 
-> 使用 $aura-backend-compliance-review 只核对设备模块内外接口的响应、分页、OpenAPI 登记、权限及模块文档；一份报告列明调用方和未证实项，不扩大为全项目。
+> 使用 $aura-backend-compliance-review 只核对设备模块内外接口的响应、分页、OpenAPI 登记、权限及模块文档；四份报告均限定当前接口范围，列明调用方和未证实项，不扩大为全项目。
 
 ## 会得到什么
 
-变更单报告按基线、结论、覆盖、发现与证据、候选、整改六章组织；全项目按同版模板交固定六文件包。两种模式都必须先生成 `00-审查结果总览.md`，用总分总方式说明结论、范围、已确认事实、未证实项和下一步；详细报告、原始 JSON 和逐文件清单作为证据附在同一目录，不要求使用者先阅读 JSON。全量接口专项也可用六文件包，但结论只覆盖接口范围。单报告不会链接不存在的六文件附件，不为单个接口拆报告。
+变更、专项与全项目统一按[四维模板](references/审查结果包模板.md)交规范、代码缺陷、公共能力提炼、优秀实践四份报告。报告01兼具导航、覆盖、证据、候选、基础复用与整改记录，不另建总览；范围按本次任务限定，不以四份文件宣称全项目审查。轻量自检不冒称独立审查。
 
 报告明确纳入、已查、未查和排除对象；每个发现有规则 ID、证据、影响及关闭条件。缺运行材料保留未证实；合理例外保留依据；零发现不代表全部规则通过。基础能力只对当前范围涉及功能核对复用，不要求所有项目接入全部专项。
 
@@ -39,8 +39,8 @@
 ./scripts/inspect-review-scope.ps1 -ProjectPath '<项目根>' -ModulePath '<模块>' -BaseRef '<基线提交>' -HeadRef '<目标提交>' -IncludeWorkingTree -Json
 # 需要逐文件清单时追加：-IncludeFiles
 ./scripts/select-json-summary.ps1 -InputPath '<临时 JSON>' -PathFilter '<模块或文件>' -RuleId '<规则>' -ApiPath '<接口路径>' -MaxItems 20
-./scripts/check-review-result.ps1 -Mode Change -ResultPath '<单报告.md>' -MatrixPath '<技能目录>/references/standards/01-基础编码规范/规范矩阵.md' -Json
-./scripts/check-review-evidence.ps1 -Mode Change -ResultPath '<单报告.md>' -Json
+./scripts/check-review-result.ps1 -Mode Change -ResultPath '<四份报告目录>' -MatrixPath '<技能目录>/references/standards/01-基础编码规范/规范矩阵.md' -Json
+./scripts/check-review-evidence.ps1 -Mode Change -ResultPath '<四份报告目录>' -Json
 ./scripts/check-capability-ledger.ps1 -InputPath '<范围盘点 JSON>' -Json
 ./scripts/check-capability-ledger-report.ps1 -LedgerPath '<范围盘点 JSON>' -ResultPath '<审查报告或结果包>' -Mode Change -Json
 ```

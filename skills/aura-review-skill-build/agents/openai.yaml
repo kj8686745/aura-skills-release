@@ -1,6 +1,6 @@
 interface:
   display_name: "AURA 审查技能构建"
   short_description: "为领域负责人建设审查技能，统一变更单报告、全项目结果包及取证验证"
-  default_prompt: "使用 $aura-review-skill-build 建设指定领域审查技能，按同版规范区分变更单报告和全项目六文件包，验证实际产物与证据边界。"
+  default_prompt: "使用 $aura-review-skill-build 建设指定领域审查技能，按同版规范构建连续只读工作流与四维报告，分别验证变更及全项目范围的实际产物和证据边界，不直接审查或整改业务项目。"
 policy:
   allow_implicit_invocation: true

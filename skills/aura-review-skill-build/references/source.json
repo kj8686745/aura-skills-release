@@ -1,6 +1,6 @@
 {
   "skill": "aura-review-skill-build",
-  "skillVersion": "0.5.1",
+  "skillVersion": "0.6.1",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
   "sourceCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
   "sourceRoot": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理",
@@ -8,18 +8,18 @@
     {
       "source": "01-管理规范/审查技能构建规范.md",
       "snapshot": "governance/01-管理规范/审查技能构建规范.md",
-      "version": "1.2.1",
-      "sourceSha256Lf": "bdd46c0b9a58882203ea7157af1115f6e847b4fdad0d3fb96f1a9bb252e85240",
-      "snapshotSha256Lf": "bdd46c0b9a58882203ea7157af1115f6e847b4fdad0d3fb96f1a9bb252e85240",
+      "version": "2.0.1",
+      "sourceSha256Lf": "8937b95f1b582e748842e24f4c59366fc3770bed7d845a5853715336734ebc55",
+      "snapshotSha256Lf": "8937b95f1b582e748842e24f4c59366fc3770bed7d845a5853715336734ebc55",
       "navigationTargetsRemoved": [],
       "committedSourceSha256Lf": "bdd46c0b9a58882203ea7157af1115f6e847b4fdad0d3fb96f1a9bb252e85240"
     },
     {
       "source": "05-技能构建/审查结果包模板.md",
       "snapshot": "governance/05-技能构建/审查结果包模板.md",
-      "version": "1.2.0",
-      "sourceSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e",
-      "snapshotSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e",
+      "version": "2.0.0",
+      "sourceSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8",
+      "snapshotSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8",
       "navigationTargetsRemoved": [],
       "committedSourceSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e"
     }
@@ -31,19 +31,27 @@
   },
   "snapshotRoot": "references",
   "sourceBinding": {
-    "status": "matched",
-    "note": "两份来源均与db5df7e内容摘要一致，与后端审查统一绑定精确提交；来源绑定不代表行为验收或发布。"
+    "status": "pending",
+    "note": "两份来源均与db5df7e内容摘要一致，与后端审查统一绑定精确提交；来源绑定不代表行为验收或发布。",
+    "baseCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
+    "date": "2026-11-09",
+    "reason": "Four-dimensional review governance and actual-project domain-routing corrections remain uncommitted; exact source binding is pending."
   },
   "skillResources": [
     {
       "path": "scripts/check-review-result.ps1",
       "kind": "script",
-      "sha256Lf": "669f5d943ebadf21fe2f2feb71434de9169c043ac7b438273bb1e35c8b8294af"
+      "sha256Lf": "deed5ace7ec52fef9cf94fa3ead9e43577f608d859e28b9413edcbf9264f156b"
     },
     {
       "path": "scripts/check-review-matrix.ps1",
       "kind": "script",
-      "sha256Lf": "3671ec77ec8df4597b2db5f8258cfe1584d9945eabbef93795771f415dbaef44"
+      "sha256Lf": "76b3f038c8662202ac08156843e67339a84e3142aa762468ead3e393404669b6"
+    },
+    {
+      "path": "scripts/check-review-dimensions.ps1",
+      "kind": "script",
+      "sha256Lf": "917dcadc903b53fd89ec6c4c976f849b2be0d2ae9d53456fbb53d8a27dabad06"
     }
   ],
   "reportClosureRevision": {
@@ -72,5 +80,68 @@
     "limits": "仅验证四规则隔离六文件专项及报告工具；新增规则矩阵来源校验已通过有效/未知规则隔离用例和真实变更报告复核；未重新验证构建技能生成新技能全过程、全项目规则适用性、真实运行、安装触发或发布。",
     "evidenceArchive": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端审查技能1.3.0隔离验证样本与结果-20261021.zip",
     "evidenceArchiveSha256": "76187ae258d333ff121c7ca3ce07525733f868e69b0d853a49c85a9e2cb500f9"
+  },
+  "updatedAt": "2026-11-09",
+  "fourDimensionReviewRevision": {
+    "date": "2026-11-09",
+    "previousSkillVersion": "0.5.1",
+    "reportFormat": "2.0.0",
+    "reportFiles": [
+      "01-规范审查结果.md",
+      "02-代码缺陷审查报告.md",
+      "03-公共能力提炼建议.md",
+      "04-优秀实践评估.md"
+    ],
+    "scope": "Change/project/specialty keep their own boundaries; one evidence collection, four judgments, primary-finding deduplication; lightweight development self-check/consultation remain separate.",
+    "legacy": "Explicit -Legacy read-only checker compatibility, no historical artifact deletion.",
+    "validation": {
+      "fourReportCases": 20,
+      "legacyCompatibilityCases": 53,
+      "frontendHelperCases": 26,
+      "ledgerCompatibilityCases": 49,
+      "matrixCases": 2,
+      "evidenceCases": 3,
+      "behaviorScope": "Shared report tooling/structure validated; no new independent frontend review or newly-generated skill trial",
+      "backendTrial": {
+        "files": 4,
+        "rules": 5,
+        "normativePass": 2,
+        "normativeDeviations": 3,
+        "codeDefects": 1,
+        "extractionCandidates": 1,
+        "notRecommendedExtraction": 1,
+        "goodPractices": 1,
+        "uniqueRootCauses": 3,
+        "sampleUnchanged": true
+      },
+      "sourceDrift": "Independent trial recorded SKILL.md/template changes by main maintenance during execution; final checker rerun is separate, not immutable-source behavior acceptance.",
+      "probe": "Main-agent isolated javac/java probe independently confirms boxed Long mismatch and three preview branches; not project/production acceptance.",
+      "limits": "No real business project modification, frontend semantic trial, publication, installation or exact uncommitted authority binding."
+    },
+    "publishedOrInstalled": false
+  },
+  "realProjectReviewRevision": {
+    "date": "2026-11-09",
+    "previousSkillVersion": "0.6.0",
+    "trialSkillVersion": "1.29.0 (immutable snapshot)",
+    "trialProject": "aura-iotbus-mgr dev/1.1.0 at8810f15663b0ad919810db3c11e5e2ce9721129a",
+    "scope": "Geocoding module,17 primary files plus necessary direct context; read-only static four-report review",
+    "observedGap": "Initial review omitted explicit INTEG/ASYNC applicability despite external API and parallel work; BE/RUNTIME overlap did not imply coverage. Large baseline JSON was also projected by exclusion and printed unnecessary hashes once.",
+    "sourceFix": "Behavior-to-domain applicability table, explicit INTEG route, conditional ASYNC semantics without durable task overdesign, explicit JSON metadata allowlist.",
+    "validation": {
+      "trialVersion": "1.29.0 immutable snapshot",
+      "scope": "17 main files +6 necessary context units;105 scoped rules",
+      "normativeRootCauses": 5,
+      "directCodeDefects": 2,
+      "extractionCandidates": 1,
+      "goodPractices": 1,
+      "projectAndSnapshotUnchanged": true,
+      "initialOmissionCorrectedWithPrimaryFeedback": true,
+      "finalReportReplay": "0errors0incomplete;105 known matrix rules",
+      "evidenceCheck": "exit2;0secret patterns,1negative-boundary hint manually excluded as actual overreach",
+      "sourceFixChecks": "2skill structures passed;0package errors4incomplete;no fresh independent blind trial1.29.1",
+      "businessBuildOrRuntime": "not executed"
+    },
+    "publishedOrInstalled": false
   }
 }

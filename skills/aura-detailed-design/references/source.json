@@ -7,8 +7,8 @@
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "00ee825047983ab6fb16b1e869b7be3ad8c241b3bfd81c04cf9864e048ed5ef6",
-      "snapshotSha256Lf": "00ee825047983ab6fb16b1e869b7be3ad8c241b3bfd81c04cf9864e048ed5ef6",
+      "sourceSha256Lf": "c7fa96b95e4b9b7d8ab73a0c9c41f7e9dd1d3e8d2f7edc0e835da9e0694307a5",
+      "snapshotSha256Lf": "c7fa96b95e4b9b7d8ab73a0c9c41f7e9dd1d3e8d2f7edc0e835da9e0694307a5",
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "67038551792da307beb153c54d424fa6d6a1df33fa2563868d5e73f3a0c2f783"
@@ -16,11 +16,13 @@
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/02-详细设计规范/02-技术详细设计文档模板.md",
       "snapshot": "references/standards/02-详细设计规范/02-技术详细设计文档模板.md",
-      "navigationTargetsRemoved": [],
+      "navigationTargetsRemoved": [
+        "../01-基础编码规范/07-安全身份权限与敏感信息规范/02-敏感信息与输入安全.md"
+      ],
       "sourceKind": "authority",
       "authorityStatus": "matched",
-      "sourceSha256Lf": "723a020272cd2e15e7086365ff80bb024622e233c77cd9ac21c0fe28930d4381",
-      "snapshotSha256Lf": "723a020272cd2e15e7086365ff80bb024622e233c77cd9ac21c0fe28930d4381",
+      "sourceSha256Lf": "20aacf5271ea1c0b2709da6037d5efcfe14733af1d44e96447c169cbc1cef530",
+      "snapshotSha256Lf": "689120de9c6af238d47aafbcf0dea6f9d77078322d6daf8033ace6a7c84bd527",
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "b1c3b5550b0bd050bae77d042cc059d05b9d199739a26ae516d4a2f7f34ebc06"
@@ -36,10 +38,25 @@
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "c1890c226d8dc3c0969844066dbe9f986ced6a9ee105f2013ac6a4a0725ea208"
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/07-安全身份权限与敏感信息规范/02-敏感信息与输入安全.md",
+      "snapshot": "references/外部数据获取边界.md",
+      "sourceSha256Lf": "f72a2a4e7fb832dd3aaeb8596ff53c00642ad33ff90774c7fc2d3601b369500b",
+      "snapshotSha256Lf": "5ffac54f244132c7d83f2911d7a63cc4705be14bd383bbf8f9e55bab1f934966",
+      "transformation": {
+        "sectionStart": "### AURA-BASE-SEC-020：禁止爬取第三方网站数据，外部数据必须通过授权渠道获取",
+        "sectionEndExclusive": "## 三、典型使用示例：受控导出与文件访问",
+        "navigationTargetsRemoved": [],
+        "finalNewline": "single"
+      },
+      "sourceKind": "authority",
+      "authorityStatus": "working-tree-pending-commit",
+      "committedSourceSha256Lf": "a775d5ec65c47914720805c1f4a9c2b2ca5452a6754b5f0a71433bca76a0de60"
     }
   ],
   "coverage": "覆盖本技能全部三份同版规范、模板和示例；任务导航与只读检查脚本单独登记。",
-  "skillVersion": "0.3.0-draft",
+  "skillVersion": "0.3.2-draft",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
   "sourceCommit": "6d7951e413ec9ca587b35d53d585d7fa8f62ef6c",
   "sourceRoot": "",
@@ -47,8 +64,10 @@
   "sourceBinding": {
     "status": "pending",
     "commit": "6d7951e413ec9ca587b35d53d585d7fa8f62ef6c",
-    "date": "2026-11-04",
-    "note": "Scheduled task rules ASYNC-027..034, task design section and selected shared views synchronized from authority worktree. New normative source is not committed; original commit digests retained, exact binding pending. No publication or installation."
+    "date": "2026-11-06",
+    "note": "Security rules SEC-017..019 and conditional locking choice updated from uncommitted authority worktree; preserve committed source digests until exact binding. Not published or installed.",
+    "baseCommit": "6d7951e413ec9ca587b35d53d585d7fa8f62ef6c",
+    "reason": "SEC-020 authority and related AI/design updates are uncommitted; stored worktree hashes do not claim exact commit binding."
   },
   "skillResources": [
     {
@@ -120,5 +139,40 @@
     "capabilityBaseline": "aura-core-common dev@53bcd77 POM/BOM declare XXL-JOB3.4.2; assembly source inspected, no executor registration/runtime verification.",
     "validation": "Five skill structures passed; 8 rule examples/IDs and 153 local normative links checked; existing design example mechanical check passed. Package:0 errors,5 pending-source bindings plus4 new-source-missing-in-old-commit records. No scheduled-task behavior trial, executor registration or real trigger verification.",
     "publishedOrInstalled": false
+  },
+  "sqlFileAndLockSafetyRevision": {
+    "date": "2026-11-06",
+    "previousSkillVersion": "0.3.0-draft",
+    "skillVersion": "0.3.1-draft",
+    "rules": [
+      "AURA-BASE-SEC-017",
+      "AURA-BASE-SEC-018",
+      "AURA-BASE-SEC-019",
+      "AURA-BASE-BE-027",
+      "AURA-BASE-DATA-005",
+      "AURA-DES-010"
+    ],
+    "scope": "Parameterized values and server-owned dynamic SQL mapping; business files must not expose host filesystem management; content validation/quarantine/nonexecution; non-default locking reads with justified invariant and bounded transaction.",
+    "screenshotAssessment": "Bound MyBatis values and explicit locking read visible; application path and transaction caller not located, no live blocking/deadlock claim.",
+    "validation": "Five structures passed; SEC-017..019 examples and matrix IDs checked; package zero errors with five pending bindings and four new scheduled-rule source files missing in old commits. Current local links checked. Screenshot-only pattern assessment, no target repository inspection or runtime blocking/deadlock/exploit/antivirus test.",
+    "publishedOrInstalled": false
+  },
+  "lockingGuidanceAudit": {
+    "date": "2026-11-06",
+    "scope": "Audited normative triggers, template rows, main skill entry, CRUD/database routing, completion gates, generator scripts, runnable positive examples, and local installed versions.",
+    "findings": "No rule or generator directly mandates SQL FOR UPDATE; rules overgeneralize consistency requirements, one lock rule lacked conditional applicability, required template emphasized locks, detailed positive report recipe used explicit locking read, and entrypoint warning was only on database branch.",
+    "corrections": "Existing sufficient protection/no new mechanism explicitly valid; ordinary reads nonlocking; lock rule conditional; template asks actual consistency not lock fields; direct entrypoint prevents checklist-driven locking; default report recipe uses closed immutable-window compute plus scoped conditional short commit instead of lockWindow/FOR UPDATE.",
+    "evidenceBoundary": "Input files and old wording recorded; other team use/session not available, deterministic universal behavior or screenshot causality not proven. Installed skills untouched and still stale.",
+    "validation": "Five skill structures passed; package zero errors with 5 pending authority bindings and 4 newly added scheduling sources absent from old commit. Reviewed295 Java/SQL/XML fenced examples across backend-development/review/design: no executable explicit locking-read or lockWindow recipe remains. This is an inventory, not a mandatory ban or semantic/behavior pass. Installed 3 skill entries unchanged; source corrections not distributed.",
+    "publishedOrInstalled": false
+  },
+  "updatedAt": "2026-11-06",
+  "externalDataPolicyRevision": {
+    "date": "2026-11-06",
+    "rule": "AURA-BASE-SEC-020",
+    "previousSkillVersion": "0.3.1-draft",
+    "scope": "No third-party website crawling; official/paid authorized acquisition only. Conditional routing, positive/negative examples, no external probing or SDK-internal review.",
+    "publishedOrInstalled": false,
+    "validation": "10 target skill structures and version checks passed; all SEC-020 full views/excerpts match authority. Seven-skill package check has zero errors,13 incomplete source-binding items; frontend legacy source formats retained. Static validation only; no independent behavior run, scraping, publication or installation."
   }
 }

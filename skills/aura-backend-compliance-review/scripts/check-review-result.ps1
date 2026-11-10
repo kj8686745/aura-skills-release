@@ -1,6 +1,6 @@
 #requires -Version 7.0
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$ResultPath,[Parameter(Mandatory)][ValidateSet('Change','Project')][string]$Mode,[string]$MatrixPath='', [switch]$Json)
+param([Parameter(Mandatory)][string]$ResultPath,[Parameter(Mandatory)][ValidateSet('Change','Project')][string]$Mode,[string]$MatrixPath='', [switch]$Legacy, [switch]$Json)
 $ErrorActionPreference='Stop'
 $issues=[Collections.Generic.List[object]]::new();$tables=[Collections.Generic.List[object]]::new();$texts=@{}
 function Add-Issue($Level,$Code,$Path,$Message){$issues.Add(@{level=$Level;code=$Code;path=$Path;message=$Message})}
@@ -35,7 +35,23 @@ function Ids($Text,$Prefix){@([regex]::Matches([string]$Text,"(?<![A-Z0-9-])$Pre
 $rulePattern='(?<![A-Z0-9-])(?:[A-Z][A-Z0-9]*-){2,}\d{3,}(?![A-Z0-9-])'
 try{
   $resolved=(Resolve-Path -LiteralPath $ResultPath).Path
-  if($Mode -eq 'Change'){
+  $fourReport = -not $Legacy
+  if($fourReport){
+    if(-not (Test-Path -LiteralPath $resolved -PathType Container)){throw '新审查需要四份报告目录；历史单报告或六文件请显式使用 -Legacy'}
+    $names=@('01-规范审查结果.md','02-代码缺陷审查报告.md','03-公共能力提炼建议.md','04-优秀实践评估.md')
+    foreach($name in $names){if(-not (Test-Path -LiteralPath (Join-Path $resolved $name) -PathType Leaf)){Add-Issue error missing_file $name '缺少四维报告文件'}}
+    $normPath=Join-Path $resolved $names[0]
+    $main=if(Test-Path -LiteralPath $normPath){Remove-Examples ([IO.File]::ReadAllText($normPath))}else{''}
+    $texts[$names[0]]=$main
+    foreach($heading in @('一、基线与范围','二、总体结论','三、对象与规则覆盖','四、发现与证据','五、候选与判定','六、整改与复核')){
+      if($main -notmatch ('(?m)^#{1,6}\s+'+[regex]::Escape($heading)+'\s*$')){Add-Issue error missing_section $normPath "规范报告缺少章节：$heading"}
+    }
+    $cards=[regex]::Match($main,'(?ms)^#{1,6}\s+四、发现与证据\s*\r?$\n(?<body>.*?)^#{1,6}\s+五、候选与判定\s*\r?$').Groups['body'].Value
+    $dimensionTool=Join-Path $PSScriptRoot 'check-review-dimensions.ps1'
+    if(-not (Test-Path -LiteralPath $dimensionTool)){throw '缺少四维结果检查工具'}
+    $dimensions=& pwsh -NoProfile -File $dimensionTool -ResultPath $resolved -Json | ConvertFrom-Json
+    foreach($item in $dimensions.issues){Add-Issue $item.level $item.code $item.path $item.message}
+  }elseif($Mode -eq 'Change'){
     if(-not (Test-Path -LiteralPath $resolved -PathType Leaf) -or [IO.Path]::GetExtension($resolved) -ne '.md'){throw 'Change 需要单个 Markdown 报告'}
     $texts[[IO.Path]::GetFileName($resolved)]=Remove-Examples ([IO.File]::ReadAllText($resolved))
     $main=$texts.Values | Select-Object -First 1
@@ -68,7 +84,7 @@ try{
   $progressFormat=$false
   if($formatVersion){$progressFormat=([version]$formatVersion -ge [version]'1.2.0')}
   foreach($name in $texts.Keys){
-    $base=if($Mode -eq 'Change'){[IO.Path]::GetDirectoryName($resolved)}else{$resolved}
+    $base=if($Mode -eq 'Change' -and -not $fourReport){[IO.Path]::GetDirectoryName($resolved)}else{$resolved}
     foreach($m in [regex]::Matches($texts[$name],'\[[^\]\r\n]+\]\((?<href>[^\s)]+)\)')){
       $href=$m.Groups['href'].Value;$part=$href.Split('#')[0]
       if(-not $part -or $href -match '^(?:[A-Za-z][A-Za-z0-9+.-]*:|//)'){continue}
@@ -263,6 +279,7 @@ try{
   }
   $errors=@($issues | Where-Object level -eq error).Count;$incomplete=@($issues | Where-Object level -eq incomplete).Count
   $summary=[ordered]@{errors=$errors;incomplete=$incomplete;uniqueRules=$ruleStates.Count;findings=$findings.Count;closedFindings=$closedFindings.Count;activeFindings=$findings.Count-$closedFindings.Count;candidates=$candidateIds.Count;evidence=$eIds.Count}
+  if($fourReport){$summary.dimensions=$dimensions.summary.dimensions}
   if($matrixCheck){$summary.matrixRules=$matrixCheck.matrixRuleCount;$summary.matrixReferencedRules=$matrixCheck.referencedRuleCount;$summary.matrixUnknownRules=$matrixCheck.unknownRuleCount}
   $result=[ordered]@{schemaVersion=1;mode=$Mode;formatVersion=$formatVersion;executionState=$executionState;status=$(if($errors){'failed'}elseif($incomplete){'partial'}else{'passed'});summary=$summary;issues=@($issues.ToArray());limitations=@('验证可解析报告结构、ID、统计、进度矛盾及重复依据风险；不证明规则覆盖完整、证据真实、例外有效、严重性正确或项目合规。','findings保留全部历史卡片；closedFindings仅表示关闭记录含条件及不同于初审的已定义E引用，不裁定真实关闭；activeFindings为其余卡片。','status 是工具检查状态，executionState 是报告自述执行状态，两者均不代替人工证据复核。旧版无执行进度时不外推其覆盖已完成。')}
   $code=if($errors){1}elseif($incomplete){2}else{0}
