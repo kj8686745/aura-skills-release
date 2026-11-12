@@ -1,18 +1,18 @@
 {
   "skill": "aura-review-skill-build",
-  "skillVersion": "0.6.1",
+  "skillVersion": "0.6.2",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
-  "sourceCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
+  "sourceCommit": "2b6cf58a470443397b1b4ad1279f5f60cb4993f7",
   "sourceRoot": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理",
   "documents": [
     {
       "source": "01-管理规范/审查技能构建规范.md",
       "snapshot": "governance/01-管理规范/审查技能构建规范.md",
-      "version": "2.0.1",
-      "sourceSha256Lf": "8937b95f1b582e748842e24f4c59366fc3770bed7d845a5853715336734ebc55",
-      "snapshotSha256Lf": "8937b95f1b582e748842e24f4c59366fc3770bed7d845a5853715336734ebc55",
+      "version": "2.0.2",
+      "sourceSha256Lf": "c128007747172104a25e23e659ade6b1aa150e6448aab15de5628922a264a7f8",
+      "snapshotSha256Lf": "c128007747172104a25e23e659ade6b1aa150e6448aab15de5628922a264a7f8",
       "navigationTargetsRemoved": [],
-      "committedSourceSha256Lf": "bdd46c0b9a58882203ea7157af1115f6e847b4fdad0d3fb96f1a9bb252e85240"
+      "committedSourceSha256Lf": "c128007747172104a25e23e659ade6b1aa150e6448aab15de5628922a264a7f8"
     },
     {
       "source": "05-技能构建/审查结果包模板.md",
@@ -21,7 +21,7 @@
       "sourceSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8",
       "snapshotSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8",
       "navigationTargetsRemoved": [],
-      "committedSourceSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e"
+      "committedSourceSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8"
     }
   ],
   "validation": {
@@ -31,11 +31,8 @@
   },
   "snapshotRoot": "references",
   "sourceBinding": {
-    "status": "pending",
-    "note": "两份来源均与db5df7e内容摘要一致，与后端审查统一绑定精确提交；来源绑定不代表行为验收或发布。",
-    "baseCommit": "db5df7e0753cf4bacc43c776c1af7f979be445b9",
-    "date": "2026-11-09",
-    "reason": "Four-dimensional review governance and actual-project domain-routing corrections remain uncommitted; exact source binding is pending."
+    "status": "matched",
+    "note": "审查构建规范和报告模板均与该规范提交核对一致。"
   },
   "skillResources": [
     {
@@ -81,7 +78,7 @@
     "evidenceArchive": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端审查技能1.3.0隔离验证样本与结果-20261021.zip",
     "evidenceArchiveSha256": "76187ae258d333ff121c7ca3ce07525733f868e69b0d853a49c85a9e2cb500f9"
   },
-  "updatedAt": "2026-11-09",
+  "updatedAt": "2026-11-12",
   "fourDimensionReviewRevision": {
     "date": "2026-11-09",
     "previousSkillVersion": "0.5.1",
@@ -143,5 +140,28 @@
       "businessBuildOrRuntime": "not executed"
     },
     "publishedOrInstalled": false
+  },
+  "reviewHandoffRevision": {
+    "previousSkillVersion": "0.6.1",
+    "date": "2026-11-12",
+    "handoffDate": "2026-11-11",
+    "status": "local-source-only",
+    "publishedOrInstalled": false,
+    "change": "Governance 2.0.2 clarifies optional grouping, cross-round review and source line verification under existing rules."
+  },
+  "reviewGovernanceBinding": {
+    "sourceCommit": "2b6cf58a470443397b1b4ad1279f5f60cb4993f7",
+    "documents": [
+      {
+        "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理/01-管理规范/审查技能构建规范.md",
+        "snapshot": "governance/01-管理规范/审查技能构建规范.md",
+        "sourceSha256Lf": "c128007747172104a25e23e659ade6b1aa150e6448aab15de5628922a264a7f8"
+      },
+      {
+        "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理/05-技能构建/审查结果包模板.md",
+        "snapshot": "governance/05-技能构建/审查结果包模板.md",
+        "sourceSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8"
+      }
+    ]
   }
 }

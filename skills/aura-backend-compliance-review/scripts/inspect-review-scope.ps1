@@ -189,7 +189,7 @@ try {
       if($baseProbe.code -ne 0 -or -not @($baseProbe.lines).Count){$gitResult.limitations+=@("无法解析 BaseRef：$BaseRef")}
       else {
         $gitResult.baseCommit=([string]$baseProbe.lines[0]).Trim()
-        $diffProbe=Invoke-GitText $gitRoot @('diff','--name-status','--no-renames',"$BaseRef`^{commit}","$HeadRef`^{commit}")
+        $diffProbe=Invoke-GitText $gitRoot @('diff','--name-status','--no-renames',$gitResult.baseCommit,$gitResult.headCommit)
         if($diffProbe.code -ne 0){$gitResult.limitations+=@('无法读取 base/head 差异')}
         else {$gitResult.baseToHead=@(Convert-GitNameStatus $diffProbe.lines | Where-Object { -not (Test-ExcludedGitPath $_.path $allExclusions) })}
       }
@@ -208,9 +208,10 @@ try {
     $gitResult.scopeId=([BitConverter]::ToString(([Security.Cryptography.SHA256]::Create().ComputeHash($digestInput)))).Replace('-','').ToLowerInvariant()
     $gitResult.status=if($BaseRef -and $gitResult.baseCommit -and -not $gitResult.limitations.Count){'complete'}else{'partial'}
   }
+  $incomplete = $unresolved.Count -gt 0 -or ($BaseRef -and $gitResult.status -ne 'complete')
   $result=[ordered]@{
     schemaVersion=1
-    status=$(if($unresolved.Count){'partial'}else{'complete'})
+    status=$(if($incomplete){'partial'}else{'complete'})
     projectRoot=$scope.root
     moduleRoots=@($ModulePath)
     scope=$scopeResult
@@ -234,7 +235,7 @@ try {
     . (Join-Path $PSScriptRoot 'capability-candidates.ps1')
     $result.capabilityReuse=Get-CapabilityReuseCandidates $scope.root $files @($dependencies.ToArray()) @($configurationEvidence.ToArray())
   }
-  $code=if($unresolved.Count){2}else{0}
+  $code=if($incomplete){2}else{0}
 } catch {
   $result=[ordered]@{schemaVersion=1;status='failed';unresolved=@(@{reason=$_.Exception.Message})};$code=1
 }

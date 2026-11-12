@@ -1,6 +1,6 @@
 {
   "skill": "aura-backend-compliance-review",
-  "skillVersion": "1.29.1",
+  "skillVersion": "1.29.2",
   "releaseStatus": "preview-authorized-not-uploaded",
   "releaseDecision": {
     "date": "2026-11-03",
@@ -1026,7 +1026,7 @@
     {
       "path": "scripts/inspect-review-scope.ps1",
       "kind": "script",
-      "sha256Lf": "6cb1960f2787cc5c2d429c507a5209ee1cdfa7c17972682359543c1cb2c2eada",
+      "sha256Lf": "5014dc64bc8de73a3627f513e72faac022fb437c4aacd7b881f2a31da468fa1b",
       "originStatus": "working-tree"
     },
     {
@@ -1038,12 +1038,12 @@
     {
       "path": "references/后端审查执行路由.md",
       "kind": "skill-navigation",
-      "sha256Lf": "86025f76ff4d85f14db67cbfb610f92a5cb778fdaee18fdc9b4de47304c7d04c"
+      "sha256Lf": "dcec54aad5c6f810f9b07f21ae4385f13af14726975d460016ae87c90f04866c"
     },
     {
       "path": "references/后端审查完成门槛.md",
       "kind": "skill-navigation",
-      "sha256Lf": "8ea0cb80bdc2937f62aa249c75349d415bf5ad4f5e38e8714a77f35700419c7e"
+      "sha256Lf": "90e9948a89bf0b5a0981504444da445b7f151eec7365357a98e4193a0be0bc06"
     },
     {
       "path": "references/专项/接口专项/审查入口.md",
@@ -1110,6 +1110,21 @@
       "path": "scripts/check-review-dimensions.ps1",
       "kind": "script",
       "sha256Lf": "917dcadc903b53fd89ec6c4c976f849b2be0d2ae9d53456fbb53d8a27dabad06"
+    },
+    {
+      "path": "references/Git审查取证.md",
+      "kind": "reference",
+      "sha256Lf": "eefaf14f2bc7501fcc4973fb6286c53ebc83d0df79f1b4f22374bcfaf7852b45"
+    },
+    {
+      "path": "references/权限与外部身份取证.md",
+      "kind": "reference",
+      "sha256Lf": "3911d45e6634df7a870c7d0e10870efe3934d2865127072c4490be43957aba6a"
+    },
+    {
+      "path": "scripts/review-git-evidence.py",
+      "kind": "script",
+      "sha256Lf": "a1744539e18a9d4608decf612304255d60991e4a808cb71444de38c28f71febb"
     }
   ],
   "sourceRoot": "",
@@ -1120,7 +1135,7 @@
     "date": "2026-11-09",
     "note": "Security rules SEC-017..019 and conditional locking choice updated from uncommitted authority worktree; preserve committed source digests until exact binding. Not published or installed.",
     "baseCommit": "6d7951e413ec9ca587b35d53d585d7fa8f62ef6c",
-    "reason": "Four-dimensional review governance and actual-project domain-routing corrections remain uncommitted; exact source binding is pending."
+    "reason": "审查治理配套文件已记录精确提交及摘要，其余来源仍按既有记录待绑定。"
   },
   "currentRevisionValidation": {
     "reportToolCasesPassed": 45,
@@ -1868,7 +1883,7 @@
     "validation": "Two primary structures passed;4consumer package0errors,4pending authority bindings and4new scheduling files absent from old commit.150 authority Java blocks contain no record declarations after7 declarations in5documents replaced; actual SDK contracts and parser support unchanged. No standalone snippet compilation, configuration binding/serialization trial, business migration, publication or installation.",
     "publishedOrInstalled": false
   },
-  "updatedAt": "2026-11-09",
+  "updatedAt": "2026-11-12",
   "externalDataPolicyRevision": {
     "date": "2026-11-06",
     "rule": "AURA-BASE-SEC-020",
@@ -1938,5 +1953,23 @@
       "businessBuildOrRuntime": "not executed"
     },
     "publishedOrInstalled": false
+  },
+  "reviewHandoffRevision": {
+    "previousSkillVersion": "1.29.1",
+    "date": "2026-11-12",
+    "handoffDate": "2026-11-11",
+    "status": "local-source-only",
+    "publishedOrInstalled": false,
+    "change": "Git scope, line evidence, optional grouping and review history. On-demand authorization, external identity, and test-stage evidence."
+  },
+  "reviewGovernanceBinding": {
+    "sourceCommit": "2b6cf58a470443397b1b4ad1279f5f60cb4993f7",
+    "documents": [
+      {
+        "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理/05-技能构建/审查结果包模板.md",
+        "snapshot": "references/审查结果包模板.md",
+        "sourceSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8"
+      }
+    ]
   }
 }
