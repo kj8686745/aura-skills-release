@@ -1,6 +1,6 @@
 #requires -Version 7.0
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$ResultPath,[Parameter(Mandatory)][ValidateSet('Change','Project')][string]$Mode,[string]$MatrixPath='', [switch]$Legacy, [switch]$Json)
+param([Parameter(Mandatory)][string]$ResultPath,[Parameter(Mandatory)][ValidateSet('Change','Project')][string]$Mode,[string]$MatrixPath='', [string]$SourceMap='', [switch]$Legacy, [switch]$Json)
 $ErrorActionPreference='Stop'
 $issues=[Collections.Generic.List[object]]::new();$tables=[Collections.Generic.List[object]]::new();$texts=@{}
 function Add-Issue($Level,$Code,$Path,$Message){$issues.Add(@{level=$Level;code=$Code;path=$Path;message=$Message})}
@@ -50,6 +50,7 @@ try{
     $dimensionTool=Join-Path $PSScriptRoot 'check-review-dimensions.ps1'
     if(-not (Test-Path -LiteralPath $dimensionTool)){throw '缺少四维结果检查工具'}
     $dimensions=& pwsh -NoProfile -File $dimensionTool -ResultPath $resolved -Json | ConvertFrom-Json
+    if(-not $dimensions -or $null -eq $dimensions.issues -or $LASTEXITCODE -notin @(0,1,2)){throw '四维子检查未返回有效结果'}
     foreach($item in $dimensions.issues){Add-Issue $item.level $item.code $item.path $item.message}
   }elseif($Mode -eq 'Change'){
     if(-not (Test-Path -LiteralPath $resolved -PathType Leaf) -or [IO.Path]::GetExtension($resolved) -ne '.md'){throw 'Change 需要单个 Markdown 报告'}
@@ -70,11 +71,14 @@ try{
   foreach($path in $texts.Keys){Read-Tables $texts[$path] $path}
   $all=($texts.Values -join "`n").Replace('`','')
   $baseline=Select-Table '^基线$' '^内容$';$executionState='';$formatVersion=''
+  $normativeScope='';$exclusionBasis=''
   if($baseline){
     $keys=$baseline.rows | ForEach-Object {$_.cells[0]}
     foreach($field in @('项目','仓库|提交|版本证据','规范','技能','执行状态','未覆盖|未验证','时间|开始|结束')){if(($keys -join ' ') -notmatch $field){Add-Issue incomplete baseline_field $baseline.path "基线缺可解析字段：$field"}}
     foreach($row in $baseline.rows){
       if($row.cells[0] -match '格式版本'){$formatVersion=[regex]::Match($row.cells[1],'\b\d+\.\d+\.\d+\b').Value}
+      if($row.cells[0] -eq '规范适用性'){$normativeScope=$row.cells[1]}
+      if($row.cells[0] -eq '规范排除依据'){$exclusionBasis=$row.cells[1]}
       if($row.cells[0] -match '执行状态'){
         $states=@([regex]::Matches($row.cells[1],'阻断|部分完成|抽查完成|变更审查完成|静态审查完成|发布准入审查完成') | ForEach-Object Value | Sort-Object -Unique)
         if($states.Count -eq 1){$executionState=$states[0]}else{Add-Issue incomplete execution_state $baseline.path '执行状态缺失或有多种未裁定状态'}
@@ -83,6 +87,19 @@ try{
   }
   $progressFormat=$false
   if($formatVersion){$progressFormat=([version]$formatVersion -ge [version]'1.2.0')}
+  if($fourReport -and $formatVersion -notin @('2.0.0','2.1.0')){
+    Add-Issue error invalid_report_format $resolved '四份报告必须声明受支持的格式版本 2.0.0 或 2.1.0'
+  }
+  $evidence21=$fourReport -and $formatVersion -eq '2.1.0'
+  $excluded=$evidence21 -and $normativeScope -eq '排除'
+  if($evidence21) {
+    if($normativeScope -notin @('纳入','排除')){Add-Issue error invalid_normative_scope $resolved '须明确填写规范适用性为纳入或排除'}
+    if($excluded -and (-not $exclusionBasis -or $exclusionBasis -in @('无','待补充'))){Add-Issue error missing_exclusion_basis $resolved '排除规范须说明实际任务策略及范围'}
+    $args21=@('-B','-X','utf8',(Join-Path $PSScriptRoot 'review-share.py'),'--report-dir',$resolved)
+    if($SourceMap){$args21+=@('--sources',$SourceMap)}
+    $evidenceCheck=& python @args21 | ConvertFrom-Json
+    if($LASTEXITCODE -or $evidenceCheck.status -ne 'checked'){Add-Issue error evidence21 $resolved $evidenceCheck.reason}
+  }
   foreach($name in $texts.Keys){
     $base=if($Mode -eq 'Change' -and -not $fourReport){[IO.Path]::GetDirectoryName($resolved)}else{$resolved}
     foreach($m in [regex]::Matches($texts[$name],'\[[^\]\r\n]+\]\((?<href>[^\s)]+)\)')){
@@ -107,7 +124,7 @@ try{
     if(-not $ruleIds.Count -or -not $refs.Count){Add-Issue error incomplete_finding '' "$id 缺规则或证据引用"}
     $findings[$id]=@{rules=$ruleIds;evidence=$refs;body=$body}
   }
-  $matrix=Select-Table '^规则\s*ID' '^状态$';$ruleStates=@{};$ruleRows=[Collections.Generic.List[object]]::new()
+  $matrix=Select-Table '^规则\s*ID' '^状态$' -Optional:$excluded;$ruleStates=@{};$ruleRows=[Collections.Generic.List[object]]::new()
   $units=Select-Table '^单元\s*ID$' '^检查状态$';$unitIds=[Collections.Generic.HashSet[string]]::new();$unitStates=@{}
   if($units){$unitStateCol=Column $units '^检查状态$';foreach($row in $units.rows){if($row.cells[0] -notmatch '^U-\d{3,}$'){Add-Issue incomplete unit_format $units.path '单元编号无法解析'}elseif(-not $unitIds.Add($row.cells[0])){Add-Issue error duplicate_unit $units.path '单元编号重复'}else{$unitStates[$row.cells[0]]=$row.cells[$unitStateCol];if($progressFormat -and $row.cells[$unitStateCol] -notin @('已检查','未检查','排除')){Add-Issue error invalid_unit_state $units.path '检查状态须为已检查、未检查或排除'}}}}
   if($matrix){
@@ -146,7 +163,8 @@ try{
       $ruleRows.Add(@{id=$id;state=$state;findings=$fs;evidence=$refs;units=$appUnits;progress=$progress;basis=$basis})
     }
   }
-  if(-not $ruleStates.Count){Add-Issue incomplete no_rules '' '未解析到纳入规则，不能验证规则覆盖'}
+  if(-not $ruleStates.Count -and -not $excluded){Add-Issue incomplete no_rules '' '未解析到纳入规则，不能验证规则覆盖'}
+  if($excluded -and ($ruleStates.Count -or $findings.Count)){Add-Issue error excluded_normative_finding '' '整体排除规范的范围不能计入规则或 F 偏差'}
   # 重复文本只提示取证质量风险，不据此判项目违规；相同 E 本身不构成重复依据。
   foreach($group in @($ruleRows | Where-Object {$_.basis.Length -ge 12 -and -not $_.findings.Count} | Group-Object basis | Where-Object Count -ge 3)){
     Add-Issue incomplete repeated_rule_basis '' ('多条规则使用完全相同的笼统依据，需逐条复核支持关系：'+(($group.Group.id | Sort-Object -Unique) -join '、'))
@@ -185,7 +203,7 @@ try{
   $counts=@{通过=0;偏差=0;未证实=0;不适用=0}
   foreach($id in $ruleStates.Keys){$values=$ruleStates[$id];$state=if($values.Contains('偏差')){'偏差'}elseif($values.Contains('未证实')){'未证实'}elseif($values.Contains('通过')){'通过'}else{'不适用'};$counts[$state]++}
   $summary=Select-Table '^规则域$' '^总规则$'
-  if($summary -and $matrix -and $ruleRows.Count -eq $matrix.rows.Count){
+  if($summary -and ($excluded -or ($matrix -and $ruleRows.Count -eq $matrix.rows.Count))){
     $totals=@($summary.rows | Where-Object {$_.cells[0] -in @('合计','总计')})
     if($totals.Count -ne 1){Add-Issue incomplete missing_rule_total $summary.path '摘要需要唯一合计行'}else{
       $expected=@{总规则=$ruleStates.Count;适用=$ruleStates.Count-$counts['不适用'];通过=$counts['通过'];偏差=$counts['偏差'];未证实=$counts['未证实'];不适用=$counts['不适用']}
@@ -209,6 +227,7 @@ try{
     }
   }
   $candidateSummary=Select-Table '^原始命中数$' '^唯一候选数$'
+  if($excluded -and $candidateTable -and $candidateTable.rows.Count){Add-Issue error excluded_normative_candidate $candidateTable.path '整体排除规范时不生成规范候选'}
   if($candidateSummary -and $candidateSummary.rows.Count -ne 1){Add-Issue incomplete candidate_rows $candidateSummary.path '候选汇总需要唯一当前基线行'}
   if($candidateSummary -and $candidateSummary.rows.Count -eq 1){
     $candidateDataComplete=(-not $candidateTable -or $candidateIds.Count -eq $candidateTable.rows.Count)
@@ -262,7 +281,7 @@ try{
     Add-Issue incomplete ambiguous_remediation '' ("同一发现有多条整改记录，需按初审/复核基线确认当前记录："+$group.Name)
   }
   $matrixCheck=$null
-  if($MatrixPath){
+  if($MatrixPath -and -not $excluded){
     if(-not (Test-Path -LiteralPath $MatrixPath -PathType Leaf)){Add-Issue incomplete matrix_path_missing $MatrixPath '指定的规范矩阵不存在'}
     else{
       $matrixScript=Join-Path $PSScriptRoot 'check-review-matrix.ps1'
@@ -280,6 +299,10 @@ try{
   $errors=@($issues | Where-Object level -eq error).Count;$incomplete=@($issues | Where-Object level -eq incomplete).Count
   $summary=[ordered]@{errors=$errors;incomplete=$incomplete;uniqueRules=$ruleStates.Count;findings=$findings.Count;closedFindings=$closedFindings.Count;activeFindings=$findings.Count-$closedFindings.Count;candidates=$candidateIds.Count;evidence=$eIds.Count}
   if($fourReport){$summary.dimensions=$dimensions.summary.dimensions}
+  if($evidence21){
+    $summary.normativeScope=$normativeScope
+    $summary.verifiedSourceExcerpts=$evidenceCheck.verifiedSourceExcerpts
+  }
   if($matrixCheck){$summary.matrixRules=$matrixCheck.matrixRuleCount;$summary.matrixReferencedRules=$matrixCheck.referencedRuleCount;$summary.matrixUnknownRules=$matrixCheck.unknownRuleCount}
   $result=[ordered]@{schemaVersion=1;mode=$Mode;formatVersion=$formatVersion;executionState=$executionState;status=$(if($errors){'failed'}elseif($incomplete){'partial'}else{'passed'});summary=$summary;issues=@($issues.ToArray());limitations=@('验证可解析报告结构、ID、统计、进度矛盾及重复依据风险；不证明规则覆盖完整、证据真实、例外有效、严重性正确或项目合规。','findings保留全部历史卡片；closedFindings仅表示关闭记录含条件及不同于初审的已定义E引用，不裁定真实关闭；activeFindings为其余卡片。','status 是工具检查状态，executionState 是报告自述执行状态，两者均不代替人工证据复核。旧版无执行进度时不外推其覆盖已完成。')}
   $code=if($errors){1}elseif($incomplete){2}else{0}

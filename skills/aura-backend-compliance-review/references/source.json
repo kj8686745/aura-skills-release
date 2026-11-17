@@ -1,6 +1,6 @@
 {
   "skill": "aura-backend-compliance-review",
-  "skillVersion": "1.29.2",
+  "skillVersion": "1.31.0",
   "releaseStatus": "preview-authorized-not-uploaded",
   "releaseDecision": {
     "date": "2026-11-03",
@@ -648,15 +648,15 @@
     {
       "source": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理/05-技能构建/审查结果包模板.md",
       "snapshot": "references/审查结果包模板.md",
-      "sourceSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8",
-      "snapshotSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8",
+      "sourceSha256Lf": "7613ea83022416179546892e24a68478b91a300a74bdd351e2db44b942f46f79",
+      "snapshotSha256Lf": "7613ea83022416179546892e24a68478b91a300a74bdd351e2db44b942f46f79",
       "navigationTargetsRemoved": [],
       "sourceKind": "authority",
       "authorityStatus": "matched",
       "inheritedSource": null,
       "inheritedCommit": null,
       "committedSourceSha256Lf": "14883cbd2379127be804a13e306165a41c6dae9017136d4f5702d2fb79fbe12e",
-      "version": "2.0.0"
+      "version": "2.1.0"
     },
     {
       "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/01-通用工具类/01-基础业务开发能力包/总入口.md",
@@ -1018,7 +1018,7 @@
     {
       "path": "scripts/check-review-result.ps1",
       "kind": "script",
-      "sha256Lf": "deed5ace7ec52fef9cf94fa3ead9e43577f608d859e28b9413edcbf9264f156b",
+      "sha256Lf": "c02be961a2a25a8ef760e530f67e23b45a13e64bf0fe0c978abf27fd5ba2381f",
       "originPath": "skills/aura-review-skill-build/scripts/check-review-result.ps1",
       "originSha256Lf": "669f5d943ebadf21fe2f2feb71434de9169c043ac7b438273bb1e35c8b8294af",
       "originStatus": "working-tree"
@@ -1109,7 +1109,7 @@
     {
       "path": "scripts/check-review-dimensions.ps1",
       "kind": "script",
-      "sha256Lf": "917dcadc903b53fd89ec6c4c976f849b2be0d2ae9d53456fbb53d8a27dabad06"
+      "sha256Lf": "f24ff3ca5e4f70131dc6e511e92269e616da9f2a52e361bb6e0e99c9d08f55e3"
     },
     {
       "path": "references/Git审查取证.md",
@@ -1125,6 +1125,16 @@
       "path": "scripts/review-git-evidence.py",
       "kind": "script",
       "sha256Lf": "a1744539e18a9d4608decf612304255d60991e4a808cb71444de38c28f71febb"
+    },
+    {
+      "path": "scripts/review-share.py",
+      "kind": "script",
+      "sha256Lf": "084d3fa54693236d5dacc2a93c2d679a89b8199caeefb51c6956342f3f0226b0"
+    },
+    {
+      "path": "references/深度审查与证据交付.md",
+      "kind": "reference",
+      "sha256Lf": "0ec08880d43a6395350c671c1a7f0cc127d76a5348a820cb2e841411ccf96303"
     }
   ],
   "sourceRoot": "",
@@ -1135,7 +1145,7 @@
     "date": "2026-11-09",
     "note": "Security rules SEC-017..019 and conditional locking choice updated from uncommitted authority worktree; preserve committed source digests until exact binding. Not published or installed.",
     "baseCommit": "6d7951e413ec9ca587b35d53d585d7fa8f62ef6c",
-    "reason": "审查治理配套文件已记录精确提交及摘要，其余来源仍按既有记录待绑定。"
+    "reason": "审查构建规范和模板 2.1 来自权威工作树，待绑定新提交。历史逐文档基线和既有差异继续保留。"
   },
   "currentRevisionValidation": {
     "reportToolCasesPassed": 45,
@@ -1883,7 +1893,7 @@
     "validation": "Two primary structures passed;4consumer package0errors,4pending authority bindings and4new scheduling files absent from old commit.150 authority Java blocks contain no record declarations after7 declarations in5documents replaced; actual SDK contracts and parser support unchanged. No standalone snippet compilation, configuration binding/serialization trial, business migration, publication or installation.",
     "publishedOrInstalled": false
   },
-  "updatedAt": "2026-11-12",
+  "updatedAt": "2026-11-17",
   "externalDataPolicyRevision": {
     "date": "2026-11-06",
     "rule": "AURA-BASE-SEC-020",
@@ -1970,6 +1980,30 @@
         "snapshot": "references/审查结果包模板.md",
         "sourceSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8"
       }
-    ]
+    ],
+    "scope": "历史 2.0 配套绑定。当前 2.1 工作树来源见 reviewEvidence21。"
+  },
+  "reviewEvidence21": {
+    "date": "2026-11-16",
+    "previousVersion": "1.29.2",
+    "reportFormat": "2.1.0",
+    "authorityStatus": "working-tree-pending-commit",
+    "delivery": "local-team-candidate",
+    "scope": "Business-chain and conditional defects, actionable remediation, source-line checks and offline export from the four Markdown reports."
+  },
+  "reviewEvidence21Followup": {
+    "previousVersion": "1.30.0",
+    "reportFormat": "2.1.0",
+    "date": "2026-11-16",
+    "delivery": "local-team-candidate",
+    "change": "Reject example-only coverage and credential-bearing attachments, keep format metadata consistent with validation, and use four reports across the frontend entry points."
+  },
+  "reviewArchiveEvidence": {
+    "date": "2026-11-17",
+    "previousVersion": "1.30.1",
+    "reportFormat": "2.1.0",
+    "change": "Multiple verified excerpts per defect and read-only offline share archive validation.",
+    "authorityStatus": "working-tree-pending-commit",
+    "delivery": "local-team-candidate"
   }
 }

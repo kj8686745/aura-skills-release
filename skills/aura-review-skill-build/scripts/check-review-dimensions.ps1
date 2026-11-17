@@ -31,6 +31,7 @@ try {
     }
     foreach ($file in Get-ChildItem -LiteralPath $root -File -Filter '*.md') { if ($file.Name -notin $names) { Add-Issue error extra_report $file.Name '新结果包根目录仅保留四份报告，过程表归入规范报告' } }
     $norm = [string]$texts[$names[0]]
+    $evidence21 = $norm -match '(?m)^\|\s*格式版本[^|]*\|\s*2\.1\.0(?:[\s；;，,|]|$)'
     $eIds = @([regex]::Matches($norm, '(?m)^\s*\|\s*(E-\d{3,})\s*\|') | ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique)
     foreach ($name in $names[1..3]) {
         foreach ($ref in @([regex]::Matches([string]$texts[$name], '(?<![A-Z0-9-])E-\d{3,}(?![A-Z0-9-])') | ForEach-Object Value | Sort-Object -Unique)) {
@@ -58,7 +59,10 @@ try {
         foreach ($card in $cards) {
             $id=$card.Groups['id'].Value; $body=$card.Groups['body'].Value
             if ($definitions.ContainsKey($id)) { Add-Issue error duplicate_dimension_id $spec.name "重复卡片：$id" } else { $definitions[$id]=$spec.name; $cardsById[$id]=$body }
-            foreach ($field in $spec.fields) { if (-not (Value-Of $body $field)) { Add-Issue error missing_dimension_field $spec.name "$id 缺字段：$field" } }
+            foreach ($field in $spec.fields) {
+                if ($evidence21 -and $spec.prefix -eq 'D' -and $field -eq '建议与关闭条件') { continue }
+                if (-not (Value-Of $body $field)) { Add-Issue error missing_dimension_field $spec.name "$id 缺字段：$field" }
+            }
             $state = Value-Of $body '状态'
             if ($state -notin $spec.states) { Add-Issue error invalid_dimension_state $spec.name "$id 状态无效" } else { $counts[$state]++ }
             $ev = @([regex]::Matches((Value-Of $body '证据'), '(?<![A-Z0-9-])E-\d{3,}(?![A-Z0-9-])') | ForEach-Object Value | Sort-Object -Unique)

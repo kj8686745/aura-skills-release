@@ -1,6 +1,6 @@
 {
   "skill": "aura-review-skill-build",
-  "skillVersion": "0.6.2",
+  "skillVersion": "0.8.0",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
   "sourceCommit": "2b6cf58a470443397b1b4ad1279f5f60cb4993f7",
   "sourceRoot": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/02-技能治理",
@@ -8,18 +8,18 @@
     {
       "source": "01-管理规范/审查技能构建规范.md",
       "snapshot": "governance/01-管理规范/审查技能构建规范.md",
-      "version": "2.0.2",
-      "sourceSha256Lf": "c128007747172104a25e23e659ade6b1aa150e6448aab15de5628922a264a7f8",
-      "snapshotSha256Lf": "c128007747172104a25e23e659ade6b1aa150e6448aab15de5628922a264a7f8",
+      "version": "2.1.0",
+      "sourceSha256Lf": "219e17994b3c28b5f8fa317a529d9d55fcd1ffa580771b84f0b510aabab191a3",
+      "snapshotSha256Lf": "219e17994b3c28b5f8fa317a529d9d55fcd1ffa580771b84f0b510aabab191a3",
       "navigationTargetsRemoved": [],
       "committedSourceSha256Lf": "c128007747172104a25e23e659ade6b1aa150e6448aab15de5628922a264a7f8"
     },
     {
       "source": "05-技能构建/审查结果包模板.md",
       "snapshot": "governance/05-技能构建/审查结果包模板.md",
-      "version": "2.0.0",
-      "sourceSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8",
-      "snapshotSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8",
+      "version": "2.1.0",
+      "sourceSha256Lf": "7613ea83022416179546892e24a68478b91a300a74bdd351e2db44b942f46f79",
+      "snapshotSha256Lf": "7613ea83022416179546892e24a68478b91a300a74bdd351e2db44b942f46f79",
       "navigationTargetsRemoved": [],
       "committedSourceSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8"
     }
@@ -31,14 +31,15 @@
   },
   "snapshotRoot": "references",
   "sourceBinding": {
-    "status": "matched",
-    "note": "审查构建规范和报告模板均与该规范提交核对一致。"
+    "status": "pending",
+    "note": "审查构建规范和报告模板均与该规范提交核对一致。",
+    "reason": "审查构建规范和模板 2.1 来自权威工作树，待绑定新提交。历史逐文档基线和既有差异继续保留。"
   },
   "skillResources": [
     {
       "path": "scripts/check-review-result.ps1",
       "kind": "script",
-      "sha256Lf": "deed5ace7ec52fef9cf94fa3ead9e43577f608d859e28b9413edcbf9264f156b"
+      "sha256Lf": "c02be961a2a25a8ef760e530f67e23b45a13e64bf0fe0c978abf27fd5ba2381f"
     },
     {
       "path": "scripts/check-review-matrix.ps1",
@@ -48,7 +49,22 @@
     {
       "path": "scripts/check-review-dimensions.ps1",
       "kind": "script",
-      "sha256Lf": "917dcadc903b53fd89ec6c4c976f849b2be0d2ae9d53456fbb53d8a27dabad06"
+      "sha256Lf": "f24ff3ca5e4f70131dc6e511e92269e616da9f2a52e361bb6e0e99c9d08f55e3"
+    },
+    {
+      "path": "scripts/review-share.py",
+      "kind": "script",
+      "sha256Lf": "084d3fa54693236d5dacc2a93c2d679a89b8199caeefb51c6956342f3f0226b0"
+    },
+    {
+      "path": "scripts/review-git-evidence.py",
+      "kind": "script",
+      "sha256Lf": "a1744539e18a9d4608decf612304255d60991e4a808cb71444de38c28f71febb"
+    },
+    {
+      "path": "references/深度审查与证据交付.md",
+      "kind": "reference",
+      "sha256Lf": "0ec08880d43a6395350c671c1a7f0cc127d76a5348a820cb2e841411ccf96303"
     }
   ],
   "reportClosureRevision": {
@@ -78,7 +94,7 @@
     "evidenceArchive": "AURA天玑规范体系/AURA天玑规范建设管理/治理维护体系/05-审查与验证/后端审查技能1.3.0隔离验证样本与结果-20261021.zip",
     "evidenceArchiveSha256": "76187ae258d333ff121c7ca3ce07525733f868e69b0d853a49c85a9e2cb500f9"
   },
-  "updatedAt": "2026-11-12",
+  "updatedAt": "2026-11-17",
   "fourDimensionReviewRevision": {
     "date": "2026-11-09",
     "previousSkillVersion": "0.5.1",
@@ -162,6 +178,30 @@
         "snapshot": "governance/05-技能构建/审查结果包模板.md",
         "sourceSha256Lf": "6c97fe08ae837acc3c6160edf746cf457eb33245b36587897ba2107fb77abee8"
       }
-    ]
+    ],
+    "scope": "历史 2.0 配套绑定。当前 2.1 工作树来源见 reviewEvidence21。"
+  },
+  "reviewEvidence21": {
+    "date": "2026-11-16",
+    "previousVersion": "0.6.2",
+    "reportFormat": "2.1.0",
+    "authorityStatus": "working-tree-pending-commit",
+    "delivery": "local-team-candidate",
+    "scope": "Business-chain and conditional defects, actionable remediation, source-line checks and offline export from the four Markdown reports."
+  },
+  "reviewEvidence21Followup": {
+    "previousVersion": "0.7.0",
+    "reportFormat": "2.1.0",
+    "date": "2026-11-16",
+    "delivery": "local-team-candidate",
+    "change": "Reject example-only coverage and credential-bearing attachments, keep format metadata consistent with validation, and use four reports across the frontend entry points."
+  },
+  "reviewArchiveEvidence": {
+    "date": "2026-11-17",
+    "previousVersion": "0.7.1",
+    "reportFormat": "2.1.0",
+    "change": "Multiple verified excerpts per defect and read-only offline share archive validation.",
+    "authorityStatus": "working-tree-pending-commit",
+    "delivery": "local-team-candidate"
   }
 }
