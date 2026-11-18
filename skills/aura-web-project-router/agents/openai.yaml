@@ -1,6 +1,6 @@
 interface:
-  display_name: "PIGX 项目分流"
-  short_description: "识别 Aura/PIGX 综合端，为前端开发、规范审查及模块联邦任务选择技能"
-  default_prompt: "使用 $aura-web-project-router 识别当前项目，为前端开发、代码规范审查或模块联邦需求选择合适技能。"
+  display_name: "AURA 项目分流"
+  short_description: "按项目身份和请求分流 AURA 业务、框架、审查及联邦与预构建专项"
+  default_prompt: "使用 $aura-web-project-router，根据目标项目和本次请求选择开发、框架维护、诊断、审查或联邦专项流程。"
 policy:
   allow_implicit_invocation: true

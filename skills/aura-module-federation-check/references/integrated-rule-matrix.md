@@ -28,7 +28,7 @@
 
 | 规则 | 级别 | 判定 |
 |---|---|---|
-| `MF-ID-001` | error | 业务源码、环境变量、构建配置、根 README 或包信息仍包含模板占位名。规范文档目录不参与扫描。 |
+| `MF-ID-001` | error / warning | 业务源码、环境变量、构建配置或包信息出现模板占位名，核对是否影响实际身份。根 README 中的名称仅为 warning，需区分模板溯源与接入说明。 |
 | `MF-ID-002` | error | 缺少 `remoteName`、`remoteEntryName` 或 `systemId`。 |
 | `MF-ID-003` | error | `remoteName` 不是 kebab-case，或 `remoteEntryName` 不是有效部署目录；1.2.0 支持 `/aura/orderWeb` 多级路径。 |
 | `MF-ID-004` | error | PostCSS/Tailwind scope 不等于 `aura-mf-remote-<remoteName>`。 |
@@ -45,6 +45,7 @@
 |---|---|---|
 | `MF-DEP-001` | error | 缺少 `@module-federation/vite` 或 `@module-federation/enhanced`，或未对齐本轮 `1.23.5 / 2.9.2`。 |
 | `MF-DEP-002` | error | 仍使用 `@originjs/vite-plugin-federation` 或 `vite-plugin-top-level-await`。 |
+| `MF-DEP-004` | error / manual | 目标消费项目的 web-kit 实装下限为 `1.12.1`。核对直接声明、所属锁文件中该项目的 specifier、解析版本与项目实际安装包，解析版本须满足声明且与实装一致。实装低于下限、已确认不一致或关键公开入口损坏记 error。缺证、复杂范围或条件导出尚未解析记 manual。 |
 | `MF-DEP-005` | error | 本轮综合端工具链应配套固定 TypeScript 5.9.3、ESLint 8.57.1、typescript-eslint parser/plugin 8.46.1；Vue parser 分层、实际安装与配置检查另行核验。 |
 | `MF-DEP-003` | error | 1.2.0 的 Node 约束低于 `22.12.0`，或 pnpm 低于 `10.28.0`；复杂 Node 范围为 warning 待人工核对。 |
 | `MF-VITE-001` | error | 缺少 federation 插件、当前容器名、`remoteEntry.js` 或 manifest。 |
@@ -52,11 +53,13 @@
 | `MF-VITE-003` | error | Element Plus 版本或 requiredVersion 未对齐：`2.14.6`。 |
 | `MF-VITE-004` | error | 未禁用 Module Preload，或缺少远程预加载跳过插件。 |
 | `MF-VITE-005` | warning | `bundleAllCSS` 不是 `false`，可能破坏 expose 级样式加载。 |
-
-| `MF-DEP-004` | error / manual | web-kit 必须为精确版本 `1.9.0`；缺少依赖声明、声明为范围/标签/其他版本、实际安装不为1.9.0、关键 exports 缺失均为 error。未安装时只可确认声明，发布包版本和 exports 仍为 manual；不自动接受更高版本或预发布版。锁文件一致性须结合项目依赖记录核对。 |
 | `MF-VITE-006` | error | 公共包模式缺少 SSR 清理、dev 优化、createAuraAutoImportPreset 或 auraAutoOptimizeDeps 调用；仍调用已移除的 stabilizeFederationModuleScan。静态模式核对标准名称，配置间接生成时需读取真实配置补证。 |
 | `MF-VITE-007` | error | 公共包模式没有通过 createAuraPostcssPlugins 绑定 PostCSS。 |
 | `MF-VITE-008` | warning / manual | 源码使用已登记入口，缺少自动收集调用且字面量 include 无入口时 warning；存在自动收集或精确 include 时仍需 manual 核验发现报告、最终配置、包版本与冷启动。静态扫描不执行 Vite 配置，不因根包 include 或组件库安装就判定覆盖。详见预构建检查及入口登记。 |
+
+版本范围可由满足声明的锁定版本与实装证实。脚本识别 pnpm 常用 importer 布局及精确版本、单一比较符、`^`、`~` 等声明。遇到 catalog、其他锁格式、提升安装或嵌套条件导出，使用目标项目的包管理器与实际解析路径补证。合规的较高版本保留，历史快照与其他 importer 只用于追溯。
+
+探针核验核心联邦入口的 exports 及显式映射的实现与类型文件。整改前按本项目实际使用的子入口、具名导出和调用签名复核。Vite、运行时工厂与预构建规则中的文本匹配只是定位线索，项目使用别名、配置工厂或 spread 时须查看最终配置。
 
 ## 四、运行时外壳
 
@@ -89,7 +92,7 @@
 | `MF-CONSUMER-002` | error | 运行时 entry 未使用环境变量，或环境变量未在 `.env*` 声明。 |
 | `MF-CONSUMER-003` | error | 远程入口前缀、本地代理路径和代理环境变量不一致。 |
 | `MF-CONSUMER-004` | error | 源码直接导入远程模块，但编译期 remotes 未配置对应远程。 |
-| `MF-CONSUMER-005` | error | 源码直接导入远程模块但缺少声明；识别本地声明和显式启用的已安装 `types/remote-core` 公开声明，不能把未引用声明算作通过。 |
+| `MF-CONSUMER-005` | error / manual | 源码直接导入远程模块但缺少声明；识别本地声明和显式启用的已安装 `types/remote-core` 公开声明，未启用的声明不能作为通过证据，已显式引用但未解析的入口记 manual。 |
 | `MF-CONSUMER-006` | error | 远程 Vue 组件静态默认导入，或动态导入未建立 `defineAsyncComponent` 边界。 |
 
 动态菜单页面只需要运行时 entries，不应因为菜单加载而强制加入编译期 remotes；只有源码直接 import 的远程才执行 `MF-CONSUMER-004`。

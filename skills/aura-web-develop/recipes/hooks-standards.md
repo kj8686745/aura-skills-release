@@ -51,7 +51,7 @@ const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, do
 
 ### 覆盖层可见时的单次静默刷新
 
-交互判断按[消息与资源反馈](../references/message-feedback-guidelines.md#覆盖层可见时的静默刷新)，真实签名、示例和首次/空表回落集中见[1.9.6 静默契约](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md#已加载列表的静默刷新196-已发布)。第二参只作用于本次调用；核对声明、锁文件与实际安装实现后使用，不把 `silent` 放到首参或 `useTable` 全局配置。
+交互判断按[消息与资源反馈](../references/message-feedback-guidelines.md#覆盖层可见时的静默刷新)，真实签名、示例和首次/空表回落集中见[静默刷新契约](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md#已加载列表的静默刷新196-已发布)。第二参只作用于本次调用，使用前核对实际安装包声明与实现。保留首参的分页语义，维护中仅在第二参传入 `silent`。
 
 ## useForm
 
@@ -77,7 +77,7 @@ const { clearFormValidate, resetForm, validateForm } = useForm();
 
 ### 当前扩展契约
 
-当前已安装 1.9.6 的字段校验与初值克隆契约见[公共表单契约与版本](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md#表单公共契约与版本)。其他消费者仍须核对实际声明、包内容与运行环境，不推定旧包具有新语义；历史实现依据保留在[表单维护记录](../references/form-hook-source.json)。
+字段校验与初值克隆见[公共表单契约与版本](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md#表单公共契约与版本)。使用前核对实际安装包声明、产物与运行环境。历史实现见[表单维护记录](../references/form-hook-source.json)。
 
 - 字段联动或分步校验必须使用支持版本的 `validateFormFields(formRef, props)`，复用实例的 `validateField`；业务不得直接调用实例 `validateField` 或在页面重新包装对应公共能力。需要该能力而安装包缺失时记明确缺口，按任务授权升级；不能假称已接入或返回成功。字段级校验不替代业务要求的最终整表校验。
 - `props` 支持 `'name'`、`['startAt', 'plannedRestoreAt']`、点路径 `'rows.0.name'` 和单字段分段路径 `[['rows', '0', 'name']]`。空路径、未挂载、缺能力、false 或异常均不放行；必须核对实际 FormItem prop、规则及挂载，不能将未注册字段的组件返回值当作已经校验的证据。

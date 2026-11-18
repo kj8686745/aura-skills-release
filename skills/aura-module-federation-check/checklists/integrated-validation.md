@@ -3,20 +3,19 @@
 ## 静态审计
 
 - [ ] 只按 1.2.0 公共包绑定验收；不保留旧运行时文件与旧 alias 兼容。
-- [ ] 声明/锁定/已安装 web-kit 版本已核对；公开入口与类型真实存在。
+- [ ] 当前项目声明与所属锁文件的依赖条目一致，解析版本满足声明并与实际安装版本一致，实装达到 `>=1.12.1`。已核验使用入口的 exports、类型与实现。缺证列为未证实。
 - [ ] 1.2.0 Node ≥22.12.0、Element Plus 2.14.6 singleton；auraAutoOptimizeDeps、共享 AutoImport 预设与 resolver 工厂、公共构建插件与 PostCSS 已接入。
 - [ ] 多级 remoteEntryName 与完整部署前缀一致，index.html 与 main.ts 启动缓存均按 remoteName。
 
 - [ ] 脚本识别结果为 `Integrated`。
-- [ ] 没有 `error` 级结果。
+- [ ] 逐项核实脚本定位的源码、最终配置与产物，记录有效偏差、静态误报的依据及待补证项。
 - [ ] 模板占位身份已全部替换。
 - [ ] shared singleton、运行时外壳、i18n 和样式扩展口完整。
 - [ ] 业务 expose key、目标文件、i18n 扫描目录和 manifest 一致。
 - [ ] 运行时远程、环境变量、开发代理、编译期 remotes 和类型声明一致。
 - [ ] 远程 Vue 模板组件使用 `defineAsyncComponent` 动态导入。
 - [ ] 后台菜单 `componentPath` 已通过脚本检查，且“带参”已开启。
-- [ ] 模块联邦配置改动前已保存检查基线，改动后已复检且没有 `error` 级确定错误。
-- [ ] 每条 `warning` 已确认保留理由或完成修复。
+- [ ] 改动前留有检查结果；修复后已复检，并记录已解决、待决策和仍待验证的事项。
 
 ## 构建验证
 

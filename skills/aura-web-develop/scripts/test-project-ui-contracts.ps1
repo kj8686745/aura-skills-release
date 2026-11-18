@@ -41,6 +41,35 @@ try {
   Write-Fixture 'src/example.ts' 'export const count = 1;'
   Write-Fixture 'src/i18n/en.ts' "export default { device: { title: 'Device', nested: { name: 'Nested' } }, sibling: { name: 'Sibling' } };"
   Write-Fixture 'src/i18n/zh-cn.ts' "const messages = { device: { title: 'Device', nested: { name: 'Nested' } }, sibling: { name: 'Sibling' } }; export default messages;"
+  Write-Fixture 'src/api/context.ts' 'export interface UnrelatedRow { statusName: string; }'
+  Write-Fixture 'src/views/context.vue' @'
+<template><span>{{ statusName }}</span></template>
+<script setup lang="ts">
+const statusName = 'Label';
+// row.statusName and t('device.missing') are not executable references.
+</script>
+'@
+  # 独占文件句柄将多余上下文读取转化为确定性失败，无需通过耗时判断。
+  $localeLock = [IO.File]::Open((Join-Path $testRoot 'src/i18n/en.ts'), 'Open', 'ReadWrite', 'None')
+  $apiLock = [IO.File]::Open((Join-Path $testRoot 'src/api/context.ts'), 'Open', 'ReadWrite', 'None')
+  try {
+    Invoke-Case 'plain view skips unrelated locale and API files' @('src/views/context.vue') 0
+    Write-Fixture 'src/example.ts' 't(dynamicKey);'
+    Invoke-Case 'dynamic key does not require locale files' @('src/example.ts') 2 '动态 i18n key' -Forbidden '无法读取源码'
+  } finally {
+    $apiLock.Dispose()
+    $localeLock.Dispose()
+  }
+  $apiLock = [IO.File]::Open((Join-Path $testRoot 'src/api/context.ts'), 'Open', 'ReadWrite', 'None')
+  try {
+    Write-Fixture 'src/example.ts' "t('device.title');"
+    Invoke-Case 'literal key reads locale files only' @('src/example.ts') 0
+  } finally { $apiLock.Dispose() }
+  $localeLock = [IO.File]::Open((Join-Path $testRoot 'src/i18n/en.ts'), 'Open', 'ReadWrite', 'None')
+  try {
+    Invoke-Case 'unreadable locale context leaves an incomplete result' @('src/example.ts') 2 '无法读取源码.*en\.ts'
+  } finally { $localeLock.Dispose() }
+  Write-Fixture 'src/example.ts' 'export const count = 1;'
   Invoke-Case 'missing' @('src/missing.ts') 2 '未找到'
   Invoke-Case 'mixed' @('src/example.ts', 'src/missing.ts') 2 '扫描不完整'
   Invoke-Case 'empty collection' @() 2 '没有有效' -EmptyFiles
@@ -127,6 +156,16 @@ const row: DictRow = {};
 </script>
 '@
   Invoke-Case 'selected view retains API context and binds type' @('src/views/test/index.vue') 1 '已绑定类型.*test_status'
+  $localeLock = [IO.File]::Open((Join-Path $testRoot 'src/i18n/en.ts'), 'Open', 'ReadWrite', 'None')
+  try {
+    Invoke-Case 'dictionary access reads API context only' @('src/views/test/index.vue') 1 '已绑定类型.*test_status'
+  } finally { $localeLock.Dispose() }
+  $apiLock = [IO.File]::Open((Join-Path $testRoot 'src/api/model.ts'), 'Open', 'ReadWrite', 'None')
+  try {
+    Invoke-Case 'unreadable API context leaves an incomplete result' @('src/views/test/index.vue') 2 '无法读取源码.*model\.ts'
+  } finally { $apiLock.Dispose() }
+  Write-Fixture 'src/views/test/index.vue' '<template><el-table-column prop="statusName" /></template>'
+  Invoke-Case 'static table prop retains unresolved dictionary candidate' @('src/views/test/index.vue') 2 '表格 prop=statusName.*候选待人工核对'
   Write-Fixture 'src/views/test/index.vue' @'
 <template><div>{{ row.statusName }}</div></template>
 <script setup lang="ts">

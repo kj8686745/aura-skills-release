@@ -17,6 +17,49 @@ try {
   const asts = new Map();
   const parse = (file, text) => ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const walk = (node, visit) => { visit(node); ts.forEachChild(node, (child) => walk(child, visit)); };
+  const directoryEntries = new Map(); // 双语与 API 上下文重叠时复用目录项。
+
+  /** 按命中规则收集指定目录中的上下文，复用本次已读取的选中源码。 */
+  function loadContext(root, matches) {
+    const files = new Set([...sources.keys()].filter(matches));
+    function collect(directory) {
+      if (!directoryEntries.has(directory)) {
+        try {
+          directoryEntries.set(directory, fs.readdirSync(directory, { withFileTypes: true }));
+        } catch (error) {
+          // 项目可省略上下文目录；目录存在但无法访问时保留缺证提示。
+          if (error.code !== 'ENOENT' || directory !== root) report.incomplete.push(`无法读取上下文目录：${directory}；${error.message}`);
+          directoryEntries.set(directory, []);
+        }
+      }
+      for (const entry of directoryEntries.get(directory)) {
+        // 沿用 PowerShell 在非 Windows 系统默认略过点文件的目录边界，不递归目录链接。
+        if (process.platform !== 'win32' && entry.name.startsWith('.')) continue;
+        const file = `${directory}/${entry.name}`;
+        if (entry.isDirectory()) collect(file);
+        else if (entry.isFile() && matches(file)) files.add(file);
+      }
+    }
+    // 全量时 PowerShell 已枚举并尝试读取所有源码，避免重扫或重复读取失败项。
+    if (!input.allSources) collect(root);
+    return [...files].sort((left, right) => left.localeCompare(right)).filter((file) => {
+      if (sources.has(file)) return true;
+      if (selected.has(file)) return false;
+      try {
+        sources.set(file, fs.readFileSync(file, 'utf8'));
+        return true;
+      } catch (error) {
+        report.incomplete.push(`无法读取源码：${file}；${error.message}`);
+        return false;
+      }
+    });
+  }
+
+  /** 按文件复用脚本 AST，语言和 API 重叠时也只解析一次。 */
+  function getAst(file) {
+    if (!asts.has(file)) asts.set(file, parse(file, sources.get(file)));
+    return asts.get(file);
+  }
   const unwrap = (node) => {
     while (node && (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node))) node = node.expression;
     return node;
@@ -105,19 +148,21 @@ try {
     const exported = ast.statements.find((statement) => ts.isExportAssignment(statement) && !statement.isExportEquals);
     return exported && !ast.parseDiagnostics.length ? evaluate(exported.expression) : unknown();
   }
-  const locales = { 'zh-cn': [], en: [] };
+  let locales;
+  const isLocaleFile = (file) => ['zh-cn.ts', 'en.ts'].includes(path.basename(file)); // 支持静态分析的双语文件名。
   const localeDefinitions = new Set();
   const relevantKeys = new Set();
   function collectLocaleKeys(index, prefix = '', visit) {
     if (prefix && (index.leaf || index.uncertain)) visit(prefix, index);
     for (const [key, child] of index.properties) collectLocaleKeys(child, prefix ? prefix + '.' + key : key, visit);
   }
-  for (const [file, text] of sources) {
-    if (!file.endsWith('.vue')) asts.set(file, parse(file, text));
-    const language = path.basename(file, '.ts');
-    if (Object.hasOwn(locales, language)) {
-      const index = localeIndex(asts.get(file));
-      locales[language].push(index);
+  /** 选中语言定义或字面量文案引用需要全局比较，动态调用只报告待核对。 */
+  function getLocales() {
+    if (locales) return locales;
+    locales = { 'zh-cn': [], en: [] };
+    for (const file of loadContext(normalize(path.join(input.project, 'src')), isLocaleFile)) {
+      const index = localeIndex(getAst(file));
+      locales[path.basename(file, '.ts')].push(index);
       collectLocaleKeys(index, '', (key) => {
         localeDefinitions.add(key);
         if (selected.has(file)) relevantKeys.add(key);
@@ -128,7 +173,9 @@ try {
         if (index.uncertain || uncertain.length) report.incomplete.push(`${relative(file)}：i18n 重复候选分析存在无法静态确认的定义${uncertain.length ? '（' + uncertain.join('、') + '）' : ''}，待人工核对`);
       }
     }
+    return locales;
   }
+  if ([...selected].some((file) => sources.has(file) && isLocaleFile(file))) getLocales();
   function TestI18nKeyExists(index, key) {
     if (index.properties.has(key)) {
       const value = index.properties.get(key);
@@ -151,7 +198,7 @@ try {
     const key = argument.text;
     relevantKeys.add(key);
     if (!keyCache.has(key)) {
-      const states = Object.entries(locales).map(([language, indexes]) => {
+      const states = Object.entries(getLocales()).map(([language, indexes]) => {
         const candidates = indexes.map((index) => TestI18nKeyExists(index, key));
         return [language, candidates.includes('exists') ? 'exists' : !indexes.length || candidates.includes('unknown') ? 'unknown' : 'missing'];
       });
@@ -163,27 +210,33 @@ try {
     }
   }
 
-  // API declarations are context, never additional rule-scan targets.
-  const dictFields = new Map();
+  let dictFields;
   function dictTags(member) {
     return ts.getJSDocTags(member).filter((tag) => tag.tagName.text === 'dictKey').map((tag) => typeof tag.comment === 'string' ? tag.comment.trim().split(/\s+/)[0] : '').filter(Boolean);
   }
-  for (const [file, ast] of asts) {
-    if (!relative(file).startsWith('src/api/')) continue;
-    walk(ast, (node) => {
-      if (!ts.isPropertySignature(node) && !ts.isPropertyDeclaration(node)) return;
-      const name = propertyName(node.name);
-      for (const key of dictTags(node)) {
-        if (!dictFields.has(name + 'Name')) dictFields.set(name + 'Name', new Set());
-        dictFields.get(name + 'Name').add(key);
-      }
-    });
+  /** 页面出现可能的字典展示字段时，用 src/api 的真实声明建立同名候选索引。 */
+  function getDictFields() {
+    if (dictFields) return dictFields;
+    dictFields = new Set();
+    const apiFiles = loadContext(normalize(path.join(input.project, 'src/api')), (file) =>
+      relative(file).startsWith('src/api/') && (path.extname(file).toLowerCase() === '.ts' || (selected.has(file) && !file.endsWith('.vue'))),
+    );
+    for (const file of apiFiles) {
+      walk(getAst(file), (node) => {
+        if (!ts.isPropertySignature(node) && !ts.isPropertyDeclaration(node)) return;
+        if (dictTags(node).length) dictFields.add(propertyName(node.name) + 'Name');
+      });
+    }
+    return dictFields;
   }
   let sfc;
   const templates = new Map();
   for (const file of selected) {
     if (!sources.has(file)) continue;
-    if (!file.endsWith('.vue')) continue;
+    if (!file.endsWith('.vue')) {
+      getAst(file);
+      continue;
+    }
     try {
       sfc ||= projectRequire('@vue/compiler-sfc');
       const parsed = sfc.parse(sources.get(file), { filename: file });
@@ -246,12 +299,39 @@ try {
       else if (!type || (type.flags & (ts.TypeFlags.Any | ts.TypeFlags.Unknown)) || !checker.getPropertiesOfType(type).length) report.incomplete.push(`${relative(file)}：${node.name.text} 与 @dictKey 字段同名，但未绑定到声明类型；候选待人工核对`);
     });
   }
+
+  const templateExpressions = new WeakMap();
+  /** 复用 Vue 表达式在上下文判定和实际检查中的 AST。 */
+  function getTemplateAst(expression) {
+    if (!templateExpressions.has(expression)) templateExpressions.set(expression, parse('template.ts', expression.content));
+    return templateExpressions.get(expression);
+  }
+
+  function hasNameAccess(node) {
+    return (ts.isPropertyAccessExpression(node) && node.name.text.endsWith('Name')) || ts.forEachChild(node, hasNameAccess);
+  }
+
+  /** 识别规则能检查的属性访问和表格 prop；注释和普通变量名不需要 API 上下文。 */
+  function hasTemplateNameAccess(node) {
+    if (!node) return false;
+    if (node.type === 5 && node.content?.content && hasNameAccess(getTemplateAst(node.content))) return true;
+    for (const prop of node.props || []) {
+      if (prop.type === 6 && prop.name === 'prop' && prop.value?.content.endsWith('Name')) return true;
+      if (prop.type === 7 && prop.exp?.content && hasNameAccess(getTemplateAst(prop.exp))) return true;
+    }
+    return (node.children || []).some(hasTemplateNameAccess);
+  }
+
   for (const file of selected) {
     const ast = asts.get(file + '.ts') || asts.get(file);
     if (!ast) continue;
     if (ast.parseDiagnostics.length) report.incomplete.push(`${relative(file)}：源码语法无法完整静态解析`);
     const bindings = new Map();
-    const allowDict = file.endsWith('.vue') && relative(file).startsWith('src/views/') && [...dictFields.keys()].some((name) => sources.get(file).includes(name));
+    // 先确认页面确实使用了旧规则可识别的展示候选，再读取 API 类型；保留原有同名判定范围。
+    const template = templates.get(file);
+    const source = sources.get(file);
+    const allowDict = file.endsWith('.vue') && relative(file).startsWith('src/views/') && source.includes('Name') &&
+      (hasNameAccess(ast) || hasTemplateNameAccess(template)) && [...getDictFields().keys()].some((name) => source.includes(name));
     if (allowDict) getChecker();
     // Explicit types and ref<T>/reactive<T> arguments are compiler Type objects, not name matches.
     walk(ast, (node) => {
@@ -274,14 +354,14 @@ try {
         const aliases = prop.name === 'for' ? prop.exp.content.split(/\s+(?:in|of)\s+/)[0] : prop.exp.content;
         for (const name of aliases.match(/[A-Za-z_$][\w$]*/g) || []) localBindings.delete(name);
       }
-      if (node.type === 5 && node.content?.content) inspect(file, parse('template.ts', node.content.content), localBindings, allowDict, true, true);
+      if (node.type === 5 && node.content?.content) inspect(file, getTemplateAst(node.content), localBindings, allowDict, true, true);
       for (const prop of node.props || []) {
-        if (prop.type === 7 && prop.exp?.content) inspect(file, parse('template.ts', prop.exp.content), localBindings, allowDict, true, prop.name === 'bind' && ['label', 'title', 'content', 'description', 'placeholder'].includes(prop.arg?.content));
+        if (prop.type === 7 && prop.exp?.content) inspect(file, getTemplateAst(prop.exp), localBindings, allowDict, true, prop.name === 'bind' && ['label', 'title', 'content', 'description', 'placeholder'].includes(prop.arg?.content));
         if (allowDict && prop.type === 6 && prop.name === 'prop' && dictFields.has(prop.value?.content)) report.incomplete.push(`${relative(file)}：表格 prop=${prop.value.content} 与 @dictKey 字段同名，行类型未静态绑定；候选待人工核对`);
       }
       for (const child of node.children || []) templateWalk(child, localBindings);
     }
-    templateWalk(templates.get(file));
+    templateWalk(template);
   }
 
   // Never choose a winner between same-key definitions: runtime merge order is outside this scan.

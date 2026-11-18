@@ -113,7 +113,8 @@ function Invoke-CheckerJson {
 }
 
 function New-KitFixture {
-	param([string]$Root, [string]$DeclaredVersion = '1.9.0', [string]$InstalledVersion = '1.9.0')
+	param([string]$Root, [string]$DeclaredVersion = '1.12.1', [string]$InstalledVersion = '1.12.1',
+		[string]$LockSpecifier = $DeclaredVersion, [string]$LockVersion = $InstalledVersion)
 	New-IntegratedScaffold -Root $Root
 	$packageFile = Join-Path $Root 'package.json'
 	$package = Get-Content -LiteralPath $packageFile -Raw | ConvertFrom-Json
@@ -146,11 +147,35 @@ const i18n = createFederationI18n({ loadRemote });
 const registry = createFederationRegistry({ loadRemote, remotes, styles, i18n, elementProvider: ModuleFederationElementProvider, getRemoteScopeClass });
 export const { getModuleFederationLoader } = registry;
 '@
-	$installedPackage = @'
-{"version":"1.9.0","exports":{"./federation":{"types":"./dist/federation.d.ts"},"./federation/config":{},"./browser/assets":{},"./vite":{},"./postcss":{},"./types/remote-core":{"types":"./dist/types/remote-core.d.ts"}}}
-'@
+	# 锁包含另一个 importer 和传递依赖，用于发现按全文件首个版本匹配的误判。
+	if ($LockSpecifier) {
+		Write-FixtureFile $Root 'pnpm-lock.yaml' @"
+lockfileVersion: '9.0'
+importers:
+  apps/other:
+    dependencies:
+      '@fxft/aura-web-kit':
+        specifier: 1.9.0
+        version: 1.9.0
+  .:
+    dependencies:
+      '@fxft/aura-web-kit':
+        specifier: '$LockSpecifier'
+        version: '$LockVersion'
+packages:
+  '@fxft/aura-web-kit@1.9.0': {}
+"@
+	}
 	if ($InstalledVersion) {
-		Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/package.json' ($installedPackage.Replace('1.9.0', $InstalledVersion))
+		$exports = [ordered]@{}
+		foreach ($entry in @('federation', 'federation/config', 'browser/assets', 'vite', 'postcss')) {
+			$exports["./$entry"] = @{ types = "./dist/$entry.d.ts"; import = "./dist/$entry.js" }
+			Write-FixtureFile $Root "node_modules/@fxft/aura-web-kit/dist/$entry.d.ts" 'export {};'
+			Write-FixtureFile $Root "node_modules/@fxft/aura-web-kit/dist/$entry.js" 'export {};'
+		}
+		$exports['./types/remote-core'] = @{ types = './dist/types/remote-core.d.ts' }
+		$installedPackage = @{ name = '@fxft/aura-web-kit'; version = $InstalledVersion; exports = $exports }
+		Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/package.json' ($installedPackage | ConvertTo-Json -Depth 6)
 		Write-FixtureFile $Root 'node_modules/@fxft/aura-web-kit/dist/types/remote-core.d.ts' "declare module 'aura-core/api/example.ts' { export const read: () => void; }"
 	}
 }
@@ -172,6 +197,13 @@ try {
 	$result = Invoke-CheckerJson -ProjectPath $integratedRoot
 	Assert-Equal $result.Report.projectType 'Integrated' '综合端类型识别失败'
 	Assert-Equal $result.ExitCode 0 '合规综合端退出码错误'
+	Write-FixtureFile $integratedRoot 'README.md' '本项目由 pigx-nexus 模板创建。'
+	$viteFile = 'vite.config.mts'
+	$formattedVite = (Get-Content -LiteralPath (Join-Path $integratedRoot $viteFile) -Raw -Encoding UTF8).Replace("filename: 'remoteEntry.js'", 'filename:"remoteEntry.js"').Replace('vue: { singleton:', "vue: {`nsingleton:")
+	Write-FixtureFile $integratedRoot $viteFile $formattedVite
+	$result = Invoke-CheckerJson -ProjectPath $integratedRoot
+	Assert-Equal $result.ExitCode 0 'README 模板历史和等效 Vite 格式不能导致身份或配置整改'
+	Assert-Equal @($result.Report.findings | Where-Object { $_.ruleId -eq 'MF-ID-001' -and $_.severity -eq 'warning' }).Count 1 '模板历史只应提示核对'
 
 	$kitRoot = Join-Path $testRoot 'kit-integrated'
 	New-KitFixture -Root $kitRoot
@@ -180,35 +212,32 @@ try {
 	Assert-Equal $result.ExitCode 0 '1.2.0 绑定、多级路径或 >=22.12.0 约束误报'
 	Assert-Rule $result.Report 'MF-RUNTIME-007'
 
-	# 每例使用独立项目，并同时设置声明与安装，声明与安装均按精确1.9.0检出偏差。
+	# 同时检查实装门槛、当前 importer 的来源和声明范围；缺证与已知偏差分别累计。
 	$versionCases = @(
-		@{ Name = 'baseline'; Declared = '1.9.0'; Installed = '1.9.0'; Errors = 0; Manual = 0 },
-		@{ Name = 'patch'; Declared = '1.9.1'; Installed = '1.9.1'; Errors = 2; Manual = 0 },
-		@{ Name = 'minor'; Declared = '1.10.0'; Installed = '1.10.0'; Errors = 2; Manual = 0 },
-		@{ Name = 'major'; Declared = '2.0.0'; Installed = '2.0.0'; Errors = 2; Manual = 0 },
-		@{ Name = 'double-digit-major'; Declared = '10.0.0'; Installed = '10.0.0'; Errors = 2; Manual = 0 },
-		@{ Name = 'metadata'; Declared = '1.9.0+build.1'; Installed = '1.9.0+build.1'; Errors = 2; Manual = 0 },
-		@{ Name = 'low-minor'; Declared = '1.8.99'; Installed = '1.8.99'; Errors = 2; Manual = 0 },
-		@{ Name = 'low-major'; Declared = '0.99.99'; Installed = '0.99.99'; Errors = 2; Manual = 0 },
-		@{ Name = 'minimum-prerelease'; Declared = '1.9.0-rc.1'; Installed = '1.9.0-rc.1'; Errors = 2; Manual = 0 },
-		@{ Name = 'higher-prerelease'; Declared = '1.10.0-rc.1'; Installed = '1.10.0-rc.1'; Errors = 2; Manual = 0 },
-		@{ Name = 'range-installed'; Declared = '^1.9.0'; Installed = '1.9.1'; Errors = 2; Manual = 0 },
-		@{ Name = 'range-installed-low'; Declared = '>=1.8.0'; Installed = '1.8.99'; Errors = 2; Manual = 0 },
-		@{ Name = 'exact-mismatch'; Declared = '1.9.0'; Installed = '1.9.1'; Errors = 1; Manual = 0 },
-		@{ Name = 'installed-low-priority'; Declared = '1.9.1'; Installed = '1.8.99'; Errors = 2; Manual = 0 },
-		@{ Name = 'invalid-installed'; Declared = '^1.9.0'; Installed = 'unknown'; Errors = 2; Manual = 0 },
-		@{ Name = 'invalid-leading-zero'; Declared = '*'; Installed = '01.9.0'; Errors = 2; Manual = 0 },
-		@{ Name = 'range-uninstalled'; Declared = '^1.9.0'; Installed = ''; Errors = 1; Manual = 1 },
-		@{ Name = 'tag-uninstalled'; Declared = 'latest'; Installed = ''; Errors = 1; Manual = 1 },
-		@{ Name = 'baseline-uninstalled'; Declared = '1.9.0'; Installed = ''; Errors = 0; Manual = 1 },
-		@{ Name = 'range-installed-baseline'; Declared = '^1.9.0'; Installed = '1.9.0'; Errors = 1; Manual = 0 },
-		@{ Name = 'exact-uninstalled'; Declared = '1.10.0'; Installed = ''; Errors = 1; Manual = 1 },
-		@{ Name = 'low-uninstalled'; Declared = '1.8.99'; Installed = ''; Errors = 1; Manual = 1 },
-		@{ Name = 'undeclared'; Declared = ''; Installed = '1.9.1'; Errors = 2; Manual = 0 }
+		@{ Name = 'floor'; Declared = '1.12.1'; Installed = '1.12.1'; Errors = 0; Manual = 0 },
+		@{ Name = 'higher'; Declared = '10.0.0'; Installed = '10.0.0'; Errors = 0; Manual = 0 },
+		@{ Name = 'metadata'; Declared = '1.12.1+ci.2'; Installed = '1.12.1+ci.2'; Errors = 0; Manual = 0 },
+		@{ Name = 'low'; Declared = '1.12.0'; Installed = '1.12.0'; Errors = 1; Manual = 0 },
+		@{ Name = 'floor-prerelease'; Declared = '1.12.1-rc.1'; Installed = '1.12.1-rc.1'; Errors = 1; Manual = 0 },
+		@{ Name = 'explicit-prerelease'; Declared = '1.13.0-rc.1'; Installed = '1.13.0-rc.1'; Errors = 0; Manual = 0 },
+		@{ Name = 'range-and-peers'; Declared = '^1.9.0'; Installed = '1.13.0'; LockVersion = '1.13.0(vue@3.5.0)'; Errors = 0; Manual = 0 },
+		@{ Name = 'range-mismatch'; Declared = '~1.12.1'; Installed = '1.13.0'; Errors = 1; Manual = 0 },
+		@{ Name = 'lock-specifier-mismatch'; Declared = '^1.12.1'; Installed = '1.12.2'; LockSpecifier = '~1.12.1'; Errors = 1; Manual = 0 },
+		@{ Name = 'lock-install-mismatch'; Declared = '^1.12.1'; Installed = '1.12.2'; LockVersion = '1.12.1'; Errors = 1; Manual = 0 },
+		@{ Name = 'catalog'; Declared = 'catalog:'; Installed = '1.12.1'; Errors = 0; Manual = 1 },
+		@{ Name = 'missing-lock'; Declared = '1.12.1'; Installed = '1.12.1'; LockSpecifier = ''; Errors = 0; Manual = 1 },
+		@{ Name = 'missing-install'; Declared = '1.12.1'; Installed = ''; LockVersion = '1.12.1'; Errors = 0; Manual = 1 },
+		@{ Name = 'bad-install'; Declared = '^1.12.1'; Installed = '01.12.1'; LockVersion = '1.12.1'; Errors = 0; Manual = 1 },
+		@{ Name = 'bad-lock'; Declared = '^1.12.1'; Installed = '1.12.1'; LockVersion = 'link:../kit'; Errors = 0; Manual = 1 },
+		@{ Name = 'undeclared'; Declared = ''; Installed = '1.12.1'; Errors = 1; Manual = 1 }
 	)
 	foreach ($case in $versionCases) {
 		$versionRoot = Join-Path $testRoot ('version-' + $case.Name)
-		New-KitFixture -Root $versionRoot -DeclaredVersion $case.Declared -InstalledVersion $case.Installed
+		$argsForCase = @{ Root = $versionRoot; DeclaredVersion = $case.Declared; InstalledVersion = $case.Installed }
+		foreach ($key in @('LockSpecifier', 'LockVersion')) {
+			if ($case.ContainsKey($key)) { $argsForCase[$key] = $case[$key] }
+		}
+		New-KitFixture @argsForCase
 		$result = Invoke-CheckerJson -ProjectPath $versionRoot
 		$versionFindings = @($result.Report.findings | Where-Object ruleId -eq 'MF-DEP-004')
 		Assert-Equal @($versionFindings | Where-Object severity -eq 'error').Count $case.Errors "web-kit $($case.Name) 错误数"
@@ -217,7 +246,7 @@ try {
 		Assert-Equal $result.ExitCode $expectedExit "web-kit $($case.Name) 退出码"
 	}
 	$missingExportRoot = Join-Path $testRoot 'missing-kit-export'
-	New-KitFixture -Root $missingExportRoot -DeclaredVersion '1.9.0' -InstalledVersion '1.9.0'
+	New-KitFixture -Root $missingExportRoot
 	$exportPackagePath = 'node_modules/@fxft/aura-web-kit/package.json'
 	$exportPackage = Get-Content -LiteralPath (Join-Path $missingExportRoot $exportPackagePath) -Raw | ConvertFrom-Json
 	$exportPackage.exports.PSObject.Properties.Remove('./vite')
@@ -225,6 +254,24 @@ try {
 	$result = Invoke-CheckerJson -ProjectPath $missingExportRoot
 	Assert-Equal $result.ExitCode 1 '基线 web-kit 缺失公开入口仍须失败'
 	Assert-Equal @($result.Report.findings | Where-Object { $_.ruleId -eq 'MF-DEP-004' -and $_.severity -eq 'error' }).Count 1 '缺失入口错误未保留'
+
+	$exportPackage.exports | Add-Member -NotePropertyName './vite' -NotePropertyValue @{ types = './dist/vite.d.ts'; import = './dist/missing.js' }
+	Write-FixtureFile $missingExportRoot $exportPackagePath ($exportPackage | ConvertTo-Json -Depth 5)
+	$result = Invoke-CheckerJson -ProjectPath $missingExportRoot
+	Assert-Equal @($result.Report.findings | Where-Object { $_.ruleId -eq 'MF-DEP-004' -and $_.message.Contains('missing.js') }).Count 1 '公开入口映射目标缺失'
+
+	# 子项目应只读取共享锁中自己的 importer，即使其他项目使用相同的包名与不同的版本。
+	$workspace = Join-Path $testRoot 'workspace'
+	$member = Join-Path $workspace 'apps/order'
+	New-KitFixture -Root $member -LockSpecifier ''
+	Write-FixtureFile $workspace 'pnpm-workspace.yaml' "packages: ['apps/*']"
+	$rootLock = Get-Content -LiteralPath (Join-Path $kitRoot 'pnpm-lock.yaml') -Raw -Encoding UTF8
+	Write-FixtureFile $workspace 'pnpm-lock.yaml' ($rootLock.Replace('  .:', '  apps/order:'))
+	$result = Invoke-CheckerJson -ProjectPath $member
+	Assert-Equal @($result.Report.findings | Where-Object ruleId -eq 'MF-DEP-004').Count 0 'workspace 应匹配当前 importer'
+	Write-FixtureFile $workspace 'pnpm-lock.yaml' ($rootLock.Replace('  .:', '  apps/elsewhere:'))
+	$result = Invoke-CheckerJson -ProjectPath $member
+	Assert-Equal @($result.Report.findings | Where-Object { $_.ruleId -eq 'MF-DEP-004' -and $_.severity -eq 'manual' }).Count 1 '缺 importer 应保留未证实'
 
 	$bindingPath = Join-Path $kitRoot 'src/config/aura/federation.ts'
 	$binding = Get-Content -LiteralPath $bindingPath -Raw
@@ -274,6 +321,15 @@ try {
 	Write-FixtureFile $kitRoot 'src/types/framework.d.ts' "import '@fxft/aura-web-kit/types/remote-core';"
 	$result = Invoke-CheckerJson -ProjectPath $kitRoot
 	Assert-Equal $result.ExitCode 0 ('已启用的包声明不应误报缺失：' + ($result.Report.findings | Where-Object severity -eq error | ConvertTo-Json -Compress))
+	$kitManifestPath = 'node_modules/@fxft/aura-web-kit/package.json'
+	$kitManifest = Get-Content -LiteralPath (Join-Path $kitRoot $kitManifestPath) -Raw -Encoding UTF8
+	$nestedTypes = $kitManifest | ConvertFrom-Json
+	$nestedTypes.exports.'./types/remote-core'.types = @{ default = './dist/types/remote-core.d.ts' }
+	Write-FixtureFile $kitRoot $kitManifestPath ($nestedTypes | ConvertTo-Json -Depth 7)
+	$result = Invoke-CheckerJson -ProjectPath $kitRoot
+	Assert-Equal $result.ExitCode 0 '嵌套类型条件等待解析，不应触发本地声明整改'
+	Assert-Equal @($result.Report.findings | Where-Object { $_.ruleId -eq 'MF-CONSUMER-005' -and $_.severity -eq 'manual' }).Count 1 '已引用但未解析的类型入口应保留未证实'
+	Write-FixtureFile $kitRoot $kitManifestPath $kitManifest
 	Write-FixtureFile $kitRoot 'src/types/framework.d.ts' "// import '@fxft/aura-web-kit/types/remote-core';"
 	$result = Invoke-CheckerJson -ProjectPath $kitRoot
 	Assert-Rule $result.Report 'MF-CONSUMER-005'
@@ -339,6 +395,9 @@ import RemotePage from 'aura-license-center/views/page.vue';
 	$prebuildRoot = Join-Path $testRoot 'prebuild-integrated'
 	Copy-Item -LiteralPath $integratedRoot -Destination $prebuildRoot -Recurse
 	Write-FixtureFile $prebuildRoot 'src/views/map.vue' '<template><FxftMap /><fxft-web-multi-video /></template>'
+	# 先使用两种纯类型导入，验证它们不会给已有地图与视频核对增加预构建要求。
+	$templateEntry = '@fxft/aura-web-kit/theme-core/template-runtime'
+	Write-FixtureFile $prebuildRoot 'src/template.ts' "import type { AuraTemplateRuntime } from '$templateEntry';`nimport { type AuraTemplateOption } from '$templateEntry';"
 	$vitePath = Join-Path $prebuildRoot 'vite.config.mts'
 	$viteSource = Get-Content -LiteralPath $vitePath -Raw -Encoding UTF8
 	$result = Invoke-CheckerJson -ProjectPath $prebuildRoot
@@ -350,11 +409,14 @@ import RemotePage from 'aura-license-center/views/page.vue';
 	$result = Invoke-CheckerJson -ProjectPath $prebuildRoot
 	$prebuildFindings = @($result.Report.findings | Where-Object ruleId -eq 'MF-VITE-008')
 	if (@($prebuildFindings | Where-Object severity -eq 'warning').Count -ne 2) { throw '根包 include 不能替代地图和多路视频入口。' }
+	# 再加入带别名的值导入；同一精确子入口此时应出现在预构建核对结果中。
+	Write-FixtureFile $prebuildRoot 'src/template.ts' "import { type AuraTemplateRuntime, createAuraTemplateRuntime as create } from '$templateEntry';"
 	Write-FixtureFile $prebuildRoot 'vite.config.mts' ($viteSource + "`nconst auditOptions = { optimizeDeps: { include: ['@fxft/ui-plus/dist/es/components/map/index.js', '@fxft/ui-plus/dist/es/components/web-multi-video/index.js'] } };")
 	$result = Invoke-CheckerJson -ProjectPath $prebuildRoot
 	$prebuildFindings = @($result.Report.findings | Where-Object ruleId -eq 'MF-VITE-008')
 	if (@($prebuildFindings | Where-Object severity -eq 'manual').Count -ne 2) { throw '已配置入口仍应要求冷启动人工验证。' }
 	if ($prebuildFindings.Message -match '/web-video/') { throw '未使用单路视频不应要求预构建。' }
+	Assert-Equal @($prebuildFindings | Where-Object { $_.severity -eq 'warning' -and $_.message.Contains($templateEntry) }).Count 1 '混合导入中的运行时值应触发公共入口核对'
 	Write-Host '✓ 模块联邦检查器回归测试通过。' -ForegroundColor Green
 } finally {
 	$resolvedTemp = [System.IO.Path]::GetFullPath($testRoot)

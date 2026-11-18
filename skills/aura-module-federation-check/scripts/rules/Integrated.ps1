@@ -9,7 +9,7 @@ function Invoke-IntegratedChecks {
 	$packagePath = Join-Path $ProjectPath 'package.json'
 	$packageContent = Get-Content -LiteralPath $packagePath -Raw -Encoding UTF8
 	$package = $packageContent | ConvertFrom-Json
-	$kitVersion = Get-MfPackageVersion -Package $package -Name '@fxft/aura-web-kit'
+	. (Join-Path $PSScriptRoot '../lib/web-kit.ps1')
 	$elementBaseline = '2.14.6'
 	$minimumNode = [version]'22.12.0'
 
@@ -17,7 +17,9 @@ function Invoke-IntegratedChecks {
 	foreach ($file in (Get-MfProjectAuditFiles -ProjectPath $ProjectPath)) {
 		$content = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
 		foreach ($match in [regex]::Matches($content, 'pigx-nexus|pigxNexus')) {
-			Add-MfFinding -Findings $findings -RuleId 'MF-ID-001' -Severity 'error' `
+			# README 可能记录模板来源，不能据此改写生效的联邦身份。
+			$identitySeverity = if ($file.Extension -eq '.md') { 'warning' } else { 'error' }
+			Add-MfFinding -Findings $findings -RuleId 'MF-ID-001' -Severity $identitySeverity `
 				-Message "仍包含模板占位身份：$($match.Value)" `
 				-Suggestion '替换为当前业务项目的真实 remoteName、remoteEntryName 或 systemId，并核对用途。' `
 				-File (Get-MfRelativePath -ProjectPath $ProjectPath -FilePath $file.FullName) `
@@ -176,24 +178,24 @@ function Invoke-IntegratedChecks {
 	$viteContent = if ($viteFile) { Get-Content -LiteralPath $viteFile.FullName -Raw -Encoding UTF8 } else { '' }
 	$viteRelative = if ($viteFile) { Get-MfRelativePath -ProjectPath $ProjectPath -FilePath $viteFile.FullName } else { 'vite.config.*' }
 	$viteRequired = @(
-		@{ Token = '@module-federation/vite'; Message = '缺少 @module-federation/vite 导入。' },
-		@{ Token = 'federation('; Message = '缺少 federation 插件调用。' },
-		@{ Token = 'name: currentFederationName'; Message = 'federation.name 未使用 currentFederationName。' },
-		@{ Token = "filename: 'remoteEntry.js'"; Message = 'federation.filename 不是 remoteEntry.js。' },
-		@{ Token = 'manifest: true'; Message = '未启用 Module Federation manifest。' }
+		@{ Pattern = '[''"]@module-federation/vite[''"]'; Message = '缺少 @module-federation/vite 导入。' },
+		@{ Pattern = '\bfederation\s*\('; Message = '缺少 federation 插件调用。' },
+		@{ Pattern = '\bname\s*:\s*currentFederationName\b'; Message = 'federation.name 未使用 currentFederationName。' },
+		@{ Pattern = '\bfilename\s*:\s*[''"]remoteEntry\.js[''"]'; Message = 'federation.filename 不是 remoteEntry.js。' },
+		@{ Pattern = '\bmanifest\s*:\s*true\b'; Message = '未启用 Module Federation manifest。' }
 	)
 	foreach ($required in $viteRequired) {
-		if (-not $viteContent.Contains($required.Token)) {
+		if ($viteContent -cnotmatch $required.Pattern) {
 			Add-MfFinding -Findings $findings -RuleId 'MF-VITE-001' -Severity 'error' -Message $required.Message `
 				-Suggestion '恢复综合端模板的 federation 基础配置。' -File $viteRelative
 		}
 	}
 
 	$singletonPatterns = [ordered]@{
-		vue = '(?m)^\s*vue\s*:\s*\{[^\r\n}]*singleton\s*:\s*true'
+		vue = '(?m)^\s*[''"]?vue[''"]?\s*:\s*\{[^}]*singleton\s*:\s*true'
 		'vue-router' = '[''"]vue-router[''"]\s*:\s*\{[^}]*singleton\s*:\s*true'
 		'vue-i18n' = '[''"]vue-i18n[''"]\s*:\s*\{[^}]*singleton\s*:\s*true'
-		pinia = '(?m)^\s*pinia\s*:\s*\{[^\r\n}]*singleton\s*:\s*true'
+		pinia = '(?m)^\s*[''"]?pinia[''"]?\s*:\s*\{[^}]*singleton\s*:\s*true'
 		'element-plus' = '[''"]element-plus[''"]\s*:\s*\{[^}]*singleton\s*:\s*true'
 	}
 	foreach ($item in $singletonPatterns.GetEnumerator()) {
@@ -240,10 +242,27 @@ function Invoke-IntegratedChecks {
 	$sourceFiles = @(Get-MfProjectSourceFiles -ProjectPath $ProjectPath)
 	foreach ($item in $catalog) {
 		$usage = $null
+		# 运行时子路径按静态 import 识别；精确匹配引号中的入口，避免将同前缀的其他子路径算入。
+		if ($item.usage -eq 'staticBrowserImport') {
+			$specifier = '[''"]' + [regex]::Escape($item.entry) + '[''"]'
+			$importPattern = '(?m)^\s*import\s*(?:(?:\{(?<bindings>[^{}]*)\}|\*\s+as\s+[\w$]+)\s*from\s*)?' + $specifier
+		}
 		foreach ($file in $sourceFiles) {
 			if ($file.Extension -notin @('.vue', '.ts', '.tsx', '.js', '.jsx')) { continue }
 			$content = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
 			$content = $content -replace '(?s)<!--.*?-->', ''
+			if ($item.usage -eq 'staticBrowserImport') {
+				# 声明文件不会生成浏览器依赖；具名绑定中也要跳过 type 修饰的类型，仅值导入才参与核对。
+				if ($file.Name -match '\.d\.[cm]?ts$') { continue }
+				foreach ($declaration in [regex]::Matches($content, $importPattern)) {
+					$bindings = $declaration.Groups['bindings']
+					if (!$bindings.Success -or @($bindings.Value -split ',' | Where-Object { $_.Trim() -match '^(?!type\s)\w' }).Count) {
+						$usage = $file; break
+					}
+				}
+				if ($usage) { break }
+				continue
+			}
 			$pattern = '(?<![\w-])(' + (($item.components | ForEach-Object { [regex]::Escape($_) }) -join '|') + ')(?![\w-])'
 			if ($content -cmatch $pattern) { $usage = $file; break }
 		}
@@ -300,26 +319,7 @@ function Invoke-IntegratedChecks {
 			Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-006' -Severity 'error' -Message "联邦绑定缺少运行时适配：$pattern" -File 'src/config/aura/federation.ts'
 		}
 	}
-	$installedPackage = Join-Path $ProjectPath 'node_modules/@fxft/aura-web-kit/package.json'
-	$kitBaseline = '1.9.0'
-	if (-not $kitVersion) {
-		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message '缺少 @fxft/aura-web-kit 依赖声明。' -File 'package.json'
-	} elseif ($kitVersion -ne $kitBaseline) {
-		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message "web-kit 依赖声明必须为精确版本 ${kitBaseline}：$kitVersion" -File 'package.json'
-	}
-	if (Test-Path -LiteralPath $installedPackage) {
-		$installed = Get-Content -LiteralPath $installedPackage -Raw -Encoding UTF8 | ConvertFrom-Json
-		if ([string]$installed.version -ne $kitBaseline) {
-			Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message "web-kit 实际安装版本未对齐 ${kitBaseline}：$($installed.version)" -File 'package.json'
-		}
-		foreach ($entry in @('./federation', './federation/config', './browser/assets', './vite', './postcss')) {
-			if (-not $installed.exports.PSObject.Properties[$entry]) {
-				Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'error' -Message "已安装 web-kit 缺少公开入口：$entry" -File 'package.json'
-			}
-		}
-	} else {
-		Add-MfFinding -Findings $findings -RuleId 'MF-DEP-004' -Severity 'manual' -Message '未安装 web-kit，无法核验发布包 exports 与版本；先安装锁文件依赖再复检。' -File 'package.json'
-	}
+	$kitPackage = Invoke-MfKitChecks -Findings $findings -ProjectPath $ProjectPath -Package $package
 	Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-007' -Severity 'manual' -Message '公共包负责 scope 根节点、失败隔离与缓存刷新；静态绑定检查不能证明运行行为，需验证宿主加载、失败重试和语言切换。' -File 'src/config/aura/federation.ts'
 
 	# 综合端作为提供方时，检查全部 expose 映射和国际化扫描目录。
@@ -488,19 +488,22 @@ function Invoke-IntegratedChecks {
 		ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 }) -join "`n"
 	# 只读取项目明确启用的公开声明入口，不把安装包中未引用的声明算作可用。
 	$activeTypeContent = $typeFilesContent -replace '(?s)/\*.*?\*/', '' -replace '(?m)^\s*//(?!/\s*<reference)[^\r\n]*', ''
+	$typeFilesContent = $activeTypeContent
+	$unresolvedKitTypes = $false
 	$kitTypePattern = '(?:import\s*[''"]|from\s*[''"]|<reference\s+types=[''"])@fxft/aura-web-kit/(?<entry>types/remote-core)[''"]'
 	foreach ($typeReference in [regex]::Matches($activeTypeContent, $kitTypePattern)) {
 		$kitPackagePath = Join-Path $ProjectPath 'node_modules/@fxft/aura-web-kit/package.json'
-		if (-not (Test-Path -LiteralPath $kitPackagePath)) { continue }
-		$kitPackage = Get-Content -LiteralPath $kitPackagePath -Raw -Encoding UTF8 | ConvertFrom-Json
 		$entryKey = './' + $typeReference.Groups['entry'].Value
-		$exportProperty = $kitPackage.exports.PSObject.Properties[$entryKey]
-		if (-not $exportProperty -or -not $exportProperty.Value.types) { continue }
+		$exportProperty = if ($kitPackage.exports) { $kitPackage.exports.PSObject.Properties[$entryKey] }
+		if ($exportProperty.Value.types -isnot [string] -or $exportProperty.Value.types -notmatch '^\./') {
+			$unresolvedKitTypes = $true
+			continue
+		}
 		$kitRoot = [System.IO.Path]::GetFullPath((Split-Path -Parent $kitPackagePath))
 		$declarationPath = [System.IO.Path]::GetFullPath((Join-Path $kitRoot $exportProperty.Value.types))
-		if ($declarationPath.StartsWith($kitRoot + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase) -and (Test-Path -LiteralPath $declarationPath)) {
+		if ($declarationPath.StartsWith($kitRoot + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase) -and (Test-Path -LiteralPath $declarationPath -PathType Leaf)) {
 			$typeFilesContent += "`n" + (Get-Content -LiteralPath $declarationPath -Raw -Encoding UTF8)
-		}
+		} else { $unresolvedKitTypes = $true }
 	}
 	$uniqueRemoteImports = @($remoteImports | Sort-Object Module -Unique)
 	foreach ($importRecord in $uniqueRemoteImports) {
@@ -513,9 +516,11 @@ function Invoke-IntegratedChecks {
 		$exactDeclaration = 'declare\s+module\s+[''"]' + [regex]::Escape($importRecord.Module) + '[''"]'
 		$wildcardDeclaration = 'declare\s+module\s+[''"]' + [regex]::Escape($importRecord.RemoteName) + '/\*[''"]'
 		if ($typeFilesContent -notmatch $exactDeclaration -and $typeFilesContent -notmatch $wildcardDeclaration) {
-			Add-MfFinding -Findings $findings -RuleId 'MF-CONSUMER-005' -Severity 'error' `
-				-Message "远程模块缺少 TypeScript 声明：$($importRecord.Module)" `
-				-Suggestion '增加精确 declare module 或受控的远程通配声明。' -File $importRecord.File -Line $importRecord.Line
+			# 已引用但尚未读到公共类型时，先核实项目的 TypeScript 解析，避免自动添加重复声明。
+			$typeSeverity = if ($unresolvedKitTypes) { 'manual' } else { 'error' }
+			Add-MfFinding -Findings $findings -RuleId 'MF-CONSUMER-005' -Severity $typeSeverity `
+				-Message "当前可读声明中未找到远程模块：$($importRecord.Module)" `
+				-Suggestion '核对启用的公开类型入口及其 TypeScript 解析；确认缺少时增加准确的声明。' -File $importRecord.File -Line $importRecord.Line
 		}
 	}
 	foreach ($importRecord in ($remoteImports | Where-Object { $_.Module -match '\.vue$' -and $_.File -match '\.vue$' })) {

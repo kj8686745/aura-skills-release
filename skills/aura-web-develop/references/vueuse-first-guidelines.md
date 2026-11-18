@@ -10,6 +10,8 @@
 
 ## 必须优先用 VueUse 的场景
 
+业务代码需要实现防抖或节流时使用 `@vueuse/core` 的适用 API：连续输入停顿后处理最终值用 `useDebounceFn`，持续高频事件按约定间隔执行用 `useThrottleFn`。同一事件复用同一个包装函数。保存按钮的异步防重按[常见 Bug 自测清单](common-bug-self-test.md)验证；已有保护能覆盖校验与提交全程时即可满足防重要求。
+
 | 场景 | 优先函数 |
 |---|---|
 | 事件监听、键盘事件、点击外部区域 | `useEventListener`、`onKeyStroke`、`onClickOutside` |

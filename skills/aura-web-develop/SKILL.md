@@ -1,22 +1,23 @@
 ---
 name: aura-web-develop
-description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript 业务，支持结构只读咨询与评估，补齐代码注释与业务说明；功能开发完成必要验收和自检后交付开发记录或报告，纯注释/说明整理默认直接交付。
+description: AURA 前端项目开发与编辑的规范入口。综合端新增功能、局部编辑、样式配置调整、修复及重构均须按改动执行全部适用规范并验收；框架内部修改由框架角色沿用适用条款。也支持结构咨询和纯注释整理。
 ---
 
 # AURA 综合端业务开发
 
-当前版本：`1.6.14`（2026-11-09）。
+当前版本：`1.6.15`（2026-11-18）。
 
 ## 执行入口
 
-1. 首次命中时简要说明本技能负责本次 AURA 业务开发或结构评估；已有明确需求时直接推进。用户询问用法、帮助或示例时才读取 [USAGE.md](USAGE.md)。
-2. 先核对任务相关的项目源码、接口类型、依赖及相邻实现，再按下表读取命中的资料。多场景任务合并去重；未命中的资料不读，同一会话已读且未变化的资料不重复读。
+1. 综合端业务修改在 `aura-web-project-router` 分流后进入本技能。隐式命中本技能且尚未分流时，使用可用的分流器确认当前请求；已分流则直接继续。小改、后续追加和新功能均适用。首次命中简要说明所用技能，用法问答才读取 [USAGE.md](USAGE.md)。
+2. 任何开发或编辑都须在动手前核对下文“始终遵守”，根据改动读取场景表中全部命中的资料，再按真实源码和契约实施。例如改按钮间距命中样式布局，增加受限操作还命中权限，新增按钮文案还命中 i18n。修改代码同时遵守[代码注释标准](references/code-comment-guidelines.md)。交付前用实际 diff 复核命中项及对应验收，遗漏先补齐。同一会话可复用仍有效的资料。框架内部修改由相应框架角色执行本入口的适用条款。
 3. 规范优先级：用户明确要求 → 当前项目真实接口、类型与依赖 → [最新版正式规范](knowledge/PIGX前端开发规范/README.md) → 本技能补充规则 → 历史写法。首次接触项目或涉及架构时读取正式规范总览；局部修改直接读取相关专项规范，不固定加载整套文档。
 4. 本文只维护入口、底线和索引；细则在下列对应文档单处维护。命中场景即必须遵循该文档，不因按需加载而降低约束。正式规范目录的阅读顺序是导航，不要求每个任务全读。
 
 ## 始终遵守
 
-- 仅面向框架 1.2.0 与本目录已验证的精确版本 `@fxft/aura-web-kit@1.9.6`（声明、锁文件与安装一致），不保留旧实现与入口兼容；用户明确授权公共依赖升级时以目标版本、实际安装声明与验证结果为准，不因历史清单基线要求回退。公共工具、Hook、运行时和构建修复先查公开能力；通用实现进入公共包，项目只绑定实例、环境和资源。公共 UI 使用 `@fxft/aura-ui` 的 Aura 前缀组件，JS/CSS 按需引入，不新增全量注册或 Aura UI 全量样式；本技能面向的项目均已接入 Core，统一使用 `AuraUIResolver({ injectGlobal: false })` 并保留组件 CSS。
+- 纳入本技能的 AURA 综合端消费项目，其 `@fxft/aura-web-kit` 实际安装版本须满足 `>=1.12.1`。核对依赖声明与锁文件对应条目一致，且锁定解析版本满足声明并与安装版本一致。按目标安装包的 exports、类型与实现核对所用能力。发现低版本、不一致或缺证时记录影响，继续其余已授权工作，受影响项在补证或获授权整改后再确认通过。合规的更高版本可继续使用，依赖调整按用户授权执行。
+- 公共工具、Hook、运行时和构建修复先查公开能力；通用实现进入公共包，项目只绑定实例、环境和资源。公共 UI 使用 `@fxft/aura-ui` 的 Aura 前缀组件，JS/CSS 按需引入，不新增全量注册或 Aura UI 全量样式；本技能面向的项目均已接入 Core，统一使用 `AuraUIResolver({ injectGlobal: false })` 并保留组件 CSS。
 - 只处理授权范围，保留工作区已有改动；接口、Hook、组件和权限以真实契约为准，不虚构。用户任务优先，先区分“只读咨询/评估”“新开发/功能修改”与“纯注释/业务说明整理”。只读咨询仅按请求读取与给出依据和建议，不实施代码修改，不自动进入功能自检或运行测试、构建；用户明确要求验证时按其范围执行只读检查。纯整理只允许修改注释和说明文档，保持可执行代码与行为；不得修改 DOM 属性、组件、import、状态、接口、控制流、依赖或配置，包括不得借规范整改增加重试、useForm、竞态处理或替换字典组件。发现既有 FE 功能偏差仅记录原有问题、证据和建议，不自动修复，也不因此停止其余可读性整理；无需逐项反复询问授权。新开发/功能修改在用户原授权内整改。
 - 请求使用 `/@/config/aura/request`；消息使用 `/@/config/aura/index`；凡涉及业务表单的开发、功能修改或重构，必须使用 `@fxft/aura-web-kit/hooks/form` 的 `useForm`，主动读取 [Hooks 契约](recipes/hooks-standards.md#useform)，不依赖用户另行提醒。按实际生命周期逐表单验收，未接入或绕过公共 Hook 不得交付为通过；纯注释保持原授权边界。不复制框架底层实现。
 - 需要已有对象完整信息或当前状态时按 ID 查询详情，入口快照不能作为详情；日期时间处理必须使用 `dayjs`；用户可见文案走 i18n。具体边界按下表读取。
@@ -47,12 +48,13 @@ description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 | 新视觉方案、显著布局重做，或用户要求视觉设计                                                    | [视觉协作](references/frontend-design-workflow.md)，检查可用的 `frontend-design`；沿既有模式增字段、校验或局部 CRUD 不触发                                                                                                                       |
 | 路由、菜单、隐藏页                                                                              | [路由规范](knowledge/PIGX前端开发规范/路由与菜单规范.md)                                                                                                                                                                                         |
 | 受限按钮/入口/操作、Tab/Drawer 权限初始化；新增正式页面或管理端菜单权限同步                     | [菜单权限与实现边界](references/admin-menu-permission-workflow.md)，新增正式页面/菜单/按钮时主动确认是否同步及是否配置远程菜单；外部写入须有授权                                                                                                 |
-| remote、expose、manifest、shared 或模块联邦运行时                                               | [模块联邦规范](knowledge/PIGX前端开发规范/模块联邦开发技术规范.md)、[组件选型](references/component-selection.md)；使用 `aura-module-federation-check` 做改前基线与改后复检                                                                      |
+| remote、expose、manifest、shared、模块联邦运行时或 Vite 公共依赖预构建                         | 按[模块联邦规范](knowledge/PIGX前端开发规范/模块联邦开发技术规范.md)与[组件选型](references/component-selection.md)实施。用 `aura-module-federation-check` 做改前基线和改后复检，复用已有专项检查证据                                   |
 | 2D 地图 / 视频                                                                                  | 地图先读 [FxftMap 组件接入](references/fxft-map-integration.md)，将系统配置结果用于初始化 Props，再按[地图规范](knowledge/PIGX前端开发规范/2D地图开发规范.md)及可用的 `fmap-2d` 实现对应业务；视频读[视频规范](knowledge/PIGX前端开发规范/视频开发规范.md)，检查并调用 `fxft-video` |
 | 选用公司组件后发现依赖缺失、不满足需求或需要安装 | [下载与权限](knowledge/PIGX前端开发规范/公司组件库下载说明/README.md)，先复用满足需求的依赖；按授权补齐后继续组件导入、样式和服务绑定 |
 | API/Apifox / Figma                                                                              | 分别读取 [Apifox 流程](recipes/apifox-workflow.md) 与 [MCP 指南](references/apifox-mcp-guide.md) / [Figma 流程](references/figma-design-workflow.md)                                                                                             |
 | 新开发、修改业务、补旧代码注释或业务逻辑说明                                                    | [注释规范与三类可复制模板](references/code-comment-guidelines.md)、[开发闭环与文档交付](references/development-review-workflow.md)                                                                                                               |
-| 可见页面/交互改造验收，或用户提供可访问原型                                                     | [Codex 内置浏览器走查](references/codex-browser-review-workflow.md)；按当前工具能力连接，不以旧技能名缺失判定不可用；原型在编码前建立对照，完成后复核；交付按变更范围选择关键状态截图，复用有效证据，不默认逐操作截图                            |
+| 新开发或编辑涉及接口、列表、导入导出、连续操作或可见文案 | 按[检查选择表](references/development-review-workflow.md#检查选择表)选择接口直测、组件测试或页面走查；从[常见 Bug 自测清单](references/common-bug-self-test.md)选取受影响项。需要防抖或节流时使用 [VueUse API](references/vueuse-first-guidelines.md)。 |
+| 需要验收页面呈现、真实交互，或用户提供可访问原型 | 按[Codex 内置浏览器走查](references/codex-browser-review-workflow.md)验证受影响的页面状态；接口直测已覆盖的请求场景复用其证据。 |
 
 ## 页面模式
 
@@ -69,12 +71,12 @@ description: 按 AURA 综合端规范开发或修改 Vue 3 + Vite + TypeScript �
 - 修改代码后按 [格式化流程](references/prettier-formatting-workflow.md) 执行项目本地 Prettier 和 `git diff --check`。
 - 功能开发或明确要求验证的整理任务，按请求范围使用 [实现清单](checklists/implementation.md)、[验证清单](checklists/validation.md) 和 [正式检查清单](knowledge/PIGX前端开发规范/开发检查清单.md) 中命中的项目；完整页面开发覆盖全部适用项。
 - 功能开发的检查触发、范围和时机统一按[检查选择表](references/development-review-workflow.md#检查选择表)执行；各清单用于核对命中项，不另设重复验收节奏。
-- 维护技能本身运行 `scripts/validate-skill.ps1`；web-kit 能力清单变更时运行 `scripts/check-web-kit-catalog.ps1 -PackagePath <已安装的 aura-web-kit 包目录>`；aura-ui 资料维护按 [组件资料维护](references/aura-ui-docs-maintenance.md) 核对目标包 exports、组件契约、Resolver、JS/CSS 和副本一致性，不误用 web-kit 专用检查器，不启动业务项目的构建或浏览器流程。
+- 维护技能本身运行 `scripts/validate-skill.ps1`。更新 web-kit 历史入口快照时，运行 `scripts/check-web-kit-catalog.ps1 -PackagePath <快照对应版本的安装包目录>` 进行精确比对。目标项目的最低版本按本技能执行入口检查。aura-ui 资料维护按[组件资料维护](references/aura-ui-docs-maintenance.md)核对目标包 exports、组件契约、Resolver、JS/CSS 和副本一致性。技能资料维护只做技能与相关示例验证。
 - 每次调整技能版本，同步在 [CHANGELOG.md](CHANGELOG.md) 记录该版本日期、用户可见变化及必要兼容影响；同一未发布版本的补充归并原条目，不重复新建日志。安装、提交与发布事实留来源记录，不能由日志版本推断已发布；普通业务调用无需加载历史日志。
 - 功能开发或明确要求自检时，开发自检只读、整改由本技能负责；调用前确认实际加载的审查技能支持模式，精确入口与旧版能力缺口处理见[开发闭环](references/development-review-workflow.md)。不能以正式六文件流程代替自检。
 - 纯整理按快速路径简报已改范围、业务说明位置和未执行自动检查，不声明自检通过；用户明确要求报告时按请求范围交付。功能开发全部适用必需项通过后，局部变更可合并检查与交付为一份简短开发记录，完整新功能或要求独立报告时按[交付要求](references/development-review-workflow.md#5-通过后供开发人员审阅)保留报告与过程记录，标记“自检通过，待人工审查”；缺证或失败如实记录并继续独立工作。
 
-MF Vite 1.23.5 与 TypeScript 5.9.3 的原配套来源见 [升级来源记录](references/framework-upgrade-source.json)；web-kit 当前 1.9.6 / 115 入口基线见[公共能力目录](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)，本轮不改写历史升级记录；按模块联邦规范接入自动预构建和 ESLint 配套配置，不沿用旧扫描插件或强制手工清单。
+MF Vite 1.23.5 与 TypeScript 5.9.3 的原配套来源见[升级来源记录](references/framework-upgrade-source.json)。随包[公共能力目录](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)中的 1.9.6 和 115 个入口用于追溯，旧资料中的版本要求以本技能的最低版本为准。按模块联邦规范接入自动预构建和 ESLint 配套配置，沿用现有发现机制。
 
 本次可读性与自检流程直接维护于本技能仓库，来源及未发布状态见[本地变更记录](references/readability-source.json)；不替换既有规范来源记录。
 

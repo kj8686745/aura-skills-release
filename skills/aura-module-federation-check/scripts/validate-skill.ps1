@@ -24,6 +24,7 @@ $requiredFiles = @(
 	'scripts/check-module-federation.ps1',
 	'scripts/lib/common.ps1',
 	'scripts/lib/project-type.ps1',
+	'scripts/lib/web-kit.ps1',
 	'scripts/rules/Integrated.ps1',
 	'scripts/test-check-module-federation.ps1'
 )

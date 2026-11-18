@@ -127,14 +127,14 @@ function Add-UiContractError {
 if ($StrictUiContracts -and $sourceFiles.Count -gt 0) {
   $manifestPath = Join-Path ([IO.Path]::GetTempPath()) ('aura-ui-scan-' + [guid]::NewGuid().ToString('N') + '.json')
   try {
-    $contextFiles = @(Get-ChildItem -LiteralPath (Join-Path $resolvedProjectPath 'src') -Recurse -File |
-      Where-Object { $_.Name -in @('zh-cn.ts', 'en.ts') -or ($_.Extension -eq '.ts' -and $_.FullName -match '[\\/]src[\\/]api[\\/]') })
+    # 只传选中源码及清单范围；静态分析器根据实际引用读取必要上下文，全量时复用已枚举的清单。
     $manifest = @{
       project = $resolvedProjectPath
       selected = @($sourceFiles.FullName)
-      sources = @(foreach ($contextFile in @($sourceFiles) + @($contextFiles) | Sort-Object FullName -Unique) {
-        $text = Read-SourceFile $contextFile.FullName
-        if ($null -ne $text) { @{ path = $contextFile.FullName; content = $text } }
+      allSources = -not $PSBoundParameters.ContainsKey('Files')
+      sources = @(foreach ($sourceFile in $sourceFiles) {
+        $text = Read-SourceFile $sourceFile.FullName
+        if ($null -ne $text) { @{ path = $sourceFile.FullName; content = $text } }
       })
     }
     [IO.File]::WriteAllText($manifestPath, ($manifest | ConvertTo-Json -Depth 5), [Text.UTF8Encoding]::new($false))

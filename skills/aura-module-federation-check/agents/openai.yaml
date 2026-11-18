@@ -1,4 +1,4 @@
 interface:
-  display_name: "PIGX 模块联邦检查"
-  short_description: "检查 PIGX 综合端模块联邦并提供复检与对外接入说明"
-  default_prompt: "使用 $aura-module-federation-check 检查当前 PIGX 综合端模块联邦，只做审计并输出问题。"
+  display_name: "AURA 模块联邦检查"
+  short_description: "检查 AURA 模块联邦，修复已确认的偏差并复检，有取舍时请用户决定"
+  default_prompt: "使用 $aura-module-federation-check 检查当前项目的模块联邦配置。"

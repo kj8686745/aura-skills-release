@@ -1,30 +1,47 @@
 [
   {
-    "package": "@fxft/ui-plus",
+    "package": "@fxft/aura-ui",
     "components": [
-      "FxftMap",
-      "fxft-map"
+      "AuraFrameworkException",
+      "aura-framework-exception"
     ],
+    "entry": "@fxft/aura-ui/framework-exception",
+    "usage": "staticBrowserImport",
+    "verifiedVersion": "1.1.11",
+    "evidence": "2026-11-12 本地统一异常候选：core 与 factory 通过公开入口导入组件/挂载函数并单独加载 framework-exception.css。SDK 构建、9项组件测试及蓝/绿/深色浏览器渲染通过。两项目冷启动 dev 的 optimizeDeps metadata 均包含该精确入口，并指向 file:vendor/framework-exceptions 本地候选。该记录不代表同版本私服包已包含新增入口，正式发布后须核对目标精确版本。首次菜单往返的整页重载证据见本轮权限验证记录，当前不据此断言缺失该入口必然导致重载。"
+  },
+  {
+    "package": "@fxft/aura-ui",
+    "components": ["AuraIamExceptionPage", "aura-iam-exception-page"],
+    "entry": "@fxft/aura-ui/iam-exception-page",
+    "usage": "staticBrowserImport",
+    "verifiedVersion": "1.1.10",
+    "evidence": "2026-11-10 本地候选：源码已将组件、挂载函数、公开入口及独立样式分别重命名为 AuraIamExceptionPage、mountAuraIamExceptionPage、@fxft/aura-ui/iam-exception-page、dist/theme-chalk/iam-exception-page.css，新命名候选构建中。此前旧名 @fxft/aura-ui/exception-page 的 SDK 构建、4 项组件测试及 2 项 theme/resolver 测试通过；聚合工厂安装旧名 1.1.10-exception-page 候选并触发原 Vite 配置监听重载清除旧包解析缓存后，Edge http://localhost:5173 渲染成功，预构建 metadata 包含旧名精确入口。旧名运行证据不代表新名已通过。2026-11-10 工厂已安装 1.1.10-iam-exception-page 候选，新入口 @fxft/aura-ui/iam-exception-page 可正常导入；Edge 无上下文访问 localhost:5173 显示 /login 和登录按钮，不含 IAM 页；空 code 回跳显示 .aura-iam-exception-page 并清除 code。截图为 factory-direct-entry-login.png、factory-iam-invalid-callback.png；已实读工厂 node_modules/.vite/deps/_metadata.json，optimized 包含精确入口 @fxft/aura-ui/iam-exception-page，结果 true，证据保存于 iam-entry-final-evidence.json；尚未完成菜单冷切换验收，未复现缺失导致冷启动重载。仅核对实际使用的精确公开入口，不登记私有同义入口或全量预构建。"
+  },
+  {
+    "package": "@fxft/aura-web-kit",
+    "entry": "@fxft/aura-web-kit/theme-core/template-runtime",
+    "usage": "staticBrowserImport",
+    "verifiedVersion": "1.10.0",
+    "evidence": "2026-11-04 本地候选：core、factory 的 src/main.ts 均从此入口导入运行时值，两端 node_modules/.vite/deps/_metadata.json 均包含该精确入口。web-kit 的 scripts/generate-optimize-deps.mjs 从公开 exports 生成浏览器预构建清单。仅使用类型不要求预构建；未复现缺失此入口导致重载。"
+  },
+  {
+    "package": "@fxft/ui-plus",
+    "components": ["FxftMap", "fxft-map"],
     "entry": "@fxft/ui-plus/dist/es/components/map/index.js",
     "verifiedVersion": "1.1.3",
     "evidence": "2026-10-16 冷启动首次加载地图时，dev 日志出现该入口 new dependencies optimized 与 reloading；resolver 在 Vue 转换阶段注入入口。"
   },
   {
     "package": "@fxft/ui-plus",
-    "components": [
-      "FxftWebVideo",
-      "fxft-web-video"
-    ],
+    "components": ["FxftWebVideo", "fxft-web-video"],
     "entry": "@fxft/ui-plus/dist/es/components/web-video/index.js",
     "verifiedVersion": "1.1.3",
     "evidence": "2026-10-16 已有使用该组件的入口预构建配置；作为检查候选，缺失是否导致重载仍需冷启动验证。"
   },
   {
     "package": "@fxft/ui-plus",
-    "components": [
-      "FxftWebMultiVideo",
-      "fxft-web-multi-video"
-    ],
+    "components": ["FxftWebMultiVideo", "fxft-web-multi-video"],
     "entry": "@fxft/ui-plus/dist/es/components/web-multi-video/index.js",
     "verifiedVersion": "1.1.3",
     "evidence": "2026-10-16 冷启动首次加载多路视频时，dev 日志出现该入口 new dependencies optimized 与 reloading；resolver 在 Vue 转换阶段注入入口。"
@@ -32,40 +49,28 @@
   {
     "package": "@fxft/aura-ui",
     "verifiedVersion": "1.1.2",
-    "components": [
-      "AuraPagination",
-      "aura-pagination"
-    ],
+    "components": ["AuraPagination", "aura-pagination"],
     "entry": "@fxft/aura-ui/dist/es/components/pagination/index.js",
     "evidence": "2026-10-16 冷启动首次访问含分页的动态菜单，dev 日志出现该精确入口 new dependencies optimized 与 reloading；resolver 在 Vue 转换阶段注入。"
   },
   {
     "package": "@fxft/aura-ui",
     "verifiedVersion": "1.1.2",
-    "components": [
-      "AuraDictTag",
-      "aura-dict-tag"
-    ],
+    "components": ["AuraDictTag", "aura-dict-tag"],
     "entry": "@fxft/aura-ui/dist/es/components/dict-tag/index.js",
     "evidence": "2026-10-16 冷启动首次访问含字典标签的动态菜单，dev 日志出现该精确入口 new dependencies optimized 与 reloading；resolver 在 Vue 转换阶段注入。"
   },
   {
     "package": "@fxft/aura-ui",
     "verifiedVersion": "1.1.2",
-    "components": [
-      "AuraDictText",
-      "aura-dict-text"
-    ],
+    "components": ["AuraDictText", "aura-dict-text"],
     "entry": "@fxft/aura-ui/dist/es/components/dict-text/index.js",
     "evidence": "2026-10-16 已核对实际使用的 AuraDictText 与 resolver 输出的精确入口；属于已配置候选，未单独复现缺失导致重载。"
   },
   {
     "package": "crypto-js",
     "verifiedVersion": "3.3.0",
-    "components": [
-      "CryptoJS",
-      "crypto-js"
-    ],
+    "components": ["CryptoJS", "crypto-js"],
     "entry": "crypto-js",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
@@ -73,163 +78,132 @@
     "evidence": "2026-10-16 冷启动首屏出现 axios new dependencies optimized 与 reloading；请求层惰性加载后补发现。",
     "package": "axios",
     "verifiedVersion": "1.18.1",
-    "components": [
-      "axios"
-    ],
+    "components": ["axios"],
     "entry": "axios"
   },
   {
     "evidence": "2026-10-16 冷启动首屏出现 echarts new dependencies optimized 与 reloading；实际图表模块在异步初始化时加载。",
     "package": "echarts",
     "verifiedVersion": "5.6.0",
-    "components": [
-      "echarts",
-      "useECharts"
-    ],
+    "components": ["echarts", "useECharts"],
     "entry": "echarts"
   },
   {
     "package": "@fxft/aura-ui",
     "verifiedVersion": "1.1.2",
-    "components": [
-      "AuraBusinessIconPicker",
-      "aura-business-icon-picker"
-    ],
+    "components": ["AuraBusinessIconPicker", "aura-business-icon-picker"],
     "entry": "@fxft/aura-ui/dist/es/components/business-icon-picker/index.js",
     "evidence": "2026-10-16 环境切换并重启dev后，首次菜单访问阶段日志出现该精确入口 new dependencies optimized 与 optimized dependencies changed. reloading；核对实际组件使用及 AuraUIResolver 输出一致。已复现补发现重载，尚未单独完成加入include后的冷启动对照，不将后续旧chunk缺失直接归因于该入口。"
   },
   {
     "package": "codemirror",
     "verifiedVersion": "5.65.5",
-    "components": [
-      "codemirror"
-    ],
+    "components": ["codemirror"],
     "entry": "codemirror",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "codemirror",
     "verifiedVersion": "5.65.5",
-    "components": [
-      "codemirror/addon/selection/active-line"
-    ],
+    "components": ["codemirror/addon/selection/active-line"],
     "entry": "codemirror/addon/selection/active-line",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "codemirror",
     "verifiedVersion": "5.65.5",
-    "components": [
-      "codemirror/mode/velocity/velocity"
-    ],
+    "components": ["codemirror/mode/velocity/velocity"],
     "entry": "codemirror/mode/velocity/velocity",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "codemirror",
     "verifiedVersion": "5.65.5",
-    "components": [
-      "codemirror/mode/go/go"
-    ],
+    "components": ["codemirror/mode/go/go"],
     "entry": "codemirror/mode/go/go",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "js-base64",
     "verifiedVersion": "3.8.0",
-    "components": [
-      "js-base64"
-    ],
+    "components": ["js-base64"],
     "entry": "js-base64",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "cherry-markdown",
     "verifiedVersion": "0.9.3",
-    "components": [
-      "cherry-markdown"
-    ],
+    "components": ["cherry-markdown"],
     "entry": "cherry-markdown",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "markmap-lib",
     "verifiedVersion": "0.15.8",
-    "components": [
-      "markmap-lib"
-    ],
+    "components": ["markmap-lib"],
     "entry": "markmap-lib",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "markmap-view",
     "verifiedVersion": "0.15.8",
-    "components": [
-      "markmap-view"
-    ],
+    "components": ["markmap-view"],
     "entry": "markmap-view",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "@vueuse/core",
     "verifiedVersion": "15.0.0",
-    "components": [
-      "@vueuse/core"
-    ],
+    "components": ["@vueuse/core"],
     "entry": "@vueuse/core",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "lodash",
     "verifiedVersion": "4.18.1",
-    "components": [
-      "lodash"
-    ],
+    "components": ["lodash"],
     "entry": "lodash",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "dompurify",
     "verifiedVersion": "3.4.11",
-    "components": [
-      "dompurify"
-    ],
+    "components": ["dompurify"],
     "entry": "dompurify",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "@microsoft/fetch-event-source",
     "verifiedVersion": "2.0.1",
-    "components": [
-      "@microsoft/fetch-event-source"
-    ],
+    "components": ["@microsoft/fetch-event-source"],
     "entry": "@microsoft/fetch-event-source",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "marked",
     "verifiedVersion": "12.0.2",
-    "components": [
-      "marked"
-    ],
+    "components": ["marked"],
     "entry": "marked",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
     "package": "mockjs",
     "verifiedVersion": "1.1.0",
-    "components": [
-      "mockjs"
-    ],
+    "components": ["mockjs"],
     "entry": "mockjs",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   },
   {
+    "package": "@fxft/aura-web-kit",
+    "verifiedVersion": "1.11.0",
+    "components": ["useCoordinateDisplay", "CoordinateDisplay"],
+    "entry": "@fxft/aura-web-kit/hooks/coordinate-display",
+    "evidence": "2026-11-10 本地1.11.0候选包新增公开入口；exports/types及独立包消费已通过，IoT实际引用后由auraAutoOptimizeDeps收集，dev _metadata.optimized包含该精确入口和utils/coordinate，且未带入Node入口。尚未取得稳定冷启动首次菜单往返的full-reload证据，不据此宣称冷启动验收通过。"
+  },
+  {
     "package": "xlsx",
     "verifiedVersion": "0.18.5",
-    "components": [
-      "xlsx"
-    ],
+    "components": ["xlsx"],
     "entry": "xlsx",
     "evidence": "2026-10-19 MF Vite 1.23.5 + Vite 6.4.3 冷启动，实际源码异步导入的此入口出现在 new dependencies optimized / reloading 日志；加入项目精确 include 后复查预构建元数据已覆盖。仅实际使用该入口时适用，浏览器首访与往返复验见 mf-1235-batch2-20261019 记录。"
   }
