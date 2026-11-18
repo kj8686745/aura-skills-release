@@ -1,6 +1,6 @@
 # Vue 项目前端代码注释与规范
 
-本规范整合《Vue 项目前端代码注释与规范指南》，并结合 PIGX 模块联邦（综合端）的 Vue 3、TypeScript、Module Federation 和业务页面约束。
+本规范整合《Vue 项目前端代码注释与规范指南》，并结合 AURA 模块联邦（综合端）的 Vue 3、TypeScript、Module Federation 和业务页面约束。
 
 ## 目录
 

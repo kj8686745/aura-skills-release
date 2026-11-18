@@ -1,4 +1,4 @@
-# PIGX 综合端模块联邦规则矩阵
+# AURA 综合端模块联邦规则矩阵
 
 ## 目录
 
@@ -45,7 +45,7 @@
 |---|---|---|
 | `MF-DEP-001` | error | 缺少 `@module-federation/vite` 或 `@module-federation/enhanced`，或未对齐本轮 `1.23.5 / 2.9.2`。 |
 | `MF-DEP-002` | error | 仍使用 `@originjs/vite-plugin-federation` 或 `vite-plugin-top-level-await`。 |
-| `MF-DEP-004` | error / manual | 目标消费项目的 web-kit 实装下限为 `1.12.1`。核对直接声明、所属锁文件中该项目的 specifier、解析版本与项目实际安装包，解析版本须满足声明且与实装一致。实装低于下限、已确认不一致或关键公开入口损坏记 error。缺证、复杂范围或条件导出尚未解析记 manual。 |
+| `MF-DEP-004` | error / manual | 目标消费项目的 web-kit 实装下限为 `1.13.1`。核对直接声明、所属锁文件中该项目的 specifier、解析版本与项目实际安装包，解析版本须满足声明且与实装一致。实装低于下限、已确认不一致或关键公开入口损坏记 error。缺证、复杂范围或条件导出尚未解析记 manual。 |
 | `MF-DEP-005` | error | 本轮综合端工具链应配套固定 TypeScript 5.9.3、ESLint 8.57.1、typescript-eslint parser/plugin 8.46.1；Vue parser 分层、实际安装与配置检查另行核验。 |
 | `MF-DEP-003` | error | 1.2.0 的 Node 约束低于 `22.12.0`，或 pnpm 低于 `10.28.0`；复杂 Node 范围为 warning 待人工核对。 |
 | `MF-VITE-001` | error | 缺少 federation 插件、当前容器名、`remoteEntry.js` 或 manifest。 |
@@ -111,12 +111,11 @@
 
 | 规则 | 级别 | 判定 |
 |---|---|---|
-| `MF-RESOURCE-001` | warning | 源码出现硬编码 `/assets/` 或 CSS 根路径资源。 |
-| `MF-RESOURCE-002` | warning | 导入图片、字体、视频等资源，但文件中未使用 `getStaticResourceUrl`。 |
+| `MF-RESOURCE-001` | warning | 模板、样式或其他业务源码写死站点根路径 `/assets/`。 |
 | `MF-RESOURCE-003` | warning | 业务源码硬编码带 IP 的 HTTP(S) 地址。 |
 | `MF-BUILD-001` | warning | 未提供 manifest 且 `dist/mf-manifest.json` 不存在，需要执行构建验证。 |
 | `MF-BUILD-002` | error | 已存在构建目录或显式 manifest 时，缺少 `remoteEntry.js`、manifest 或标准 expose。 |
-| `MF-BUILD-003` | manual | 独立运行、宿主加载、i18n、样式、资源请求和失败隔离需要浏览器验证。 |
+| `MF-BUILD-003` | manual | 核对提供方 Vite 资源回调、public 静态引用的相对地址与代理路径、当前产物和预览目录；在浏览器验证独立运行、宿主加载、i18n、样式、失败隔离以及资源 URL 和实际响应，图片核对响应类型或解码结果。 |
 
 资源扫描用于发现候选项。CSS import、外部 CDN 或明确经过模块联邦转换的代码应结合上下文复核。
 
@@ -124,8 +123,8 @@
 
 以下内容只预留独立项目处理器接口，不在 `1.0.0` 给出合规结论：
 
-- 非 PIGX 综合端项目中的生产端业务规则。
-- 非 PIGX 综合端项目中的消费端业务规则。
+- 非 AURA 综合端项目中的生产端业务规则。
+- 非 AURA 综合端项目中的消费端业务规则。
 - 多仓库部署环境中的身份唯一性和 Nginx 配置。
 
-PIGX 综合端自身的 exposes、remotes、类型声明、远程 Vue 组件和菜单路径均属于首版检查范围。
+AURA 综合端自身的 exposes、remotes、类型声明、远程 Vue 组件和菜单路径均属于首版检查范围。

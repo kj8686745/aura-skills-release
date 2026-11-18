@@ -289,7 +289,7 @@ function Invoke-IntegratedChecks {
 	foreach ($relativePath in $requiredRuntimeFiles) {
 		if (-not (Test-Path -LiteralPath (Join-Path $ProjectPath $relativePath) -PathType Leaf)) {
 			Add-MfFinding -Findings $findings -RuleId 'MF-RUNTIME-001' -Severity 'error' -Message "缺少综合端标准文件：$relativePath" `
-				-Suggestion '从当前 PIGX 综合端模板恢复文件，并重新核对本项目适配。' -File $relativePath
+				-Suggestion '从当前 AURA 综合端模板恢复文件，并重新核对本项目适配。' -File $relativePath
 		}
 	}
 
@@ -589,15 +589,8 @@ function Invoke-IntegratedChecks {
 		$content = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
 		foreach ($match in [regex]::Matches($content, '(?i)(?:src\s*=\s*[''"]|url\(\s*[''"]?|[''"])/assets/')) {
 			Add-MfFinding -Findings $findings -RuleId 'MF-RESOURCE-001' -Severity 'warning' -Message '发现硬编码 /assets/ 资源根路径。' `
-				-Suggestion 'import 资源使用 getStaticResourceUrl，public 资源使用 getPublicResourceUrl。' -File $relativePath `
+				-Suggestion '源码资源改用 /@ 别名或静态导入。固定 public 文件核对 Vite 静态引用和提供方产物，运行时 public 路径使用 getPublicResourceUrl。' -File $relativePath `
 				-Line (Get-MfLineNumber -Content $content -Index $match.Index)
-		}
-		$assetImport = [regex]::Match($content, '(?m)from\s+[''"]/\@/assets/[^''"]+\.(png|jpe?g|gif|svg|webp|woff2?|ttf|mp4|webm)[''"]')
-		if ($assetImport.Success -and $content -notmatch '\bgetStaticResourceUrl\s*\(') {
-			Add-MfFinding -Findings $findings -RuleId 'MF-RESOURCE-002' -Severity 'warning' `
-				-Message '导入了静态资源，但文件中未调用 getStaticResourceUrl。' `
-				-Suggestion '在资源用于 src、背景图或配置项前转换远程地址。' -File $relativePath `
-				-Line (Get-MfLineNumber -Content $content -Index $assetImport.Index)
 		}
 		foreach ($match in [regex]::Matches($content, 'https?://(?:\d{1,3}\.){3}\d{1,3}(?::\d+)?')) {
 			Add-MfFinding -Findings $findings -RuleId 'MF-RESOURCE-003' -Severity 'warning' -Message "业务源码硬编码 IP 地址：$($match.Value)" `
@@ -653,7 +646,7 @@ function Invoke-IntegratedChecks {
 	}
 	Add-MfFinding -Findings $findings -RuleId 'MF-BUILD-003' -Severity 'manual' `
 		-Message '静态扫描无法替代独立运行和宿主加载验证。' `
-		-Suggestion '按验收清单验证路由、i18n、样式、资源请求、失败隔离和重新加载。'
+		-Suggestion '按验收清单核对提供方资源配置、产物和实际请求，验证路由、i18n、样式、失败隔离和重新加载。'
 
 	return @($findings)
 }

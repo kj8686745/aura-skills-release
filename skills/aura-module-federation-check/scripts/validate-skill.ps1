@@ -19,8 +19,8 @@ $requiredFiles = @(
 	'references/prebuild-entries.json',
 	'references/provider-consumer-handoff.md',
 	'checklists/integrated-validation.md',
-	'knowledge/PIGX前端开发规范/模块联邦开发技术规范.md',
-	'knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md',
+	'knowledge/AURA前端开发规范/模块联邦开发技术规范.md',
+	'knowledge/AURA前端开发规范/aura-web-kit能力清单与接入规范.md',
 	'scripts/check-module-federation.ps1',
 	'scripts/lib/common.ps1',
 	'scripts/lib/project-type.ps1',
@@ -106,7 +106,7 @@ foreach ($file in $scriptFiles) {
 if ($SourceStandardsPath) {
 	foreach ($document in @('模块联邦开发技术规范.md', 'aura-web-kit能力清单与接入规范.md', '路由与菜单规范.md')) {
 	$sourceFile = Join-Path (Resolve-Path -LiteralPath $SourceStandardsPath).Path $document
-	$targetFile = Join-Path $resolvedSkillPath "knowledge\PIGX前端开发规范\$document"
+	$targetFile = Join-Path $resolvedSkillPath "knowledge\AURA前端开发规范\$document"
 	if (-not (Test-Path -LiteralPath $sourceFile -PathType Leaf)) {
 		[void]$errors.Add("源规范不存在：$sourceFile")
 	} elseif ((Get-FileHash -LiteralPath $sourceFile -Algorithm SHA256).Hash -ne (Get-FileHash -LiteralPath $targetFile -Algorithm SHA256).Hash) {

@@ -2,8 +2,8 @@
 
 ## 端类型边界
 
-- 综合端必须同时具备 PIGX 综合端基础配置、标准 expose 聚合、config/aura 公共包运行时绑定，以及 Vite Module Federation 配置。
-- 生产端是存在对外 exposes、但不具备 PIGX 综合端运行时外壳的项目。
+- 综合端必须同时具备 AURA 综合端基础配置、标准 expose 聚合、config/aura 公共包运行时绑定，以及 Vite Module Federation 配置。
+- 生产端是存在对外 exposes、但不具备 AURA 综合端运行时外壳的项目。
 - 消费端是存在 remotes、运行时远程注册或远程加载行为、但不具备综合端和生产端特征的项目。
 - 同时命中生产端和消费端、或证据不足时归类为 `Unknown`。
 

@@ -4,7 +4,7 @@
   "change": "前端历史迭代六项审查发现修订与取证路由归位",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
   "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
-  "snapshotRoot": "knowledge/PIGX前端开发规范",
+  "snapshotRoot": "knowledge/AURA前端开发规范",
   "sourceCommit": null,
   "sourceBaseCommit": "d20bfdcca60ff22f5d5e93dfea1db6a63e4ee843",
   "sourceBinding": {
@@ -42,7 +42,7 @@
     },
     {
       "source": "00-前端开发总览.md",
-      "snapshot": "PIGX前端开发总览.md",
+      "snapshot": "AURA前端开发总览.md",
       "sourceSha256Lf": "28d19abcba78781fb5cc9342a824bd9026940b3e8f09f554576287641d91149a",
       "snapshotSha256Lf": "b7aa643ecdb18bd7de71dd078cb08e7c4b93411521bf13857ef4078ecfc94d8e",
       "committedSourceSha256Lf": "64e4d604282205576f573c06ef5c267423660607de2b192ac4032468ef367209",

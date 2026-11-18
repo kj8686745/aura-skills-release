@@ -18,7 +18,7 @@
 
 > 按最新前端规范审查当前 Aura 项目，aura-ui 仅检查 AuraDictTag / AuraDictText / AuraDictSelect 的公开接入及筛选/表单/字典展示消费、ui-plus 正常检查；连续完成静态取证，按原六文件格式输出，中文解释规范要求、实际检查和真实缺证，不修改业务源码。
 
-只审查前端源码、配置、依赖与已有产物。规范来自随包 `knowledge/PIGX前端开发规范`；sourceRepository/sourceCommit 仅供维护追溯，无需联网拉取仓库。最新基线统一使用，不做旧版适配。
+只审查前端源码、配置、依赖与已有产物。规范来自随包 `knowledge/AURA前端开发规范`；sourceRepository/sourceCommit 仅供维护追溯，无需联网拉取仓库。最新基线统一使用，不做旧版适配。
 
 Aura 身份以基础配置、expose 聚合、当前 web-kit 运行时绑定和 Vite federation 四项证据识别。缺项且有 Aura 专有线索时，明确审查任务可用 `-ReviewCandidate` 继续盘点并报告偏差；普通 Vue/Vite 或单一联邦插件不据此套用 Aura 规范。
 

@@ -7,7 +7,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 if ([string]::IsNullOrWhiteSpace($CatalogPath)) {
-  $CatalogPath = Join-Path $PSScriptRoot '../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md'
+  $CatalogPath = Join-Path $PSScriptRoot '../knowledge/AURA前端开发规范/aura-web-kit能力清单与接入规范.md'
 }
 $packageRoot = (Resolve-Path -LiteralPath $PackagePath).Path
 $package = Get-Content -LiteralPath (Join-Path $packageRoot 'package.json') -Raw -Encoding UTF8 | ConvertFrom-Json

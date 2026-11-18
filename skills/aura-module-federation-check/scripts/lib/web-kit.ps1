@@ -119,7 +119,7 @@ function Invoke-MfKitChecks {
 	if (-not $actual) {
 		Add-MfFinding @rule -Severity 'manual' -Message "无法解析实际安装版本：$($installed.version)" -File $installedFile
 	} else {
-		$minimum = [version]'1.12.1'
+		$minimum = [version]'1.13.1'
 		if ($actual.Core -lt $minimum -or ($actual.Core -eq $minimum -and $actual.Pre)) {
 			Add-MfFinding @rule -Severity 'error' -Message "web-kit 实际安装版本 $($actual.Text) 低于最低版本 $minimum。" -File $installedFile
 		}

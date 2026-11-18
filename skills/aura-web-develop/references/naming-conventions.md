@@ -1,6 +1,6 @@
 # 命名规范
 
-正式规则以 `../knowledge/PIGX前端开发规范/工程与代码生成规范.md`、对应页面模式和当前业务域现有代码为准。
+正式规则以 `../knowledge/AURA前端开发规范/工程与代码生成规范.md`、对应页面模式和当前业务域现有代码为准。
 
 ## 决策顺序
 
@@ -19,7 +19,7 @@
 
 - 函数、方法、变量、参数和对象成员使用 lowerCamelCase，名称必须表达业务动作或业务含义。
 - 固定业务常量使用 UPPER_SNAKE_CASE，单词之间使用下划线，避免无语义缩写。
-- 业务常量与可变默认值按[常量归属与定义](../knowledge/PIGX前端开发规范/工程与代码生成规范.md#前端常量归属与定义)核对实际消费者、单位、固定/动态边界和工厂；固定编码映射成员随常量使用 UPPER_SNAKE_CASE，普通对象成员仍为 lowerCamelCase；普通 const/ref/computed/函数不因此大写。
+- 业务常量与可变默认值按[常量归属与定义](../knowledge/AURA前端开发规范/工程与代码生成规范.md#前端常量归属与定义)核对实际消费者、单位、固定/动态边界和工厂；固定编码映射成员随常量使用 UPPER_SNAKE_CASE，普通对象成员仍为 lowerCamelCase；普通 const/ref/computed/函数不因此大写。
 - 类型、接口、枚举和类使用 PascalCase；布尔值使用 `is`、`has`、`can`、`should` 等语义前缀。
 - API 方法使用“动作 + 业务对象”，例如 `getDeviceList`、`updateDeviceStatus`；禁止使用 `query`、`save`、`data1` 等过泛名称。
 
@@ -31,7 +31,7 @@
 - Vue Template 使用语义化标签、双引号属性和简洁表达式；复杂表达式提取为计算属性或方法。
 - 页面放在 `src/views/<业务域>/<业务模块>/`，私有组件放在同目录 `components/`。
 - API 放在 `src/api/<业务域>/`，目录结构先遵循相邻模块。
-- 页面私有 TS/SCSS 少量同级，多组职责才建 `composables/`、`utils/`、`styles/`；同模块共用就近，项目跨模块共用沿用 `src/hooks/`、`src/utils/`，不并建同义公共目录。归属按[职责决策表](../knowledge/PIGX前端开发规范/文件组织与职责拆分.md)，跨项目能力先查 `aura-web-kit`，项目业务仍留项目。
+- 页面私有 TS/SCSS 少量同级，多组职责才建 `composables/`、`utils/`、`styles/`；同模块共用就近，项目跨模块共用沿用 `src/hooks/`、`src/utils/`，不并建同义公共目录。归属按[职责决策表](../knowledge/AURA前端开发规范/文件组织与职责拆分.md)，跨项目能力先查 `aura-web-kit`，项目业务仍留项目。
 - 不使用 `common`、`temp`、`new`、`test`、`Page.vue`、`useData` 等缺少业务语义的正式命名。
 
 ## API 函数

@@ -6,7 +6,7 @@ param()
 $ErrorActionPreference = 'Stop'
 $checker = Join-Path $PSScriptRoot 'check-module-federation.ps1'
 $powerShellExe = (Get-Process -Id $PID).Path
-$testRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("aura-pigx-mf-check-" + [guid]::NewGuid().ToString('N'))
+$testRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("aura-mf-check-" + [guid]::NewGuid().ToString('N'))
 $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Write-FixtureFile {
@@ -113,7 +113,7 @@ function Invoke-CheckerJson {
 }
 
 function New-KitFixture {
-	param([string]$Root, [string]$DeclaredVersion = '1.12.1', [string]$InstalledVersion = '1.12.1',
+	param([string]$Root, [string]$DeclaredVersion = '1.13.1', [string]$InstalledVersion = '1.13.1',
 		[string]$LockSpecifier = $DeclaredVersion, [string]$LockVersion = $InstalledVersion)
 	New-IntegratedScaffold -Root $Root
 	$packageFile = Join-Path $Root 'package.json'
@@ -194,11 +194,42 @@ New-Item -ItemType Directory -Path $testRoot -Force | Out-Null
 try {
 	$integratedRoot = Join-Path $testRoot 'integrated'
 	New-KitFixture -Root $integratedRoot
+	$viteFile = 'vite.config.mts'
+	$viteWithAssetRenderer = Get-Content -LiteralPath (Join-Path $integratedRoot $viteFile) -Raw -Encoding UTF8
+	$viteWithAssetRenderer = $viteWithAssetRenderer.Replace('export default { build:', 'export default { experimental: { renderBuiltUrl: renderFederationAssetUrl }, build:')
+	$viteWithAssetRenderer += "`nimport { renderFederationAssetUrl } from '@fxft/aura-web-kit/vite';`n"
+	Write-FixtureFile $integratedRoot $viteFile $viteWithAssetRenderer
+	# 对照可编译的源码路径、普通属性绑定和硬编码站点根路径。
+	Write-FixtureFile $integratedRoot 'src/empty-image.vue' @'
+<script setup lang="ts">
+import noDataImageSource from '/@/assets/no-data.png';
+import publicImageSource from '/images/empty-state.png?url';
+</script>
+<template>
+  <img src="/@/assets/no-data.png" alt="" />
+  <img :src="publicImageSource" alt="" />
+  <el-empty :image="noDataImageSource" />
+  <div :style="{ backgroundImage: `url(${publicImageSource})` }" />
+</template>
+<style scoped>
+.empty-page { background-image: url('/@/assets/no-data.png'); }
+.public-empty { background-image: url('/images/empty-state.png'); }
+</style>
+'@
+	Write-FixtureFile $integratedRoot 'src/styles/empty-image.scss' @'
+.empty-alias { background-image: url('/@/assets/no-data.png'); }
+.empty-relative { background-image: url('../assets/no-data.png'); }
+'@
+	Write-FixtureFile $integratedRoot 'src/hardcoded-image.vue' '<template><img src="/assets/no-data.png" alt="" /></template>'
+	Write-FixtureFile $integratedRoot 'src/styles/hardcoded-image.css' '.empty-page { background-image: url("/assets/no-data.png"); }'
 	$result = Invoke-CheckerJson -ProjectPath $integratedRoot
 	Assert-Equal $result.Report.projectType 'Integrated' '综合端类型识别失败'
 	Assert-Equal $result.ExitCode 0 '合规综合端退出码错误'
-	Write-FixtureFile $integratedRoot 'README.md' '本项目由 pigx-nexus 模板创建。'
-	$viteFile = 'vite.config.mts'
+	Assert-Equal @($result.Report.findings | Where-Object { $_.file -in @('src/empty-image.vue', 'src/styles/empty-image.scss') -and $_.ruleId -like 'MF-RESOURCE-*' }).Count 0 '默认资源回调的源码与 public 静态引用不产生资源告警'
+	Assert-Equal @($result.Report.findings | Where-Object { $_.file -eq 'src/hardcoded-image.vue' -and $_.ruleId -eq 'MF-RESOURCE-001' }).Count 1 '模板硬编码资源仍应报告'
+	Assert-Equal @($result.Report.findings | Where-Object { $_.file -eq 'src/styles/hardcoded-image.css' -and $_.ruleId -eq 'MF-RESOURCE-001' }).Count 1 '样式硬编码资源仍应报告'
+	Assert-Rule $result.Report 'MF-BUILD-003'
+	Write-FixtureFile $integratedRoot 'README.md' '本项目早期由旧脚手架 pigx-nexus 创建。'
 	$formattedVite = (Get-Content -LiteralPath (Join-Path $integratedRoot $viteFile) -Raw -Encoding UTF8).Replace("filename: 'remoteEntry.js'", 'filename:"remoteEntry.js"').Replace('vue: { singleton:', "vue: {`nsingleton:")
 	Write-FixtureFile $integratedRoot $viteFile $formattedVite
 	$result = Invoke-CheckerJson -ProjectPath $integratedRoot
@@ -214,22 +245,22 @@ try {
 
 	# 同时检查实装门槛、当前 importer 的来源和声明范围；缺证与已知偏差分别累计。
 	$versionCases = @(
-		@{ Name = 'floor'; Declared = '1.12.1'; Installed = '1.12.1'; Errors = 0; Manual = 0 },
+		@{ Name = 'floor'; Declared = '1.13.1'; Installed = '1.13.1'; Errors = 0; Manual = 0 },
 		@{ Name = 'higher'; Declared = '10.0.0'; Installed = '10.0.0'; Errors = 0; Manual = 0 },
-		@{ Name = 'metadata'; Declared = '1.12.1+ci.2'; Installed = '1.12.1+ci.2'; Errors = 0; Manual = 0 },
-		@{ Name = 'low'; Declared = '1.12.0'; Installed = '1.12.0'; Errors = 1; Manual = 0 },
-		@{ Name = 'floor-prerelease'; Declared = '1.12.1-rc.1'; Installed = '1.12.1-rc.1'; Errors = 1; Manual = 0 },
-		@{ Name = 'explicit-prerelease'; Declared = '1.13.0-rc.1'; Installed = '1.13.0-rc.1'; Errors = 0; Manual = 0 },
-		@{ Name = 'range-and-peers'; Declared = '^1.9.0'; Installed = '1.13.0'; LockVersion = '1.13.0(vue@3.5.0)'; Errors = 0; Manual = 0 },
-		@{ Name = 'range-mismatch'; Declared = '~1.12.1'; Installed = '1.13.0'; Errors = 1; Manual = 0 },
-		@{ Name = 'lock-specifier-mismatch'; Declared = '^1.12.1'; Installed = '1.12.2'; LockSpecifier = '~1.12.1'; Errors = 1; Manual = 0 },
-		@{ Name = 'lock-install-mismatch'; Declared = '^1.12.1'; Installed = '1.12.2'; LockVersion = '1.12.1'; Errors = 1; Manual = 0 },
-		@{ Name = 'catalog'; Declared = 'catalog:'; Installed = '1.12.1'; Errors = 0; Manual = 1 },
-		@{ Name = 'missing-lock'; Declared = '1.12.1'; Installed = '1.12.1'; LockSpecifier = ''; Errors = 0; Manual = 1 },
-		@{ Name = 'missing-install'; Declared = '1.12.1'; Installed = ''; LockVersion = '1.12.1'; Errors = 0; Manual = 1 },
-		@{ Name = 'bad-install'; Declared = '^1.12.1'; Installed = '01.12.1'; LockVersion = '1.12.1'; Errors = 0; Manual = 1 },
-		@{ Name = 'bad-lock'; Declared = '^1.12.1'; Installed = '1.12.1'; LockVersion = 'link:../kit'; Errors = 0; Manual = 1 },
-		@{ Name = 'undeclared'; Declared = ''; Installed = '1.12.1'; Errors = 1; Manual = 1 }
+		@{ Name = 'metadata'; Declared = '1.13.1+ci.2'; Installed = '1.13.1+ci.2'; Errors = 0; Manual = 0 },
+		@{ Name = 'low'; Declared = '1.13.0'; Installed = '1.13.0'; Errors = 1; Manual = 0 },
+		@{ Name = 'floor-prerelease'; Declared = '1.13.1-rc.1'; Installed = '1.13.1-rc.1'; Errors = 1; Manual = 0 },
+		@{ Name = 'explicit-prerelease'; Declared = '1.13.2-rc.1'; Installed = '1.13.2-rc.1'; Errors = 0; Manual = 0 },
+		@{ Name = 'range-and-peers'; Declared = '^1.9.0'; Installed = '1.13.1'; LockVersion = '1.13.1(vue@3.5.0)'; Errors = 0; Manual = 0 },
+		@{ Name = 'range-mismatch'; Declared = '~1.13.1'; Installed = '1.14.0'; Errors = 1; Manual = 0 },
+		@{ Name = 'lock-specifier-mismatch'; Declared = '^1.13.1'; Installed = '1.13.2'; LockSpecifier = '~1.13.1'; Errors = 1; Manual = 0 },
+		@{ Name = 'lock-install-mismatch'; Declared = '^1.13.1'; Installed = '1.13.2'; LockVersion = '1.13.1'; Errors = 1; Manual = 0 },
+		@{ Name = 'catalog'; Declared = 'catalog:'; Installed = '1.13.1'; Errors = 0; Manual = 1 },
+		@{ Name = 'missing-lock'; Declared = '1.13.1'; Installed = '1.13.1'; LockSpecifier = ''; Errors = 0; Manual = 1 },
+		@{ Name = 'missing-install'; Declared = '1.13.1'; Installed = ''; LockVersion = '1.13.1'; Errors = 0; Manual = 1 },
+		@{ Name = 'bad-install'; Declared = '^1.13.1'; Installed = '01.13.1'; LockVersion = '1.13.1'; Errors = 0; Manual = 1 },
+		@{ Name = 'bad-lock'; Declared = '^1.13.1'; Installed = '1.13.1'; LockVersion = 'link:../kit'; Errors = 0; Manual = 1 },
+		@{ Name = 'undeclared'; Declared = ''; Installed = '1.13.1'; Errors = 1; Manual = 1 }
 	)
 	foreach ($case in $versionCases) {
 		$versionRoot = Join-Path $testRoot ('version-' + $case.Name)

@@ -20,22 +20,22 @@ $required = @(
   "references\skill-dependency-workflow.md",
   "references\codex-browser-review-workflow.md",
   "references\prettier-formatting-workflow.md",
-  "knowledge\PIGX前端开发规范\README.md",
-  "knowledge\PIGX前端开发规范\aura-web-kit能力清单与接入规范.md",
-  "knowledge\PIGX前端开发规范\aura-ui能力清单与接入规范.md",
-  "knowledge\PIGX前端开发规范\aura-ui组件库\README.md",
-  "knowledge\PIGX前端开发规范\aura-ui组件库\dict-tag.md",
-  "knowledge\PIGX前端开发规范\aura-ui组件库\dict-text.md",
-  "knowledge\PIGX前端开发规范\aura-ui组件库\dict-select.md",
+  "knowledge\AURA前端开发规范\README.md",
+  "knowledge\AURA前端开发规范\aura-web-kit能力清单与接入规范.md",
+  "knowledge\AURA前端开发规范\aura-ui能力清单与接入规范.md",
+  "knowledge\AURA前端开发规范\aura-ui组件库\README.md",
+  "knowledge\AURA前端开发规范\aura-ui组件库\dict-tag.md",
+  "knowledge\AURA前端开发规范\aura-ui组件库\dict-text.md",
+  "knowledge\AURA前端开发规范\aura-ui组件库\dict-select.md",
   "references\aura-ui-docs-maintenance.md",
-  "knowledge\PIGX前端开发规范\PIGX前端开发总览.md",
-  "knowledge\PIGX前端开发规范\工程与代码生成规范.md",
-  "knowledge\PIGX前端开发规范\路由与菜单规范.md",
-  "knowledge\PIGX前端开发规范\模块联邦开发技术规范.md",
-  "knowledge\PIGX前端开发规范\样式布局与静态资源规范.md",
-  "knowledge\PIGX前端开发规范\组件复用与公司基础组件库规范.md",
-  "knowledge\PIGX前端开发规范\开发检查清单.md",
-  "knowledge\PIGX前端开发规范\公司组件库下载说明\.npmrc.example",
+  "knowledge\AURA前端开发规范\AURA前端开发总览.md",
+  "knowledge\AURA前端开发规范\工程与代码生成规范.md",
+  "knowledge\AURA前端开发规范\路由与菜单规范.md",
+  "knowledge\AURA前端开发规范\模块联邦开发技术规范.md",
+  "knowledge\AURA前端开发规范\样式布局与静态资源规范.md",
+  "knowledge\AURA前端开发规范\组件复用与公司基础组件库规范.md",
+  "knowledge\AURA前端开发规范\开发检查清单.md",
+  "knowledge\AURA前端开发规范\公司组件库下载说明\.npmrc.example",
   "references\message-feedback-guidelines.md",
   "references\code-comment-guidelines.md",
   "references\admin-menu-permission-workflow.md",
@@ -80,8 +80,8 @@ if (Test-Path -LiteralPath $skillFile) {
     $errors += "SKILL.md 缺少 description"
   }
 
-  if ($skillContent -notmatch "knowledge/PIGX前端开发规范/README\.md") {
-    $errors += "SKILL.md 未引用最新版 PIGX 规范入口"
+  if ($skillContent -notmatch "knowledge/AURA前端开发规范/README\.md") {
+    $errors += "SKILL.md 未引用最新版 AURA 规范入口"
   }
 
   if ($version -and -not $skillContent.Contains($versionMarker)) {
@@ -289,7 +289,7 @@ if (Test-Path -LiteralPath $adminWorkflow) {
   }
 }
 
-$standardsRoot = Join-Path $resolvedSkillPath "knowledge\PIGX前端开发规范"
+$standardsRoot = Join-Path $resolvedSkillPath "knowledge\AURA前端开发规范"
 $standardFiles = Get-ChildItem -LiteralPath $standardsRoot -Recurse -File -Filter "*.md"
 # 通过必需入口与源文件集合核验，新增正式规范不应被固定数量误判。
 

@@ -1,6 +1,6 @@
 # aura-ui 组件资料维护
 
-维护技能 UI 资料时读取本页。业务开发从 [能力清单](../knowledge/PIGX前端开发规范/aura-ui能力清单与接入规范.md) 和 [组件索引](../knowledge/PIGX前端开发规范/aura-ui组件库/README.md) 按需查阅。
+维护技能 UI 资料时读取本页。业务开发从 [能力清单](../knowledge/AURA前端开发规范/aura-ui能力清单与接入规范.md) 和 [组件索引](../knowledge/AURA前端开发规范/aura-ui组件库/README.md) 按需查阅。
 
 ## 文档组织
 

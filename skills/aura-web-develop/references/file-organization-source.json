@@ -4,7 +4,7 @@
   "updatedAt": "2026-11-02",
   "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
   "sourceRoot": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范",
-  "snapshotRoot": "knowledge/PIGX前端开发规范",
+  "snapshotRoot": "knowledge/AURA前端开发规范",
   "sourceCommit": null,
   "sourceBaseCommit": "69dbfef7cf7a11620408245178e543184323c470",
   "sourceBinding": {
@@ -452,27 +452,27 @@
         "baselineSha256Lf": "7c7adcfa89e6c41c982eef8c88632487e025b307a4f76b27a3efcd1ea8b6c01d"
       },
       {
-        "path": "knowledge/PIGX前端开发规范/文件组织与职责拆分.md",
+        "path": "knowledge/AURA前端开发规范/文件组织与职责拆分.md",
         "workingTreeSha256Lf": "a435a63360379e15d44d0c488360521c4a16dbf3fe03971ac9f12c4993cfbf30",
         "baselineSha256Lf": "047d0c2aac6d7a5adb73a24628109d949653958216cf995bfa8fdb57953de114"
       },
       {
-        "path": "knowledge/PIGX前端开发规范/工程与代码生成规范.md",
+        "path": "knowledge/AURA前端开发规范/工程与代码生成规范.md",
         "workingTreeSha256Lf": "2eb023a63762cf930f4709f8a7db565d19cf6f251634bd31ae8221db305f1479",
         "baselineSha256Lf": "44b22773c1ecd301b6335f44c5f55c2d08ba38edeaa4615048dbb6924ae1d916"
       },
       {
-        "path": "knowledge/PIGX前端开发规范/开发检查清单.md",
+        "path": "knowledge/AURA前端开发规范/开发检查清单.md",
         "workingTreeSha256Lf": "ebe458e532668fa72e625e93e6c8ce6304b0ff378ec3426874c208b7c0cc2657",
         "baselineSha256Lf": "ab1d216f9d560f6348e04eb5bddc167155c21a3155e35e418e754f0a32d3411a"
       },
       {
-        "path": "knowledge/PIGX前端开发规范/样式布局与静态资源规范.md",
+        "path": "knowledge/AURA前端开发规范/样式布局与静态资源规范.md",
         "workingTreeSha256Lf": "b032bb35a882007f77f4a529ccd5a4232e0561b2bacd517ddea859f14b9ab0f6",
         "baselineSha256Lf": "58d5130f88ae21787e83a4f3c78d0b9b61e4cc0283350884c9a70d57dfbf0400"
       },
       {
-        "path": "knowledge/PIGX前端开发规范/README.md",
+        "path": "knowledge/AURA前端开发规范/README.md",
         "workingTreeSha256Lf": "7c0a45cebd31289d9d730c2c55f5e48e90ef7d867b67146ad1bd0a14022e44f8",
         "baselineSha256Lf": "cbdd1c73b5ab4c93e16f86f119fd71ee417edefc6d3af4e6db99da95b11905b4"
       },

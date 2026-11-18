@@ -16,7 +16,7 @@
 
 先读取：
 
-- `knowledge/PIGX前端开发规范/工程与代码生成规范.md`
+- `knowledge/AURA前端开发规范/工程与代码生成规范.md`
 - 当前业务域 `src/api/` 相邻模块
 - 当前 `/@/config/aura/request` 类型和调用方式
 - 对应页面模式

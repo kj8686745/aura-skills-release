@@ -1,4 +1,4 @@
-# PIGX 业务项目规则扫描脚本
+# AURA 业务项目规则扫描脚本
 
 param(
   [Parameter(Mandatory = $true)]

@@ -53,7 +53,7 @@
       "type": "existing-rule-reference",
       "source": "04-工程与代码生成.md",
       "targets": [
-        "knowledge/PIGX前端开发规范/工程与代码生成规范.md"
+        "knowledge/AURA前端开发规范/工程与代码生成规范.md"
       ],
       "status": "affected-paragraph-updated"
     },
@@ -62,7 +62,7 @@
       "type": "self-check",
       "source": "12-研发自检与交付.md",
       "targets": [
-        "knowledge/PIGX前端开发规范/开发检查清单.md"
+        "knowledge/AURA前端开发规范/开发检查清单.md"
       ],
       "status": "affected-item-updated"
     },
@@ -103,12 +103,12 @@
   "deliveryState": "local-working-tree; not-committed; not-pushed; not-published; not-installed",
   "affectedViews": [
     {
-      "path": "knowledge/PIGX前端开发规范/工程与代码生成规范.md",
+      "path": "knowledge/AURA前端开发规范/工程与代码生成规范.md",
       "sha256Lf": "89e44e331dec39aa7336e7f11ef5a004bbf29802b25aa8e6b8715dae55907f96",
       "transformation": "仅替换FE-012章节、FE-019字典引用段或相应自检项；其他正文与历史导航保持。按影响清单人工核对，非全文件字节一致声明。"
     },
     {
-      "path": "knowledge/PIGX前端开发规范/开发检查清单.md",
+      "path": "knowledge/AURA前端开发规范/开发检查清单.md",
       "sha256Lf": "93de3575e8ee633bc035a849ef7df030c18262f1fc371e19bd3a6b84dac4fe8d",
       "transformation": "仅替换FE-012章节、FE-019字典引用段或相应自检项；其他正文与历史导航保持。按影响清单人工核对，非全文件字节一致声明。"
     }

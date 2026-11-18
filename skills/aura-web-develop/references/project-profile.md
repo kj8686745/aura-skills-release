@@ -1,6 +1,6 @@
-# PIGX Nexus 项目画像
+# AURA 综合端项目画像
 
-本文件只做快速导航，项目事实以当前源码、类型和 `../knowledge/PIGX前端开发规范/` 最新版正文为准。
+本文件只做快速导航，项目事实以当前源码、类型和 `../knowledge/AURA前端开发规范/` 最新版正文为准。
 
 ## 当前基线
 
@@ -19,7 +19,7 @@
 - 业务请求统一走 `/@/config/aura/request`。
 - 消息提示和弹框统一从 `/@/config/aura/index` 使用 `useMessage`、`useMessageBox`。
 - 远程页面加载时不会执行提供方 `index.html` 和 `main.ts`。
-- import 静态资源经 `getStaticResourceUrl`；public 资源经 `getPublicResourceUrl`。
+- 项目接入联邦资源回调后，按使用位置采用模板静态路径、CSS `url()` 或 JS 静态导入，Vite 识别的 public 静态引用默认随 JS 模块或外链样式表定位，运行时 public 路径用 `getPublicResourceUrl`。见[静态资源规范](../knowledge/AURA前端开发规范/样式布局与静态资源规范.md#六vite-打包资源)。
 - Element Plus 保持本地依赖，并在 Module Federation shared 中配置 singleton，requiredVersion 为 ^2.14.6。
 - API、组件、Hook 和全局组件名称必须从当前项目真实源码确认。
 

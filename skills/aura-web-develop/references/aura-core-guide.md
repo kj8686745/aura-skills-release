@@ -2,7 +2,7 @@
 
 完整规则以以下资料为准：
 
-- `../knowledge/PIGX前端开发规范/模块联邦开发技术规范.md`
+- `../knowledge/AURA前端开发规范/模块联邦开发技术规范.md`
 - 当前项目 `src/config/moduleFederation.ts`
 - 当前项目模块联邦运行时加载器和类型声明
 
@@ -20,5 +20,5 @@
 - 远程页面不会执行提供方 `index.html` 与 `main.ts`，不能只依赖全局注册副作用。
 - 远程 i18n、Tailwind 和页面 CSS 按最新版规范加载。
 - Element Plus 保持本地依赖，并在 Module Federation shared 中配置 singleton，requiredVersion 为 ^2.14.6。
-- import 静态资源经 `getStaticResourceUrl`；public 资源经 `getPublicResourceUrl`。
+- 项目接入联邦资源回调后，按使用位置采用模板静态路径、CSS `url()` 或 JS 静态导入，Vite 识别的 public 静态引用默认随 JS 模块或外链样式表定位，运行时 public 路径用 `getPublicResourceUrl`。见[静态资源规范](../knowledge/AURA前端开发规范/样式布局与静态资源规范.md#六vite-打包资源)。
 - 加载失败只影响当前内容区，并提供符合项目约定的重试能力。

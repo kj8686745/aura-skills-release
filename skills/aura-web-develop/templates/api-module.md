@@ -2,7 +2,7 @@
 
 API 封装以以下资料为准：
 
-- `../knowledge/PIGX前端开发规范/工程与代码生成规范.md`
+- `../knowledge/AURA前端开发规范/工程与代码生成规范.md`
 - 当前业务域 `src/api/` 相邻模块
 - 当前接口文档、Apifox 定义和真实 TypeScript 类型
 - `/@/config/aura/request` 的实际调用契约

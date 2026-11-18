@@ -1,6 +1,6 @@
 # Hooks 使用规范
 
-1.2.0 以已安装 `@fxft/aura-web-kit` 的公开声明、项目 `src/config/aura` 绑定和最新版 PIGX 规范为准。先查 [能力清单](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)，禁止根据历史技能示例猜测返回值。
+1.2.0 以已安装 `@fxft/aura-web-kit` 的公开声明、项目 `src/config/aura` 绑定和最新版 AURA 规范为准。先查 [能力清单](../knowledge/AURA前端开发规范/aura-web-kit能力清单与接入规范.md)，禁止根据历史技能示例猜测返回值。
 
 ## useTable
 
@@ -51,7 +51,7 @@ const { getDataList, currentChangeHandle, sizeChangeHandle, sortChangeHandle, do
 
 ### 覆盖层可见时的单次静默刷新
 
-交互判断按[消息与资源反馈](../references/message-feedback-guidelines.md#覆盖层可见时的静默刷新)，真实签名、示例和首次/空表回落集中见[静默刷新契约](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md#已加载列表的静默刷新196-已发布)。第二参只作用于本次调用，使用前核对实际安装包声明与实现。保留首参的分页语义，维护中仅在第二参传入 `silent`。
+交互判断按[消息与资源反馈](../references/message-feedback-guidelines.md#覆盖层可见时的静默刷新)，真实签名、示例和首次/空表回落集中见[静默刷新契约](../knowledge/AURA前端开发规范/aura-web-kit能力清单与接入规范.md#已加载列表的静默刷新196-已发布)。第二参只作用于本次调用，使用前核对实际安装包声明与实现。保留首参的分页语义，维护中仅在第二参传入 `silent`。
 
 ## useForm
 
@@ -77,7 +77,7 @@ const { clearFormValidate, resetForm, validateForm } = useForm();
 
 ### 当前扩展契约
 
-字段校验与初值克隆见[公共表单契约与版本](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md#表单公共契约与版本)。使用前核对实际安装包声明、产物与运行环境。历史实现见[表单维护记录](../references/form-hook-source.json)。
+字段校验与初值克隆见[公共表单契约与版本](../knowledge/AURA前端开发规范/aura-web-kit能力清单与接入规范.md#表单公共契约与版本)。使用前核对实际安装包声明、产物与运行环境。历史实现见[表单维护记录](../references/form-hook-source.json)。
 
 - 字段联动或分步校验必须使用支持版本的 `validateFormFields(formRef, props)`，复用实例的 `validateField`；业务不得直接调用实例 `validateField` 或在页面重新包装对应公共能力。需要该能力而安装包缺失时记明确缺口，按任务授权升级；不能假称已接入或返回成功。字段级校验不替代业务要求的最终整表校验。
 - `props` 支持 `'name'`、`['startAt', 'plannedRestoreAt']`、点路径 `'rows.0.name'` 和单字段分段路径 `[['rows', '0', 'name']]`。空路径、未挂载、缺能力、false 或异常均不放行；必须核对实际 FormItem prop、规则及挂载，不能将未注册字段的组件返回值当作已经校验的证据。
@@ -144,5 +144,5 @@ const maxUploadSize = useParam('sys.upload.maxSize'); // Ref<string>，按需读
 1. 先查 web-kit 能力清单、exports 和声明，再用 `rg "useXxx" src/config/aura src/hooks src/views` 确认项目实例与业务实现。
 2. 检查公司 UI 规范或 VueUse 是否已有稳定能力。
 3. 仅在确认无法复用时新增业务 Composable。
-4. 按[职责决策表](../knowledge/PIGX前端开发规范/文件组织与职责拆分.md)选择结构：简单状态可留 Vue，少量私有 Hook 可同级，多组职责才进页面 `composables/`；同模块共用放模块，项目跨模块共用才进 `src/hooks/`。跨项目能力先查 web-kit，项目业务留项目。
+4. 按[职责决策表](../knowledge/AURA前端开发规范/文件组织与职责拆分.md)选择结构：简单状态可留 Vue，少量私有 Hook 可同级，多组职责才进页面 `composables/`；同模块共用放模块，项目跨模块共用才进 `src/hooks/`。跨项目能力先查 web-kit，项目业务留项目。
 5. 新增副作用必须说明生命周期和清理时机。

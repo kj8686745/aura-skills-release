@@ -5,18 +5,18 @@ description: AURA 前端项目开发与编辑的规范入口。综合端新增�
 
 # AURA 综合端业务开发
 
-当前版本：`1.6.15`（2026-11-18）。
+当前版本：`1.6.16`（2026-11-18）。
 
 ## 执行入口
 
 1. 综合端业务修改在 `aura-web-project-router` 分流后进入本技能。隐式命中本技能且尚未分流时，使用可用的分流器确认当前请求；已分流则直接继续。小改、后续追加和新功能均适用。首次命中简要说明所用技能，用法问答才读取 [USAGE.md](USAGE.md)。
 2. 任何开发或编辑都须在动手前核对下文“始终遵守”，根据改动读取场景表中全部命中的资料，再按真实源码和契约实施。例如改按钮间距命中样式布局，增加受限操作还命中权限，新增按钮文案还命中 i18n。修改代码同时遵守[代码注释标准](references/code-comment-guidelines.md)。交付前用实际 diff 复核命中项及对应验收，遗漏先补齐。同一会话可复用仍有效的资料。框架内部修改由相应框架角色执行本入口的适用条款。
-3. 规范优先级：用户明确要求 → 当前项目真实接口、类型与依赖 → [最新版正式规范](knowledge/PIGX前端开发规范/README.md) → 本技能补充规则 → 历史写法。首次接触项目或涉及架构时读取正式规范总览；局部修改直接读取相关专项规范，不固定加载整套文档。
+3. 规范优先级：用户明确要求 → 当前项目真实接口、类型与依赖 → [最新版正式规范](knowledge/AURA前端开发规范/README.md) → 本技能补充规则 → 历史写法。首次接触项目或涉及架构时读取正式规范总览；局部修改直接读取相关专项规范，不固定加载整套文档。
 4. 本文只维护入口、底线和索引；细则在下列对应文档单处维护。命中场景即必须遵循该文档，不因按需加载而降低约束。正式规范目录的阅读顺序是导航，不要求每个任务全读。
 
 ## 始终遵守
 
-- 纳入本技能的 AURA 综合端消费项目，其 `@fxft/aura-web-kit` 实际安装版本须满足 `>=1.12.1`。核对依赖声明与锁文件对应条目一致，且锁定解析版本满足声明并与安装版本一致。按目标安装包的 exports、类型与实现核对所用能力。发现低版本、不一致或缺证时记录影响，继续其余已授权工作，受影响项在补证或获授权整改后再确认通过。合规的更高版本可继续使用，依赖调整按用户授权执行。
+- 纳入本技能的 AURA 综合端消费项目，其 `@fxft/aura-web-kit` 实际安装版本须满足 `>=1.13.1`。核对依赖声明与锁文件对应条目一致，且锁定解析版本满足声明并与安装版本一致。按目标安装包的 exports、类型与实现核对所用能力。发现低版本、不一致或缺证时记录影响，继续其余已授权工作，受影响项在补证或获授权整改后再确认通过。合规的更高版本可继续使用，依赖调整按用户授权执行。
 - 公共工具、Hook、运行时和构建修复先查公开能力；通用实现进入公共包，项目只绑定实例、环境和资源。公共 UI 使用 `@fxft/aura-ui` 的 Aura 前缀组件，JS/CSS 按需引入，不新增全量注册或 Aura UI 全量样式；本技能面向的项目均已接入 Core，统一使用 `AuraUIResolver({ injectGlobal: false })` 并保留组件 CSS。
 - 只处理授权范围，保留工作区已有改动；接口、Hook、组件和权限以真实契约为准，不虚构。用户任务优先，先区分“只读咨询/评估”“新开发/功能修改”与“纯注释/业务说明整理”。只读咨询仅按请求读取与给出依据和建议，不实施代码修改，不自动进入功能自检或运行测试、构建；用户明确要求验证时按其范围执行只读检查。纯整理只允许修改注释和说明文档，保持可执行代码与行为；不得修改 DOM 属性、组件、import、状态、接口、控制流、依赖或配置，包括不得借规范整改增加重试、useForm、竞态处理或替换字典组件。发现既有 FE 功能偏差仅记录原有问题、证据和建议，不自动修复，也不因此停止其余可读性整理；无需逐项反复询问授权。新开发/功能修改在用户原授权内整改。
 - 请求使用 `/@/config/aura/request`；消息使用 `/@/config/aura/index`；凡涉及业务表单的开发、功能修改或重构，必须使用 `@fxft/aura-web-kit/hooks/form` 的 `useForm`，主动读取 [Hooks 契约](recipes/hooks-standards.md#useform)，不依赖用户另行提醒。按实际生命周期逐表单验收，未接入或绕过公共 Hook 不得交付为通过；纯注释保持原授权边界。不复制框架底层实现。
@@ -29,28 +29,28 @@ description: AURA 前端项目开发与编辑的规范入口。综合端新增�
 
 | 命中场景                                                                                        | 必须读取的资料                                                                                                                                                                                                                                   |
 | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 公共工具/Hook 选型、1.2.0 迁移、自动导入或公共 TS 修改                                          | [aura-web-kit 清单与接入](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)，先核对已安装版本 exports；只面向 1.2.0，不保留旧实现与旧路径兼容                                                                                        |
-| aura-ui 公共组件选型、Resolver、样式或服务绑定 | 现有 **39 个公开组件**，先按[组件索引](knowledge/PIGX前端开发规范/aura-ui组件库/README.md)选型，只读实际使用组件的示例和 API；接入见[公共接入](knowledge/PIGX前端开发规范/aura-ui能力清单与接入规范.md)。升级、契约差异或接入异常时再核对安装包，不把维护校验转成日常开发步骤 |
-| 首次接触项目、架构或框架边界                                                                    | [总览](knowledge/PIGX前端开发规范/PIGX前端开发总览.md)、[开发边界](knowledge/PIGX前端开发规范/开发边界说明.md)                                                                                                                                   |
-| 修改业务代码、命名、组件职责或布局                                                              | [业务实现约束](references/implementation-rules.md)；新建模块/重构另读 [工程规范](knowledge/PIGX前端开发规范/工程与代码生成规范.md)                                                                                                               |
-| 新增或功能修改 Vue/TS/样式、拆分职责、提升复用层级，或只读评估这些职责                          | [文件组织与职责拆分](knowledge/PIGX前端开发规范/文件组织与职责拆分.md)，按职责、所有权和实际消费者选择最小结构；纯注释不触发重构                                                                                                                 |
-| 新增/调整常量、常量归属或默认值共享                                                             | [常量归属与定义](knowledge/PIGX前端开发规范/工程与代码生成规范.md#前端常量归属与定义)，按实际消费者选择最小层级及模板；同版来源见[维护记录](references/constants-source.json)                                                                                           |
+| 公共工具/Hook 选型、1.2.0 迁移、自动导入或公共 TS 修改                                          | [aura-web-kit 清单与接入](knowledge/AURA前端开发规范/aura-web-kit能力清单与接入规范.md)，先核对已安装版本 exports；只面向 1.2.0，不保留旧实现与旧路径兼容                                                                                        |
+| aura-ui 公共组件选型、Resolver、样式或服务绑定 | 现有 **39 个公开组件**，先按[组件索引](knowledge/AURA前端开发规范/aura-ui组件库/README.md)选型，只读实际使用组件的示例和 API；接入见[公共接入](knowledge/AURA前端开发规范/aura-ui能力清单与接入规范.md)。升级、契约差异或接入异常时再核对安装包，不把维护校验转成日常开发步骤 |
+| 首次接触项目、架构或框架边界                                                                    | [总览](knowledge/AURA前端开发规范/AURA前端开发总览.md)、[开发边界](knowledge/AURA前端开发规范/开发边界说明.md)                                                                                                                                   |
+| 修改业务代码、命名、组件职责或布局                                                              | [业务实现约束](references/implementation-rules.md)；新建模块/重构另读 [工程规范](knowledge/AURA前端开发规范/工程与代码生成规范.md)                                                                                                               |
+| 新增或功能修改 Vue/TS/样式、拆分职责、提升复用层级，或只读评估这些职责                          | [文件组织与职责拆分](knowledge/AURA前端开发规范/文件组织与职责拆分.md)，按职责、所有权和实际消费者选择最小结构；纯注释不触发重构                                                                                                                 |
+| 新增/调整常量、常量归属或默认值共享                                                             | [常量归属与定义](knowledge/AURA前端开发规范/工程与代码生成规范.md#前端常量归属与定义)，按实际消费者选择最小层级及模板；同版来源见[维护记录](references/constants-source.json)                                                                                           |
 | 查看结构、判断拆分是否合理、先给建议不改代码，或优化/梳理/重构指定页面/模块的结构               | [结构任务覆盖与收尾](references/development-review-workflow.md#结构任务覆盖与收尾)，同时评估授权范围内入口尚未拆出的职责与已有子组件，按职责规范给出保留、内部整理或提取的依据；只读咨询直接交付建议，实施任务再进入开发闭环                     |
 | 查看、编辑、复制、分配等需要已有对象数据                                                        | [已有业务对象加载](references/business-object-loading.md)，适用页面、Tab、面板、抽屉和弹窗                                                                                                                                                       |
 | 日期时间解析、格式化、比较、运算、时间戳或时区                                                  | [dayjs 时间处理](references/date-time-guidelines.md)                                                                                                                                                                                             |
 | 新增/改值文案或新增/替换 i18n 引用                                                              | 编码前执行[公共文案检索与验收](references/ui-data-contracts.md#新增文案的执行与验收)，将检索范围、公共 key 与复用/提取/保留依据带入自检；双语键存在或扫描零候选不能代替复用检查                                                                  |
-| 字段、筛选、表格、表单、字典或用户可见文案                                                      | [字典、i18n 与占位契约](references/ui-data-contracts.md)；涉及三字典组件 Props、选项、空值或接入时先读 [aura-ui 组件库入口](knowledge/PIGX前端开发规范/aura-ui组件库/README.md)，再仅加载实际使用组件的 dict-tag.md / dict-text.md / dict-select.md |
+| 字段、筛选、表格、表单、字典或用户可见文案                                                      | [字典、i18n 与占位契约](references/ui-data-contracts.md)；涉及三字典组件 Props、选项、空值或接入时先读 [aura-ui 组件库入口](knowledge/AURA前端开发规范/aura-ui组件库/README.md)，再仅加载实际使用组件的 dict-tag.md / dict-text.md / dict-select.md |
 | 查询提交、列表/导出条件或选择器候选规模                                                         | [查询与选择器契约](references/query-select-contract.md)：查询边界格式化空条件并保留有效假值；大规模、无上限或增长型候选必须虚拟化，核对公共能力实际安装状态                                                                                      |
 | 消息、确认框、请求失败反馈，或覆盖层仍可见时操作成功同步背后区域                                | [消息与资源反馈](references/message-feedback-guidelines.md)，命中公共列表时再读单次静默契约；保留原分页/选择规则                                                                                                                                 |
 | 凡涉及业务表单的开发、功能修改或重构（页面、Dialog、Drawer、内嵌编辑及查询表单），以及列表 Hook | [Hooks 契约](recipes/hooks-standards.md)；表单必须接入公共 `useForm`，不能只导入或沿用旧实例调用                                                                                                                                                 |
-| 组件选型或远程组件解析与样式                                                                    | [组件选型](references/component-selection.md)、[组件复用规范](knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md)                                                                                                                        |
-| 页面布局、主题或静态资源                                                                        | [样式与资源](knowledge/PIGX前端开发规范/样式布局与静态资源规范.md)                                                                                                                                                                               |
+| 组件选型或远程组件解析与样式                                                                    | [组件选型](references/component-selection.md)、[组件复用规范](knowledge/AURA前端开发规范/组件复用与公司基础组件库规范.md)                                                                                                                        |
+| 页面布局、主题或静态资源                                                                        | [样式与资源](knowledge/AURA前端开发规范/样式布局与静态资源规范.md)；需编写 public 资源引用时可用[模板](templates/public-static-assets.md)                                                                                                                                                                               |
 | 新视觉方案、显著布局重做，或用户要求视觉设计                                                    | [视觉协作](references/frontend-design-workflow.md)，检查可用的 `frontend-design`；沿既有模式增字段、校验或局部 CRUD 不触发                                                                                                                       |
-| 路由、菜单、隐藏页                                                                              | [路由规范](knowledge/PIGX前端开发规范/路由与菜单规范.md)                                                                                                                                                                                         |
+| 路由、菜单、隐藏页                                                                              | [路由规范](knowledge/AURA前端开发规范/路由与菜单规范.md)                                                                                                                                                                                         |
 | 受限按钮/入口/操作、Tab/Drawer 权限初始化；新增正式页面或管理端菜单权限同步                     | [菜单权限与实现边界](references/admin-menu-permission-workflow.md)，新增正式页面/菜单/按钮时主动确认是否同步及是否配置远程菜单；外部写入须有授权                                                                                                 |
-| remote、expose、manifest、shared、模块联邦运行时或 Vite 公共依赖预构建                         | 按[模块联邦规范](knowledge/PIGX前端开发规范/模块联邦开发技术规范.md)与[组件选型](references/component-selection.md)实施。用 `aura-module-federation-check` 做改前基线和改后复检，复用已有专项检查证据                                   |
-| 2D 地图 / 视频                                                                                  | 地图先读 [FxftMap 组件接入](references/fxft-map-integration.md)，将系统配置结果用于初始化 Props，再按[地图规范](knowledge/PIGX前端开发规范/2D地图开发规范.md)及可用的 `fmap-2d` 实现对应业务；视频读[视频规范](knowledge/PIGX前端开发规范/视频开发规范.md)，检查并调用 `fxft-video` |
-| 选用公司组件后发现依赖缺失、不满足需求或需要安装 | [下载与权限](knowledge/PIGX前端开发规范/公司组件库下载说明/README.md)，先复用满足需求的依赖；按授权补齐后继续组件导入、样式和服务绑定 |
+| remote、expose、manifest、shared、模块联邦运行时或 Vite 公共依赖预构建                         | 按[模块联邦规范](knowledge/AURA前端开发规范/模块联邦开发技术规范.md)与[组件选型](references/component-selection.md)实施。用 `aura-module-federation-check` 做改前基线和改后复检，复用已有专项检查证据                                   |
+| 2D 地图 / 视频                                                                                  | 地图先读 [FxftMap 组件接入](references/fxft-map-integration.md)，将系统配置结果用于初始化 Props，再按[地图规范](knowledge/AURA前端开发规范/2D地图开发规范.md)及可用的 `fmap-2d` 实现对应业务；视频读[视频规范](knowledge/AURA前端开发规范/视频开发规范.md)，检查并调用 `fxft-video` |
+| 选用公司组件后发现依赖缺失、不满足需求或需要安装 | [下载与权限](knowledge/AURA前端开发规范/公司组件库下载说明/README.md)，先复用满足需求的依赖；按授权补齐后继续组件导入、样式和服务绑定 |
 | API/Apifox / Figma                                                                              | 分别读取 [Apifox 流程](recipes/apifox-workflow.md) 与 [MCP 指南](references/apifox-mcp-guide.md) / [Figma 流程](references/figma-design-workflow.md)                                                                                             |
 | 新开发、修改业务、补旧代码注释或业务逻辑说明                                                    | [注释规范与三类可复制模板](references/code-comment-guidelines.md)、[开发闭环与文档交付](references/development-review-workflow.md)                                                                                                               |
 | 新开发或编辑涉及接口、列表、导入导出、连续操作或可见文案 | 按[检查选择表](references/development-review-workflow.md#检查选择表)选择接口直测、组件测试或页面走查；从[常见 Bug 自测清单](references/common-bug-self-test.md)选取受影响项。需要防抖或节流时使用 [VueUse API](references/vueuse-first-guidelines.md)。 |
@@ -60,7 +60,7 @@ description: AURA 前端项目开发与编辑的规范入口。综合端新增�
 
 新建或调整页面结构时选择实际命中的模式，只读取对应文档：
 
-[查询表格](knowledge/PIGX前端开发规范/页面模式/查询表格页.md) · [查询卡片](knowledge/PIGX前端开发规范/页面模式/查询卡片页.md) · [左树右表](knowledge/PIGX前端开发规范/页面模式/左树右表页.md) · [弹窗表单](knowledge/PIGX前端开发规范/页面模式/弹窗表单.md) · [详情与抽屉](knowledge/PIGX前端开发规范/页面模式/详情页与抽屉.md) · [看板](knowledge/PIGX前端开发规范/页面模式/看板页.md) · [Teleport 嵌套页](knowledge/PIGX前端开发规范/页面模式/Teleport嵌套页面模式.md)。
+[查询表格](knowledge/AURA前端开发规范/页面模式/查询表格页.md) · [查询卡片](knowledge/AURA前端开发规范/页面模式/查询卡片页.md) · [左树右表](knowledge/AURA前端开发规范/页面模式/左树右表页.md) · [弹窗表单](knowledge/AURA前端开发规范/页面模式/弹窗表单.md) · [详情与抽屉](knowledge/AURA前端开发规范/页面模式/详情页与抽屉.md) · [看板](knowledge/AURA前端开发规范/页面模式/看板页.md) · [Teleport 嵌套页](knowledge/AURA前端开发规范/页面模式/Teleport嵌套页面模式.md)。
 
 完整页面开发先明确页面、私有组件、Composable、API、类型和 i18n 职责，再按模式实现；默认完整 SFC，少量私有 TS/SCSS 可同级，不要求逐项建文件。局部修复只评估相关职责，无需重做整页设计。历史 `templates/` 不能覆盖正式模式。
 
@@ -69,14 +69,14 @@ description: AURA 前端项目开发与编辑的规范入口。综合端新增�
 - 只读咨询按请求范围交付结构判断、依据、建议及未覆盖项，不声明自检或行为通过；测试合理性咨询仅核对已有测试、覆盖与缺口，不以静态检查或旧 build 代表当前行为已验证。
 
 - 修改代码后按 [格式化流程](references/prettier-formatting-workflow.md) 执行项目本地 Prettier 和 `git diff --check`。
-- 功能开发或明确要求验证的整理任务，按请求范围使用 [实现清单](checklists/implementation.md)、[验证清单](checklists/validation.md) 和 [正式检查清单](knowledge/PIGX前端开发规范/开发检查清单.md) 中命中的项目；完整页面开发覆盖全部适用项。
+- 功能开发或明确要求验证的整理任务，按请求范围使用 [实现清单](checklists/implementation.md)、[验证清单](checklists/validation.md) 和 [正式检查清单](knowledge/AURA前端开发规范/开发检查清单.md) 中命中的项目；完整页面开发覆盖全部适用项。
 - 功能开发的检查触发、范围和时机统一按[检查选择表](references/development-review-workflow.md#检查选择表)执行；各清单用于核对命中项，不另设重复验收节奏。
 - 维护技能本身运行 `scripts/validate-skill.ps1`。更新 web-kit 历史入口快照时，运行 `scripts/check-web-kit-catalog.ps1 -PackagePath <快照对应版本的安装包目录>` 进行精确比对。目标项目的最低版本按本技能执行入口检查。aura-ui 资料维护按[组件资料维护](references/aura-ui-docs-maintenance.md)核对目标包 exports、组件契约、Resolver、JS/CSS 和副本一致性。技能资料维护只做技能与相关示例验证。
 - 每次调整技能版本，同步在 [CHANGELOG.md](CHANGELOG.md) 记录该版本日期、用户可见变化及必要兼容影响；同一未发布版本的补充归并原条目，不重复新建日志。安装、提交与发布事实留来源记录，不能由日志版本推断已发布；普通业务调用无需加载历史日志。
 - 功能开发或明确要求自检时，开发自检只读、整改由本技能负责；调用前确认实际加载的审查技能支持模式，精确入口与旧版能力缺口处理见[开发闭环](references/development-review-workflow.md)。不能以正式六文件流程代替自检。
 - 纯整理按快速路径简报已改范围、业务说明位置和未执行自动检查，不声明自检通过；用户明确要求报告时按请求范围交付。功能开发全部适用必需项通过后，局部变更可合并检查与交付为一份简短开发记录，完整新功能或要求独立报告时按[交付要求](references/development-review-workflow.md#5-通过后供开发人员审阅)保留报告与过程记录，标记“自检通过，待人工审查”；缺证或失败如实记录并继续独立工作。
 
-MF Vite 1.23.5 与 TypeScript 5.9.3 的原配套来源见[升级来源记录](references/framework-upgrade-source.json)。随包[公共能力目录](knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)中的 1.9.6 和 115 个入口用于追溯，旧资料中的版本要求以本技能的最低版本为准。按模块联邦规范接入自动预构建和 ESLint 配套配置，沿用现有发现机制。
+MF Vite 1.23.5 与 TypeScript 5.9.3 的原配套来源见[升级来源记录](references/framework-upgrade-source.json)。随包[公共能力目录](knowledge/AURA前端开发规范/aura-web-kit能力清单与接入规范.md)中的 1.9.6 和 115 个入口用于追溯，旧资料中的版本要求以本技能的最低版本为准。按模块联邦规范接入自动预构建和 ESLint 配套配置，沿用现有发现机制。
 
 本次可读性与自检流程直接维护于本技能仓库，来源及未发布状态见[本地变更记录](references/readability-source.json)；不替换既有规范来源记录。
 

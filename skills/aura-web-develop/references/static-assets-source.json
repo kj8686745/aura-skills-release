@@ -1,0 +1,135 @@
+{
+  "topic": "联邦提供方源码与 public 静态资源（FE-023 / FE-024）",
+  "updatedAt": "2026-11-18",
+  "sourceRepository": "ssh://gogs@git.fxft.net:2222/other/aura-code-nexus.git",
+  "sourceBranch": "1.0.0",
+  "sourceBaseCommit": "cc256d7a805bcace165eeeb3c7ed8499cfc3ed8e",
+  "sourceCommit": null,
+  "bindingStatus": "pending-source-commit",
+  "implementationReference": {
+    "repository": "aura-web-kit",
+    "package": "@fxft/aura-web-kit@1.13.1",
+    "commit": "d7a06cb3b6d5dd5f102ff63e99c6504e937556e6",
+    "publicEntry": "@fxft/aura-web-kit/vite",
+    "files": [
+      "src/vite/federation-asset-urls.ts",
+      "docs/remote-entry-base.md",
+      "tests/federation-browser.test.ts"
+    ],
+    "verification": {
+      "vite": "6.4.3",
+      "vuePlugin": "6.0.8",
+      "scope": "重发包独立安装、完整回归和私服回读验证 public 默认相对地址，无 publicUrlMode 参数；保留 CSS base 的 qiankun 内联分支。三种静态用法的测试页代码和图片在验收后已清理。"
+    },
+    "registryVerification": {
+      "publishedAtUtc": "2026-11-18T09:47:41.053Z",
+      "sha256": "60dc66788f9dd3ea995a9c076e86be121df3b7bb11b746aea756bcfc42e069aa",
+      "registry": "https://repository.fxft.online/repository/npm-public/"
+    }
+  },
+  "transformation": "同步静态资源条款与示例，随包知识目录统一命名 AURA 前端开发规范。保留各视图原有组织及其余条款，以各技能目录为 snapshot 路径基准。",
+  "hashAlgorithm": "SHA256 of UTF-8 file bytes with CRLF normalized to LF",
+  "documents": [
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/04-工程与代码生成.md",
+      "sourceSha256Lf": "a28841f158ce51febbf2e52bd44c94b54b56ede36b0983d5ebb29196af9cbab0",
+      "snapshot": "knowledge/AURA前端开发规范/工程与代码生成规范.md",
+      "snapshotSha256LfBySkill": {
+        "aura-web-develop": "4c5b5807a532e74632ca6f5079629a565e258214adbe0b254de748087cfa4545",
+        "aura-web-review": "6355d9aecd2fb3f69834bdc8a693b81d4cd905fc2d209fb5a5ae0b9cb31ea314"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/05-开发边界与框架归属.md",
+      "sourceSha256Lf": "b4d1936a4f06ad67c193fa91ac7b034c07d8288bf5e8346ff7e7ba2f2b0d6beb",
+      "snapshot": "knowledge/AURA前端开发规范/开发边界说明.md",
+      "snapshotSha256LfBySkill": {
+        "aura-web-develop": "4e717e9fe345ed9937d0b0b92a18122e006cfa2a23363bd403e7a7fc4b12b066",
+        "aura-web-review": "e63fa65c7fdd5233937a95064243071ab937d7a1d7bc60f2a168dc05e178973a"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/06-aura-web-kit公共能力.md",
+      "sourceSha256Lf": "461cfccf7a140d9206d13a2fd2dd73ef6ab1967ffeb7924dcc1089eb57da589b",
+      "snapshot": "knowledge/AURA前端开发规范/aura-web-kit能力清单与接入规范.md",
+      "snapshotSha256LfBySkill": {
+        "aura-web-develop": "1e98896fba9ae3e2c3930fddb9ce4f00ad6b1ea250acdd65766dfecefc94a074",
+        "aura-web-review": "f11f6aaead6e9b53e8bf19a38e46092190b084fe8c40a4330ee497195f8f7843",
+        "aura-module-federation-check": "23c96f58b26fac96a7bac0e1456195cf50a36537a6e282f8e211f3ca62ce3bf4"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/08-模块联邦开发与构建.md",
+      "sourceSha256Lf": "e24c036356c5a6c3ee1622589de5fdd32e2c9895c92f9c43516e8d35bea73279",
+      "snapshot": "knowledge/AURA前端开发规范/模块联邦开发技术规范.md",
+      "snapshotSha256LfBySkill": {
+        "aura-web-develop": "0f95a7cbb804dd2039ecee1c93f6030e82203cceb16d212d049210eb0741bb13",
+        "aura-web-review": "f64343d439f1bfb4adafaa82da529f2bc3e5cce6fc1f4598be7c72184d2d0195",
+        "aura-module-federation-check": "649603d775f070116d1bf74e50d2995c7119b3fa2ef144ab68d262a2183885be"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/09-样式布局与静态资源.md",
+      "sourceSha256Lf": "4fbd4c30f4d9a01002049558b881d693187c3c94a4d7884b22ddb8c737244b5f",
+      "snapshot": "knowledge/AURA前端开发规范/样式布局与静态资源规范.md",
+      "snapshotSha256LfBySkill": {
+        "aura-web-develop": "9ed630b8f0c4384a35320e130422a3cfc59b0dfbf4668e9a7c924f6126758ffd",
+        "aura-web-review": "7cd2ad20d38f2946af2d676a2b10dba0830ecee3fc7be924db727c052d28caa9"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/12-研发自检与交付.md",
+      "sourceSha256Lf": "da4bd3a6faf04689b309ad789f55747316558e790c94b6c598fae1d8a3519f4a",
+      "snapshot": "knowledge/AURA前端开发规范/开发检查清单.md",
+      "snapshotSha256LfBySkill": {
+        "aura-web-develop": "c5fc4395dc9c8cb314ad38022625cd29bf31cd1eda83688d2ee5277d3ce89f24",
+        "aura-web-review": "46436d41dce2d045f6632456d56375464c4d6180abe7818a8b84b01a2dbcbead"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/13-参考页面样例.md",
+      "sourceSha256Lf": "0b9f13614a2fdde8f834472e3bdf4563651a3b645812ad97a96e3efa3fd38be5",
+      "snapshot": "knowledge/AURA前端开发规范/参考页面样例.md",
+      "snapshotSha256LfBySkill": {
+        "aura-web-develop": "14a395793a4291e27535e39d00c7ec18db8b6f66db08951a8c69f912f9b3e62c",
+        "aura-web-review": "c9b20624bd83c52b6fab28a4211280f7f3ad0e69139b13eac9f2c6c6a2aaef9a"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/04-前端基础编码规范/页面模式/查询卡片页.md",
+      "sourceSha256Lf": "77d998754068f9ba5b1788023a9281d788eff4d91abd1b4142c1b521b93ee4c0",
+      "snapshot": "knowledge/AURA前端开发规范/页面模式/查询卡片页.md",
+      "snapshotSha256LfBySkill": {
+        "aura-web-develop": "1038dff2ce5057c244f549cf8912240d7ba75f759f2ccbc40a44a45ae32286ad",
+        "aura-web-review": "67488e0d5809afa704ba4819717ee89d672226e90f933aff40b254622c2259d8"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/06-其他平台能力/01-二维地图/01-前端接入规范.md",
+      "sourceSha256Lf": "55dfee8c2b4fe2aedbf55ea4c00d1f3cc798b758a7115d2e7c666a23d168bc7c",
+      "snapshot": "knowledge/AURA前端开发规范/2D地图开发规范.md",
+      "snapshotSha256LfBySkill": {
+        "aura-web-develop": "23a55213bd6c5b59a993e36bea4a6f97c81159835d9cae9b12cd08b907c0f3ce",
+        "aura-web-review": "516b0e33d42a6a8e30552488eeb504eeea457b336127f60496f2c1d22428a608"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/05-能力包/03-视频中台/01-前端接入规范.md",
+      "sourceSha256Lf": "0da59f9ae74cbeb4f30809c3e199700943b417f4e7582146f1c557b778a57735",
+      "snapshot": "knowledge/AURA前端开发规范/视频开发规范.md",
+      "snapshotSha256LfBySkill": {
+        "aura-web-develop": "2eb4a0a278627db2ad9e33fc5d77fb5892c67e31864f340b2ca1fd02e835d780",
+        "aura-web-review": "2eb4a0a278627db2ad9e33fc5d77fb5892c67e31864f340b2ca1fd02e835d780"
+      }
+    },
+    {
+      "source": "AURA天玑规范体系/AURA天玑公司级框架规范/01-基础编码规范/规范矩阵.md",
+      "sourceSha256Lf": "f8b5280620cc971c6d526750881c690626da19558af4aa2e7dc70b3bf776dc96"
+    }
+  ],
+  "skillVersions": {
+    "aura-web-develop": "1.6.16",
+    "aura-module-federation-check": "1.1.8",
+    "aura-web-review": "1.0.2"
+  }
+}

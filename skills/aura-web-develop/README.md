@@ -1,8 +1,8 @@
 # aura-web-develop
 
-PIGX 模块联邦（综合端）业务开发规范技能。
+AURA 模块联邦（综合端）业务开发规范技能。
 
-当前版本：`1.6.15`
+当前版本：`1.6.16`
 
 版本更新记录见[CHANGELOG.md](CHANGELOG.md)。
 
@@ -11,14 +11,14 @@ PIGX 模块联邦（综合端）业务开发规范技能。
 - 技能执行入口：`SKILL.md`
 - FxftMap 组件接入与初始化配置：`references/fxft-map-integration.md`；地图专项能力仍按需调用 `fmap-2d`
 - 版本标识：`VERSION`
-- 最新版正式规范：`knowledge/PIGX前端开发规范/README.md`
+- 最新版正式规范：`knowledge/AURA前端开发规范/README.md`
 - 消息反馈硬约束：`references/message-feedback-guidelines.md`
 - 代码注释规范：`references/code-comment-guidelines.md`
 - 开发闭环与文档交付：`references/development-review-workflow.md`
 - 本次本地变更来源：`references/readability-source.json`（保留原规范绑定状态）
 - 按需核对清单：`checklists/`（执行节奏以开发闭环检查选择表为准）
 
-最新版正式规范来自 `aura-pigx-cli/src/template/nexus/docs/PIGX前端开发规范`。技能中的历史模板不得覆盖该规范。
+AURA 前端规范正文由 `aura-code-nexus` 的 AURA 天玑前端基础编码规范维护，技能使用随包视图。选择页面代码骨架时以正式页面模式为准。
 
 ## 使用说明
 
@@ -45,7 +45,7 @@ $aura-web-develop <你的业务需求>
 
 管理端实际写入仍需在主动询问后获得用户确认，并提供目标环境、运行时 Token、租户和父菜单定位信息；凭据仅在运行时使用，不写入文件或日志。
 
-结构任务按[职责规范](knowledge/PIGX前端开发规范/文件组织与职责拆分.md)覆盖完整授权职责，选择保留、内部整理或提取；合理保留也是完成，Dialog/Drawer 同一般区域，不按数量、类型或行数要求拆分。
+结构任务按[职责规范](knowledge/AURA前端开发规范/文件组织与职责拆分.md)覆盖完整授权职责，选择保留、内部整理或提取；合理保留也是完成，Dialog/Drawer 同一般区域，不按数量、类型或行数要求拆分。
 
 ## 补充硬约束
 

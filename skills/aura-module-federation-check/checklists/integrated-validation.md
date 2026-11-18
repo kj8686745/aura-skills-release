@@ -1,9 +1,9 @@
-# PIGX 综合端模块联邦验收清单
+# AURA 综合端模块联邦验收清单
 
 ## 静态审计
 
 - [ ] 只按 1.2.0 公共包绑定验收；不保留旧运行时文件与旧 alias 兼容。
-- [ ] 当前项目声明与所属锁文件的依赖条目一致，解析版本满足声明并与实际安装版本一致，实装达到 `>=1.12.1`。已核验使用入口的 exports、类型与实现。缺证列为未证实。
+- [ ] 当前项目声明与所属锁文件的依赖条目一致，解析版本满足声明并与实际安装版本一致，实装达到 `>=1.13.1`。已核验使用入口的 exports、类型与实现。缺证列为未证实。
 - [ ] 1.2.0 Node ≥22.12.0、Element Plus 2.14.6 singleton；auraAutoOptimizeDeps、共享 AutoImport 预设与 resolver 工厂、公共构建插件与 PostCSS 已接入。
 - [ ] 多级 remoteEntryName 与完整部署前缀一致，index.html 与 main.ts 启动缓存均按 remoteName。
 
@@ -27,12 +27,15 @@
 - [ ] 依赖已存在时执行 `pnpm build`；不为只读审计擅自安装或升级依赖。
 - [ ] `dist/remoteEntry.js` 和 `dist/mf-manifest.json` 存在。
 - [ ] manifest 包含 runtime、i18n 和 scoped Tailwind 标准 expose。
+- [ ] 核对模板静态属性、CSS `url()`、脚本导入与提供方生效的 Vite 资源回调和构建产物。外链 CSS 中的打包资源相对样式表解析，qiankun 内联 CSS 按部署前缀解析。旧项目按实际配置与资源结果核对兼容处理。
+- [ ] 接入默认资源回调后，核对 public 产物的相对地址、提供方部署的文件位置及代理可达性。固定 public 资源通过 `?url` 导入或编译 CSS `url()` 获取地址，Vue `:style` 绑定导入值。普通行内样式、SDK 普通路径及其他运行时拼接路径按 `getPublicResourceUrl` 核对。qiankun 内联 CSS 使用 `cssUrlMode: 'base'`，HTML 与 SSR 依 Vite 原路径规则处理。
+- [ ] 联调 `vite preview` 时确认预览服务读取的目录已用当前配置重建。
 
 ## 运行时验证
 
 - [ ] 项目可独立运行并正常登录、切换路由。
 - [ ] 作为远程页面加载时内容、i18n、Element Plus 文案和样式正常。
-- [ ] 图片、字体、视频和 Worker 请求指向正确的远程资源根路径。
+- [ ] 图片、字体、视频和 Worker 请求指向正确的远程资源根路径。图片响应返回实际图片内容，核对响应类型或解码结果。
 - [ ] 远程加载失败只影响当前内容区，其他菜单仍可访问。
 - [ ] “重新加载”能刷新远程容器、manifest、i18n 和样式缓存。
 

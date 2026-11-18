@@ -6,6 +6,8 @@
   "sourceCommit": null,
   "sourceBaseCommit": "bb12cd8797be043305a0c2b694e228afd0f25314",
   "bindingStatus": "pending-source-commit",
+  "currentSnapshotRoot": "knowledge/AURA前端开发规范",
+  "snapshotPathNote": "documents 中的路径与哈希记录本条历史快照；当前目录迁移后，按 currentSnapshotRoot 定位同名文档。",
   "pendingChanges": "web-kit 1.9.0 改为最低稳定版本；源规范已本地修订，随包 knowledge 保留原交付视图，待规范提交后重新绑定并生成。",
   "referenceThread": "01a15347-1d0a-7213-b2b6-40d74329c041",
   "implementationReference": {

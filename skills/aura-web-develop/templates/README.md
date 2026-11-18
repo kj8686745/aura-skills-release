@@ -4,16 +4,17 @@
 
 | 场景 | 正式入口或补充模板 |
 |---|---|
-| 查询表格页 | `knowledge/PIGX前端开发规范/页面模式/查询表格页.md` |
-| 查询卡片页 | `knowledge/PIGX前端开发规范/页面模式/查询卡片页.md` |
-| 左树右表页 | `knowledge/PIGX前端开发规范/页面模式/左树右表页.md` |
-| 弹窗表单 | `knowledge/PIGX前端开发规范/页面模式/弹窗表单.md` |
-| 详情页与抽屉 | `knowledge/PIGX前端开发规范/页面模式/详情页与抽屉.md` |
-| 看板页 | `knowledge/PIGX前端开发规范/页面模式/看板页.md` |
-| Teleport 嵌套页 | `knowledge/PIGX前端开发规范/页面模式/Teleport嵌套页面模式.md` |
+| 查询表格页 | `knowledge/AURA前端开发规范/页面模式/查询表格页.md` |
+| 查询卡片页 | `knowledge/AURA前端开发规范/页面模式/查询卡片页.md` |
+| 左树右表页 | `knowledge/AURA前端开发规范/页面模式/左树右表页.md` |
+| 弹窗表单 | `knowledge/AURA前端开发规范/页面模式/弹窗表单.md` |
+| 详情页与抽屉 | `knowledge/AURA前端开发规范/页面模式/详情页与抽屉.md` |
+| 看板页 | `knowledge/AURA前端开发规范/页面模式/看板页.md` |
+| Teleport 嵌套页 | `knowledge/AURA前端开发规范/页面模式/Teleport嵌套页面模式.md` |
 | API 模块 | `templates/api-module.md` |
 | Pinia Store | `templates/pinia-store.md` |
 | i18n 模块 | `templates/i18n-module.md` |
+| public 静态资源 | [public-static-assets.md](public-static-assets.md) |
 
 ## 使用规则
 

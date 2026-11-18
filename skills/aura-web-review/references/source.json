@@ -5,6 +5,9 @@
   "sourceCommit": null,
   "sourceBaseCommit": "bb12cd8797be043305a0c2b694e228afd0f25314",
   "bindingStatus": "pending-source-commit",
+  "currentSnapshotRoot": "knowledge/AURA前端开发规范",
+  "currentOverview": "knowledge/AURA前端开发规范/AURA前端开发总览.md",
+  "snapshotPathNote": "各来源记录中的旧路径与哈希保留当时快照事实；当前同名文档以 currentSnapshotRoot 为准，前端开发总览以 currentOverview 为准。",
   "updatedAt": "2026-10-21",
   "ruleCount": 27,
   "documents": [

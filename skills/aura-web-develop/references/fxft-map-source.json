@@ -69,11 +69,11 @@
         "sourceSha256Lf": "5c1b49cee5afbc3df4d2911318038a76096c545e5e49d6bfeceffb5a999be49b",
         "derived": [
           {
-            "path": "skills/aura-web-develop/knowledge/PIGX前端开发规范/2D地图开发规范.md",
+            "path": "skills/aura-web-develop/knowledge/AURA前端开发规范/2D地图开发规范.md",
             "sha256Lf": "c09cb27084cf8f3cc59e60ba857fcffe025532e95c4c04168d2aade1a055c5e6"
           },
           {
-            "path": "skills/aura-web-review/knowledge/PIGX前端开发规范/2D地图开发规范.md",
+            "path": "skills/aura-web-review/knowledge/AURA前端开发规范/2D地图开发规范.md",
             "sha256Lf": "4e8296ba01b2cbb483b2a1fae57effe0fd9dd0b191c1bab5dc50c09ac7c3538d"
           }
         ]
@@ -83,11 +83,11 @@
         "sourceSha256Lf": "08a8f087043399930613c5a9686e10bb3097a139b373aab6ef879921eac234f8",
         "derived": [
           {
-            "path": "skills/aura-web-develop/knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md",
+            "path": "skills/aura-web-develop/knowledge/AURA前端开发规范/组件复用与公司基础组件库规范.md",
             "sha256Lf": "9ea808611f54c593e39fd3071a905d0d34114634a782aa9b45777febf997addb"
           },
           {
-            "path": "skills/aura-web-review/knowledge/PIGX前端开发规范/组件复用与公司基础组件库规范.md",
+            "path": "skills/aura-web-review/knowledge/AURA前端开发规范/组件复用与公司基础组件库规范.md",
             "sha256Lf": "4910a12bf46a33bdaa8562432c702edb8f883b6ae662f7fd56a5b46895eabf83"
           }
         ]
@@ -97,11 +97,11 @@
         "sourceSha256Lf": "1f5e749408876a00180980df16b8ed698943683eb5b0b1ee9a138e416035cd7f",
         "derived": [
           {
-            "path": "skills/aura-web-develop/knowledge/PIGX前端开发规范/开发检查清单.md",
+            "path": "skills/aura-web-develop/knowledge/AURA前端开发规范/开发检查清单.md",
             "sha256Lf": "89c8f3112ce43f42ad33df9210b55da6c75bf5ce9729495e71f8cdcf38b2d6b4"
           },
           {
-            "path": "skills/aura-web-review/knowledge/PIGX前端开发规范/开发检查清单.md",
+            "path": "skills/aura-web-review/knowledge/AURA前端开发规范/开发检查清单.md",
             "sha256Lf": "baabe02c3f85e856bd93ecbe9e3b3dd239fdee4bc5697abc56510b2631bd6472"
           }
         ]

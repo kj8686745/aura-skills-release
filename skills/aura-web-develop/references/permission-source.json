@@ -37,23 +37,23 @@
   "transformation": "沿用各技能既有 knowledge 目录、相对链接与前端结论边界；开发引用工程规范和菜单权限实现边界，审查 FE-007 排除后端实际授权结论。未覆盖无关历史差异。",
   "bundledDocuments": [
     {
-      "path": "knowledge/PIGX前端开发规范/工程与代码生成规范.md",
+      "path": "knowledge/AURA前端开发规范/工程与代码生成规范.md",
       "sha256Lf": "d229eb7790358f22a010bad1b7bf2733b35594bfd9a22bf01669ae1efd6a65a0"
     },
     {
-      "path": "knowledge/PIGX前端开发规范/开发检查清单.md",
+      "path": "knowledge/AURA前端开发规范/开发检查清单.md",
       "sha256Lf": "cc009e5e7a9604717b6313635be56e39a3a510c30c8884efba3b04cd98aa1c0a"
     },
     {
-      "path": "knowledge/PIGX前端开发规范/页面模式/查询表格页.md",
+      "path": "knowledge/AURA前端开发规范/页面模式/查询表格页.md",
       "sha256Lf": "5329aa04b52ea1b1acdb66aeef44887cd58b2d5571ccad11e11a4d0ad07f7f08"
     },
     {
-      "path": "knowledge/PIGX前端开发规范/页面模式/查询卡片页.md",
+      "path": "knowledge/AURA前端开发规范/页面模式/查询卡片页.md",
       "sha256Lf": "f3d7842222705cc59a42903bb5e356f9ce363c6d9cbf485a8178d20de1076d57"
     },
     {
-      "path": "knowledge/PIGX前端开发规范/页面模式/左树右表页.md",
+      "path": "knowledge/AURA前端开发规范/页面模式/左树右表页.md",
       "sha256Lf": "3b586778527c48cb81ba4277a970d89e928f7ccf59c12a7526b7bf4495b74840"
     }
   ],

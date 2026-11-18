@@ -1,4 +1,4 @@
-# PIGX 模块联邦项目类型识别与综合端审计入口
+# AURA 模块联邦项目类型识别与综合端审计入口
 
 [CmdletBinding()]
 param(
@@ -24,7 +24,7 @@ function Write-MfReport {
 		return
 	}
 
-	Write-Host '=== PIGX 模块联邦检查 ===' -ForegroundColor Cyan
+	Write-Host '=== AURA 模块联邦检查 ===' -ForegroundColor Cyan
 	Write-Host "项目：$($Report.projectPath)"
 	Write-Host "类型：$($Report.projectType)"
 	Write-Host "状态：$($Report.status)"
@@ -103,7 +103,7 @@ try {
 	if (-not (Test-Path -LiteralPath $handlerPath -PathType Leaf)) {
 		$displayType = if ($detectedType -eq 'Provider') { '生产端' } elseif ($detectedType -eq 'Consumer') { '消费端' } else { $detectedType }
 		$report = New-MfReport -ResolvedProjectPath $resolvedProjectPath -DetectedType $detectedType -Evidence $evidence `
-			-Status 'Unsupported' -Message "已识别为$displayType；首版只支持 PIGX 综合端，已停止且未执行合规检查。"
+			-Status 'Unsupported' -Message "已识别为$displayType；首版只支持 AURA 综合端，已停止且未执行合规检查。"
 		Write-MfReport -Report $report -AsJson:$Json
 		exit 3
 	}
@@ -115,7 +115,7 @@ try {
 	$findings = @(& $handlerName -ProjectPath $resolvedProjectPath -ComponentPath $ComponentPath -ManifestPath $ManifestPath)
 	$errorCount = @($findings | Where-Object severity -eq 'error').Count
 	if ($errorCount -eq 0) {
-		$findings += New-MfFinding -RuleId 'MF-SUMMARY-001' -Severity 'pass' -Message 'PIGX 综合端静态合规检查未发现确定错误。' `
+		$findings += New-MfFinding -RuleId 'MF-SUMMARY-001' -Severity 'pass' -Message 'AURA 综合端静态合规检查未发现确定错误。' `
 			-Suggestion '继续完成构建、独立运行和宿主加载验证。'
 	}
 	$status = if ($errorCount -gt 0) { 'Failed' } else { 'Passed' }

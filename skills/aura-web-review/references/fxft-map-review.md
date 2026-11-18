@@ -1,6 +1,6 @@
 # FxftMap 地图接入取证（FE-025）
 
-本技能补充门禁适用于 `formal-review`、`change-review` 和 `development-self-check` 审查范围内的所有地图功能。限定范围不扩展为全项目审查；无地图有盘点依据才标不适用，纯注释/说明检查保持原请求范围。门禁已按用户要求补入天玑前端规范工作树，并更新随包相关规范段；源提交待绑定，见[地图规范](../knowledge/PIGX前端开发规范/2D地图开发规范.md)，来源见[维护记录](fxft-map-source.json)。
+本技能补充门禁适用于 `formal-review`、`change-review` 和 `development-self-check` 审查范围内的所有地图功能。限定范围不扩展为全项目审查；无地图有盘点依据才标不适用，纯注释/说明检查保持原请求范围。门禁已按用户要求补入天玑前端规范工作树，并更新随包相关规范段；源提交待绑定，见[地图规范](../knowledge/AURA前端开发规范/2D地图开发规范.md)，来源见[维护记录](fxft-map-source.json)。
 
 ## 必查链路
 

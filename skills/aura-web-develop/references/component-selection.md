@@ -2,13 +2,13 @@
 
 ## 通用组件选型
 
-Aura UI 目前有 **39 个公开组件**，从[组件索引](../knowledge/PIGX前端开发规范/aura-ui组件库/README.md)按用途选型，只读本次使用组件的示例、Props、事件、插槽和公开方法。Resolver、样式及服务绑定见[公共接入](../knowledge/PIGX前端开发规范/aura-ui能力清单与接入规范.md)。日常开发按文档接入，不要求逐项审计包 exports、Resolver 源码或构建产物；仅升级依赖、遇到契约差异或接入异常时核对实际安装包。演示数据和文案替换为项目真实接口、字典和 i18n。
+Aura UI 目前有 **39 个公开组件**，从[组件索引](../knowledge/AURA前端开发规范/aura-ui组件库/README.md)按用途选型，只读本次使用组件的示例、Props、事件、插槽和公开方法。Resolver、样式及服务绑定见[公共接入](../knowledge/AURA前端开发规范/aura-ui能力清单与接入规范.md)。日常开发按文档接入，不要求逐项审计包 exports、Resolver 源码或构建产物；仅升级依赖、遇到契约差异或接入异常时核对实际安装包。演示数据和文案替换为项目真实接口、字典和 i18n。
 
-按“aura-web-kit 公共 Hook / aura-ui 公共组件 → Element Plus → 必要的自定义基础 UI”核对通用能力，地图、视频等专项能力按对应规范使用公司组件。公开入口与项目绑定见 [能力清单](../knowledge/PIGX前端开发规范/aura-web-kit能力清单与接入规范.md)。进入 Element Plus 选型阶段时，按需查阅[官方组件总览](https://element-plus.org/zh-CN/component/overview)和候选组件文档，并核对当前安装版本的类型与公开 API；资料可通过当前可用的文档工具读取，需要交互取证时再使用浏览器，不固定工具或要求局部任务重读整个总览。
+按“aura-web-kit 公共 Hook / aura-ui 公共组件 → Element Plus → 必要的自定义基础 UI”核对通用能力，地图、视频等专项能力按对应规范使用公司组件。公开入口与项目绑定见 [能力清单](../knowledge/AURA前端开发规范/aura-web-kit能力清单与接入规范.md)。进入 Element Plus 选型阶段时，按需查阅[官方组件总览](https://element-plus.org/zh-CN/component/overview)和候选组件文档，并核对当前安装版本的类型与公开 API；资料可通过当前可用的文档工具读取，需要交互取证时再使用浏览器，不固定工具或要求局部任务重读整个总览。
 
 可复用的基础 UI 优先采用公共组件，不重复实现已有能力。页面私有业务组件可组合 Aura UI、Element Plus 和业务数据，按职责、所有权和复用收益组织，不以“Element Plus 可以组合实现”为由禁止封装。只有确需新写基础控件时，才在既有开发记录中简记已核对能力和不适用原因，不为普通业务组合新增选型报告。
 
-组件 JS 与 CSS 均按需引入：模板优先 `AuraUIResolver`，脚本组件对象使用公开子入口；公共类型可用根入口 `import type`。本技能面向的项目均已接入 Core，统一使用 `AuraUIResolver({ injectGlobal: false })` 并保留默认组件 CSS。服务通过 `@fxft/aura-ui/config` 绑定，不新增全量注册或 Aura UI 全量样式；详细边界及包产物限制见[公共接入](../knowledge/PIGX前端开发规范/aura-ui能力清单与接入规范.md#按需解析)。
+组件 JS 与 CSS 均按需引入：模板优先 `AuraUIResolver`，脚本组件对象使用公开子入口；公共类型可用根入口 `import type`。本技能面向的项目均已接入 Core，统一使用 `AuraUIResolver({ injectGlobal: false })` 并保留默认组件 CSS。服务通过 `@fxft/aura-ui/config` 绑定，不新增全量注册或 Aura UI 全量样式；详细边界及包产物限制见[公共接入](../knowledge/AURA前端开发规范/aura-ui能力清单与接入规范.md#按需解析)。
 
 ## 地图组件
 

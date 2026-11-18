@@ -1,4 +1,4 @@
-# PIGX 项目画像扫描脚本
+# AURA 项目画像扫描脚本
 
 param(
   [Parameter(Mandatory = $true)]
@@ -18,7 +18,7 @@ if (-not (Test-Path -LiteralPath $sourceRoot)) {
   throw "未找到 src 目录：$resolvedProjectPath"
 }
 
-Write-Host "=== PIGX 项目扫描 ===" -ForegroundColor Cyan
+Write-Host "=== AURA 项目扫描 ===" -ForegroundColor Cyan
 
 $pkg = Get-Content -LiteralPath $packageFile -Raw -Encoding UTF8 | ConvertFrom-Json
 Write-Host "`n[运行环境]"

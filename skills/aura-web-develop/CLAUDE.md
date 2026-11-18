@@ -4,7 +4,7 @@
 
 ## 最高优先级
 
-`knowledge/PIGX前端开发规范/` 是技能内最新版正式规范。当前项目源码和类型优先于历史示例；其他 references、recipes、templates 只能补充，不能覆盖正式规范。
+`knowledge/AURA前端开发规范/` 是技能内最新版正式规范。当前项目源码和类型优先于历史示例；其他 references、recipes、templates 只能补充，不能覆盖正式规范。
 
 ## 强制规则
 

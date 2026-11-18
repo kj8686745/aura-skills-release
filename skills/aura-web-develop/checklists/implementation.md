@@ -7,13 +7,13 @@
 - [ ] 本次调用的外部技能均已核对实际可用性；开发自检若明确使用仓库源码已记录路径/版本/模式能力与未安装状态，缺失项未假称已调用
 - [ ] 技能安装仅在用户明确授权后执行；拒绝或安装失败时已按可降级/必需边界处理
 - [ ] 已按[检查选择表](../references/development-review-workflow.md#检查选择表)选定接口、前端交互及实际页面的验证方式；涉及真实页面走查时使用 Codex 内置浏览器或用户指定的浏览器
-- [ ] 命中的 Vue/TS/样式已按[职责决策表](../knowledge/PIGX前端开发规范/文件组织与职责拆分.md)明确所有权、真实消费者及依赖方向；默认 SFC，少量私有 TS/SCSS 同级，私有 Vue 在 components/，多组职责才分目录，未按行数或缺 Hook 机械拆分
-- [ ] 常量命中时按[常量归属与定义](../knowledge/PIGX前端开发规范/工程与代码生成规范.md#前端常量归属与定义)核对最小归属、定义与消费复用、单位/边界及默认值实例隔离；缺目录不直接判偏差
+- [ ] 命中的 Vue/TS/样式已按[职责决策表](../knowledge/AURA前端开发规范/文件组织与职责拆分.md)明确所有权、真实消费者及依赖方向；默认 SFC，少量私有 TS/SCSS 同级，私有 Vue 在 components/，多组职责才分目录，未按行数或缺 Hook 机械拆分
+- [ ] 常量命中时按[常量归属与定义](../knowledge/AURA前端开发规范/工程与代码生成规范.md#前端常量归属与定义)核对最小归属、定义与消费复用、单位/边界及默认值实例隔离；缺目录不直接判偏差
 - [ ] i18n 已按[文案验收](../references/ui-data-contracts.md#新增文案的执行与验收)先查全局、业务域、模块，并记录本次 key、命中公共 key/未命中依据及复用/提取/保留结论；新增/改值及替换引用均已覆盖，跨页面同义文案未重复定义
 - [ ] 已按 FE-012 从接口 code 与真实字典关联追踪到表格列、私有组件及动态列的最终渲染；以原始 code + options 使用字典组件，独立分类标识优先 Tag，复合规则摘要/句内枚举可 Text 并保持行内排版；未用名称快照或手写映射替代，真实名称、筛选和开关边界已核验，未凭组件名或零扫描判通过。 详见[FE-012](../references/dictionary-table-contract.md)。
 - [ ] 用户可见 label、title、placeholder、按钮、列名、卡片、Dialog/Drawer、空态、校验和消息均走 `t()` / `$t()`；已复用 common，跨两个及以上业务模块的文案已上提到业务域 i18n，zh/en key 同步存在
 - [ ] 所有可编辑或筛选控件均有 i18n placeholder；例外使用 `data-placeholder-exempt` 并有相邻中文原因说明
-- [ ] 按[职责决策表](../knowledge/PIGX前端开发规范/文件组织与职责拆分.md)选择保留、内部整理或提取；提取时私有状态、行为及样式一起迁移，未整体搬运 script、传入整页 state 或强制每组件配 Hook
+- [ ] 按[职责决策表](../knowledge/AURA前端开发规范/文件组织与职责拆分.md)选择保留、内部整理或提取；提取时私有状态、行为及样式一起迁移，未整体搬运 script、传入整页 state 或强制每组件配 Hook
 - [ ] 弹窗专属数据仅在实际打开时加载，状态来源单一；提取组件持有状态并在公开打开流程加载，合理内联由所属页面持有状态并在具名打开处理加载，页面或组件挂载及 `immediate` 监听未提前请求
 - [ ] 已提取组件的父页面只传记录 ID、已选 ID 等操作上下文，未为使用公开打开方法强制提取；保存后只刷新仍打开且确有需要的关联弹窗
 - [ ] 文件与变量有业务语义，目录和命名符合最新版工程规范及相邻模块
@@ -86,13 +86,14 @@
 - [ ] 普通内容滚动区域使用 `el-scrollbar`，未使用 `overflow: auto/scroll` 或 `overflow-auto/overflow-y-auto` 等原生滚动写法
 - [ ] `el-table`、`el-tree`、`el-select` 等已有内置滚动能力的组件使用自身能力，未额外嵌套 `el-scrollbar`
 - [ ] 远程样式有正确 scope，不重置无 scope 的 `body`、`html` 或 `.el-*`
-- [ ] import 资源经 `getStaticResourceUrl`，public 资源经 `getPublicResourceUrl`
+- [ ] 项目接入联邦资源回调后，按使用位置采用模板静态路径、CSS `url()` 或 JS 静态导入，Vite 识别的 public 静态引用默认随 JS 模块或外链样式表定位，运行时 public 路径用 `getPublicResourceUrl`
+- [ ] 核对已安装的 web-kit 和实际构建产物，确认 Vite 识别的 public 引用默认使用相对地址
 
 ## 模块联邦与专项组件
 
 - [ ] 远程页面不依赖提供方 `main.ts` 的全局注册副作用
 - [ ] 若页面涉及模块联邦，配置已在修改前后运行 `aura-module-federation-check`，Web 开发技能负责实现而检查技能只提供基线/复检；不配置远程菜单时仅确认未登记远程菜单
-- [ ] Element Plus 的本地依赖与 shared singleton 按[模块联邦规范](../knowledge/PIGX前端开发规范/模块联邦开发技术规范.md)核对，不沿用旧的禁止共享要求
+- [ ] Element Plus 的本地依赖与 shared singleton 按[模块联邦规范](../knowledge/AURA前端开发规范/模块联邦开发技术规范.md)核对，不沿用旧的禁止共享要求
 - [ ] expose、i18n、Tailwind、页面 CSS 和静态资源按最新版规范适配
 - [ ] 地图使用 `FxftMap`，未重复接入底层地图 SDK
 - [ ] 地图按 [FxftMap 接入](../references/fxft-map-integration.md)复用 Resolver/JS-CSS 与有效高度，四项初始化 Props 来自公共配置，配置就绪后挂载、组件 `load` 后操作实例；中心与缺坐标兜底分离，选点沿用单 marker 公开 API
